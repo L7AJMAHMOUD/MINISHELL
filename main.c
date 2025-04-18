@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:22 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/18 11:57:50 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:52:14 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,8 @@ int main(int ac, char **av)
 {
     (void)ac;
     (void)av;
-    read_input();
+    if (ac == 1)
+        read_input();
+    else
+        invalid_param();
 }

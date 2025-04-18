@@ -3,7 +3,8 @@ CC = cc
 FLAGS = -Wall -Wextra -Werror 
 HEAD = minishell.h
 RM = rm -f
-SRCS = main.c read_input.c
+SRCS = main.c read_input.c linked_lists_utils.c ft_split.c split_utils.c \
+		handle_errors.c
 OBJ = $(SRCS:.c=.o)
 
 
