@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/18 15:29:38 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/18 21:49:30 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void    read_input()
 
     while (1)
     {
-        command = readline("▄︻デ══━一 💥 > ");
+        command = readline("▄︻デ══━一💥 > ");
         if (!command)
             break ;
         if (command && *command)
