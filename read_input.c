@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/19 21:04:15 by user01           ###   ########.fr       */
+/*   Updated: 2025/04/19 22:43:57 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,52 @@ void    command_analyze(char *command)
     pipe_detector(command);
     and_or(command);
 }
+char	*ft_strdup(char *src )
+{
+	size_t	i;
+	char	*h;
+
+	i = 0;
+	h = malloc(ft_strlen(src) * sizeof(char) + 1);
+	if (!h)
+		return (0);
+	while (src[i])
+	{
+		h[i] = src[i];
+		i++;
+	}
+	h[i] = '\0';
+	return (h);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	size_t	k;
+	size_t	j;
+	char	*str;
+
+	j = 0;
+	k = 0;
+	if (!s2 && !s1)
+		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 2);
+	if (str == NULL)
+		return (0);
+	while (s1[j])
+	{
+		str[j] = s1[j];
+		j++;
+	}
+	str[j++] = 32;
+	while (s2[k])
+		str[j++] = s2[k++];
+	str[j] = '\0';
+	return (free(s1), free(s2), str);
+}
 
 int	ft_strleen(const char *str, int c)
 {
@@ -100,6 +146,7 @@ int	ft_strleen(const char *str, int c)
 	return (i);
 }
 
+
 char	*ft_strduup(const char *src, int c, int *i)
 {
 	char	*h;
@@ -107,6 +154,8 @@ char	*ft_strduup(const char *src, int c, int *i)
 	*i = 0;
 	if (!src)
 		return (0);
+	if (!src[*i])
+		return NULL;
 	h = malloc(ft_strleen(src, c) * sizeof(char) + 1);
 	if (!h)
 		return (0);
@@ -141,6 +190,7 @@ void    command_tokenization(char *command)
 	int i;
 	int j;
 	t_node node;
+	char *str;
 	i = 0;
 	// if (ft_strstr(command, " | "))
 		// {pipex}
@@ -163,25 +213,36 @@ void    command_tokenization(char *command)
 		while (command[i] == ' ')
 			i++;
 		if (!node.command)
-		node.command = ft_strduup(&command[i], 32, &j);
+			node.command = ft_strduup(&command[i], 32, &j);
 		i = i + j;
 		j = 0;
 		if (node.flag == 1)
 		{
-			while (command[i] == ' ')
-				i++;
-			node.flags = ft_strduup(&command[i], '-', &j);
+			while (command[i] != '-')
+					i++;
+			node.flags = ft_strduup(&command[i], ' ', &j);
+			i = i + j;
+			j = 0;
 		}
-		i = i + j;
-		j = 0;
-		break;
+		while (node.flag == 1 && node.flags)
+		{
+			while (command[i] != '-' && command[i])
+				i++;
+			str = ft_strduup(&command[i], ' ', &j);
+			if (!str)
+				break;
+			node.flags = ft_strjoin(node.flags, str);	
+			i = i + j;
+			j = 0;
+		}
 		if (node.and == 1 && command[i] == '&')
 			break;
 		if (node.or == 1 && command[i] == '|')
 			break;
 		i++;
 	}
-	printf("%s", node.flags);
+	printf("command = %s\n", node.command);
+	printf("flags = %s\n", node.flags);
 }
 
 void    read_input()
