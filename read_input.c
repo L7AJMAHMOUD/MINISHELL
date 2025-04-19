@@ -3,29 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/18 21:49:30 by user01           ###   ########.fr       */
+/*   Updated: 2025/04/19 15:09:50 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    command_tokenization(char *command)
+
+void    and_or(char *command)
 {
-    char **tokens;
+    int i;
 
-    tokens = ft_split(command, ' ');
-    
-    int i = 0;
-
-    while(tokens[i])
+    i = 0;
+    while  (command[i])
     {
-        printf("%s\n",tokens[i]);
+        if ((command[i] == '&' && command[i + 1] == '&') 
+        || command[i] == '|' && command[i + 1] == '|')
+        {
+            
+        }
         i++;
     }
 }
+int dsq_detector(char *command)
+{
+    int i;
+    int count;
+    int c;
+
+    i = 0;
+    count = 0;
+    c = 0;
+    while (command[i])
+    {
+        if (command[i] == '"' || command[i] == '\'')
+        {
+            if (c == 0)
+                c = command[i];
+            if (c == command[i]) 
+                count++;
+            if(count == 2)
+                c = 0;
+        }
+        i++;
+    }
+    return (count);
+}
+void    pipe_detector(char *command)
+{
+    int i;
+
+    i = 0;
+    while (command[i])
+    {
+        if(command[i] == '|')
+        {
+            while (command[++i] == ' ')
+                i++;
+            if (command[i] == '\0')
+                printf("SYNTAX ERROR \n");
+        }
+        i++;
+    }
+}
+
+void    command_analyze(char *command)
+{
+    int sdq;
+
+    sdq = dsq_detector(command);
+    if (sdq % 2 != 0)
+        printf("SYNTAX ERROR \n");
+    pipe_detector(command);
+    and_or(command);
+}
+
 void    read_input()
 {
     char *command;
@@ -37,6 +92,6 @@ void    read_input()
             break ;
         if (command && *command)
             add_history(command);
-        command_tokenization(command);
+        command_analyze(command);
     }
 }
