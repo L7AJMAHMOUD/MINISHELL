@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/19 15:09:50 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/19 18:17:27 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void    and_or(char *command)
     int i;
 
     i = 0;
-    while  (command[i])
+    while  (command[i + 1])
     {
         if ((command[i] == '&' && command[i + 1] == '&') 
-        || command[i] == '|' && command[i + 1] == '|')
+        || (command[i] == '|' && command[i + 1] == '|'))
         {
             
         }
@@ -59,6 +59,13 @@ void    pipe_detector(char *command)
     i = 0;
     while (command[i])
     {
+		if (i == 0)
+		{
+			while (command[i] == ' ')
+                i++;
+			if(command[i] == '|')
+				printf("SYNTAX ERROR \n");
+		}
         if(command[i] == '|')
         {
             while (command[++i] == ' ')
