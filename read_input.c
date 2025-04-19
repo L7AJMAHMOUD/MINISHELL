@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/19 18:17:27 by user01           ###   ########.fr       */
+/*   Updated: 2025/04/19 21:04:15 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,102 @@ void    command_analyze(char *command)
     and_or(command);
 }
 
+int	ft_strleen(const char *str, int c)
+{
+	int		i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i] && str[i] != c)
+		i++;
+	return (i);
+}
+
+char	*ft_strduup(const char *src, int c, int *i)
+{
+	char	*h;
+
+	*i = 0;
+	if (!src)
+		return (0);
+	h = malloc(ft_strleen(src, c) * sizeof(char) + 1);
+	if (!h)
+		return (0);
+	while (src[*i] && src[*i] != c)
+	{
+		h[*i] = src[*i];
+		*i += 1;
+	}
+	h[*i] = '\0';
+	*i += 1;
+	return (h);
+}
+
+t_node node_null(void)
+{
+	t_node node;
+	
+	node.command = 0;
+	node.flags = 0;
+    node.arg = 0;
+	node.pipe = 0;
+   	node.flag = 0;
+	node.and = 0;
+	node.or = 0;
+    node.next = 0;
+
+	return node;
+}
+
+void    command_tokenization(char *command)
+{
+	int i;
+	int j;
+	t_node node;
+	i = 0;
+	// if (ft_strstr(command, " | "))
+		// {pipex}
+	node = node_null();
+	if (ft_strstr(command, "&&"))
+	{
+		node.and = 1;
+		command_tokenization(ft_strstr(command, "&&"));
+	}
+	if (ft_strstr(command, "||"))
+	{
+		node.or = 1;
+		command_tokenization(ft_strstr(command, "||"));
+	}
+	if (ft_strstr(command, "-"))
+		node.flag = 1;
+	while(command[i])
+	{
+		j = 0;
+		while (command[i] == ' ')
+			i++;
+		if (!node.command)
+		node.command = ft_strduup(&command[i], 32, &j);
+		i = i + j;
+		j = 0;
+		if (node.flag == 1)
+		{
+			while (command[i] == ' ')
+				i++;
+			node.flags = ft_strduup(&command[i], '-', &j);
+		}
+		i = i + j;
+		j = 0;
+		break;
+		if (node.and == 1 && command[i] == '&')
+			break;
+		if (node.or == 1 && command[i] == '|')
+			break;
+		i++;
+	}
+	printf("%s", node.flags);
+}
+
 void    read_input()
 {
     char *command;
@@ -99,6 +195,7 @@ void    read_input()
             break ;
         if (command && *command)
             add_history(command);
-        command_analyze(command);
+        // command_analyze(command);
+		command_tokenization(command);
     }
 }

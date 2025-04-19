@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:24 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/18 13:51:36 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/19 19:00:39 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 typedef struct s_node
 {
     char *command;
+    char *flags;
+    char *arg;
+	int pipe;
+    int flag;
+	int and;
+	int or;
     struct s_node *next;
 }   t_node;
 
@@ -31,5 +37,7 @@ size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	**ft_split(char const *s, char c);
 void    invalid_param(void);
+
+char	*ft_strstr(char *haystack, char *needle);
 
 #endif
