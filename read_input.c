@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   read_input.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/20 14:17:59 by maen-naj         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -93,6 +83,7 @@ void    command_analyze(char *command)
 void    read_input()
 {
     char *command;
+	t_node *node;
 
     while (1)
     {
@@ -101,6 +92,15 @@ void    read_input()
             break ;
         if (command && *command)
             add_history(command);
-        command_analyze(command);
+        // if(command_analyze(command) == 0);
+			node = command_tokenization(command);
+		while(node)
+		{
+			printf("command : %s\n", node->command);
+			printf("flags : %s\n", node->flags);
+			printf("arg : %s\n", node->arg);
+			printf("---------\n");
+			node = node->next; 
+		}
     }
 }
