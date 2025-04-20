@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/19 22:43:57 by user01           ###   ########.fr       */
+/*   Updated: 2025/04/20 08:52:48 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ void    command_tokenization(char *command)
 		node.or = 1;
 		command_tokenization(ft_strstr(command, "||"));
 	}
-	if (ft_strstr(command, "-"))
+	if (ft_strstr(command, " -"))
 		node.flag = 1;
 	while(command[i])
 	{
@@ -218,16 +218,19 @@ void    command_tokenization(char *command)
 		j = 0;
 		if (node.flag == 1)
 		{
-			while (command[i] != '-')
+			while (command[i] == ' ')
 					i++;
-			node.flags = ft_strduup(&command[i], ' ', &j);
+			if (command[i] == '-')
+				node.flags = ft_strjoin(node.flags, ft_strduup(&command[i], ' ', &j));
 			i = i + j;
 			j = 0;
 		}
 		while (node.flag == 1 && node.flags)
 		{
-			while (command[i] != '-' && command[i])
+			while (command[i] == ' ')
 				i++;
+			if (command[i] != '-')
+				break;
 			str = ft_strduup(&command[i], ' ', &j);
 			if (!str)
 				break;
@@ -235,6 +238,10 @@ void    command_tokenization(char *command)
 			i = i + j;
 			j = 0;
 		}
+		while (command[i] == ' ')
+			i++;
+		if (!node.arg)
+			node.arg = ft_strduup(&command[i], 32, &j);
 		if (node.and == 1 && command[i] == '&')
 			break;
 		if (node.or == 1 && command[i] == '|')
@@ -243,6 +250,7 @@ void    command_tokenization(char *command)
 	}
 	printf("command = %s\n", node.command);
 	printf("flags = %s\n", node.flags);
+	printf("flags = %s\n", node.arg);
 }
 
 void    read_input()
@@ -256,7 +264,7 @@ void    read_input()
             break ;
         if (command && *command)
             add_history(command);
-        // command_analyze(command);
-		command_tokenization(command);
+        // if(command_analyze(command) == 0);
+			command_tokenization(command);
     }
 }

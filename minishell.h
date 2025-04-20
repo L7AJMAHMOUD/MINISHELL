@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:24 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/19 19:00:39 by user01           ###   ########.fr       */
+/*   Updated: 2025/04/20 08:38:36 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,28 @@ typedef struct s_node
 }   t_node;
 
 void    read_input();
-t_node	*create_node(char *data);
-size_t	ft_strlen(const char *s);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	**ft_split(char const *s, char c);
 void    invalid_param(void);
 
+/* **************************************************************** */
+/*								    */
+/*	                      linked_lists_utils	                    */
+/*								    */
+/* **************************************************************** */
+
+void ft_nodeadd_back(t_node **lst, t_node *new);
+void ft_lstadd_front(t_node **lst, t_node *new);
+int ft_lstsize(t_node *lst);
+void delete_node(t_node **head);
+
+/* **************************************************************** */
+/*								    */
+/*	                           strings_utils	                    */
+/*								    */
+/* **************************************************************** */
+
 char	*ft_strstr(char *haystack, char *needle);
+size_t	ft_strlen(const char *s);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
 #endif
