@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:24 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/20 08:38:36 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/04/20 09:00:24 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,16 @@ void delete_node(t_node **head);
 
 char	*ft_strstr(char *haystack, char *needle);
 size_t	ft_strlen(const char *s);
+char	*ft_strdup(char *src );
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char	*ft_strjoin(char *s1, char *s2);
+
+/* **************************************************************** */
+/*								    */
+/*	                     command_tokenization_utils	                */
+/*								    */
+/* **************************************************************** */
+
+void    command_tokenization(char *command);
 
 #endif
