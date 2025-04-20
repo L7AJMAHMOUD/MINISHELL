@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:24 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/20 09:00:24 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/04/20 09:40:31 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ char	*ft_strjoin(char *s1, char *s2);
 /*								    */
 /* **************************************************************** */
 
-void    command_tokenization(char *command);
+t_node    *command_tokenization(char *command);
 
 #endif

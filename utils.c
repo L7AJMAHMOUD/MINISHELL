@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:54:55 by abkaram           #+#    #+#             */
-/*   Updated: 2025/04/20 09:00:31 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/04/20 10:08:57 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strstr(char *haystack, char *needle)
 	{
 		if (haystack[i] == needle[j])
 			if (ft_an(&haystack[i], needle) == 1)
-				return (&haystack[i + 2]);
+				return (&haystack[i + 3]);
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/20 08:59:53 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/04/20 10:08:05 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void    command_analyze(char *command)
 void    read_input()
 {
     char *command;
+	t_node *node;
 
     while (1)
     {
@@ -100,6 +101,14 @@ void    read_input()
         if (command && *command)
             add_history(command);
         // if(command_analyze(command) == 0);
-			command_tokenization(command);
+			node = command_tokenization(command);
+		while(node)
+		{
+			printf("command : %s\n", node->command);
+			printf("flags : %s\n", node->flags);
+			printf("arg : %s\n", node->arg);
+			printf("---------\n");
+			node = node->next; 
+		}
     }
 }
