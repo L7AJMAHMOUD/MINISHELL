@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/19 18:17:27 by user01           ###   ########.fr       */
+/*   Updated: 2025/04/20 14:17:59 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ void    and_or(char *command)
     int i;
 
     i = 0;
-    while  (command[i + 1])
+    while  (command[i])
     {
-        if ((command[i] == '&' && command[i + 1] == '&') 
-        || (command[i] == '|' && command[i + 1] == '|'))
+        if (command[i] == '&')
         {
-            
+            if (command[i + 1] == '&')
+                return ;
+            else
+                printf("bash: syntax error near unexpected token `&'\n");
         }
         i++;
     }
