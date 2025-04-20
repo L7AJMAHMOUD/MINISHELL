@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   read_input.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/20 10:08:05 by abkaram          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -18,12 +8,14 @@ void    and_or(char *command)
     int i;
 
     i = 0;
-    while  (command[i + 1])
+    while  (command[i])
     {
-        if ((command[i] == '&' && command[i + 1] == '&') 
-        || (command[i] == '|' && command[i + 1] == '|'))
+        if (command[i] == '&')
         {
-            
+            if (command[i + 1] == '&')
+                return ;
+            else
+                printf("bash: syntax error near unexpected token `&'\n");
         }
         i++;
     }
