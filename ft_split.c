@@ -6,13 +6,13 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/18 13:38:05 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/21 14:31:43 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**free_alocation(char **tab)
+char	**free_split(char **tab)
 {
 	unsigned int	i;
 
@@ -88,7 +88,7 @@ char	**ft_split(char const *s, char c)
 		len_w = ln((char *)s, c);
 		k[i] = malloc((len_w + 1) * sizeof(char));
 		if (!k[i])
-			return (free_alocation(k));
+			return (free_split(k));
 		ft_strlcpy(k[i], s, len_w + 1);
 		k[i][len_w] = '\0';
 		s = s + len_w;
