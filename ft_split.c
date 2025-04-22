@@ -6,25 +6,11 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/22 13:27:15 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/04/22 14:02:59 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static char	**free_alocation(char **tab)
-// {
-// 	unsigned int	i;
-
-// 	i = 0;
-// 	while (tab[i])
-// 	{
-// 		free(tab[i]);
-// 		i++;
-// 	}
-// 	free(tab);
-// 	return (NULL);
-// }
 
 static int	ln(char *s)
 {
@@ -87,7 +73,11 @@ char	**ft_ultra_split(char *s)
 		return (NULL);
 	words = count_word((char *)s);
 	arr = malloc ((words+ 1) * sizeof(char *) );
-	
+	if (!arr)
+	{
+		printf("Error : allocation in split\n");
+		exit (1);
+	}
 	while(s[i] && s[i] != '&' && s[i] != '|')
 	{
 		k = 0;
@@ -96,6 +86,14 @@ char	**ft_ultra_split(char *s)
 		if (!s[i])
 			break;
 		arr[j] = malloc(ln(&s[i]) + 1);
+		if (!arr[j])
+		{
+			printf("Error : allocation in split\n");
+			while (j >= 0)
+				free(arr[j--]);
+			free(arr);
+			exit (1);
+		}
 		while (s[i] && s[i] != ' ' && s[i] != '&' && s[i] != '|')
 		{
 			if (s[i] == '"')

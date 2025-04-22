@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/22 13:25:57 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/04/22 13:59:54 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void    command_analyze(char *command)
     and_or(command);
 }
 
-void    read_input()
+void    read_input(char **envp)
 {
     char *command;
 	t_node *node;
@@ -102,5 +102,6 @@ void    read_input()
             add_history(command);
         // if(command_analyze(command) == 0);
 			node = command_tokenization(command);
+        exe(node->command, envp);
     }
 }
