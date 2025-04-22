@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_tokenization.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:56:47 by abkaram           #+#    #+#             */
-/*   Updated: 2025/04/22 13:27:45 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/04/22 22:31:25 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ t_node    *command_tokenization(char *command)
 		// {pipex}
 	node = malloc(sizeof(t_node));
 	node_null(node);
-	if (ft_strstr(command, "&&"))
+	if (ft_strstr(command, " &&"))
 	{
 		node->and = 1;
 		node->next = command_tokenization(ft_strstr(command, " &&"));
 	}
-	else if (ft_strstr(command, "||"))
+	else if (ft_strstr(command, " ||"))
 	{
 		node->or = 1;
 		node->next = command_tokenization(ft_strstr(command, " ||"));

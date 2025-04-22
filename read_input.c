@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/22 16:14:02 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/22 22:45:55 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ void    read_input(char **envp)
             break ;
         if (command && *command)
             add_history(command);
-        if(command_analyze(command) == 0)
+        if(command_analyze(command) == 0);
 			node = command_tokenization(command);
-        exe(node->command, envp);
+		for(int i = 0;node->command[i];i++)
+			printf("command : %s\n", node->command[i]);
+        // exe(node->command, envp);
     }
 }
