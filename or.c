@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/22 16:01:32 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:54:59 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,11 @@ void    or_single_operator(char *command, int *i)
     while (command[*i] != '|' && command[*i])
         *i += 1;
 }
+
+// ls &&  ls "       && "
+
+// ls ||  ls "       || "
+
+// ld && ls |  "      &&  "
+
+// ld && ls |  "      &&  "
