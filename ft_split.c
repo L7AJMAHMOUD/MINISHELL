@@ -3,95 +3,121 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/21 14:31:43 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:02:59 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**free_split(char **tab)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-	return (NULL);
-}
-
-static int	ln(char *s, char c)
+static int	ln(char *s)
 {
 	int	length;
+	char c;
 
+	c = 32;
 	length = 0;
-	while (s[length] && s[length] != c)
+	while (s[length] && s[length] != c && s[length] != '&')
+	{
+		if (s[length++] == '"')
+		{
+			if (!s[length])
+				break;
+			while (s[length] != '"' && s[length + 1])
+				length++;
+		}
 		length++;
+	}
 	return (length);
 }
 
-static char	**double_array(int words)
+size_t	count_word(char const *str)
 {
-	char	**p;
-
-	p = malloc((words + 1) * sizeof(char *));
-	if (!p)
-		return (NULL);
-	return (p);
-}
-
-static int	count_word(char *s, char c)
-{
-	int	i;
-	int	count;
+	size_t	i;
+	size_t	k;
 
 	i = 0;
-	count = 0;
-	while (s[i])
+	k = 0;
+	while (str[i] && str[i] != '&')
 	{
-		if (s[i] != c)
+		while (str[i] == ' ' && str[i] && str[i] != '&')
+			i++;
+		if (str[i] == '"')
 		{
-			while (s[i] && s[i] != c)
+			i++;
+			while (str[i] != '"')
 				i++;
-			count++;
 		}
-		else
+		if (str[i++])
+			k++;
+		while (str[i] != ' ' && str[i] && str[i] != '&')
 			i++;
 	}
-	return (count);
+	return (k);
 }
 
-char	**ft_split(char const *s, char c)
+
+char	**ft_ultra_split(char *s)
 {
 	int		words;
 	int		i;
-	int		len_w;
-	char	**k;
+	int		j;
+	int		k;
+	char	**arr;
 
+	i = 0;
+	j = 0;
 	if (!s)
 		return (NULL);
-	words = count_word((char *)s, c);
-	i = -1;
-	k = double_array(words);
-	if (!k)
-		return (NULL);
-	while (++i < words)
+	words = count_word((char *)s);
+	arr = malloc ((words+ 1) * sizeof(char *) );
+	if (!arr)
 	{
-		while (*s == c)
-			s++;
-		len_w = ln((char *)s, c);
-		k[i] = malloc((len_w + 1) * sizeof(char));
-		if (!k[i])
-			return (free_split(k));
-		ft_strlcpy(k[i], s, len_w + 1);
-		k[i][len_w] = '\0';
-		s = s + len_w;
+		printf("Error : allocation in split\n");
+		exit (1);
 	}
-	return (k[i] = NULL, k);
+	while(s[i] && s[i] != '&' && s[i] != '|')
+	{
+		k = 0;
+		while (s[i] == ' ')
+			i++;
+		if (!s[i])
+			break;
+		arr[j] = malloc(ln(&s[i]) + 1);
+		if (!arr[j])
+		{
+			printf("Error : allocation in split\n");
+			while (j >= 0)
+				free(arr[j--]);
+			free(arr);
+			exit (1);
+		}
+		while (s[i] && s[i] != ' ' && s[i] != '&' && s[i] != '|')
+		{
+			if (s[i] == '"')
+			{
+				i++;
+				while (s[i] != '"' && s[i + 1])
+				{
+					arr[j][k] = s[i];
+					k++;
+					i++;
+				}
+				i++;
+			}
+			else
+			{
+				arr[j][k] = s[i];
+				i++;
+				k++;
+			}
+				
+		}
+		arr[j][k] = 0;
+		j++;
+	}
+	arr[j] = 0;
+	return arr;
 }

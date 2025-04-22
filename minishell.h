@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:24 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/22 15:25:08 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/22 13:57:12 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@
 
 typedef struct s_node
 {
-    char *token;
+    char **command;
+	int pipe;
+	int and;
+	int or;
     struct s_node *next;
 }   t_node;
 
 void    read_input();
-char	**ft_split(char const *s, char c);
+char	**ft_ultra_split(char *s);
 void    invalid_param(void);
 
 /* **************************************************************** */
@@ -39,8 +42,6 @@ void ft_nodeadd_back(t_node **lst, t_node *new);
 void ft_lstadd_front(t_node **lst, t_node *new);
 int ft_lstsize(t_node *lst);
 void delete_node(t_node **head);
-t_node	*create_node(char *data);
-void	print_list(t_node *head);
 
 /* **************************************************************** */
 /*								    */
@@ -53,7 +54,6 @@ size_t	ft_strlen(const char *s);
 char	*ft_strdup(char *src );
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strjoin(char *s1, char *s2);
-char	**free_split(char **tab);
 
 /* **************************************************************** */
 /*								    */
@@ -62,7 +62,10 @@ char	**free_split(char **tab);
 /* **************************************************************** */
 
 t_node    *command_tokenization(char *command);
-int    command_analyze(char *command);
+
+
+
+void	exe(char **command, char **envp);
 
 int   and(char *command);
 void    check_and_last(char *command);

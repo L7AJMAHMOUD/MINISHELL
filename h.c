@@ -1,8 +1,8 @@
+#include <stdio.h>
 #include <unistd.h>
 
-int main(void)
+int main(int argc, char const *argv[])
 {
-	char *av[] = {"ls", "&&", "ls", NULL};  // Correctly terminated argv
-	execve("/bin/ls", av, NULL);     // Make sure path is right
+	execve("/usr/bin/ls", argv + 1, NULL);
 	return 0;
 }

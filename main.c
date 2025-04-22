@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:22 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/21 10:54:10 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/22 13:58:07 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char **av)
+int main(int ac, char **av, char **envp)
 {
+    (void)ac;
     (void)av;
     if (ac == 1)
-        read_input();
+        read_input(envp);
     else
         invalid_param();
 }
