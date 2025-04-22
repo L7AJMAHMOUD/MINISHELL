@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/22 23:30:44 by user01           ###   ########.fr       */
+/*   Updated: 2025/04/22 23:33:53 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void    read_input(char **envp)
             add_history(command);
         if(command_analyze(command) == 0);
 			node = command_tokenization(command);
-		for(int i = 0;node->command[i];i++)
-			printf("command : %s\n", node->command[i]);
         exe(node->command, envp);
     }
 }

@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/22 23:28:15 by user01           ###   ########.fr       */
+/*   Updated: 2025/04/22 23:33:10 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ln(char *s)
 
 	c = 32;
 	length = 0;
-	while (s[length] && s[length] != c && s[length] != '&' && s[length] != '|')
+	while (s[length] && s[length] != c)
 	{
 		if (s[length++] == '"')
 		{
