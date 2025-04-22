@@ -67,4 +67,13 @@ t_node    *command_tokenization(char *command);
 
 void	exe(char **command, char **envp);
 
+int   and(char *command);
+void    check_and_last(char *command);
+int   or(char *command);
+int   pipe_detector(char *command);
+void    and_single_operator(char *command, int *i);
+void    or_single_operator(char *command, int *i);
+void    check_or_last(char *command);
+void    xor(char *command, int *i);
+
 #endif
