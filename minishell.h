@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:24 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/21 15:17:23 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:25:08 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,14 @@ char	**free_split(char **tab);
 
 t_node    *command_tokenization(char *command);
 int    command_analyze(char *command);
+
+int   and(char *command);
+void    check_and_last(char *command);
+int   or(char *command);
+int   pipe_detector(char *command);
+void    and_single_operator(char *command, int *i);
+void    or_single_operator(char *command, int *i);
+void    check_or_last(char *command);
+void    xor(char *command, int *i);
 
 #endif
