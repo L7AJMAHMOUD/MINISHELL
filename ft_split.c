@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/23 10:57:23 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:30:30 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ static int	ln(char *s)
 		if (s[length++] == '"')
 		{
 			while (s[length] != '"' && s[length + 1])
+				length++;
+		}
+		if (s[length++] == '\'')
+		{
+			while (s[length] != '\'' && s[length + 1])
 				length++;
 		}
 	}
@@ -45,6 +50,12 @@ size_t	count_word(char const *str)
 		{
 			i++;
 			while (str[i] != '"')
+				i++;
+		}
+		if (str[i] == '\'')
+		{
+			i++;
+			while (str[i] != '\'')
 				i++;
 		}
 		if ((str [i] != '|' && str[i] != '&') && str[i++])
@@ -100,6 +111,14 @@ char	**ft_ultra_split(char *s)
 				i++;
 				while (s[i] != '"')
 					arr[j][k++] = s[i++];
+				i++;
+			}
+			else if (s[i] == '\'')
+			{
+				i++;
+				while (s[i] != '\'')
+					arr[j][k++] = s[i++];
+				i++;
 			}
 			else
 				arr[j][k++] = s[i++];
