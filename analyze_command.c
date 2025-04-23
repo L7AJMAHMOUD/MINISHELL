@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:30:54 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/23 11:21:22 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:36:31 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,15 @@ int	dsq_detector(char *command)
 	{
 		if (command[i] == '"' || command[i] == '\'')
 		{
-			if (c == 0)
-				c = command[i];
-			if (c == command[i])
-				count++;
-			if (count == 2)
-				c = 0;
+			c = command[i++];
+			while (command[i] != c && command[i])
+				i++;
+			if (!command[i])
+				return 1;
 		}
 		i++;
 	}
-	return (count % 2);
+	return (0);
 }
 
 int	search_first(char *command)
