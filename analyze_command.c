@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:30:54 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/22 17:26:01 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:21:22 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,9 @@ int	command_analyze(char *command)
 		return (printf("SYNTAX ERROR 1\n"), -1);
 	if (pipe_detector(command) != 0)
 		return (printf("SYNTAX ERROR 2\n"), -1);
-	if (and(command) != 0)
-	{
+	if (and(command, 0 , 0) != 0)
 		return (printf("SYNTAX ERROR 3\n"), -1);
-	}
-	if (or(command) != 0)
-	{
-		return (printf("SYNTAX    ERROR 4\n"), -1);
-	}
+	if (or(command, 0, 0) != 0)
+		return (printf("SYNTAX ERROR 4\n"), -1);
 	return (0);
 }

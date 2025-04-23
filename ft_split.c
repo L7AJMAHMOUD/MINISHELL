@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/22 23:33:10 by user01           ###   ########.fr       */
+/*   Updated: 2025/04/23 10:57:23 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	**ft_ultra_split(char *s)
 			return (NULL);
 		}
 		k = 0;
-		while (k <= w_len)
+		while (k < w_len)
 		{
 			if (s[i] == '"')
 			{
