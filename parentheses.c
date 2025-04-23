@@ -6,13 +6,35 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:58:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/23 17:06:05 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:22:16 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
+int	cmd_between_par(char *command)
+{
+	int i;
+	int len;
+
+	i = 0;
+	while (command[i])
+	{
+		len = 0;
+		if (command[i] == '(')
+		{
+			i++;
+			while (command[i] != ')')
+			{
+				len++;
+				i++;
+			}
+		}
+		i++;
+	}
+	return (len);
+}
 int	push_and_pop(char *stack, char *command)
 {
 	int i;
