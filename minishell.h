@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:24 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/23 11:21:40 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:04:04 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ void    or_single_operator(char *command, int *i);
 void    check_or_last(char *command);
 void    xor(char *command, int *i);
 int    command_analyze(char *command);
+int		parenth(char *command);
 
 #endif

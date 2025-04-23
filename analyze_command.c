@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:30:54 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/23 11:36:31 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:04:26 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,7 @@ int	command_analyze(char *command)
 		return (printf("SYNTAX ERROR 3\n"), -1);
 	if (or(command, 0, 0) != 0)
 		return (printf("SYNTAX ERROR 4\n"), -1);
+	if (parenth(command) != 0)
+		return (printf("SYNTAX ERROR 5\n"), -1);
 	return (0);
 }
