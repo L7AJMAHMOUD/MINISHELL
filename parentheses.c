@@ -15,25 +15,7 @@
 
 int	cmd_between_par(char *command)
 {
-	int i;
-	int len;
-
-	i = 0;
-	while (command[i])
-	{
-		len = 0;
-		if (command[i] == '(')
-		{
-			i++;
-			while (command[i] != ')')
-			{
-				len++;
-				i++;
-			}
-		}
-		i++;
-	}
-	return (len);
+	
 }
 int	push_and_pop(char *stack, char *command)
 {
@@ -58,6 +40,7 @@ int	parenth(char *command)
 	int j;
 	char *stack;
 	int closed;
+	int cmd;
 	
 	i = 0;
 	j = 0;
@@ -70,6 +53,7 @@ int	parenth(char *command)
 	}
 	stack[j] = '\0';
 	closed = push_and_pop(stack, command);
+	cmd = cmd_between_par(command);
 	if (closed != 0)
 		return (-1);
 	return 0;
