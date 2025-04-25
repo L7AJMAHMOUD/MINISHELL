@@ -6,33 +6,34 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:58:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/25 16:54:52 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:34:23 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int	operator_between_par(char *command)
-// {
-// 	int i;
+int	operator_between_par(char *command)
+{
+	int i;
 
-// 	i = 0;
-// 	while (command[i])
-// 	{
-// 		while (command[i] == ')')
-// 		{
-// 			i++;
-// 			while (command[i] == ' ' || command[i] != '(')
-// 			{
-// 				if (command[i] == '&' && command[i + 1] == '&')
-// 					return (0);
-// 				i++;
-// 			}
-// 		}
-// 		i++;
-// 	}
-// 	return (-1);
-// }
+	i = 0;
+	while (command[i])
+	{
+		while (command[i] == ')')
+		{
+			i++;
+			while (command[i] == ' ' || command[i] != '(')
+			{
+				if (command[i] == '&' && command[i + 1] == '&' || command[i] == '|' && command[i + 1] == '|'
+					|| command[i] == '&' || command[i] == '|')
+					return (0);
+				i++;
+			}
+		}
+		i++;
+	}
+	return (-1);
+}
 int	cmd_between_par(char *command)
 {
 	int i;
@@ -87,5 +88,10 @@ int	parenth(char *command)
 	stack[j] = '\0';
 	if (push_and_pop(stack, command) != 0 || cmd_between_par(command) != 0)
 		return (-1);
+	if (ft_strlen(stack) > 2)
+	{
+		if (operator_between_par(command) != 0)
+			return -1;		
+	}
 	return 0;
 }
