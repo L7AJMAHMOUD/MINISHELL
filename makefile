@@ -4,7 +4,7 @@ FLAGS = #-Wall -Wextra -Werror
 HEAD = minishell.h
 RM = rm -f
 SRCS = main.c read_input.c linked_lists_utils.c ft_split.c split_utils.c handle_errors.c utils.c command_tokenization.c exe.c or.c and.c pipe.c analyze_command.c \
-		parentheses.c split.c
+		parentheses.c split.c parse.c
 
 OBJ = $(SRCS:.c=.o)
 

@@ -6,7 +6,16 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 12:01:45 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/18 12:01:46 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/25 16:31:52 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
+int	ft_is_spc(int cmd)
+{
+
+    if (33 <= cmd && cmd <= 40 || 42 <= cmd && cmd <= 126)
+        return (1);
+	return (-1);
+}
