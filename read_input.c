@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/23 13:27:23 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/26 16:38:53 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void    read_input(char **envp)
         if (command && *command)
             add_history(command);
         command_analyze(command);
+        // node = command_tokenization(command);
         // while (node)
         // {
         //     exe(node->command, envp);
