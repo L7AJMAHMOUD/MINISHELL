@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:58:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/30 11:04:32 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:59:53 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,32 @@
 
 
 
-int	operator_between_par(char *command)
-{
-	int i;
-	int operator;
+// int	operator_between_par(char *command)
+// {
+// 	int i;
+// 	int operator;
 
-	i = 0;
-	while (command[i])
-	{
-		operator = 0;
-		if (command[i] == ')')
-		{
-			i++;
-			while (command[i] == ' ' && command[i] != '(')
-			{
-				if (command[i] == '&' && command[i + 1] == '&' || command[i] == '|' && command[i + 1] == '|'
-					|| command[i] == '&' || command[i] == '|')
-					operator++;
-				i++;
-			}
-		}
-		i++;
-	}
-	if (operator == 0 != operator > 1)
-		return -1;
-	return (0);
-}
+// 	i = 0;
+// 	while (command[i])
+// 	{
+// 		operator = 0;
+// 		if (command[i] == ')')
+// 		{
+// 			i++;
+// 			while (command[i] == ' ' && command[i] != '(')
+// 			{
+// 				if (command[i] == '&' && command[i + 1] == '&' || command[i] == '|' && command[i + 1] == '|'
+// 					|| command[i] == '&' || command[i] == '|')
+// 					operator++;
+// 				i++;
+// 			}
+// 		}
+// 		i++;
+// 	}
+// 	if (operator == 0 != operator > 1)
+// 		return -1;
+// 	return (0);
+// }
 int	cmd_between_par(char *command)
 {
 	int i;
