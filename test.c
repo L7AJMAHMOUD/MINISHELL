@@ -20,9 +20,10 @@ int	operator_between_par(char *command)
             i++;
             if (is_operator(command[i]) == 1)
                 i++;
-            while (command[i] != ')' &&command[i] == ' ' && i >= 0)
+            op = 1;
+            while (command[i] != ')' && ft_is_spc2(command[i]) != 1 && i >= 0)
                 i--;
-            if (isalpha(command[i]) != 0)
+            if (ft_is_spc2(command[i]) == 1)
                 printf("c = %c\n",command[i]);
         }
         i++;
@@ -30,18 +31,18 @@ int	operator_between_par(char *command)
     return -1;
 }
 
-// int main()
-// {
-//     char tab0[] = "ls   &&   ls";
-//     char tab1[] = "(  (ls)   &&   (ls) )";
-//     char tab2[] = "(  ls   &&   (ls))";
-//     char tab4[] = "(  ls      (ls))";
-//     char tab5[] = "(  (ls)      (ls))";
-//     char tab6[] = "(ls)";
-//     char tab7[] = "ls";
-//     char tab8[] = "((ls))";
-//     char tab9[] = "(  (ls)      (ls)   &&  ls)";
+int main()
+{
+    char tab0[] = "ls   &&   ls";
+    char tab1[] = "(  (ls)   &&   (ls) )";
+    char tab2[] = "(  ls   &&   (ls))";
+    char tab4[] = "(  ls      (ls))";
+    char tab5[] = "(  (ls)      (ls))";
+    char tab6[] = "(ls)";
+    char tab7[] = "ls";
+    char tab8[] = "((ls))";
+    char tab9[] = "( (ls)      (ls)   &&  ls)";
 
-//     printf("tab 0 = %d\n",operator_between_par(tab0));
+    printf("tab 0 = %d\n",operator_between_par(tab0));
 
-// }
+}

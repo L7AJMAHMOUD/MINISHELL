@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:24 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/25 16:01:06 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/01 11:11:57 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strjoin(char *s1, char *s2);
 char	**ft_split(char const *s, char c);
 int	ft_is_spc(int cmd);
+int ft_is_spc2(int cmd);
 
 /* **************************************************************** */
 /*								    */
