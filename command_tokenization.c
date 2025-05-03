@@ -67,17 +67,17 @@ int analyse(char *command)
 int check(char *command)
 {
 	int i;
-	i = 0;
-	while (command[i] <= 32)
-		i++;
-	if (command[i++] == '(')
-	{
-		i++;
-		while (command[i] != ')')
-			i++;
-		if (command[i + 1])
-			return 1;
-	}
+	// i = 0;
+	// while (command[i] <= 32)
+	// 	i++;
+	// if (command[i++] == '(')
+	// {
+	// 	i++;
+	// 	while (command[i] != ')')
+	// 		i++;
+	// 	if (command[i + 1])
+	// 		return 1;
+	// }
 	i = ft_strlen(command);
 	while (command[i] <= 32)
 		i--;
