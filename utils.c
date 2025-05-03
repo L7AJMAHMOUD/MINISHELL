@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:54:55 by abkaram           #+#    #+#             */
-/*   Updated: 2025/04/23 12:07:21 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/26 17:00:50 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,22 @@ char	*ft_strstr(char *haystack, char *needle)
 	while (haystack[i])
 	{
 		c = haystack[i];
-		if (c == '"' || c == '\'')
+		if (c == '"' || c == '\'' || c == '(')
 		{
 			i++;
-			while(haystack[i] != c)
-				i++;
+			if(c == '(')
+				while(haystack[i] != ')')
+					i++;
+			else
+				while(haystack[i] != c)
+					i++;
 			i++;
 		}
 		if (haystack[i] == 0)
 			return 0;
 		if (haystack[i] == needle[j])
 			if (ft_an(&haystack[i], needle) == 1)
-				return (&haystack[i + 3]);
+				return (&haystack[i + 2]);
 		i++;
 	}
 	return (0);
@@ -98,4 +102,38 @@ char	*ft_strdup(char *src )
 	}
 	h[i] = '\0';
 	return (h);
+}
+
+int	ft_strt(char *haystack, char *needle)
+{
+	size_t	i;
+	size_t	j;
+	size_t	c;
+
+	i = 0;
+	j = 0;
+	if (needle[j] == 0)
+		return (0);
+	while (haystack[i])
+	{
+		c = haystack[i];
+		if (c == '"' || c == '\'' || c == '(')
+		{
+			i++;
+			if(c == '(')
+				while(haystack[i] != ')')
+					i++;
+			else
+				while(haystack[i] != c)
+					i++;
+			i++;
+		}
+		if (haystack[i] == 0)
+			return 0;
+		if (haystack[i] == needle[j])
+			if (ft_an(&haystack[i], needle) == 1)
+				return (i);
+		i++;
+	}
+	return (0);
 }

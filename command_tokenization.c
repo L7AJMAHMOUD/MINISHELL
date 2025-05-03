@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_tokenization.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:56:47 by abkaram           #+#    #+#             */
-/*   Updated: 2025/04/22 22:31:25 by user01           ###   ########.fr       */
+/*   Updated: 2025/04/26 17:01:35 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,129 @@ static void node_null(t_node *node)
 	node->or = 0;
     node->next = 0;
 }
+char *ft_strdup_p(char *command)
+{
+	int i;
+	char *str;
+	
+	i = ft_strlen(command);
+	while (command[i] != ')')
+		i--;
+	str = malloc (i + 1);
+	if (!str)
+	return NULL;
+	str[i--] = 0;
+	while (i >= 0)
+	{
+		str[i] = command[i];
+		i--;
+	}
+	return str;
+}
 
-t_node    *command_tokenization(char *command)
+int analyse(char *command)
+{
+	int i;
+	int j;
+	int k;
+
+	i = 0;
+	while(command[i] == '(')
+		i++;
+	j = i;
+	if (i == 0)
+	return 0;
+	else
+	while (command [j] != ')')
+	j++;
+	k = j;
+	while(command[k] == ')')
+	k++;
+	k = k - j;
+	if (i < k)
+		return 1;
+	return 0;
+}
+
+int check(char *command)
+{
+	int i;
+	i = 0;
+	while (command[i] <= 32)
+		i++;
+	if (command[i++] == '(')
+	{
+		i++;
+		while (command[i] != ')')
+			i++;
+		if (command[i + 1])
+			return 1;
+	}
+	i = ft_strlen(command);
+	while (command[i] <= 32)
+		i--;
+	if (command[i] != ')')
+		return 1;
+	return 0;
+}
+
+char	*ft_strstr_pare(char *command)
+{
+	int i;
+
+	i = 0;
+	while (command[i])
+	{
+		if (check(command))
+			return NULL;
+		if (command[i] == '(')
+		{
+			i++;
+			if (analyse(&command[i]))
+				return ft_strdup(" ");
+			command = ft_strdup_p(&command[i]);
+			return (command);
+		}
+		else if (command[i] > 32)
+			break;
+		i++;
+		
+	}
+	return NULL;
+}
+
+t_node    *command_tokenization(char *command, int j)
 {
 	int i;
 	t_node *node;
+	char *tmp;
+
 	i = 0;
-	// if (ft_strstr(command, " | "))
-		// {pipex}
+	if (!command)
+		return (NULL);
 	node = malloc(sizeof(t_node));
 	node_null(node);
-	if (ft_strstr(command, " &&"))
+	tmp = ft_strstr_pare(command);
+	if (tmp)
+		return(command_tokenization(tmp, 1));
+	if (ft_strstr(command, "&&"))
 	{
-		node->and = 1;
-		node->next = command_tokenization(ft_strstr(command, " &&"));
+		ft_lstadd_back(&node, command_tokenization(ft_strstr(command, "&&"), 0));
+		i = ft_strt(command, "&&");
+		command[i] = 0;
+		ft_lstadd_back(&node, command_tokenization(command, 0));
 	}
-	else if (ft_strstr(command, " ||"))
+	else if  (node->or == 1 && ft_strstr(command, " ||"))
 	{
-		node->or = 1;
-		node->next = command_tokenization(ft_strstr(command, " ||"));
+		ft_lstadd_back(&node, command_tokenization(ft_strstr(command, "||"), 0));
+		i = ft_strt(command, "||");
+		command[i] = 0;
+		ft_lstadd_back(&node, command_tokenization(command, 0));
 	}
-	node->command = ft_ultra_split(command);
+	else
+		node->command = ft_ultra_split(command);
+	if (j == 1)
+		free(command);
 	return node;
 }
+

@@ -38,11 +38,11 @@ void    invalid_param(void);
 /*	                      linked_lists_utils	                    */
 /*								    */
 /* **************************************************************** */
-
 void ft_nodeadd_back(t_node **lst, t_node *new);
-void ft_lstadd_front(t_node **lst, t_node *new);
+void	ft_lstadd_front(t_node **lst, t_node *new);
+void	ft_lstadd_back(t_node **lst, t_node *new);
 int ft_lstsize(t_node *lst);
-void delete_node(t_node **head);
+void delete_node(t_node **head);;
 
 /* **************************************************************** */
 /*								    */
@@ -56,6 +56,7 @@ char	*ft_strdup(char *src );
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strjoin(char *s1, char *s2);
 char	**ft_split(char const *s, char c);
+int	ft_strt(char *haystack, char *needle);
 int	ft_is_spc(int cmd);
 int ft_is_spc2(int cmd);
 
@@ -65,7 +66,7 @@ int ft_is_spc2(int cmd);
 /*								    */
 /* **************************************************************** */
 
-t_node    *command_tokenization(char *command);
+t_node    *command_tokenization(char *command, int j);
 
 
 

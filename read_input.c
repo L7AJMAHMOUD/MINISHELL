@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/30 15:58:21 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/04/26 10:37:52 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,14 @@ void    read_input(char **envp)
     {
         command = readline("▄︻デ══━一💥 > ");
         if (!command)
-            break ;
-        if (command && *command)
+        {
+            printf("\nexit\n");
+            exit (127);
+        }
+        if (command)
             add_history(command);
-        command_analyze(command);
-        node = command_tokenization(command);
+        if(command_analyze(command) == 0)
+			node = command_tokenization(command, 0);
         while (node)
         {
             exe(node->command, envp);
