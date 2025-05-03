@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/23 11:16:35 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/03 14:27:13 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int   or(char *command, int i, int k)
 {
     while  (command[i])
     {
-        xor(command, &i);
+        skip_inside_quotes(command, &i);
         if (command[i++] == '|')
         {
             k++;
@@ -37,13 +37,4 @@ int   or(char *command, int i, int k)
             k = 0;
         }
     return (0);
-}
-
-
-
-void    or_single_operator(char *command, int *i)
-{
-    *i += 1;
-    while (command[*i] != '|' && command[*i])
-        *i += 1;
 }

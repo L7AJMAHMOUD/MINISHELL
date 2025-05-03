@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:55:21 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/26 14:17:52 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/03 14:25:32 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int   pipe_detector(char *command)
     i = 0;
     while (command[i])
     {
-        xor(command, &i);
+        skip_inside_quotes(command, &i);
         if(command[i] == '|')
         {
             while (command[++i] == ' ')

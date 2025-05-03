@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-FLAGS = #-Wall -Wextra -Werror 
+# FLAGS = -Wall -Wextra -Werror 
 HEAD = minishell.h
 RM = rm -f
 SRCS = $(wildcard *.c)

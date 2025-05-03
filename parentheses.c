@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:58:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/30 15:59:53 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/03 14:57:44 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	cmd_between_par(char *command)
 	i = 0;
 	while (command[i])
 	{
-		xor(command, &i);
 		while(command[i] == '(')
 		{
 			i++;
@@ -65,13 +64,11 @@ int	push_and_pop(char *stack, char *command)
 {
 	int i;
 	int count;
-	int c;
 	
 	i = 0;
 	count = 0;
 	while (command[i])
 	{
-		xor(command, &i);
 		if (command[i] == ')')
 			count++;
 		i++;
@@ -84,7 +81,6 @@ int	parenth(char *command)
 {
 	int i;
 	int j;
-	int c;
 	char *stack;
 	
 	i = 0;
@@ -92,7 +88,7 @@ int	parenth(char *command)
 	stack = malloc(ft_strlen(command) * sizeof(char));
 	while (command[i])
 	{
-		xor(command, &i);
+		skip_inside_quotes(command, &i);
 		if (command[i] == '(')
 			stack[j++] = command[i];
 		i++;

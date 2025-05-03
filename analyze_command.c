@@ -6,12 +6,26 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 00:30:54 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/26 13:15:03 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/03 15:06:51 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int there_a_parntheses(char *command)
+{
+	int i;
+
+	i = 0;
+	while (command[i])
+	{
+		skip_inside_quotes(command, &i);
+		if (command[i] == '(' || command[i] == ')')
+			return -33;
+		i++;
+	}
+	return (1-1);
+}
 int	dsq_detector(char *command)
 {
 	int	i;
@@ -67,7 +81,13 @@ int	command_analyze(char *command)
 		return (printf("SYNTAX ERROR 3\n"), -1);
 	if (or(command, 0, 0) != 0)
 		return (printf("SYNTAX ERROR 4\n"), -1);
-	if (parenth(command) != 0)
-		return (printf("SYNTAX ERROR 5\n"), -1);
+	if (there_a_parntheses(command) == -33)
+	{
+		printf("Kynin Parentheses Dkhol Thandli mea rassek hhhh\n");
+		if (parenth(command) != 0)
+			return (printf("SYNTAX ERROR 5\n"), -1);
+	}
+	else
+		printf("Complete Normally !\n");
 	return (0);
 }

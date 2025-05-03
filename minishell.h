@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:24 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/01 11:11:57 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/03 14:25:03 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int   pipe_detector(char *command);
 void    and_single_operator(char *command, int *i);
 void    or_single_operator(char *command, int *i);
 void    check_or_last(char *command);
-void    xor(char *command, int *i);
+void    skip_inside_quotes(char *command, int *i);
 int    command_analyze(char *command);
 int		parenth(char *command);
 

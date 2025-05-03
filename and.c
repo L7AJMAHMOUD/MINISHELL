@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:50:17 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/23 11:21:14 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/03 14:27:07 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int   and(char *command, int i, int k)
 {
     while  (command[i])
     {
-        xor(command, &i);
+        skip_inside_quotes(command, &i);
         if (command[i++] == '&')
         {
             k++;
@@ -39,7 +39,7 @@ int   and(char *command, int i, int k)
 }
 
 
-void    xor(char *command, int *i)
+void    skip_inside_quotes(char *command, int *i)
 {
     if (command[*i] == '"')
     {
@@ -53,11 +53,4 @@ void    xor(char *command, int *i)
         while(command[*i] != '\'')
             *i += 1;
     }
-}
-
-void    and_single_operator(char *command, int *i)
-{
-    *i += 1;
-    while (command[*i] != '&' && command[*i])
-        *i += 1;
 }
