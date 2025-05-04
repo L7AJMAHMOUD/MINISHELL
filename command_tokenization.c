@@ -117,6 +117,7 @@ void    command_tokenization(t_node **node, char *command)
 	
 	char *tmp;
 	t_node *t_mp;
+	t_node *t_p;
 	t_mp = NULL;
 
 	i = 0;
@@ -134,12 +135,12 @@ void    command_tokenization(t_node **node, char *command)
 	{
 		command_tokenization(&t_mp ,ft_strstr(command, "&&"));
 		if (!(*node)->next)
-			(*node) = t_mp;
-		else 
-		{
-			while((*node)->next)
-				(*node) = (*node)->next;
 			(*node)->next = t_mp;
+		else
+		{
+			t_p = (*node)->next;
+			(*node)->next = t_mp;
+			t_mp->next = t_p;
 		}
 		i = ft_strt(command, "&&");
 		command[i] = 0;
