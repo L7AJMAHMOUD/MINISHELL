@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void node_null(t_node *node)
+void node_null(t_node *node)
 {
 	node->command = 0;
 	node->pipe = 0;
@@ -111,35 +111,43 @@ char	*ft_strstr_pare(char *command)
 	return NULL;
 }
 
-t_node    *command_tokenization(char *command, int j)
+void    command_tokenization(t_node **node, char *command)
 {
 	int i;
-	t_node *node;
+	
 	char *tmp;
+	t_node *t_mp;
+	t_mp = NULL;
 
 	i = 0;
 	if (!command)
-		return (NULL);
-	node = malloc(sizeof(t_node));
-	node_null(node);
-	tmp = ft_strstr_pare(command);
-	if (tmp)
-		return(command_tokenization(tmp, 1));
+		return ;
+	// tmp = ft_strstr_pare(command);
+	// if (tmp)
+	// 	command = tmp;
+	// printf("%s\n", command);
+	if(!*node)
+	{
+		*node = malloc(sizeof(t_node));
+		node_null(*node);
+	}
 	if (ft_strstr(command, "&&"))
 	{
-		ft_lstadd_back(&node, command_tokenization(ft_strstr(command, "&&"), 0));
+		command_tokenization(&t_mp ,ft_strstr(command, "&&"));
+		(*node)->next = t_mp;
 		i = ft_strt(command, "&&");
 		command[i] = 0;
+		command_tokenization(node ,command);
 	}
-	else if  (node->or == 1 && ft_strstr(command, " ||"))
+	else if  ((*node)->or == 1 && ft_strstr(command, " ||"))
 	{
-		ft_lstadd_back(&node, command_tokenization(ft_strstr(command, "||"), 0));
+		command_tokenization(&t_mp ,ft_strstr(command, "||"));
+		(*node)->next = t_mp;
 		i = ft_strt(command, "||");
 		command[i] = 0;
+		command_tokenization(node ,command);
 	}
-	node->command = ft_ultra_split(command);
-	if (j == 1)
-		free(command);
-	return node;
+	else
+		(*node)->command = ft_ultra_split(command);
 }
 

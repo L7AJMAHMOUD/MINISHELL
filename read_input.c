@@ -17,9 +17,11 @@ void    read_input(char **envp)
 {
     char *command;
 	t_node *node;
+	t_node *tmp;
 
     while (1)
     {
+        node = NULL;
         command = readline("▄︻デ══━一💥 > ");
         if (!command)
         {
@@ -29,11 +31,13 @@ void    read_input(char **envp)
         if (command)
             add_history(command);
         if(command_analyze(command) == 0)
-			node = command_tokenization(command, 0);
-        while (node)
+			command_tokenization(&node, command);
+        tmp = node;
+        while (tmp)
         {
-            exe(node->command, envp);
-            node = node -> next;
+            exe((tmp)->command, envp);
+            tmp = (tmp) -> next;
         }
+        // free_all(node);
     }
 }

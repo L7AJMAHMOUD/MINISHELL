@@ -65,9 +65,8 @@ int ft_is_spc2(int cmd);
 /*	                     command_tokenization_utils	                */
 /*								    */
 /* **************************************************************** */
-
-t_node    *command_tokenization(char *command, int j);
-
+void    command_tokenization(t_node **node, char *command);
+void node_null(t_node *node);
 
 
 void	exe(char **command, char **envp);
