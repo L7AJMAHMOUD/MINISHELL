@@ -130,17 +130,14 @@ t_node    *command_tokenization(char *command, int j)
 		ft_lstadd_back(&node, command_tokenization(ft_strstr(command, "&&"), 0));
 		i = ft_strt(command, "&&");
 		command[i] = 0;
-		ft_lstadd_back(&node, command_tokenization(command, 0));
 	}
 	else if  (node->or == 1 && ft_strstr(command, " ||"))
 	{
 		ft_lstadd_back(&node, command_tokenization(ft_strstr(command, "||"), 0));
 		i = ft_strt(command, "||");
 		command[i] = 0;
-		ft_lstadd_back(&node, command_tokenization(command, 0));
 	}
-	else
-		node->command = ft_ultra_split(command);
+	node->command = ft_ultra_split(command);
 	if (j == 1)
 		free(command);
 	return node;
