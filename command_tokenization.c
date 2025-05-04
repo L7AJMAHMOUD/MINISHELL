@@ -146,10 +146,17 @@ void    command_tokenization(t_node **node, char *command)
 		command[i] = 0;
 		command_tokenization(node ,command);
 	}
-	else if  ((*node)->or == 1 && ft_strstr(command, " ||"))
+	else if ((*node)->or == 1 && ft_strstr(command, " ||"))
 	{
 		command_tokenization(&t_mp ,ft_strstr(command, "||"));
-		(*node)->next = t_mp;
+		if (!(*node)->next)
+			(*node)->next = t_mp;
+		else
+		{
+			t_p = (*node)->next;
+			(*node)->next = t_mp;
+			t_mp->next = t_p;
+		}
 		i = ft_strt(command, "||");
 		command[i] = 0;
 		command_tokenization(node ,command);
