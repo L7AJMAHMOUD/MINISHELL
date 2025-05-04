@@ -57,6 +57,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strjoin(char *s1, char *s2);
 char	**ft_split(char const *s, char c);
 int	ft_strt(char *haystack, char *needle);
+int	ft_strcmp(char *s1, char *s2);
 int	ft_is_spc(int cmd);
 int ft_is_spc2(int cmd);
 

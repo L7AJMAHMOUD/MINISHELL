@@ -12,6 +12,21 @@
 
 #include "minishell.h"
 
+void	pwd(char **envp)
+{
+	int i;
+
+	i = 0;
+	while(envp[i])
+	{
+		if (envp[i][0] == 'P' && envp[i][1] == 'W' && envp[i][2] == 'D')
+			break ;
+		i++;
+	}
+	// if (!envp[i])
+    //     ft_printf("pwd not disponible\n", 0);
+    printf("%s\n",&envp[i][4]);
+}
 
 void free_all_node(t_node *node)
 {
@@ -22,6 +37,25 @@ void free_all_node(t_node *node)
         node = node->next;
     }
     
+}
+
+int check_command(char **str, char **envp)
+{
+    if (!(ft_strcmp(str[0], "echo")))
+        return (0);
+    if (!(ft_strcmp(str[0], "cd")))
+        return (0);
+    if (!(ft_strcmp(str[0], "pwd")))
+        return (pwd(envp), 0);
+    if (!(ft_strcmp(str[0], "export")))
+        return (0);
+    if (!(ft_strcmp(str[0], "unset")))
+        return (0);
+    if (!(ft_strcmp(str[0], "env")))
+        return (0);
+    if (!(ft_strcmp(str[0], "exit")))
+        return (0);
+    return (1);
 }
 
 void    read_input(char **envp)
@@ -46,7 +80,8 @@ void    read_input(char **envp)
         tmp = node;
         while (tmp)
         {
-            exe((tmp)->command, envp);
+            if(check_command((tmp)->command, envp))
+                exe((tmp)->command, envp);
             tmp = (tmp) -> next;
         }
         free_all_node(node);
