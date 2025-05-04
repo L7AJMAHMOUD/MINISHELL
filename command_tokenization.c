@@ -129,6 +129,8 @@ void    command_tokenization(t_node **node, char *command)
 	if(!*node)
 	{
 		*node = malloc(sizeof(t_node));
+		if (!(*node))
+			return ;
 		node_null(*node);
 	}
 	if (ft_strstr(command, "&&"))
