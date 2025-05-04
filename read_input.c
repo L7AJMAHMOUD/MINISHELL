@@ -13,6 +13,17 @@
 #include "minishell.h"
 
 
+void free_all_node(t_node *node)
+{
+    while (node)
+    {
+        free_all_ul_split(node->command);
+        free(node);
+        node = node->next;
+    }
+    
+}
+
 void    read_input(char **envp)
 {
     char *command;
@@ -38,6 +49,6 @@ void    read_input(char **envp)
             exe((tmp)->command, envp);
             tmp = (tmp) -> next;
         }
-        // free_all(node);
+        free_all_node(node);
     }
 }

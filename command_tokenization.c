@@ -122,10 +122,9 @@ void    command_tokenization(t_node **node, char *command)
 	i = 0;
 	if (!command)
 		return ;
-	// tmp = ft_strstr_pare(command);
-	// if (tmp)
-	// 	command = tmp;
-	// printf("%s\n", command);
+	tmp = ft_strstr_pare(command);
+	if (tmp)
+		command = tmp;
 	if(!*node)
 	{
 		*node = malloc(sizeof(t_node));
@@ -134,7 +133,14 @@ void    command_tokenization(t_node **node, char *command)
 	if (ft_strstr(command, "&&"))
 	{
 		command_tokenization(&t_mp ,ft_strstr(command, "&&"));
-		(*node)->next = t_mp;
+		if (!(*node)->next)
+			(*node) = t_mp;
+		else 
+		{
+			while((*node)->next)
+				(*node) = (*node)->next;
+			(*node)->next = t_mp;
+		}
 		i = ft_strt(command, "&&");
 		command[i] = 0;
 		command_tokenization(node ,command);

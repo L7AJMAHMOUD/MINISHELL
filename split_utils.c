@@ -39,3 +39,13 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	dst[i] = '\0';
 	return (ln);
 }
+
+void free_all_ul_split(char **str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+		free(str[i++]);
+	free(str[i]);
+}
