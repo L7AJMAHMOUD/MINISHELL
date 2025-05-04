@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/26 10:37:52 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/04 16:35:25 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,33 @@ void free_all_node(t_node *node)
     
 }
 
+void echo(char **str, int fd)
+{
+	int i;
+	i = 1;
+	if (str[i] && ft_strcmp(str[i], "-n") == 0)
+	{
+		i++;
+		while(str[i])
+		{
+			write(fd, str[i], ft_strlen(str[i]));
+			i++;
+		}
+		return ;
+	}
+	while(str[i])
+	{
+		write(fd, str[i], ft_strlen(str[i]));
+		i++;
+	}
+	write(fd, "\n", 1);
+	
+}
+
 int check_command(char **str, char **envp)
 {
     if (!(ft_strcmp(str[0], "echo")))
-        return (0);
+        return (echo(str, 1), 0);
     if (!(ft_strcmp(str[0], "cd")))
         return (0);
     if (!(ft_strcmp(str[0], "pwd")))
