@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/05 08:58:29 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/05 09:03:18 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,9 @@ int	ft_locat(char **envp)
 
 char	*find_path(char *path, char **envp)
 {
-	char *str;
 	char *tmp;
 	int i;
-	int j;
+	size_t j;
 	int k;
 
 	j = 5;
