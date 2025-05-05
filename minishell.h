@@ -19,6 +19,9 @@
 #include <sys/wait.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <sys/wait.h>
 
 typedef struct s_node
 {
@@ -84,6 +87,7 @@ void	echo(char **str, int fd);
 
 void	ft_print(char *s, int i);
 void	exe(char **command, char **envp);
+char	*find_path(char *path, char **envp);
 
 int   and(char *command, int i, int k);
 void	check_and_last(char *command);
