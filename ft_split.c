@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/04/23 11:30:30 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/05 08:59:02 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	**ft_ultra_split(char *s)
 	arr = malloc ((words + 2) * sizeof(char *));
 	if (!arr)
 	{
-		printf("Error : allocation in split\n");
+		ft_print("Error : allocation in split\n", 0);
 		return (NULL);
 	}
 	while(j < words)
@@ -97,7 +97,7 @@ char	**ft_ultra_split(char *s)
 		arr[j] = malloc(w_len + 1);
 		if (!arr[j])
 		{
-			printf("Error : allocation in split\n");
+			ft_print("Error : allocation in split\n", 0);
 			while (j >= 0)
 			free(arr[j--]);
 			free(arr);

@@ -82,7 +82,7 @@ void	echo(char **str, int fd);
 
 
 
-
+void	ft_print(char *s, int i);
 void	exe(char **command, char **envp);
 
 int   and(char *command, int i, int k);

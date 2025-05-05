@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:50:19 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/05 08:50:20 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/05 08:58:35 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	pwd(char **envp)
 			break ;
 		i++;
 	}
-	// if (!envp[i])
-    //     ft_printf("pwd not disponible\n", 0);
+	if (!envp[i])
+        ft_print("pwd not disponible\n", 0);
     printf("%s\n",&envp[i][4]);
 }
 

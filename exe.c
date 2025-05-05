@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/04/23 11:17:42 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/05 08:58:29 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*find_path(char *path, char **envp)
 	if (i == -1)
 	{
 		// free()
-		printf("path not found\n");
+		ft_print("path not found\n", 0);
 		exit(1);
 	}
 	while (j < ft_strlen(envp[i]))
