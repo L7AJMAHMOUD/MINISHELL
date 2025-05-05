@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/04 16:35:25 by user01           ###   ########.fr       */
+/*   Updated: 2025/05/05 08:52:56 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	pwd(char **envp)
-{
-	int i;
-
-	i = 0;
-	while(envp[i])
-	{
-		if (envp[i][0] == 'P' && envp[i][1] == 'W' && envp[i][2] == 'D')
-			break ;
-		i++;
-	}
-	// if (!envp[i])
-    //     ft_printf("pwd not disponible\n", 0);
-    printf("%s\n",&envp[i][4]);
-}
 
 void free_all_node(t_node *node)
 {
@@ -39,30 +23,7 @@ void free_all_node(t_node *node)
     
 }
 
-void echo(char **str, int fd)
-{
-	int i;
-	i = 1;
-	if (str[i] && ft_strcmp(str[i], "-n") == 0)
-	{
-		i++;
-		while(str[i])
-		{
-			write(fd, str[i], ft_strlen(str[i]));
-			i++;
-		}
-		return ;
-	}
-	while(str[i])
-	{
-		write(fd, str[i], ft_strlen(str[i]));
-		i++;
-	}
-	write(fd, "\n", 1);
-	
-}
-
-int check_command(char **str, char **envp)
+int check_command(char **str, char **envp, t_node *node)
 {
     if (!(ft_strcmp(str[0], "echo")))
         return (echo(str, 1), 0);
@@ -77,7 +38,7 @@ int check_command(char **str, char **envp)
     if (!(ft_strcmp(str[0], "env")))
         return (0);
     if (!(ft_strcmp(str[0], "exit")))
-        return (0);
+        return (free_all_node(node), exit(127), 0); // print in 2 exit
     return (1);
 }
 
@@ -103,7 +64,7 @@ void    read_input(char **envp)
         tmp = node;
         while (tmp)
         {
-            if(check_command((tmp)->command, envp))
+            if(check_command((tmp)->command, envp, node))
                 exe((tmp)->command, envp);
             tmp = (tmp) -> next;
         }
