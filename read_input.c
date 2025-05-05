@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/05 09:00:25 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/05 13:01:58 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int check_command(char **str, char **envp, t_node *node)
     if (!(ft_strcmp(str[0], "env")))
         return (0);
     if (!(ft_strcmp(str[0], "exit")))
-        return (free_all_node(node),ft_print("\nexit", 0), exit(127), 0); // print in 2 exit
+        return (free_all_node(node),ft_print("\nexit", 0), exit(127), 0);
     return (1);
 }
 

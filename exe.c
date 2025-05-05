@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/05 09:03:18 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/05 12:33:28 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	exe(char **command, char **envp)
 	if (i == 0)
 	{
 		path = find_path(*command, envp);
+		// analyse_rederection();
 		execve(path,command, NULL);
 	}
 	else

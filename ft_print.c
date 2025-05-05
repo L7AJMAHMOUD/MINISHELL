@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:36:10 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/05 08:55:43 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/05 13:02:21 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_putchar(char s)
 {
-	return (write (1, &s, 1));
+	return (write (2, &s, 1));
 }
 
 static int	ft_putstr(char *s)
@@ -24,7 +24,7 @@ static int	ft_putstr(char *s)
 	i = 0;
 	if (!s)
 	{
-		write(1, "(null)", 6);
+		write(2, "(null)", 6);
 		return (6);
 	}
 	while (s[i])
@@ -44,7 +44,7 @@ static int	ft_putnbr(int n)
 		i += ft_putstr("-2147483648");
 	else if (n < 0)
 	{
-		write(1, "-", 1);
+		write(2, "-", 1);
 		i += ft_putnbr(-n) + 1;
 	}
 	else if (n >= 0 && n < 10)
