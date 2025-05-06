@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/06 10:51:22 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:16:01 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int check_command(char **str, char **envp, t_node *node)
     if (!(ft_strcmp(str[0], "env")))
         return (0);
     if (!(ft_strcmp(str[0], "exit")))
-        return (free_all_node(node),ft_print("\nexit", 0), exit(127), 0);
+        return (free_all_node(node), free_all_ul_split(envp), ft_print("\nexit", 0), exit(127), 0);
     return (1);
 }
 
@@ -56,6 +56,7 @@ void    read_input(char **envp)
         if (!command)
         {
             ft_print("\nexit", 0);
+            free_all_ul_split(envp);
             exit (127);
         }
         if (command)
@@ -70,6 +71,5 @@ void    read_input(char **envp)
             tmp = (tmp) -> next;
         }
         free_all_node(node);
-        // while_baner();
     }
 }
