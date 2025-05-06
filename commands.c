@@ -6,26 +6,11 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:50:19 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/06 16:35:48 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/06 17:19:54 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_an(char *haystack, char *needle, size_t k)
-{
-	size_t	i;
-
-	i = 0;
-	while (haystack[i] == needle[i] && haystack[i])
-	{
-		i++;
-		k++;
-	}
-	if (i == ft_strlen(needle))
-		return (1);
-	return (0);
-}
 
 char	*ft_shearch(char *haystack, char *needle)
 {
@@ -34,18 +19,16 @@ char	*ft_shearch(char *haystack, char *needle)
 
 	i = 0;
 	j = 0;
-	if (!haystack || !needle)
-		return NULL;
-	if (needle[j] == 0)
-		return (haystack);
-	while (haystack[i])
+	while (haystack && haystack[i] && haystack[i] != 32)
 	{
-		if (haystack[i] == needle[j])
-			if (ft_an(&haystack[i], needle, i) == 1)
-				return (&haystack[i]);
+		if (haystack[i] != needle[j])
+			return 0;
 		i++;
+		j++;
 	}
-	return (0);
+	if (needle[i] == '=')
+		return &needle[i];
+	return 0;
 }
 
 int ft_check(char *str)
@@ -81,9 +64,10 @@ void	priint(char *str)
 	i = 0;
 	while(str && str[i])
 	{
-		if 
-		if (str[i] == '$' && (str[i] > '9' || str[i] < '0'))
-			i++;
+		if (str[i] == '$' && (str[i + 1] <= '9' && str[i + 1] >= '0'))
+			i += 2;
+		if (str[i] == '$' && (str[i + 1] > '9' || str[i + 1] < '0'))
+			break;
 		write(1, &str[i], 1);
 		i++;
 	}
@@ -96,16 +80,15 @@ void echo(char **str, int fd, char **envp)
 	char *tmp;
 
 	i = 1;
-	// if (str && str[i] && ft_check(str[i]))
-	// {
-	// 	i++;
-	// 	while(str[i])
-	// 	{
-	// 		write(fd, str[i], ft_strlen(str[i]));
-	// 		i++;
-	// 	}
-	// 	return ;
-	// }
+	if (str && str[i] && ft_check(str[i]))
+	{
+		i++;
+		while(str[i])
+		{
+			write(fd, str[i], ft_strlen(str[i]));
+			i++;
+		}
+	}
 	k = 0;
 	while(str && str[i])
 	{
@@ -118,23 +101,22 @@ void echo(char **str, int fd, char **envp)
 			{
 				print(&str[i][2]);
 			}
-			// else if(ft_isalpha(str[i][1]))
-			// {
-			// 	j = 0;
-			// 	while(envp[j])
-			// 	{
-			// 		tmp = ft_shearch(envp[j++], &str[i][1]);
-			// 		if (tmp)
-			// 		{
-			// 			print(tmp);
-			// 			break;
-			// 		}
-			// 	}
-			// }
+			else if(ft_isalpha(str[i][1]))
+			{
+				j = 0;
+				while(envp[j])
+				{
+					tmp = ft_shearch(&str[i][1], envp[j++]);
+					if (tmp)
+					{
+						print(tmp);
+						break ;
+					}
+				}
+			}
 		}
 		else
 			priint(str[i]);
-			write(fd, " ", 1);
 		i++;
 	}
 	write(fd, "\n", 1);
