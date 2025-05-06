@@ -81,15 +81,5 @@ void baner() {
     type_text(creepy_messages[random_msg], 50);
     printf("\n\n");
 
-    printf("\033[31m╔══[root@nightmare]—[/dev/null]\n");
-    printf("╚═\033[5m♱\033[0m\033[31m> \033[0m");
 
-    printf("\033[?25h");
-
-}
-
-void while_baner()
-{
-	printf("\033[31m╔══[root@nightmare]—[/dev/null]\n");
-    printf("╚═\033[5m♱\033[0m\033[31m> \033[0m");
 }

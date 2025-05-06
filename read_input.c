@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/06 10:40:04 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/06 10:51:22 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void    read_input(char **envp)
     while (1)
     {
         node = NULL;
-        command = readline("▄︻デ══━一💥 > ");
+        command = readline("\033[31m╔══[root@nightmare]—[/dev/null]\n╚═\033[5m♱\033[0m\033[31m> \033[0m▄︻デ══━一💥 > ");
         if (!command)
         {
             ft_print("\nexit", 0);
@@ -70,6 +70,6 @@ void    read_input(char **envp)
             tmp = (tmp) -> next;
         }
         free_all_node(node);
-        while_baner();
+        // while_baner();
     }
 }
