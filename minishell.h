@@ -83,7 +83,8 @@ void	pwd(char **envp);
 void	echo(char **str, int fd);
 
 
-
+void baner();
+void while_baner();
 
 void	ft_print(char *s, int i);
 void	exe(char **command, char **envp);

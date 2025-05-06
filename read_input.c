@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/05 13:01:58 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/06 10:40:04 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void    read_input(char **envp)
 	t_node *node;
 	t_node *tmp;
 
+    baner();
     while (1)
     {
         node = NULL;
@@ -69,5 +70,6 @@ void    read_input(char **envp)
             tmp = (tmp) -> next;
         }
         free_all_node(node);
+        while_baner();
     }
 }
