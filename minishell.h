@@ -58,6 +58,7 @@ size_t	ft_strlen(const char *s);
 char	*ft_strdup(char *src );
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strjoin(char *s1, char *s2);
+int	ft_isalpha(int c);
 char	**ft_split(char const *s, char c);
 int	ft_strt(char *haystack, char *needle);
 int	ft_strcmp(char *s1, char *s2);
@@ -80,7 +81,7 @@ void free_all_ul_split(char **str);
 /* **************************************************************** */
 
 void	pwd(char **envp);
-void	echo(char **str, int fd);
+void echo(char **str, int fd, char **envp);
 
 
 void baner();

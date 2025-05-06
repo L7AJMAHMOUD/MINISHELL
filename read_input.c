@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/06 11:47:32 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/06 14:43:26 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,38 @@ void free_all_node(t_node *node)
 
 void export(char **envp, char **command)
 {
-    
+    // int i;
+    // int j;
+    // int k;
+
+    // i = 0;
+    // if (!command[1])
+    //     while (envp[i])
+    //     {
+    //         j = 0;
+    //         k = 0;
+    //         write(1, "declare -x ", 12); 
+    //         while(envp[i][j])
+    //         {
+    //             write(1, &envp[i][j], 1);
+    //             if (envp[i][j] == '=' || (!envp[i][j + 1] && k == 1))
+    //             {
+    //                 write(1, "\"", 1);
+    //                 k = 1;
+    //             }
+    //             j++;
+    //         }
+    //         write(1, "\n", 1);
+    //         i++;
+    //     }
+    // else
+        
 }
 
 int check_command(char **str, char **envp, t_node *node)
 {
     if (!(ft_strcmp(str[0], "echo")))
-        return (echo(str, 1), 0);
+        return (echo(str, 1, envp), 0);
     if (!(ft_strcmp(str[0], "cd")))
         return (0);
     if (!(ft_strcmp(str[0], "pwd")))
@@ -53,11 +78,11 @@ void    read_input(char **envp)
 	t_node *node;
 	t_node *tmp;
 
-    baner();
+    // baner();
     while (1)
     {
         node = NULL;
-        command = readline("\033[31m╔══[root@nightmare]—[/dev/null]\n╚═\033[5m♱\033[0m\033[31m> \033[0m▄︻デ══━一💥 > ");
+        command = readline("\033[31m╔══[root@nightmare]—[/dev/null]\n╚═\033[5m\033[0m\033[31m> \033[0m▄︻デ══━一💥 > ");
         if (!command)
         {
             ft_print("\nexit", 0);
