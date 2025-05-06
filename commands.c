@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:50:19 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/06 17:19:54 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/06 21:40:39 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void print(char *str)
 			while(str[i])
 				write(1, &str[i++], 1);
 	}
+	write(1, "\n", 1);
 }
 
 void	priint(char *str)
@@ -119,7 +120,6 @@ void echo(char **str, int fd, char **envp)
 			priint(str[i]);
 		i++;
 	}
-	write(fd, "\n", 1);
 	
 }
 
