@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
-#include <string.h>
 
 void type_text(const char *text, int delay_ms)
 {
@@ -77,8 +75,7 @@ void baner() {
     flicker_text(horror_banner, 3);
 
     printf("\n");
-    int random_msg = rand() % 5;
-    type_text(creepy_messages[random_msg], 50);
+    type_text(creepy_messages[4], 50);
     printf("\n\n");
 
 

@@ -6,17 +6,30 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:50:19 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/05 08:58:35 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/06 11:39:01 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int ft_check(char *str)
+{
+	int i;
+
+	i = 1;
+	while (str[i])
+	{
+		if (str[i++] != 'n')
+			return 0;
+	}
+	return 1;
+}
+
 void echo(char **str, int fd)
 {
 	int i;
 	i = 1;
-	if (str[i] && ft_strcmp(str[i], "-n") == 0)
+	if (str[i] && ft_check(str[i]))
 	{
 		i++;
 		while(str[i])

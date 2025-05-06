@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/06 11:16:01 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/06 11:47:32 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ void free_all_node(t_node *node)
     
 }
 
+void export(char **envp, char **command)
+{
+    
+}
+
 int check_command(char **str, char **envp, t_node *node)
 {
     if (!(ft_strcmp(str[0], "echo")))
@@ -32,7 +37,7 @@ int check_command(char **str, char **envp, t_node *node)
     if (!(ft_strcmp(str[0], "pwd")))
         return (pwd(envp), 0);
     if (!(ft_strcmp(str[0], "export")))
-        return (0);
+        return (export(envp, node->command), 0);
     if (!(ft_strcmp(str[0], "unset")))
         return (0);
     if (!(ft_strcmp(str[0], "env")))
