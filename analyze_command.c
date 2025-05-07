@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 00:30:54 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/03 15:06:51 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:42:34 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,5 @@ int	command_analyze(char *command)
 		if (parenth(command) != 0)
 			return (printf("SYNTAX ERROR 5\n"), -1);
 	}
-	else
-		printf("Complete Normally !\n");
 	return (0);
 }
