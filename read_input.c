@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/07 09:35:29 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/07 10:24:28 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,30 @@ void free_all_node(t_node *node)
 
 void export(char **envp, char **command)
 {
-    // int i;
-    // int j;
-    // int k;
+    int i;
+    int j;
+    int k;
 
-    // i = 0;
-    // if (!command[1])
-    //     while (envp[i])
-    //     {
-    //         j = 0;
-    //         k = 0;
-    //         write(1, "declare -x ", 12); 
-    //         while(envp[i][j])
-    //         {
-    //             write(1, &envp[i][j], 1);
-    //             if (envp[i][j] == '=' || (!envp[i][j + 1] && k == 1))
-    //             {
-    //                 write(1, "\"", 1);
-    //                 k = 1;
-    //             }
-    //             j++;
-    //         }
-    //         write(1, "\n", 1);
-    //         i++;
-    //     }
+    i = 0;
+    if (!command[1])
+        while (envp[i])
+        {
+            j = 0;
+            k = 0;
+            write(1, "declare -x ", 12); 
+            while(envp[i][j])
+            {
+                write(1, &envp[i][j], 1);
+                if (envp[i][j] == '=' || (!envp[i][j + 1] && k == 1))
+                {
+                    write(1, "\"", 1);
+                    k = 1;
+                }
+                j++;
+            }
+            write(1, "\n", 1);
+            i++;
+        }
     // else
         
 }
