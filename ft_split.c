@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/07 10:10:22 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/07 10:21:54 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ static int	ln(char *s)
 	{
 		if (s[length] == '"')
 		{
-			k += 1;
+			k += 2;
+			length++;
 			while (s[length] != '"' && s[length + 1])
 				length++;
 		}
 		if (s[length] == '\'')
 		{
-			k += 1;
+			k += 2;
+			length++;
 			while (s[length] != '\'' && s[length + 1])
 				length++;
 		}
