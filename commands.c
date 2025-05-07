@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:50:19 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/07 09:57:38 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/07 12:25:09 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,10 @@ void echo(char **str, int fd, char **envp)
 			j++;
 			if (str[i][j] <= '9' && str[i][j] >= '0')
 			{
-				print(&str[i][++j]);
+				if (str[i + 1])
+					priint(&str[i][++j], 1);
+				else
+					priint(&str[i][++j], 1);
 			}
 			else if(ft_isalpha(str[i][j]))
 			{

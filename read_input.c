@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/07 10:46:12 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/07 12:18:07 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char **add_to_envp(char **envp, char *ligne)
     while(envp[j])
     {
         i = 0;
-        str[j] = malloc(ft_strlen(envp[j]) +1);
+        str[j] = malloc(ft_strlen(envp[j]) + 1);
         while(envp[j][i])
         {
             str[j][i] = envp[j][i];
@@ -49,14 +49,14 @@ char **add_to_envp(char **envp, char *ligne)
         j++;
     }
     // i = 0;
-    // str[j] = malloc(ft_strlen(ligne) +1);
+    // str[j] = malloc(ft_strlen(ligne) + 1);
     // while(ligne[i])
     // {
     //     str[j][i] = ligne[i];
     //     i++;
     // }
     // str[j++][i] = 0;
-    str[j] = 0;
+    // str[j] = 0;
     free_all_ul_split(envp);
     return str;
 }
@@ -121,7 +121,7 @@ void    read_input(char **envp)
 	t_node *node;
 	t_node *tmp;
 
-    baner();
+    // baner();
     while (1)
     {
         node = NULL;
