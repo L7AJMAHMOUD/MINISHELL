@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/07 12:18:07 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/07 16:35:34 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ char **add_to_envp(char **envp, char *ligne)
 
     j = 0;
     while (envp[j])
-    {
         j++;
-    }
     str = malloc((j + 2) * sizeof(char *));
     j = 0;
     while(envp[j])
@@ -48,37 +46,39 @@ char **add_to_envp(char **envp, char *ligne)
         str[j][i] = 0;
         j++;
     }
-    // i = 0;
-    // str[j] = malloc(ft_strlen(ligne) + 1);
-    // while(ligne[i])
-    // {
-    //     str[j][i] = ligne[i];
-    //     i++;
-    // }
-    // str[j++][i] = 0;
-    // str[j] = 0;
-    free_all_ul_split(envp);
+    i = 0;
+    str[j] = malloc(ft_strlen(ligne) + 1);
+    while(ligne[i])
+    {
+        str[j][i] = ligne[i];
+        i++;
+    }
+    str[j++][i] = 0;
+    str[j] = NULL;
+    // free_all_ul_split(envp);
     return str;
 }
 
-void export(char **envp, char **command)
+void export(char ***envp, char **command)
 {
     int i;
     int j;
+    char **tmp;
     int k;
 
     i = 0;
     j = 1;
+    tmp = *envp;
     if (!command[1])
-        while (envp[i])
+        while (tmp[i])
         {
             j = 0;
             k = 0;
             write(1, "declare -x ", 12); 
-            while(envp[i][j])
+            while(tmp[i][j])
             {
-                write(1, &envp[i][j], 1);
-                if (envp[i][j] == '=' || (!envp[i][j + 1] && k == 1))
+                write(1, &tmp[i][j], 1);
+                if (tmp[i][j] == '=' || (!tmp[i][j + 1] && k == 1))
                 {
                     write(1, "\"", 1);
                     k = 1;
@@ -91,19 +91,22 @@ void export(char **envp, char **command)
     else
     {
         while(command[j])
-            envp = add_to_envp(envp, command[j++]);
+        {
+            tmp = add_to_envp(*envp, command[j++]);
+            *envp = tmp;
+        }
     }
         
 }
 
-int check_command(char **str, char **envp, t_node *node)
+int check_command(char **str, char ***envp, t_node *node)
 {
     if (!(ft_strcmp(str[0], "echo")))
-        return (echo(str, 1, envp), 0);
+        return (echo(str, 1, *envp), 0);
     if (!(ft_strcmp(str[0], "cd")))
         return (0);
     if (!(ft_strcmp(str[0], "pwd")))
-        return (pwd(envp), 0);
+        return (pwd(*envp), 0);
     if (!(ft_strcmp(str[0], "export")))
         return (export(envp, node->command), 0);
     if (!(ft_strcmp(str[0], "unset")))
@@ -111,15 +114,16 @@ int check_command(char **str, char **envp, t_node *node)
     if (!(ft_strcmp(str[0], "env")))
         return (0);
     if (!(ft_strcmp(str[0], "exit")))
-        return (free_all_node(node), free_all_ul_split(envp), ft_print("\nexit", 0), exit(127), 0);
+        return (free_all_node(node), free_all_ul_split(*envp), ft_print("\nexit", 0), exit(127), 0);
     return (1);
 }
 
-void    read_input(char **envp)
+void    read_input(char ***envp)
 {
     char *command;
 	t_node *node;
 	t_node *tmp;
+    char *str;
 
     // baner();
     while (1)
@@ -129,7 +133,7 @@ void    read_input(char **envp)
         if (!command)
         {
             ft_print("\nexit", 0);
-            free_all_ul_split(envp);
+            free_all_ul_split(*envp);
             exit (127);
         }
         if (command)
@@ -140,7 +144,7 @@ void    read_input(char **envp)
         while (tmp)
         {
             if(check_command((tmp)->command, envp, node))
-                exe((tmp)->command, envp);
+                exe((tmp)->command, *envp);
             tmp = (tmp) -> next;
         }
         free_all_node(node);

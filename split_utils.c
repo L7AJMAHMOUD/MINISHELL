@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:38:23 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/07 10:15:25 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/07 14:41:48 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ void free_all_ul_split(char **str)
 	i = 0;
 	while(str[i])
 		free(str[i++]);
-	free(str[i]);
+	free(str);
 }
