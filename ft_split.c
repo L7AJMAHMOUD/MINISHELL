@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/05 08:59:02 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/07 10:10:22 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,28 @@ static int	ln(char *s)
 {
 	int	length;
 	char c;
+	int k;
 
 	c = 32;
+	k = 0;
 	length = 0;
 	while (s[length] && s[length] != c)
 	{
-		if (s[length++] == '"')
+		if (s[length] == '"')
 		{
+			k += 1;
 			while (s[length] != '"' && s[length + 1])
 				length++;
 		}
-		if (s[length++] == '\'')
+		if (s[length] == '\'')
 		{
+			k += 1;
 			while (s[length] != '\'' && s[length + 1])
 				length++;
 		}
+		length++;
 	}
-	return (length);
+	return (length - k);
 }
 
 size_t	count_word(char const *str)
@@ -81,7 +86,7 @@ char	**ft_ultra_split(char *s)
 	if (!s)
 		return (NULL);
 	words = count_word(s);
-	arr = malloc ((words + 2) * sizeof(char *));
+	arr = malloc ((words + 1) * sizeof(char *));
 	if (!arr)
 	{
 		ft_print("Error : allocation in split\n", 0);
