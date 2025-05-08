@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:50:19 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/07 13:07:11 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/08 16:38:05 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void echo(char **str, int fd, char **envp)
 	k = 0;
 	p = 0;
 	j = 0;
-	if (str && str[i] && ft_check(str[i]))
+	while (str && str[i] && ft_check(str[i]))
 	{
 		i++;
 		p = -1;
