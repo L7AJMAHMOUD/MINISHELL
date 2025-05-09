@@ -71,6 +71,19 @@ void print_tree(s_root *root)
   [AND (&&)]  [CMD]
    /     \     cmd3
 cmd1   cmd2
+
+
+
+
+	cmd1 runs
+
+	if success → run cmd2
+
+	if success → skip cmd3
+
+	if fail → run cmd3
+
+	if cmd1 fails → skip cmd2, run cmd3
 */
 
 int main()
