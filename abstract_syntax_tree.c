@@ -46,10 +46,32 @@ s_root *insert_node(s_root *root, int value)
 
 void print_tree(s_root *root)
 {
-		printf("%d\n",root);
 }
 
+/*
+      [AND (&&)]
+       /     \
+   [CMD]   [CMD]
+   cmd1    cmd2
+*/
 
+/*
+      [OR (||)]
+       /     \
+   [CMD]   [CMD]
+   cmd1    cmd2
+*/
+
+// -----------------------------
+//  ((cmd1 && cmd2) || cmd3)
+
+/*
+        [OR (||)]
+         /     \
+  [AND (&&)]  [CMD]
+   /     \     cmd3
+cmd1   cmd2
+*/
 
 int main()
 {
