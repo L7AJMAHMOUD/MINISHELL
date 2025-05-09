@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:50:19 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/08 16:38:05 by user01           ###   ########.fr       */
+/*   Updated: 2025/05/09 10:31:09 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void echo(char **str, int fd, char **envp)
 }
 
 
-void	pwd(char **envp)
+void	pwd(char **envp, int j)
 {
 	int i;
 
@@ -157,5 +157,9 @@ void	pwd(char **envp)
 	if (!envp[i])
         ft_print("pwd not disponible\n", 0);
 	else
-    	printf("%s\n",&envp[i][4]);
+	{
+    	printf("%s",&envp[i][4]);
+		if (j != 0)
+			printf("\n");
+	}
 }

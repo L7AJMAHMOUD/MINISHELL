@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/07 16:35:34 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/09 10:30:36 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int check_command(char **str, char ***envp, t_node *node)
     if (!(ft_strcmp(str[0], "cd")))
         return (0);
     if (!(ft_strcmp(str[0], "pwd")))
-        return (pwd(*envp), 0);
+        return (pwd(*envp, 1), 0);
     if (!(ft_strcmp(str[0], "export")))
         return (export(envp, node->command), 0);
     if (!(ft_strcmp(str[0], "unset")))
@@ -129,7 +129,10 @@ void    read_input(char ***envp)
     while (1)
     {
         node = NULL;
-        command = readline("\033[31m╔══[root@nightmare]—[/dev/null]\n╚═\033[5m\033[0m\033[31m> \033[0m▄︻デ══━一💥 > ");
+		printf("\033[31m╔══[root@nightmare]—[");
+		pwd(*envp, 0);
+		printf("]\n");
+        command = readline("╚═\033[5m\033[0m\033[31m> \033[0m▄︻デ══━一💥 > ");
         if (!command)
         {
             ft_print("\nexit", 0);

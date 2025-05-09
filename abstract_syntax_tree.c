@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   abstract_syntax_tree.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:47:55 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/08 14:59:57 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:20:31 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ void print_tree(s_root *root)
 
 
 
-int main()
-{
-	s_root *root = NULL;
-	root = insert_node(root, 20);
-	root = insert_node(root, 30);
-	root = insert_node(root,2);
+// int main()
+// {
+// 	s_root *root = NULL;
+// 	root = insert_node(root, 20);
+// 	root = insert_node(root, 30);
+// 	root = insert_node(root,2);
 
-	print_tree(root);
-}%  
+// 	print_tree(root);
+// }  
