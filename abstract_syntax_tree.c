@@ -46,31 +46,15 @@ s_root *insert_node(s_root *root, int value)
 
 void print_tree(s_root *root)
 {
-	int i;
-
-	if (!root)
-		return;
-	root = root  ->left;
-
-	printf("%d\n",root -> data);
-	// if (root ->left && root -> right)
-	// 	printf("root has a childs\n");
-	// else if (root -> left && root -> right == NULL)
-	// 	printf("root has a left child\n");
-	// else if (root -> right && root -> left == NULL)
-	// 	printf("root has a right child\n");
-	// else
-	// 	printf("root isn't has a childs\n");
+		printf("%d\n",root);
 }
 
 
 
-// int main()
-// {
-// 	s_root *root = NULL;
-// 	root = insert_node(root, 20);
-// 	root = insert_node(root, 30);
-// 	root = insert_node(root,2);
+int main()
+{
+	s_root *root = NULL;
 
-// 	print_tree(root);
-// }  
+	root = insert_node(root, 30);
+	print_tree(root);
+}  
