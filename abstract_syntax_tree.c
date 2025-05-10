@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   abstract_syntax_tree.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:47:55 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/09 10:20:31 by user01           ###   ########.fr       */
+/*   Updated: 2025/05/10 09:00:53 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ cmd1   cmd2
 	if cmd1 fails → skip cmd2, run cmd3
 */
 
-int main()
-{
-	s_root *root = NULL;
+// int main()
+// {
+// 	s_root *root = NULL;
 
-	root = insert_node(root, 30);
-	print_tree(root);
-}  
+// 	root = insert_node(root, 30);
+// 	print_tree(root);
+// }  

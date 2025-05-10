@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/09 10:30:36 by user01           ###   ########.fr       */
+/*   Updated: 2025/05/10 09:57:41 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,19 @@ void export(char ***envp, char **command)
         
 }
 
+void print_env(char **envp, char **command)
+{
+    int i;
+
+    i = 0;
+    if (command[1])
+        printf("my shell must implement env with no options or arguments ​😉​\n");
+    else
+        while (envp && envp[i])
+            printf("%s\n", envp[i++]);
+    
+}
+
 int check_command(char **str, char ***envp, t_node *node)
 {
     if (!(ft_strcmp(str[0], "echo")))
@@ -112,7 +125,7 @@ int check_command(char **str, char ***envp, t_node *node)
     if (!(ft_strcmp(str[0], "unset")))
         return (0);
     if (!(ft_strcmp(str[0], "env")))
-        return (0);
+        return (print_env(*envp, node->command), 0);
     if (!(ft_strcmp(str[0], "exit")))
         return (free_all_node(node), free_all_ul_split(*envp), ft_print("\nexit", 0), exit(127), 0);
     return (1);
