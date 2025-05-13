@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/13 10:04:29 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/13 10:08:03 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int check_node_syntex(t_node *tmp)
             || !(ft_strcmp((tmp)->command[0], "<<")) || !(ft_strcmp((tmp)->command[0], "<<")))
                 && !tmp->command[1])
         {
-            ft_print("minishell: syntax error near unexpected token `newline' 😉.​", 0);
+            ft_print("minishell: syntax error near unexpected token `nightmare' 😉.​", 0);
             return 0;
         }
         tmp = tmp->next;
