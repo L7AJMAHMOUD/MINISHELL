@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/10 09:57:41 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/13 10:04:29 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,21 @@ int check_command(char **str, char ***envp, t_node *node)
         return (free_all_node(node), free_all_ul_split(*envp), ft_print("\nexit", 0), exit(127), 0);
     return (1);
 }
-
+int check_node_syntex(t_node *tmp)
+{
+    while(tmp)
+    {
+        if ((!(ft_strcmp((tmp)->command[0], ">")) || !(ft_strcmp((tmp)->command[0], "<"))
+            || !(ft_strcmp((tmp)->command[0], "<<")) || !(ft_strcmp((tmp)->command[0], "<<")))
+                && !tmp->command[1])
+        {
+            ft_print("minishell: syntax error near unexpected token `newline' 😉.​", 0);
+            return 0;
+        }
+        tmp = tmp->next;
+    }
+    return 1;
+}
 void    read_input(char ***envp)
 {
     char *command;
@@ -157,12 +171,17 @@ void    read_input(char ***envp)
         if(command_analyze(command) == 0)
 			command_tokenization(&node, command);
         tmp = node;
-        while (tmp)
-        {
-            if(check_command((tmp)->command, envp, node))
-                exe((tmp)->command, *envp);
-            tmp = (tmp) -> next;
-        }
+        if(check_node_syntex(tmp))
+            while (tmp)
+            {
+                if(check_command((tmp)->command, envp, node))
+                {
+                    if (!(ft_strcmp((tmp)->command[0], ">")))
+                        return ;
+                    exe((tmp)->command, *envp);
+                }
+                tmp = (tmp) -> next;
+            }
         free_all_node(node);
     }
 }
