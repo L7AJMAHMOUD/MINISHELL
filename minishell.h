@@ -90,8 +90,8 @@ void	ft_print(char *s, int i);
 void	exe(char **command, char **envp);
 char	*find_path(char *path, char **envp);
 
-int   and(char *command, int i, int k);
-int	redirect_parse(char *command);
+int   	and(char *command, int i, int k);
+int		redirect_parse(char *command);
 void	check_and_last(char *command);
 int		or(char *command, int i, int k);
 int		pipe_detector(char *command);
@@ -99,7 +99,7 @@ void	and_single_operator(char *command, int *i);
 void	or_single_operator(char *command, int *i);
 void	check_or_last(char *command);
 void	skip_inside_quotes(char *command, int *i);
-int	command_analyze(char *command);
+int		command_analyze(char *command);
 int		parenth(char *command);
 
 #endif
