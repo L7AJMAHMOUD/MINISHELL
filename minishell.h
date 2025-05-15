@@ -63,7 +63,7 @@ char	**ft_split(char const *s, char c);
 int	ft_strt(char *haystack, char *needle);
 int	ft_strcmp(char *s1, char *s2);
 int	ft_is_spc(int cmd);
-int ft_is_spc2(int cmd);
+int is_something(int cmd);
 
 /* **************************************************************** */
 /*									*/
@@ -91,6 +91,7 @@ void	exe(char **command, char **envp);
 char	*find_path(char *path, char **envp);
 
 int   and(char *command, int i, int k);
+int	redirect_parse(char *command);
 void	check_and_last(char *command);
 int		or(char *command, int i, int k);
 int		pipe_detector(char *command);

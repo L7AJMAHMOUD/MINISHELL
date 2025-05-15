@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 12:01:45 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/01 11:11:43 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/15 12:05:19 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	ft_is_spc(int cmd)
 	return (-1);
 }
 
-int ft_is_spc2(int cmd)
+int is_something(int cmd)
 {
-    if (33 <= cmd && cmd <= 37 || 39 <= cmd && cmd <= 123 || 125 <= cmd && cmd <= 126)
-        return 1;
+    if (33 <= cmd && cmd <= 59 || cmd == 61 || 63 <= cmd && cmd <= 126)
+        return (0);
     return -1;
 }
 // 33 -> 37
