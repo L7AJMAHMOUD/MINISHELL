@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:20 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/17 11:48:44 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/17 16:06:17 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	redirect_parse(char *command)
 			i++;
 			if (command[i] == '>' && is_left == 1 || command[i] == '<' && is_right == 1)
 				err = -404;
-			else
-				i++;
+			i++;
 			while (command[i] == ' ')
 				i++;
 			if (command[i] == '>' || command[i] == '<')
@@ -44,7 +43,7 @@ int	redirect_parse(char *command)
 			if (is_something(command[i]) == 0)
 				err = 0;
 			if (command[i] == '\0')
-					err = -404;
+				err = -404;
 		}
 		i++;
 	}

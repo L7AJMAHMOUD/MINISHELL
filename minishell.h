@@ -104,5 +104,6 @@ int		parenth(char *command);
 char	*ft_strstr_pare(char *command);
 int ultra_redirect_parse(char *command);
 int ultra_redirect_parsee(char *command);
+void	apply_redirections(t_node *node_cmd);
 
 #endif

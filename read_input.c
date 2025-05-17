@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/17 12:06:54 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/17 15:56:33 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,18 +171,17 @@ void    read_input(char ***envp)
         if(command_analyze(command) == 0)
 			command_tokenization(&node, command);
         tmp = node;
-        // start work here !!!!
-        if(check_node_syntex(tmp))
-            while (tmp)
+        apply_redirections(node);
+        while (tmp)
+        {
+            if(check_command((tmp)->command, envp, node))
             {
-                if(check_command((tmp)->command, envp, node))
-                {
-                    if (!(ft_strcmp((tmp)->command[0], ">")))
-                        return ;
-                    exe((tmp)->command, *envp);
-                }
-                tmp = (tmp) -> next;
+                if (!(ft_strcmp((tmp)->command[0], ">")))
+                    return ;
+                exe((tmp)->command, *envp);
             }
+            tmp = (tmp) -> next;
+        }
         free_all_node(node);
     }
 }
