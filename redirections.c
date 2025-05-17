@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:20 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/15 13:48:46 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:48:44 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_redirection(char *command)
 {
-	
+	return 0;
 }
 int	redirect_parse(char *command)
 {

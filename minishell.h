@@ -101,5 +101,8 @@ void	check_or_last(char *command);
 void	skip_inside_quotes(char *command, int *i);
 int		command_analyze(char *command);
 int		parenth(char *command);
+char	*ft_strstr_pare(char *command);
+int ultra_redirect_parse(char *command);
+int ultra_redirect_parsee(char *command);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 00:30:54 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/15 12:59:48 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/17 12:09:10 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,9 @@ int	command_analyze(char *command)
 	if(redirect_parse(command) != 0)
 		return (printf("SYNTAX ERROR 5\n"), -1);
 	if (there_a_parntheses(command) == -33)
-	{
-		printf("Kynin Parentheses Dkhol Thandli mea rassek hhhh\n");
 		if (parenth(command) != 0)
 			return (printf("SYNTAX ERROR 6\n"), -1);
-	}
+	if(ultra_redirect_parse(command) != 0 || ultra_redirect_parsee(command) != 0)
+		return (printf("ULTRA SYNTAX ERROR 5 HHHHH\n"), -1);
 	return (0);
 }
