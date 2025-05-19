@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/17 15:56:33 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/19 10:54:44 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,89 +23,13 @@ void free_all_node(t_node *node)
     
 }
 
-char **add_to_envp(char **envp, char *ligne)
-{
-    int i;
-    int j;
-    char **str;
-
-    j = 0;
-    while (envp[j])
-        j++;
-    str = malloc((j + 2) * sizeof(char *));
-    j = 0;
-    while(envp[j])
-    {
-        i = 0;
-        str[j] = malloc(ft_strlen(envp[j]) + 1);
-        while(envp[j][i])
-        {
-            str[j][i] = envp[j][i];
-            i++;
-        }
-        str[j][i] = 0;
-        j++;
-    }
-    i = 0;
-    str[j] = malloc(ft_strlen(ligne) + 1);
-    while(ligne[i])
-    {
-        str[j][i] = ligne[i];
-        i++;
-    }
-    str[j++][i] = 0;
-    str[j] = NULL;
-    // free_all_ul_split(envp);
-    return str;
-}
-
-void export(char ***envp, char **command)
-{
-    int i;
-    int j;
-    char **tmp;
-    int k;
-
-    i = 0;
-    j = 1;
-    tmp = *envp;
-    if (!command[1])
-        while (tmp[i])
-        {
-            j = 0;
-            k = 0;
-            write(1, "declare -x ", 12); 
-            while(tmp[i][j])
-            {
-                write(1, &tmp[i][j], 1);
-                if (tmp[i][j] == '=' || (!tmp[i][j + 1] && k == 1))
-                {
-                    write(1, "\"", 1);
-                    k = 1;
-                }
-                j++;
-            }
-            write(1, "\n", 1);
-            i++;
-        }
-    else
-    {
-        while(command[j])
-        {
-            tmp = add_to_envp(*envp, command[j++]);
-            *envp = tmp;
-        }
-    }
-        
-}
-
 void print_env(char **envp, char **command)
 {
     int i;
 
     i = 0;
     if (command[1])
-        printf("my shell must implement env with no options or arguments ​😉​\n");
+        ft_print("my shell must implement env with no options or arguments ​😉​\n", 0);
     else
         while (envp && envp[i])
             printf("%s\n", envp[i++]);
