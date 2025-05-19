@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/05 12:33:28 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/19 14:39:07 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,14 +119,16 @@ char	*find_path(char *path, char **envp)
 void	exe(char **command, char **envp)
 {
 	char *path;
+	// int *fd;
 	int i = fork();
 	if (i == 0)
 	{
 		path = find_path(*command, envp);
-		// analyse_rederection();
+		apply_redirections(command);
 		execve(path,command, NULL);
 	}
 	else
 		wait(NULL);
+	
 	return ;
 }

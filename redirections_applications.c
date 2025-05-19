@@ -6,48 +6,62 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:35:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/17 17:42:44 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:50:23 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void redirect_output_fd(t_node *node_cmd)
+void redirect_output_fd(char **command)
 {
 	int i;
 	int fd;
-	   
+	
  	i = 0;
-	while (node_cmd)
+	while (command[i])
 	{
-		while (node_cmd -> command[i])
+		if (ft_strcmp(command[i], ">") == 0)
 		{
-			if (ft_strcmp(node_cmd -> command[i], ">") == 0)
-				fd = open(node_cmd -> command[i + 1], O_CREAT | O_RDWR, 0777);
-			i++;
+			fd = open(command[i + 1], O_CREAT | O_RDWR, 0777);
+			command[i] = NULL;
+			dup2(fd, 1);
+			close(fd);
 		}
-		node_cmd = node_cmd -> next;
+		i++;
 	}
- 
 }
 
-void	apply_redirections(t_node *node_cmd)
+void	redirect_input_fd(char **command)
+{
+	int i;
+	int fd;
+	
+ 	i = 0;
+	while (command[i])
+	{
+		if (ft_strcmp(command[i], "<") == 0)
+		{
+			fd = open(command[i + 1], O_CREAT | O_RDWR, 0777);
+			command[i] = NULL;
+			dup2(fd, 0);
+			close(fd);
+		}
+		i++;
+	}	
+}
+void	apply_redirections(char **command)
 {
 	int i = 0;
-	while (node_cmd)
+	while (command[i])
 	{
-		while (node_cmd -> command[i])
-		{
-			if (ft_strcmp(node_cmd -> command[i], ">") == 0)
-				redirect_output_fd(node_cmd);
-			else if (ft_strcmp(node_cmd -> command[i], "<") == 0)
-				printf("redirect_input_fd func\n");
-			else if (ft_strcmp(node_cmd -> command[i], ">>") == 0)
-				printf("fd_adder func\n");
-			else if (ft_strcmp(node_cmd -> command[i], "<<")  == 0)
-				printf("here_doc func\n");
-			i++;
-		}
-		node_cmd = node_cmd -> next;
+		if (ft_strcmp(command[i], ">") == 0)
+			redirect_output_fd(command);
+		else if (ft_strcmp(command[i], "<") == 0)
+			redirect_input_fd(command); 
+		else if (ft_strcmp(command[i], ">>") == 0)
+			printf("fd_adder func\n");
+		else if (ft_strcmp(command[i], "<<")  == 0)
+			printf("here_doc func\n");
+		i++;
 	}
 }
