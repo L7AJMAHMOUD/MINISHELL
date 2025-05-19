@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:35:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/19 16:50:23 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:11:38 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,25 @@ void	redirect_input_fd(char **command)
 		i++;
 	}	
 }
+
+void	fd_append(char **command)
+{
+	int i;
+	int fd;
+	
+ 	i = 0;
+	while (command[i])
+	{
+		if (ft_strcmp(command[i], ">>") == 0)
+		{
+			fd = open(command[i + 1], O_CREAT | O_RDWR | O_APPEND, 0777);
+			command[i] = NULL;
+			dup2(fd, 1);
+			close(fd);
+		}
+		i++;
+	}	
+}
 void	apply_redirections(char **command)
 {
 	int i = 0;
@@ -59,7 +78,7 @@ void	apply_redirections(char **command)
 		else if (ft_strcmp(command[i], "<") == 0)
 			redirect_input_fd(command); 
 		else if (ft_strcmp(command[i], ">>") == 0)
-			printf("fd_adder func\n");
+			fd_append(command);
 		else if (ft_strcmp(command[i], "<<")  == 0)
 			printf("here_doc func\n");
 		i++;
