@@ -106,5 +106,7 @@ int ultra_redirect_parse(char *command);
 int ultra_redirect_parsee(char *command);
 void	apply_redirections(char **command);
 void export(char ***envp, char **command);
+void unset(char ***envp, char **command);
+int	ft_str_cmp(char *s1, char *s2);
 
 #endif
