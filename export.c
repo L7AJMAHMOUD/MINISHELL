@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/19 10:54:25 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/20 10:31:35 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char **add_to_envp(char **envp, char *ligne)
 
     j = 0;
 	k = 2;
-	if (!envp)
+	if (!envp || !ligne)
 		return NULL;
 	m = analyse_c(envp, ligne, &k);
     while (envp[j])
@@ -112,6 +112,37 @@ char **add_to_envp(char **envp, char *ligne)
     free_all_ul_split(envp);
     return str;
 }
+char **copy_envp(char **envp)
+{
+    int i;
+    int j;
+    int k;
+    int m;
+    char **str;
+
+    j = 0;
+	k = 2;
+	if (!envp)
+		return NULL;
+    while (envp[j])
+        j++;
+    str = malloc((j + 1) * sizeof(char *));
+    j = 0;
+    while(envp[j])
+    {
+        i = 0;
+		str[j] = malloc(ft_strlen(envp[j]) + 1);
+		while(envp[j][i])
+		{
+			str[j][i] = envp[j][i];
+			i++;
+		}
+		str[j][i] = 0;
+        j++;
+	}
+    str[j] = NULL;
+    return str;
+}
 
 int	check_synt(char *str)
 {
@@ -124,6 +155,40 @@ int	check_synt(char *str)
 		return (ft_print("minishell: export: not a valid identifier ​😉", 0), 1);
 	return 0;
 }
+
+void ft_swap_str(char **s1, char **s2)
+{
+	char *tmp;
+
+	tmp = *s1;
+	*s1 = *s2;
+	*s2 = tmp;
+	
+}
+
+char **arr_sorted(char **str)
+{
+	int i;
+	int j;
+	int min;
+	int *arr;
+	if (!str)
+		return NULL;
+	char **tmp = copy_envp(str);
+	i = 0;
+	while(tmp[i])
+	{
+		j = i + 1;
+		while(tmp[j])
+		{
+			if(ft_strcmp(tmp[j], tmp[i]) < 0)
+				ft_swap_str(&tmp[j], &tmp[i]);
+			j++;
+		}
+		i++;
+	}
+	return tmp;
+}
 void export(char ***envp, char **command)
 {
     int i;
@@ -133,8 +198,9 @@ void export(char ***envp, char **command)
 
     i = 0;
     j = 1;
-    tmp = *envp;
+    tmp = arr_sorted(*envp);
     if (!command[1])
+	{
         while (tmp[i])
         {
             j = 0;
@@ -153,6 +219,8 @@ void export(char ***envp, char **command)
             write(1, "\n", 1);
             i++;
         }
+		free_all_ul_split(tmp);
+	}
     else
     {
         while(command[j])
@@ -163,6 +231,5 @@ void export(char ***envp, char **command)
             *envp = tmp;
         }
     }
-        
 }
 
