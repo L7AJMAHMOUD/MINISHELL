@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:35:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/19 17:11:38 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/20 11:46:13 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,32 @@ void	fd_append(char **command)
 		i++;
 	}	
 }
+
+void	here_doc(char **command)
+{
+	int i;
+	int fd;
+	char *delimter;
+	char *comm;
+
+	i = 0;
+	while (command[i])
+	{
+		if (ft_strcmp(command[i], "<<") == 0)
+		{
+			delimter = command[i + 1];
+			fd = open(".heredoc", O_CREAT | O_RDWR, 0777);
+			command[i] = NULL;
+			while (1)
+			{
+				comm = readline("> ");
+				if (ft_strcmp(comm, delimter) == 0)
+					break;
+			}
+		}
+		i++;
+	}
+}
 void	apply_redirections(char **command)
 {
 	int i = 0;
@@ -80,7 +106,7 @@ void	apply_redirections(char **command)
 		else if (ft_strcmp(command[i], ">>") == 0)
 			fd_append(command);
 		else if (ft_strcmp(command[i], "<<")  == 0)
-			printf("here_doc func\n");
+			here_doc(command);
 		i++;
 	}
 }
