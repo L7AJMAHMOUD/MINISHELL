@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:50:19 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/09 10:31:09 by user01           ###   ########.fr       */
+/*   Updated: 2025/05/21 10:59:10 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,23 +143,13 @@ void echo(char **str, int fd, char **envp)
 }
 
 
-void	pwd(char **envp, int j)
+void	pwd(int i)
 {
-	int i;
+	char buff[BUFFER_SIZE];
 
-	i = 0;
-	while(envp[i])
-	{
-		if (envp[i][0] == 'P' && envp[i][1] == 'W' && envp[i][2] == 'D')
-			break ;
-		i++;
-	}
-	if (!envp[i])
-        ft_print("pwd not disponible\n", 0);
-	else
-	{
-    	printf("%s",&envp[i][4]);
-		if (j != 0)
-			printf("\n");
-	}
+	if(!getcwd(buff,BUFFER_SIZE))
+		perror("getcwd");
+	printf("%s",buff);
+	if (!i)
+		printf("\n");
 }

@@ -23,6 +23,8 @@
 #include <errno.h>
 #include <sys/wait.h>
 
+#define BUFFER_SIZE 100000
+
 typedef struct s_node
 {
 	char **command;
@@ -80,7 +82,7 @@ void free_all_ul_split(char **str);
 /*									*/
 /* **************************************************************** */
 
-void	pwd(char **envp, int i);
+void	pwd();
 void echo(char **str, int fd, char **envp);
 
 

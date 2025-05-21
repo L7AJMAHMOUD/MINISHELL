@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/19 14:24:11 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/21 10:59:25 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int check_command(char **str, char ***envp, t_node *node)
     if (!(ft_strcmp(str[0], "cd")))
         return (0);
     if (!(ft_strcmp(str[0], "pwd")))
-        return (pwd(*envp, 1), 0);
+        return (pwd(0), 0);
     if (!(ft_strcmp(str[0], "export")))
         return (export(envp, node->command), 0);
     if (!(ft_strcmp(str[0], "unset")))
@@ -81,7 +81,7 @@ void    read_input(char ***envp)
     {
         node = NULL;
 		printf("\033[31m╔══[root@nightmare]—[");
-		pwd(*envp, 0);
+		pwd(1);
 		printf("]\n");
         command = readline("╚═\033[5m\033[0m\033[31m> \033[0m▄︻デ══━一💥 > ");
         if (!command)
