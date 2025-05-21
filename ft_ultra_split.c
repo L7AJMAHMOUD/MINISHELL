@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/21 12:03:23 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/21 12:36:06 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	ln(char *s)
 		skip_quotes(s, &length, &k);
 		length++;
 	}
-	if (s[length] == '<' || s[length] == '>' && length == 0)
+	if ((s[length] == '<' || s[length] == '>') && length == 0)
 	{
 		length++;
 		if (s[length] == '<' || s[length] == '>')
@@ -127,10 +127,11 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 	int		k;
 	int		w_len;
 	char	**arr;
-
+	
 	if (!s)
-		return (NULL);
+	return (NULL);
 	words = count_word(s);
+	printf("%d\n", words);
 	arr = malloc ((words + 1) * sizeof(char *));
 	if (!arr)
 		return (ft_print("Error : allocation in split\n", 0), NULL);
@@ -141,12 +142,11 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 		w_len = ln(&s[i]);
 		arr[j] = malloc(w_len + 1);
 		if (check_alloc(arr, j))
-			return (NULL);
+		return (NULL);
 		k = 0;
 		while (k < w_len)
 			skip_quotes_copy(s, arr, &i, &k, j);
 		arr[j++][k] = 0;
-	}
-	return (arr[j] = NULL, arr);
+		}
+		return (arr[j] = NULL, arr);
 }
-
