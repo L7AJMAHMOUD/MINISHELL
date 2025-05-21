@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/21 10:30:41 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/21 12:03:23 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,12 @@ static int	ln(char *s)
 		length++;
 	}
 	if (s[length] == '<' || s[length] == '>' && length == 0)
+	{
+		length++;
+		if (s[length] == '<' || s[length] == '>')
+			return 2;
 		return 1;
+	}
 	return (length - k);
 }
 
@@ -144,3 +149,4 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 	}
 	return (arr[j] = NULL, arr);
 }
+

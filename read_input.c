@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/21 10:59:25 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/21 11:08:31 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,6 @@ void    read_input(char ***envp)
         {
             if(check_command((tmp)->command, envp, node))
             {
-                if (!(ft_strcmp((tmp)->command[0], ">")))
-                    return ;
                 exe((tmp)->command, *envp);
             }
             tmp = (tmp) -> next;

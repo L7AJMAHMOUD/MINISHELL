@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_applications.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:35:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/20 11:46:13 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/21 11:20:31 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void redirect_output_fd(char **command)
 		if (ft_strcmp(command[i], ">") == 0)
 		{
 			fd = open(command[i + 1], O_CREAT | O_RDWR, 0777);
-			command[i] = NULL;
 			dup2(fd, 1);
 			close(fd);
 		}
@@ -42,7 +41,6 @@ void	redirect_input_fd(char **command)
 		if (ft_strcmp(command[i], "<") == 0)
 		{
 			fd = open(command[i + 1], O_CREAT | O_RDWR, 0777);
-			command[i] = NULL;
 			dup2(fd, 0);
 			close(fd);
 		}
@@ -61,7 +59,6 @@ void	fd_append(char **command)
 		if (ft_strcmp(command[i], ">>") == 0)
 		{
 			fd = open(command[i + 1], O_CREAT | O_RDWR | O_APPEND, 0777);
-			command[i] = NULL;
 			dup2(fd, 1);
 			close(fd);
 		}
@@ -109,4 +106,5 @@ void	apply_redirections(char **command)
 			here_doc(command);
 		i++;
 	}
+	
 }
