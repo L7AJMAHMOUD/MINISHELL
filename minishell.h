@@ -33,7 +33,7 @@ typedef struct s_node
 }   t_node;
 
 void    read_input(char ***envp);
-char	**ft_ultra_split(char *s);
+char	**ft_ultra_split(char *s, int	i, int		j);
 void	invalid_param(void);
 
 /* **************************************************************** */
