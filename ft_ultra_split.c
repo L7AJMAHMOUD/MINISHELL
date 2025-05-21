@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/17 12:08:31 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/21 09:51:37 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	ln(char *s)
 	c = 32;
 	k = 0;
 	length = 0;
-	while (s[length] && s[length] != c)
+	while (s[length] && s[length] != c && s[length] != '>' && s[length] != '<')
 	{
 		if (s[length] == '"')
 		{
@@ -39,6 +39,8 @@ static int	ln(char *s)
 		}
 		length++;
 	}
+	if (s[length] == '<' || s[length] == '>' && length == 0)
+		return 1;
 	return (length - k);
 }
 
@@ -49,26 +51,17 @@ size_t	count_word(char const *str)
 
 	i = 0;
 	k = 0;
-	while (str[i] && str[i] != '&' && str [i] != '|')
+	while (str[i] && str[i] != '&' && str[i] != '|')
 	{
-		while (str[i] == ' ' && str[i] && str[i] != '&')
+		while (str[i] == ' ' && str[i] && str[i] != '&' && str[i] != '|')
 			i++;
-		if (str[i] == '"')
-		{
-			i++;
-			while (str[i] != '"')
-				i++;
-		}
-		if (str[i] == '\'')
-		{
-			i++;
-			while (str[i] != '\'')
-				i++;
-		}
+		skip_inside_quotes((char *)str, (unsigned int *)&i);
 		if ((str [i] != '|' && str[i] != '&') && str[i++])
 			k++;
-		while (str[i] != ' ' && str[i] && str[i] != '&' && str[i] != '|')
+		while (str[i] != ' ' && str[i] != '<' && str[i] != '>' && str[i] && str[i] != '&' && str[i] != '|')
 			i++;
+		if ((str [i] == '<' || str[i] == '>'))
+			k++;
 	}
 	return (k);
 }
@@ -101,6 +94,7 @@ char	**ft_ultra_split(char *s)
 		if (!s[i])
 			break;
 		w_len = ln(&s[i]);
+		printf("---%d\n",w_len);
 		arr[j] = malloc(w_len + 1);
 		if (!arr[j])
 		{
