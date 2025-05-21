@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:32:43 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/21 13:44:32 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/21 15:28:37 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ void cd(char *arg)
 	
 	if(!getcwd(buff,BUFFER_SIZE))
 		perror("getcwd");
+	if (arg[0] == '/')
+	{
+		chdir (arg);
+		return ;
+	}
 	tmp = strjoin(buff, "/");
 	str = strjoin(tmp, arg);
 	chdir (str);

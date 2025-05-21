@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/21 13:45:15 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/21 15:28:58 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ size_t	count_word(char const *str)
 		if ((str [i] == '<' || str[i] == '>'))
 			k++;
 	}
-	return (k + 1);
+	return (k);
 }
 int check_alloc(char **arr, int j)
 {
