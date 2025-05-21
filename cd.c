@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:32:43 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/21 12:14:24 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/21 13:44:32 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 #include "minishell.h"
 
-static char	*strjoin(char const *s1, char const *s2)
+static char	*strjoin(char *s1, char *s2)
 {
 	size_t	k;
 	size_t	j;
@@ -54,14 +54,17 @@ static char	*strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-void cd()
+void cd(char *arg)
 {
 	char buff[BUFFER_SIZE];
+	char *tmp;
 	char *str;
 	
 	if(!getcwd(buff,BUFFER_SIZE))
 		perror("getcwd");
-	str = strjoin(buff, "/");
-	
-	// chdir ()
+	tmp = strjoin(buff, "/");
+	str = strjoin(tmp, arg);
+	chdir (str);
+	free(tmp);
+	free(str);
 }

@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/21 12:36:06 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/21 13:45:15 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ size_t	count_word(char const *str)
 		if ((str [i] == '<' || str[i] == '>'))
 			k++;
 	}
-	return (k);
+	return (k + 1);
 }
 int check_alloc(char **arr, int j)
 {
@@ -131,7 +131,6 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 	if (!s)
 	return (NULL);
 	words = count_word(s);
-	printf("%d\n", words);
 	arr = malloc ((words + 1) * sizeof(char *));
 	if (!arr)
 		return (ft_print("Error : allocation in split\n", 0), NULL);

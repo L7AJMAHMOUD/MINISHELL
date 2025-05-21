@@ -84,6 +84,7 @@ void free_all_ul_split(char **str);
 
 void	pwd();
 void echo(char **str, int fd, char **envp);
+void cd(char *arg);
 
 
 void baner();

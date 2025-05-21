@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/21 11:08:31 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/21 13:41:58 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int check_command(char **str, char ***envp, t_node *node)
     if (!(ft_strcmp(str[0], "echo")))
         return (echo(str, 1, *envp), 0);
     if (!(ft_strcmp(str[0], "cd")))
-        return (0);
+        return (cd(str[1]), 0);
     if (!(ft_strcmp(str[0], "pwd")))
         return (pwd(0), 0);
     if (!(ft_strcmp(str[0], "export")))
