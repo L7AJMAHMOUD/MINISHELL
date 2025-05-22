@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/21 13:41:58 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/22 10:01:27 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,15 @@ void print_env(char **envp, char **command)
             printf("%s\n", envp[i++]);
     
 }
-
+void minishell(char **str)
+{
+    if (!str[1])
+        printf("\nWelcome in MINISHELL OF NIGHTMARES\n\033[35mEvery command has consequences...\033[0m\n\n");
+    else if (!(ft_strcmp(str[1], "--version")) && !str[2])
+        printf("\nMINISHELL OF NIGHTMARES, version 1.0.0-release (x64-pc-linux-gnu)\nCopyright (C) 2025 Free Software Foundation, Inc.\n\nThis is free software; you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n");
+    else
+        ft_print("minishell : invalid option\nminishell options:\n\t--version",0);
+}
 int check_command(char **str, char ***envp, t_node *node)
 {
     if (!(ft_strcmp(str[0], "echo")))
@@ -44,6 +52,8 @@ int check_command(char **str, char ***envp, t_node *node)
         return (cd(str[1]), 0);
     if (!(ft_strcmp(str[0], "pwd")))
         return (pwd(0), 0);
+    if (!(ft_strcmp(str[0], "minishell")))
+        return (minishell(str), 0);
     if (!(ft_strcmp(str[0], "export")))
         return (export(envp, node->command), 0);
     if (!(ft_strcmp(str[0], "unset")))
