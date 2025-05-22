@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/22 10:07:37 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/22 10:18:25 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,7 @@ void    read_input(char ***envp)
     while (1)
     {
         node = NULL;
-		printf("\033[31m╔══[root@nightmare]—[");
-		pwd(1);
-		printf("]\n");
-        command = readline("╚═\033[5m\033[0m\033[31m> \033[0m▄︻デ══━一💥 > ");
+        command = readline("\033[31m╔══[root@nightmare]—[]\n╚═\033[5m\033[0m\033[31m> \033[0m▄︻デ══━一💥 > ");
         if (!command)
         {
             ft_print("\nexit", 0);
