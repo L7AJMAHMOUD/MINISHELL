@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/22 12:42:27 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/22 15:14:34 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,21 @@ size_t	count_word(char const *str)
 	k = 0;
 	while (str[i] && str[i] != '&' && str[i] != '|')
 	{
-		while ((str[i] == ' ' || ((str [i] == '<' || str[i] == '>') && i != 0)) && str[i] && str[i] != '&' && str[i] != '|')
+		while (str[i] == ' ' && str[i])
 			i++;
 		skip_inside_quotes((char *)str, &i);
 		if ((str [i] != '|' && str[i] != '&') && str[i])
 			k++;
-		i++;
+		while (str[i] != ' ' && str[i] && str[i] != '&' && str[i] != '|')
+		{
+			if ((str[i] == '<' || str[i] =='>') && i != 0 && (str[i - 1] != ' '))
+				k++;
+			if ((str[i] == '<' || str[i] =='>') && i != 0 && (str[i + 1] != ' '))
+				k++;
+			i++;
+		}
 	}
-	return (k == 0 ? k : k - 1);
+	return (k);
 }
 int check_alloc(char **arr, int j)
 {
@@ -148,8 +155,3 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 	}
 	return (arr[j] = NULL, arr);
 }
-// int main()
-// {
-// 	// char **str = ft_ultra_split("\"\"", 0 , 0);
-// 	printf("%d\n",count_word("\"\""));
-// }
