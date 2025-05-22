@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/22 15:47:03 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/22 15:58:48 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*find_path(char *path, char **envp)
 	int k;
 
 	j = 5;
-	if (access(path, F_OK) == 0)
+	if ((path[0] == '/' || path[0] =='.') && access(path, F_OK) == 0)
 		return path;
 	i = ft_locat(envp);
 	if (i == -1)
