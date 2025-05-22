@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/22 12:35:58 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/22 12:42:27 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 		skip_quotes_copy(s, arr, &i, &k, j);
 		arr[j++][k] = 0;
 	}
-	printf("hana\n");
 	return (arr[j] = NULL, arr);
 }
 // int main()
