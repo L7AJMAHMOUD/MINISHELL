@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:58:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/22 12:20:52 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/22 12:23:05 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	push_and_pop(char *stack, char *command)
 	if (count == ft_strlen(stack))
 		return (0);
 	return (-1);
-}
+} 
 int	parenth(char *command)
 {
 	int i;
