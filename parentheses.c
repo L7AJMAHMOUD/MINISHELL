@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parentheses.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:58:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/21 11:05:03 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/22 12:18:18 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	parenth(char *command)
 	}
 	stack[j] = '\0';
 	if (push_and_pop(stack, command) != 0 || cmd_between_par(command) != 0)
-		return (-1);
+		return (free(stack), -1);
+	free(stack);
 	return 0;
 }
