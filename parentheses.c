@@ -6,40 +6,11 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:58:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/22 12:18:18 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/05/22 12:20:12 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-
-// int	operator_between_par(char *command)
-// {
-// 	int i;
-// 	int operator;
-
-// 	i = 0;
-// 	while (command[i])
-// 	{
-// 		operator = 0;
-// 		if (command[i] == ')')
-// 		{
-// 			i++;
-// 			while (command[i] == ' ' && command[i] != '(')
-// 			{
-// 				if (command[i] == '&' && command[i + 1] == '&' || command[i] == '|' && command[i + 1] == '|'
-// 					|| command[i] == '&' || command[i] == '|')
-// 					operator++;
-// 				i++;
-// 			}
-// 		}
-// 		i++;
-// 	}
-// 	if (operator == 0 != operator > 1)
-// 		return -1;
-// 	return (0);
-// }
 
 int	cmd_between_par(char *command)
 {
