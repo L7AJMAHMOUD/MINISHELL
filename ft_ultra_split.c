@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/21 15:28:58 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/22 12:35:58 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ void skip_quotes(char *s, int *length, int *k)
 	if (s[*length] == '"')
 		{
 			k += 2;
-			*length += 1;
+			// *length += 1;
 			while (s[*length] != '"' && s[*length + 1])
 				*length += 1;
 		}
 		if (s[*length] == '\'')
 		{
 			k += 2;
-			*length += 1;
+			// *length += 1;
 			while (s[*length] != '\'' && s[*length + 1])
 				*length += 1;
 		}
@@ -63,17 +63,14 @@ size_t	count_word(char const *str)
 	k = 0;
 	while (str[i] && str[i] != '&' && str[i] != '|')
 	{
-		while (str[i] == ' ' && str[i] && str[i] != '&' && str[i] != '|')
+		while ((str[i] == ' ' || ((str [i] == '<' || str[i] == '>') && i != 0)) && str[i] && str[i] != '&' && str[i] != '|')
 			i++;
 		skip_inside_quotes((char *)str, &i);
-		if ((str [i] != '|' && str[i] != '&') && str[i++])
+		if ((str [i] != '|' && str[i] != '&') && str[i])
 			k++;
-		while (str[i] != ' ' && str[i] != '<' && str[i] != '>' && str[i] && str[i] != '&' && str[i] != '|')
-			i++;
-		if ((str [i] == '<' || str[i] == '>'))
-			k++;
+		i++;
 	}
-	return (k);
+	return (k == 0 ? k : k - 1);
 }
 int check_alloc(char **arr, int j)
 {
@@ -88,6 +85,14 @@ int check_alloc(char **arr, int j)
 	return 0;
 }
 
+int skip_space(char *s, int *i)
+{
+	while (s[*i] < 33)
+			*i += 1;
+	if (!s[*i])
+		return 1;
+	return 0;
+}
 void skip_quotes_copy(char *s, char **arr, int *i, int *k, int j)
 {
 	char c;
@@ -106,20 +111,13 @@ void skip_quotes_copy(char *s, char **arr, int *i, int *k, int j)
 	}
 	else
 	{
+		skip_space(s,i);
 		arr[j][*k] = s[*i];
 		*i += 1;
 		*k += 1;
 	}
 }
 
-int skip_space(char *s, int *i)
-{
-	while (s[*i] == ' ')
-			*i += 1;
-	if (!s[*i])
-		return 1;
-	return 0;
-}
 
 char	**ft_ultra_split(char *s, int	i, int		j)
 {
@@ -129,7 +127,8 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 	char	**arr;
 	
 	if (!s)
-	return (NULL);
+		return (NULL);
+	j = 0;
 	words = count_word(s);
 	arr = malloc ((words + 1) * sizeof(char *));
 	if (!arr)
@@ -137,15 +136,21 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 	while(j < words)
 	{
 		if (skip_space(s, &i))
-			break;
+		break;
 		w_len = ln(&s[i]);
 		arr[j] = malloc(w_len + 1);
 		if (check_alloc(arr, j))
 		return (NULL);
 		k = 0;
 		while (k < w_len)
-			skip_quotes_copy(s, arr, &i, &k, j);
+		skip_quotes_copy(s, arr, &i, &k, j);
 		arr[j++][k] = 0;
-		}
-		return (arr[j] = NULL, arr);
+	}
+	printf("hana\n");
+	return (arr[j] = NULL, arr);
 }
+// int main()
+// {
+// 	// char **str = ft_ultra_split("\"\"", 0 , 0);
+// 	printf("%d\n",count_word("\"\""));
+// }
