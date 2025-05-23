@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ultra_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/23 08:55:06 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/23 18:07:15 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,17 @@ size_t	count_word(char const *str)
 		while (str[i] != ' ' && str[i] && str[i] != '&' && str[i] != '|')
 		{
 			if ((str[i] == '<' || str[i] =='>') && i != 0 && (str[i - 1] != ' '))
+			{
+				while(str[i] == '<' || str[i] == '>')
+					i++;
 				k++;
-			if ((str[i] == '<' || str[i] =='>') && i != 0 && (str[i + 1] != ' '))
+			}
+			else if ((str[i] == '<' || str[i] =='>') && i != 0 && (str[i + 1] != ' '))
+			{
+				while(str[i] == '<' || str[i] == '>')
+					i++;
 				k++;
+			}
 			i++;
 		}
 	}
@@ -145,7 +153,6 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 		if (skip_space(s, &i))
 		break;
 		w_len = ln(&s[i]);
-		printf("%d\n",w_len);
 		arr[j] = malloc(w_len + 1);
 		if (check_alloc(arr, j))
 		return (NULL);
@@ -156,10 +163,3 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 	}
 	return (arr[j] = NULL, arr);
 }
-
-// int main()
-// {
-// 	char **str = ft_ultra_split("ls>l", 0 ,0);
-// 	for(int i = 0;str[i];i++)
-// 		printf("%s\n",str[i]);
-// }
