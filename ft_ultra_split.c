@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/22 15:14:34 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/23 08:54:42 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 void skip_quotes(char *s, int *length, int *k)
 {
 	if (s[*length] == '"')
-		{
-			k += 2;
-			// *length += 1;
-			while (s[*length] != '"' && s[*length + 1])
-				*length += 1;
-		}
-		if (s[*length] == '\'')
-		{
-			k += 2;
-			// *length += 1;
-			while (s[*length] != '\'' && s[*length + 1])
-				*length += 1;
-		}
+	{
+		*k += 2;
+		*length += 1;
+		while (s[*length] != '"' && s[*length + 1])
+			*length += 1;
+	}
+	if (s[*length] == '\'')
+	{
+		*k += 2;
+		*length += 1;
+		while (s[*length] != '\'' && s[*length + 1])
+			*length += 1;
+	}
 }
 
 static int	ln(char *s)
@@ -145,6 +145,7 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 		if (skip_space(s, &i))
 		break;
 		w_len = ln(&s[i]);
+		printf("%d\n",w_len);
 		arr[j] = malloc(w_len + 1);
 		if (check_alloc(arr, j))
 		return (NULL);
@@ -154,4 +155,11 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 		arr[j++][k] = 0;
 	}
 	return (arr[j] = NULL, arr);
+}
+
+int main()
+{
+	char **str = ft_ultra_split("ls>l", 0 ,0);
+	for(int i = 0;str[i];i++)
+		printf("%s\n",str[i]);
 }

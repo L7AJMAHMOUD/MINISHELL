@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/20 10:31:35 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/23 08:47:39 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,12 @@ void export(char ***envp, char **command)
     int j;
     char **tmp;
     int k;
+
+	for (size_t i = 0; command[i]; i++)
+	{
+		printf("%s\n",command[i]);
+	}
+	
 
     i = 0;
     j = 1;
