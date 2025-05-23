@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/23 08:54:42 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/23 08:55:06 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,9 +157,9 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 	return (arr[j] = NULL, arr);
 }
 
-int main()
-{
-	char **str = ft_ultra_split("ls>l", 0 ,0);
-	for(int i = 0;str[i];i++)
-		printf("%s\n",str[i]);
-}
+// int main()
+// {
+// 	char **str = ft_ultra_split("ls>l", 0 ,0);
+// 	for(int i = 0;str[i];i++)
+// 		printf("%s\n",str[i]);
+// }
