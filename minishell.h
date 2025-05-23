@@ -84,7 +84,9 @@ void free_all_ul_split(char **str);
 
 void	pwd();
 void echo(char **str, int fd, char **envp);
-void cd(char *arg);
+void cd(char ***envp, char *arg);
+void export(char ***envp, char **command);
+void unset(char ***envp, char **command);
 
 
 void baner();
@@ -108,8 +110,7 @@ char	*ft_strstr_pare(char *command);
 int ultra_redirect_parse(char *command);
 int ultra_redirect_parsee(char *command);
 void	apply_redirections(char **command);
-void export(char ***envp, char **command);
-void unset(char ***envp, char **command);
 int	ft_str_cmp(char *s1, char *s2);
+char **add_to_envp(char **envp, char *ligne, int i);
 
 #endif

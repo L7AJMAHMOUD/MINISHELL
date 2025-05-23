@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/23 08:47:39 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/23 20:16:24 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int analyse_d(char *s1, char *s2)
 	return 1;
 }
 
-char **add_to_envp(char **envp, char *ligne)
+char **add_to_envp(char **envp, char *ligne, int p)
 {
     int i;
     int j;
@@ -66,8 +66,10 @@ char **add_to_envp(char **envp, char *ligne)
     j = 0;
 	k = 2;
 	if (!envp || !ligne)
-		return NULL;
+	return NULL;
 	m = analyse_c(envp, ligne, &k);
+	if (p == 1 && k == 2)
+		return envp;
     while (envp[j])
         j++;
     str = malloc((j + k) * sizeof(char *));
@@ -196,12 +198,6 @@ void export(char ***envp, char **command)
     char **tmp;
     int k;
 
-	for (size_t i = 0; command[i]; i++)
-	{
-		printf("%s\n",command[i]);
-	}
-	
-
     i = 0;
     j = 1;
     tmp = arr_sorted(*envp);
@@ -233,7 +229,7 @@ void export(char ***envp, char **command)
         {
 			if (check_synt(command[j]))
 				break;
-            tmp = add_to_envp(*envp, command[j++]);
+            tmp = add_to_envp(*envp, command[j++], 0);
             *envp = tmp;
         }
     }

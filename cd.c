@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:32:43 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/21 15:28:37 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/23 20:15:21 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,30 @@ static char	*strjoin(char *s1, char *s2)
 	return (str);
 }
 
-void cd(char *arg)
+void cd(char ***envp, char *arg)
 {
 	char buff[BUFFER_SIZE];
 	char *tmp;
+	char **tmp1;
 	char *str;
 	
 	if(!getcwd(buff,BUFFER_SIZE))
 		perror("getcwd");
+	
 	if (arg[0] == '/')
 	{
 		chdir (arg);
-		return ;
+		tmp1 = add_to_envp(*envp, arg, 1);
+		*envp = tmp1;
 	}
-	tmp = strjoin(buff, "/");
-	str = strjoin(tmp, arg);
-	chdir (str);
-	free(tmp);
-	free(str);
+	else
+	{
+		tmp = strjoin(buff, "/");
+		str = strjoin(tmp, arg);
+		chdir (str);
+		tmp1 = add_to_envp(*envp, str, 1);
+		*envp = tmp1;
+		free(tmp);
+		free(str);
+	}
 }

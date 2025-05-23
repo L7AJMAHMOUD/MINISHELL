@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/22 12:41:48 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/23 20:07:13 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int check_command(char **str, char ***envp, t_node *node)
     if (!(ft_strcmp(str[0], "echo")))
         return (echo(str, 1, *envp), 0);
     if (!(ft_strcmp(str[0], "cd")))
-        return (cd(str[1]), 0);
+        return (cd(envp, str[1]), 0);
     if (!(ft_strcmp(str[0], "pwd")))
         return (pwd(0), 0);
     if (!(ft_strcmp(str[0], "minishell")))
