@@ -1,4 +1,4 @@
-## ⚠️ Avertissement – Version Instable
+## ⚠️ Avertissement – Version pseudo-stable
 
 > 🛠 **Un correctif est en cours de développement.**  
 > Assurez-vous de cloner **la dernière version stable** du projet.  
