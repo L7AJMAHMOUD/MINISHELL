@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/23 20:07:13 by user01           ###   ########.fr       */
+/*   Updated: 2025/05/25 10:45:13 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int check_command(char **str, char ***envp, t_node *node)
 {
     if (!str || !*str)
 		return 0;
+	// str = dirham(str, *envp);
     if (!(ft_strcmp(str[0], "echo")))
         return (echo(str, 1, *envp), 0);
     if (!(ft_strcmp(str[0], "cd")))

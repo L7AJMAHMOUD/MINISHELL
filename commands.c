@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:50:19 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/21 10:59:10 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/05/25 10:38:07 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ int ft_check(char *str)
 {
 	int i;
 
-	i = 1;
+	i = 0;
+	if (str[i++] != '-')
+		return 0;
 	while (str[i])
 	{
 		if (str[i++] != 'n')
@@ -60,8 +62,10 @@ void print(char *str)
 void	priint(char *str, int k)
 {
 	int i;
+	int l;
 
 	i = 0;
+	l = 0;
 	while(str && str[i])
 	{
 		if (str[i] == '=')
@@ -70,6 +74,20 @@ void	priint(char *str, int k)
 			i += 2;
 		if (str[i] == '$' && (str[i + 1] > '9' || str[i + 1] < '0'))
 			break;
+		if (str[i] == '\\')
+		{
+			i++;
+			l++;
+			if (str[i] != '\\')
+			{
+					l /= 2;
+				while (l > 0)
+				{
+					l--;
+					write(1, "\\", 1);
+				}
+			}
+		}
 		write(1, &str[i], 1);
 		i++;
 	}
@@ -82,6 +100,7 @@ void echo(char **str, int fd, char **envp)
 	int j;
 	int k;
 	int p;
+	int o;
 	int b;
 	char *tmp;
 
@@ -111,13 +130,29 @@ void echo(char **str, int fd, char **envp)
 				else
 					priint(&str[i][++j], 1);
 			}
-			else if(ft_isalpha(str[i][j]))
+			else if(ft_isalpha(str[i][j]) || str[i][j] == '$')
 			{
 				b = 0;
+				o = 0;
+				while(str[i][j] == '$')
+				{
+					j++;
+					o++;
+					if (str[i][j] != '$')
+					{
+						if (o % 2)
+							o = -1;
+					}
+				}
 				while(envp[b])
 				{
 					tmp = ft_shearch(&str[i][j], envp[b++]);
-					if (tmp)
+					if (o == -1)
+					{
+						priint(&str[i][j], 1);
+						break;
+					}
+					else if (tmp)
 					{
 						
 						if (str[i + 1])

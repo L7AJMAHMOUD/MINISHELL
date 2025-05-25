@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/23 18:07:15 by user01           ###   ########.fr       */
+/*   Updated: 2025/05/25 11:22:38 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,15 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 	while(j < words)
 	{
 		if (skip_space(s, &i))
-		break;
+			break;
 		w_len = ln(&s[i]);
+		if (w_len == 0)
+		{
+			arr[j++] = ft_strdup("''");
+			if (skip_space(s, &i))
+				break;
+			w_len = ln(&s[i]);
+		}
 		arr[j] = malloc(w_len + 1);
 		if (check_alloc(arr, j))
 		return (NULL);
@@ -163,3 +170,9 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 	}
 	return (arr[j] = NULL, arr);
 }
+// int main ()
+// {
+// 	char **str = ft_ultra_split("\"\"", 0 ,0 );
+// 	for (int i = 0; str[i]; i++)
+// 		printf("%s\n", str[i]);
+// }
