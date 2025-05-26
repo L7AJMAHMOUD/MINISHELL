@@ -82,7 +82,7 @@ void free_all_ul_split(char **str);
 /*									*/
 /* **************************************************************** */
 
-void	pwd();
+void	pwd(int i);
 void echo(char **str, int fd, char **envp);
 void cd(char ***envp, char *arg);
 void export(char ***envp, char **command);
