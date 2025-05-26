@@ -1,3 +1,14 @@
+## 🚨 À LIRE ABSOLUMENT
+
+Avant toute action, **lisez attentivement ce fichier README**.  
+Il contient :
+- les instructions d'installation,
+- l'état de la version actuelle,
+- les avertissements importants.
+
+**👉 Ne pas ignorer ce fichier.**
+
+
 ## ⚠️ Avertissement – Version pseudo-stable
 
 > 🛠 **Un correctif est en cours de développement.**  
