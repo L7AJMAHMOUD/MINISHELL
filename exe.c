@@ -125,9 +125,8 @@ void	exe(char **command, char **envp)
 	int i = fork();
 	if (i == 0)
 	{
-        printf("HHHH\n");
-		path = find_path(*command, envp);
 		apply_redirections(command);
+		path = find_path(*command, envp);
 		execve(path,command, NULL);
 	}
 	else
