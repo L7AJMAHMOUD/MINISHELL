@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:50:19 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/25 10:38:07 by user01           ###   ########.fr       */
+/*   Updated: 2025/06/04 08:54:14 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,6 @@ void	priint(char *str, int k)
 	{
 		if (str[i] == '=')
 			i++;
-		if (str[i] == '$' && (str[i + 1] <= '9' && str[i + 1] >= '0'))
-			i += 2;
-		if (str[i] == '$' && (str[i + 1] > '9' || str[i + 1] < '0'))
-			break;
 		if (str[i] == '\\')
 		{
 			i++;
@@ -117,60 +113,10 @@ void echo(char **str, int fd, char **envp)
 	{
 		while (str[i][j] == '=')
 			write(1, &str[i][j++], 1);
-		if (str[i][j] == '$')
-		{
-			if (k == 1)
-				break ;
-			k = 1;
-			j++;
-			if (str[i][j] <= '9' && str[i][j] >= '0')
-			{
-				if (str[i + 1])
-					priint(&str[i][++j], 1);
-				else
-					priint(&str[i][++j], 1);
-			}
-			else if(ft_isalpha(str[i][j]) || str[i][j] == '$')
-			{
-				b = 0;
-				o = 0;
-				while(str[i][j] == '$')
-				{
-					j++;
-					o++;
-					if (str[i][j] != '$')
-					{
-						if (o % 2)
-							o = -1;
-					}
-				}
-				while(envp[b])
-				{
-					tmp = ft_shearch(&str[i][j], envp[b++]);
-					if (o == -1)
-					{
-						priint(&str[i][j], 1);
-						break;
-					}
-					else if (tmp)
-					{
-						
-						if (str[i + 1])
-							priint(tmp, 1);
-						else
-							priint(tmp, 0);
-						break ;
-					}
-				}
-			}
-		}
+		if (str[i + 1])
+			priint(str[i], 1);
 		else
-		{
-			if (str[i + 1])
-				priint(str[i], 1);
-			else
-				priint(str[i], 0);
-		}
+			priint(str[i], 0);
 		i++;
 		if (!str[i] && p == 0)
 			write(1, "\n", 1);
