@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:56:47 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/21 10:29:49 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/06/04 11:42:35 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	*ft_strstr_pare(char *command)
 	return NULL;
 }
 
-void    command_tokenization(t_node **node, char *command)
+void    command_tokenization(t_node **node, char *command, char **envp)
 {
 	int i;
 	
@@ -135,7 +135,7 @@ void    command_tokenization(t_node **node, char *command)
 	}
 	if (ft_strstr(command, "&&"))
 	{
-		command_tokenization(&t_mp ,ft_strstr(command, "&&"));
+		command_tokenization(&t_mp ,ft_strstr(command, "&&"), envp);
 		if (!(*node)->next)
 			(*node)->next = t_mp;
 		else
@@ -146,11 +146,11 @@ void    command_tokenization(t_node **node, char *command)
 		}
 		i = ft_strt(command, "&&");
 		command[i] = 0;
-		command_tokenization(node ,command);
+		command_tokenization(node ,command, envp);
 	}
 	else if ((*node)->or == 1 && ft_strstr(command, " ||"))
 	{
-		command_tokenization(&t_mp ,ft_strstr(command, "||"));
+		command_tokenization(&t_mp ,ft_strstr(command, "||"), envp);
 		if (!(*node)->next)
 			(*node)->next = t_mp;
 		else
@@ -161,9 +161,9 @@ void    command_tokenization(t_node **node, char *command)
 		}
 		i = ft_strt(command, "||");
 		command[i] = 0;
-		command_tokenization(node ,command);
+		command_tokenization(node ,command, envp);
 	}
 	else
-		(*node)->command = ft_ultra_split(command, 0, 0);
+		(*node)->command = ft_ultra_split(command, 0, 0, envp);
 }
 

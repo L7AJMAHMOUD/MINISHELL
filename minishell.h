@@ -35,7 +35,7 @@ typedef struct s_node
 }   t_node;
 
 void    read_input(char ***envp);
-char	**ft_ultra_split(char *s, int	i, int		j);
+char	**ft_ultra_split(char *s, int	i, int		j, char **envp);
 void	invalid_param(void);
 
 /* **************************************************************** */
@@ -72,7 +72,7 @@ int is_something(int cmd);
 /*						 command_tokenization_utils					*/
 /*									*/
 /* **************************************************************** */
-void	command_tokenization(t_node **node, char *command);
+void	command_tokenization(t_node **node, char *command, char **envp);
 void node_null(t_node *node);
 void free_all_ul_split(char **str);
 
@@ -88,6 +88,7 @@ void cd(char ***envp, char *arg);
 void export(char ***envp, char **command);
 void unset(char ***envp, char **command);
 
+char	*ft_shearch(char *haystack, char *needle);
 
 void baner();
 
@@ -112,7 +113,7 @@ int ultra_redirect_parsee(char *command);
 void	apply_redirections(char **command);
 int	ft_str_cmp(char *s1, char *s2);
 char **add_to_envp(char **envp, char *ligne, int i);
-char **dirham(char **str, char **envp);
+char **dirham(char ***str, char **envp);
 void redirect_output_fd(char **command);
 
 #endif

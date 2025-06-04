@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/06/04 09:24:43 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/06/04 14:43:10 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void skip_quotes_copy(char *s, char **arr, int *i, int *k, int j)
 }
 
 
-char	**ft_ultra_split(char *s, int	i, int		j)
+char	**ft_ultra_split(char *s, int	i, int		j,char ** envp)
 {
 	int		words;
 	int		k;
@@ -168,7 +168,12 @@ char	**ft_ultra_split(char *s, int	i, int		j)
 		skip_quotes_copy(s, arr, &i, &k, j);
 		arr[j++][k] = 0;
 	}
-	return (arr[j] = NULL, arr);
+	arr[j] = NULL;
+	arr = dirham(&arr, envp);
+	printf("----------------------\n");
+	for (int z = 0; arr[z]; z++)
+		printf("%s\n",arr[z]);
+	return (arr);
 }
 // int main ()
 // {

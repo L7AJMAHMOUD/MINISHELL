@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/06/04 10:17:00 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/06/04 11:46:41 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int check_command(char **str, char ***envp, t_node *node)
 {
     if (!str || !*str)
 		return 0;
-	// str = dirham(str, *envp);
     if (!(ft_strcmp(str[0], "echo")))
         return (echo(str, 1, *envp), 0);
     if (!(ft_strcmp(str[0], "cd")))
@@ -103,7 +102,7 @@ void    read_input(char ***envp)
         if (command)
             add_history(command);
         if(command_analyze(command) == 0)
-			command_tokenization(&node, command);
+			command_tokenization(&node, command, *envp);
         tmp = node;
 
         while (tmp)
