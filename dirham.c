@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 06:00:23 by abkaram           #+#    #+#             */
-/*   Updated: 2025/06/04 14:57:38 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/06/04 15:18:27 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,15 @@ char **regenerat_dol_with_env(char **stro, char *comm, int k)
 	char **str;
 	int i;
 	int j;
+	int z;
 	int len;
 
 	i = 0;
+	z = 0;
 	while(stro[i])
 		i++;
+	if (!comm)
+		i--;
 	str = malloc ((i + 1) * sizeof(char *));
 	i = 0;
 	while (stro[i])
@@ -80,22 +84,27 @@ char **regenerat_dol_with_env(char **stro, char *comm, int k)
 		j = 0;
 		if (i == k)
 		{
-			while(comm[j] != '=')
-				j++;
-			len = ft_strlen(&comm[++j]);
-			str[i] = malloc(len + 1);
-			len = 0;
-			while(comm[j])
-				str[i][len++] = comm[j++];
-			str[i][len] = 0;
+			if (!comm)
+				z++;
+			else
+			{
+				while(comm[j] != '=')
+					j++;
+				len = ft_strlen(&comm[++j]);
+				str[i] = malloc(len + 1);
+				len = 0;
+				while(comm[j])
+					str[i][len++] = comm[j++];
+				str[i][len] = 0;
+			}
 		}
 		else
 		{
-			len = ft_strlen(&stro[i][j]);
+			len = ft_strlen(&stro[i + z][j]);
 			str[i] = malloc(len + 1);
 			len = 0;
-			while(stro[i][j])
-				str[i][len++] = stro[i][j++];
+			while(stro[i + z][j])
+				str[i][len++] = stro[i + z][j++];
 			str[i][len] = 0;
 		}
 		i++;
@@ -154,8 +163,11 @@ char **dirham(char ***st, char **envp)
 						}
 					}
 				}
-				// if (b != -1)
-				// 	return_with_vide();
+				if (b != -1)
+				{
+					*st = regenerat_dol_with_env(*st, NULL, i);
+					break;
+				}
 			}
 			j++;
 		}
