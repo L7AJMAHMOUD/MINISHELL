@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 06:00:23 by abkaram           #+#    #+#             */
-/*   Updated: 2025/06/04 15:18:27 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/06/05 09:24:43 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ char **regenerat_without_dol(char **stro)
 		j = 0;
 		while (stro[i][j] == '$')
 			stro[i][j++] = 32;
+		if (stro[i][j] <= 57 && stro[i][j] >= 48)
+			stro[i][j++] = 32;
 		if (j != 0)
 			break;
 		i++;
@@ -75,8 +77,8 @@ char **regenerat_dol_with_env(char **stro, char *comm, int k)
 	z = 0;
 	while(stro[i])
 		i++;
-	if (!comm)
-		i--;
+	// if (!comm)
+	// 	i--;
 	str = malloc ((i + 1) * sizeof(char *));
 	i = 0;
 	while (stro[i])
@@ -100,6 +102,8 @@ char **regenerat_dol_with_env(char **stro, char *comm, int k)
 		}
 		else
 		{
+			if (stro[i + z][j] <= 57 && stro[i + z][j] >= 48)
+				j++;
 			len = ft_strlen(&stro[i + z][j]);
 			str[i] = malloc(len + 1);
 			len = 0;
@@ -126,14 +130,13 @@ char **dirham(char ***st, char **envp)
 
 	i = 0;
 	o = 0;
-	j = 0;
-	b = 0;
 	while (str[i])
 	{
 		j  = 0;
 		while (str[i][j])
 		{
-			if (str[i][j] == '$')
+			b = 0;
+			if (str[i][j] == '$' && str[i][j + 1] != 32 && str[i][j + 1])
 			{
 				while(str[i][j] == '$')
 				{
@@ -145,7 +148,7 @@ char **dirham(char ***st, char **envp)
 							o = -1;
 					}
 				}
-				if (o != -1)
+				if (o != -1 || (str[i][j] <= 57 && str[i][j] >= 48))
 				{
 					*st = regenerat_without_dol(*st);
 					break;

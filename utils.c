@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:54:55 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/06 14:32:42 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/06/04 15:43:24 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,24 @@ int	ft_isalpha(int c)
 	if (c >= 65 && c <= 90)
 		return (1);
 	if (c >= 97 && c <= 122)
+		return (1);
+	return (0);
+}
+
+int	ft_isalnum(int c)
+{
+	if (c >= 48 && c <= 57)
+		return (1);
+	if (c >= 65 && c <= 90)
+		return (1);
+	if (c >= 97 && c <= 122)
+		return (1);
+	return (0);
+}
+
+int	ft_isdigit(int c)
+{
+	if (c >= 48 && c <= 57)
 		return (1);
 	return (0);
 }
