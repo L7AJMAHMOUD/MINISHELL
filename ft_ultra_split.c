@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ultra_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/06/04 14:43:10 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/06/06 14:57:11 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,9 +170,6 @@ char	**ft_ultra_split(char *s, int	i, int		j,char ** envp)
 	}
 	arr[j] = NULL;
 	arr = dirham(&arr, envp);
-	printf("----------------------\n");
-	for (int z = 0; arr[z]; z++)
-		printf("%s\n",arr[z]);
 	return (arr);
 }
 // int main ()
