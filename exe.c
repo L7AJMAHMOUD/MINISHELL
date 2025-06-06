@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/22 15:58:48 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/06/06 17:30:02 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ char	*find_path(char *path, char **envp)
 			return tmp;
 		free(tmp);
 	}
-	printf ("%s : command not found\n", path);
+	// printf ("%s : command not found\n", path); // in str 2
+	ft_print("path not found\n", 0);
 	return NULL;
 }
 void	exe(char **command, char **envp)
@@ -127,6 +128,8 @@ void	exe(char **command, char **envp)
 	{
 		apply_redirections(command);
 		path = find_path(*command, envp);
+		if (!path)
+			exit(1) ;
 		execve(path,command, NULL);
 	}
 	else
