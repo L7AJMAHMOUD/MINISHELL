@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dirham.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 06:00:23 by abkaram           #+#    #+#             */
-/*   Updated: 2025/06/06 15:00:06 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:22:46 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,13 @@ char **dirham(char ***st, char **envp)
 	str = *st;
 
 	i = 0;
-	o = 0;
+	
 	while (str[i])
 	{
 		j  = 0;
 		while (str[i][j])
 		{
+			o = 0;
 			b = 0;
 			if (str[i][j] == '$' && str[i][j + 1] != 32 && str[i][j + 1])
 			{
