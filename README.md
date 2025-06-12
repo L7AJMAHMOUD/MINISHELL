@@ -9,13 +9,13 @@ Il contient :
 **👉 Ne pas ignorer ce fichier.**
 
 
-## ⚠️ Avertissement – Version pseudo-stable
+## ⚠️ Avertissement – Version failed
 
 > 🛠 **Un correctif est en cours de développement.**  
 > Assurez-vous de cloner **la dernière version stable** du projet.  
 >
 > **Message de user01 :**  
-> _"Cette version est afchale version 0/10 attentien."_
+> _"Cette version est afchale version 0/10 attention."_
 
 ---
 
