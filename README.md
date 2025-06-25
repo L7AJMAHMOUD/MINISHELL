@@ -15,7 +15,7 @@ Il contient :
 > Assurez-vous de cloner **la dernière version stable** du projet.  
 >
 > **Message de user01 :**  
-> _"Cette version est la plus stable version 8/10 . testi ila l9iti chi haja kteb test f test.txt"_
+> _"Cette version est la plus stable version 8/10 . testi ila l9iti chi haja kteb test f test.txt (andek tkhser lik clavier b testat)"_
 
 ---
 
