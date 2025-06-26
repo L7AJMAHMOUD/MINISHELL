@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/06/26 12:56:44 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/06/26 14:14:03 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ char	**ft_ultra_split(char *s, int	i, int		j,char ** envp)
 	}
 	arr[j] = NULL;
 	arr = dirham(arr, envp);
-	// arr = widlcart(arr, envp);
+	arr = wildcart(arr, envp);
 	return (arr);
 }
 // int main ()

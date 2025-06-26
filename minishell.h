@@ -21,6 +21,7 @@
 #include <readline/history.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <dirent.h>
 #include <sys/wait.h>
 
 #define BUFFER_SIZE 100000

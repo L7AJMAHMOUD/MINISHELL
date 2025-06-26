@@ -15,7 +15,7 @@ Il contient :
 > Assurez-vous de cloner **la dernière version stable** du projet.  
 >
 > **Message de user01 :**  
-> _"Cette version est la plus stable version 8/10 ."_
+> _"Cette version est la plus stable version 8/10 ., la bantlik chi haja machi hia hadik commenti --> ft_ultra_split.c:173"_
 
 ---
 

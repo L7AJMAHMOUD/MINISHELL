@@ -6,69 +6,48 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:57:15 by abkaram           #+#    #+#             */
-/*   Updated: 2025/06/26 12:58:34 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/06/26 14:10:16 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// char **wildcart(char **st, char **envp)
-// {
-// 	int i;
-// 	int j;
-// 	char *tmp;
-// 	char **str;
+char **add_in_array(char **st, char *cmd, int i)
+{
+	return NULL;	
+}
 
-// 	str = st;
-
-// 	i = 0;
+char **wildcart(char **str, char **envp)
+{
+	DIR *dir;
+	struct dirent *entry;
+	int i;
+	int j;
 	
-// 	while (str[i])
-// 	{
-// 		j  = 0;
-// 		while (str[i][j])
-// 		{
-// 			if (str[i][j] == '$' && str[i][j + 1] != 32 && str[i][j + 1])
-// 			{
-// 				while(str[i][j] == '$')
-// 				{
-// 					j++;
-// 					o++;
-// 					if (str[i][j] != '$')
-// 					{
-// 						if (o % 2)
-// 							o = -1;
-// 					}
-// 				}
-// 				if (o != -1 || (str[i][j] <= 57 && str[i][j] >= 48))
-// 				{
-// 					st = regenerat_without_dol(st);
-// 							return(dirham(st,envp));
-// 				}
-// 				else
-// 				{
-// 					while(envp[b])
-// 					{
-// 						tmp = ft_shearch(&str[i][j], envp[b++]);
-// 						if (tmp)
-// 						{
-// 							st = regenerat_dol_with_env(st, envp[b - 1], i);
-// 							b = -1;
-// 							return(dirham(st,envp));
-// 						}
-// 					}
-// 				}
-// 				if (b != -1)
-// 				{
-// 					st = regenerat_dol_with_env_emply(st, i);
-// 					while (str[i][j] && str[i][j + 1] != '$')
-// 						j++;
-// 				}
-// 			}
-// 			if (str[i][j])
-// 				j++;
-// 		}
-// 		i++;
-// 	}
-// 	return st;
-// }
+	i = 0;
+	while(str[i])
+	{
+		j = 0;
+		while(str[i][j])
+		{
+			skip_inside_quotes(str[i], &j);
+			if (str[i][j] == '*')
+			{
+				printf("\033[1;32m*** Welcome to SGF HHHH ***\033[0m\n");
+				dir = opendir(".");
+				if (!dir) {
+					perror("opendir");
+					return NULL;
+				}
+				while ((entry = readdir(dir)) != NULL)
+					str = add_in_array(str, entry->d_name, i);
+				closedir(dir);
+				break;
+			}
+			if (str[i][j])
+				j++;
+		}
+		i++;
+	}
+	return str;
+}
