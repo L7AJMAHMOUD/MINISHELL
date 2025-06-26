@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   linked_lists_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:28:31 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/04 16:27:13 by user01           ###   ########.fr       */
+/*   Updated: 2025/06/26 14:26:26 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	ft_lstadd_front(t_node **lst, t_node *new)
 {
