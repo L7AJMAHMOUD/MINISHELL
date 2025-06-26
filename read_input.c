@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/06/26 10:17:23 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/06/26 11:04:58 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,11 @@ void    read_input(char ***envp)
         if(command_analyze(command) == 0)
 			command_tokenization(&node, command, *envp);
         tmp = node;
-
         while (tmp)
         {
             if(check_command((tmp)->command, envp, node))
             {
-                exe((tmp)->command, *envp);
+                exe((tmp)->command, *envp, node);
             }
             tmp = (tmp) -> next;
         }

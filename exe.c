@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/06/26 10:50:43 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/06/26 11:02:54 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,21 +120,31 @@ char	*find_path(char *path, char **envp)
 	// ft_print("path not found\n", 0);
 	return NULL;
 }
-void	exe(char **command, char **envp)
+void	exe(char **command, char **envp, t_node *node)
 {
 	char *path;
 	// int *fd;
 	int i = fork();
+	int status;
 	if (i == 0)
 	{
 		apply_redirections(command);
 		path = find_path(*command, envp);
 		if (!path)
 			exit(1) ;
-		execve(path,command, NULL);
+		exit (execve(path ,command, NULL));
 	}
 	else
-		wait(NULL);
-	
+		wait(&status);
+	if (status == 0)
+	{
+		node->and = 1;
+		node->or = 0;
+	}
+	else
+	{
+		node->and = 0;
+		node->or = 1;
+	}
 	return ;
 }

@@ -95,7 +95,7 @@ char	*ft_shearch(char *haystack, char *needle);
 void baner();
 
 void	ft_print(char *s, int i);
-void	exe(char **command, char **envp);
+void	exe(char **command, char **envp, t_node *node);
 char	*find_path(char *path, char **envp);
 
 int   	and(char *command, int i, int k);
