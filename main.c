@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:22 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/25 11:22:20 by user01           ###   ########.fr       */
+/*   Updated: 2025/06/26 10:27:02 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ char **read_stock(char **envp)
 
     j = 0;
     while (envp[j])
-    {
         j++;
-    }
     str = malloc((j + 1) * sizeof(char *));
     j = 0;
     while(envp[j])
