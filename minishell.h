@@ -117,5 +117,6 @@ int	ft_str_cmp(char *s1, char *s2);
 char **add_to_envp(char **envp, char *ligne, int i);
 char **dirham(char **str, char **envp);
 void redirect_output_fd(char **command);
+char **wildcart(char **st, char **envp);
 
 #endif

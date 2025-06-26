@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ultra_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/06/25 21:59:11 by user01           ###   ########.fr       */
+/*   Updated: 2025/06/26 12:56:44 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,11 +165,12 @@ char	**ft_ultra_split(char *s, int	i, int		j,char ** envp)
 		return (NULL);
 		k = 0;
 		while (k < w_len)
-		skip_quotes_copy(s, arr, &i, &k, j);
+			skip_quotes_copy(s, arr, &i, &k, j);
 		arr[j++][k] = 0;
 	}
 	arr[j] = NULL;
 	arr = dirham(arr, envp);
+	// arr = widlcart(arr, envp);
 	return (arr);
 }
 // int main ()
