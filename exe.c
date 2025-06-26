@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/06/06 17:30:02 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/06/26 10:15:47 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ char	*find_path(char *path, char **envp)
 	if (i == -1)
 	{
 		// free()
-		ft_print("path not found\n", 0);
+		printf ("minishell : %s: No such file or directory\n", path); 
+		// ft_print("path not found\n", 0);
 		exit(1);
 	}
 	while (j < ft_strlen(envp[i]))
@@ -115,8 +116,8 @@ char	*find_path(char *path, char **envp)
 			return tmp;
 		free(tmp);
 	}
-	// printf ("%s : command not found\n", path); // in str 2
-	ft_print("path not found\n", 0);
+	printf ("%s : command not found\n", path); // in str 2
+	// ft_print("path not found\n", 0);
 	return NULL;
 }
 void	exe(char **command, char **envp)
