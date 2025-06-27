@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ultra_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/06/26 14:14:03 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/06/27 14:32:01 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,3 +179,74 @@ char	**ft_ultra_split(char *s, int	i, int		j,char ** envp)
 // 	for (int i = 0; str[i]; i++)
 // 		printf("%s\n", str[i]);
 // }
+
+/// ERRORS CONDITIONS 
+
+// ==========================
+
+// export VAR=hello	 (clear)
+
+// echo $VAR	hello (clear)
+
+// echo "$VAR"	hello (clear)
+
+// echo '$VAR'	expected-> $VAR   result -> hello
+
+// ================================
+
+// export A=hi B=there	(clear)
+
+// echo $A $B	         (clear)
+
+// echo "$A-$B"	          expected -> hi-there   result -> nothing 
+
+// echo "$A $B"            expected -> hi there   result -> hi
+
+// =================================
+
+// export NAME=abkaram
+
+// echo "Salam $NAME"        expected -> Salam abkaram     result -> abkaram
+
+// ==================================
+
+// echo "User : $USER, Home : $HOME"
+
+// expected -> User : maen-naj, Home : /home/maen-naj
+
+// result -> empty
+
+// ===================================
+
+// echo $$
+
+// expected ->   pid of minishell 
+
+// result -> empty 
+
+// ===================================
+
+// echo $0
+
+// expected -> bash
+
+// result -> empty
+
+// ====================================
+
+// echo $? 
+
+// expected -> exit status of last command (127 or 0)
+
+// result -> empty
+
+// =================================
+
+// export VAR=value
+
+// echo "$VARabc"        (clear)
+
+// echo "${VAR}abc"   expected -> valueabc    result -> empty
+
+// ==========================================
+
