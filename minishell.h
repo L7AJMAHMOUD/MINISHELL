@@ -23,6 +23,7 @@
 #include <errno.h>
 #include <dirent.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 #define BUFFER_SIZE 100000
 
@@ -119,5 +120,6 @@ char **add_to_envp(char **envp, char *ligne, int i);
 char **dirham(char **str, char **envp);
 void redirect_output_fd(char **command);
 char **wildcart(char **st, char **envp);
-
+void	start(void);
+void    bash_sig_handler(int sig);
 #endif

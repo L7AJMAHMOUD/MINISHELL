@@ -16,7 +16,6 @@ char **add_in_array(char **st, char *cmd, int i)
 {
 	return NULL;	
 }
-
 char **wildcart(char **str, char **envp)
 {
 	DIR *dir;

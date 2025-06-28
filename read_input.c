@@ -88,11 +88,12 @@ void    read_input(char ***envp)
 	t_node *tmp;
     char *str;
 
-    // baner();
     while (1)
     {
         node = NULL;
-        command = readline("\033[31m╔══[root@nightmare]—[]\n╚═\033[5m\033[0m\033[31m> \033[0m▄︻デ══━一💥 > ");
+        // command = readline("\033[31m╔══[root@nightmare]—[]\n╚═\033[5m\033[0m\033[31m> \033[0m▄︻デ══━一 > ");
+        signal(SIGINT, bash_sig_handler);
+        command = readline("▄︻デ══━一 > ");
         if (!command)
         {
             ft_print("\nexit", 0);
