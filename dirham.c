@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 06:00:23 by abkaram           #+#    #+#             */
-/*   Updated: 2025/06/26 14:25:58 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:35:39 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,43 @@ char **regenerat_without_dol(char **stro)
 	free_all_ul_split(stro);
 	return (str);
 }
+
+int ft_strlen_(char *stro)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	
+	if (!stro)
+		return 0;
+	while(stro[i])
+	{
+		if (stro[i] == '$')
+		{
+			i++;
+			j++;
+			while (stro[i] != 32 && stro[i])
+			{
+				i++;
+				j++;
+			}
+			
+		}
+		else
+			i++;
+	}
+	return (i - j);
+	
+}
+
 char **regenerat_dol_with_env(char **stro, char *comm, int k)
 {
 	char **str;
 	int i;
 	int j;
+	int x = 0;
 	int len;
 
 	i = 0;
@@ -84,11 +116,20 @@ char **regenerat_dol_with_env(char **stro, char *comm, int k)
 		{
 			while(comm[j] != '=')
 				j++;
-			len = ft_strlen(&comm[++j]);
+			len = ft_strlen(&comm[++j] + ft_strlen_(stro[i]));
 			str[i] = malloc(len + 1);
 			len = 0;
-			while(comm[j])
-				str[i][len++] = comm[j++];
+			while (stro[i][x])
+			{
+				if (stro[i][x] == '$')
+				{
+					while(comm[j])
+						str[i][len++] = comm[j++];
+					while(stro[i][x] != 32 && stro[i][x])
+						x++;
+				}
+				str[i][len++] = stro[i][x++];
+			}
 			str[i][len] = 0;
 		}
 		else
@@ -107,58 +148,37 @@ char **regenerat_dol_with_env(char **stro, char *comm, int k)
 	str[i] = 0;
 	return str;	
 }
-// char **regenerat_dol_with_env_emply(char **stro, int k)
-// {
-// 	char **str;
-// 	int i;
-// 	int j;
-// 	int z;
-// 	int len;
-
-// 	i = 0;
-// 	z = 0;
-// 	while(stro[i])
-// 		i++;
-// 	str = malloc ((i) * sizeof(char *));
-// 	i = 0;
-// 	while (stro[i])
-// 	{
-// 		j = 0;
-// 		if (i == k)
-// 			i++;
-// 		else
-// 		{
-// 			if (stro[i][j] <= 57 && stro[i][j] >= 48)
-// 				j++;
-// 			len = ft_strlen(&stro[i][j]);
-// 			str[z] = malloc(len + 1);
-// 			len = 0;
-// 			while(stro[i][j])
-// 				str[z][len++] = stro[i][j++];
-// 			str[z][len] = 0;
-// 		}
-// 		z++;
-// 		i++;
-// 	}
-// 	str[z] = 0;
-// 	return str;	
-// }
 
 char **regenerat_dol_with_env_emply(char **stro, int k)
 {
     char **str;
-    int i = 0, j, z = 0, len;
+    int i = 0, j, z = 0, len, x= 0;
     while (stro[i])
         i++;
-    str = malloc((i) * sizeof(char *));
+    str = malloc((i + 1) * sizeof(char *));
     if (!str)
         return NULL;
     i = 0;
     while (stro[i])
     {
         if (i == k) {
+			str[i] = malloc(ft_strlen_(stro[i]) + 1);
+			len = 0;
+			x = 0;
+			while (stro[i][x])
+			{
+				if (stro[i][x] == '$')
+				{
+					while(stro[i][x] != 32 && stro[i][x])
+						x++;
+				}
+				else
+					str[i][len++] = stro[i][x++];
+			}
+			str[i][len] = 0;
             i++;
-            continue;  
+			z++;
+            continue;
         }
         j = 0;
         if (stro[i][j] >= '0' && stro[i][j] <= '9')
@@ -170,7 +190,6 @@ char **regenerat_dol_with_env_emply(char **stro, int k)
         len = 0;
         while(stro[i][j])
             str[z][len++] = stro[i][j++];
-
         str[z][len] = 0;
         z++;
         i++;
