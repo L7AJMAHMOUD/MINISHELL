@@ -71,6 +71,12 @@ int	search_first(char *command)
 
 int	command_analyze(char *command)
 {
+	if (command[0] == '\0' || command[0] == ' ')
+	{
+		printf("\n");
+		return 0;
+	}
+	// printf("CMD = %s\n",command);
 	if (search_first(command) != 0)
 		return (printf("SYNTAX ERROR 0\n"), -1);
 	if (dsq_detector(command) != 0)
