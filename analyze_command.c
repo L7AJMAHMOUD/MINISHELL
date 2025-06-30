@@ -87,8 +87,8 @@ int	command_analyze(char *command)
 		return (printf("SYNTAX ERROR 3\n"), -1);
 	if (or(command, 0, 0) != 0)
 		return (printf("SYNTAX ERROR 4\n"), -1);
-	// if(redirect_parse(command) != 0)
-	// 	return (printf("SYNTAX ERROR 5\n"), -1);
+	if(redirect_parse(command) != 0)
+		return (printf("SYNTAX ERROR 5\n"), -1);
 	if (there_a_parntheses(command) == -33)
 		if (parenth(command) != 0)
 			return (printf("SYNTAX ERROR 6\n"), -1);
