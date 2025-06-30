@@ -116,8 +116,10 @@ char	*find_path(char *path, char **envp)
 			return tmp;
 		free(tmp);
 	}
-	printf ("%s : command not found\n", path); // in str 2
+	// printf ("%s : command not found\n", path); // in str 2
 	// ft_print("path not found\n", 0);
+	write(2, path, ft_strlen(path));
+	write (2, " : command not found\n", 21);
 	return NULL;
 }
 void	exe(char **command, char **envp, t_node *node)
@@ -128,6 +130,7 @@ void	exe(char **command, char **envp, t_node *node)
 	int status;
 	if (i == 0)
 	{
+	
 		apply_redirections(command);
 		path = find_path(*command, envp);
 		if (!path)

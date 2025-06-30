@@ -15,16 +15,12 @@
 void	apply_redirections(char **command)
 {
 	int i = 0;
+	int count = 0;
 	while (command[i])
 	{
 		if (ft_strcmp(command[i], ">") == 0)
 			redirect_output_fd(command);
 		i++;
 	}
-	
-}
 
-// [ls] ----> [>] ----> [p]
-// [>] ----> [p] ----> [ls]
-// [ls] ----> [>] ----> [p] ----> [x]
-// [>] ----> [ls] ----> [p]
+}
