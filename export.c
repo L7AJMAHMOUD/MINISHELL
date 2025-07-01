@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/01 11:20:29 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:53:57 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,11 +149,22 @@ char **copy_envp(char **envp)
 int	check_synt(char *str)
 {
 	int i;
+	int j;
 
 	i = 0;
+	j = 0;
 	if (str[i] == '"')
 	while (str[i] && str[i] == '"')
 		i++;	
+	while (str[i] == '_')
+	{
+		j++;
+		i++;	
+	}
+	if (j == 1)
+		return (1);
+	else if (j > 1 && (str[i] == '=' || !str[i]))
+		return (0);
 	if (!ft_isalpha(str[i]) && str[i] != '\\')
 		return (ft_print("minishell: export: not a valid identifier ​😉", 0), 1);
 	return 0;
