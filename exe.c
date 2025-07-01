@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/06/26 11:30:51 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/01 12:27:36 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,22 @@ char	*find_path(char *path, char **envp)
 
 	j = 5;
 	if ((path[0] == '/' || path[0] =='.') && access(path, F_OK) == 0)
+	{
+		if (access(path ,X_OK) == 0)
+		{
+			write (2, "minishell: ", 11);
+			write(2, path, ft_strlen(path));
+			write (2, " : Is a directory\n", 18);
+		}
 		return path;
+	}
+	else if ((path[0] == '/' || path[0] =='.'))
+	{
+		write (2, "minishell: ", 11);
+		write(2, path, ft_strlen(path));
+		write (2, " : No such file or directory\n", 29);
+		return path;
+	}
 	i = ft_locat(envp);
 	if (i == -1)
 	{
@@ -139,15 +154,5 @@ void	exe(char **command, char **envp, t_node *node)
 	}
 	else
 		wait(&status);
-	if (status == 0)
-	{
-		node->and = 1;
-		node->or = 0;
-	}
-	else
-	{
-		node->and = 0;
-		node->or = 1;
-	}
 	return ;
 }
