@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/01 12:27:36 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/01 12:34:22 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,9 @@ char	*find_path(char *path, char **envp)
 	if (i == -1)
 	{
 		// free()
-		printf ("minishell : %s: No such file or directory\n", path);  // in str 2
-		// ft_print("path not found\n", 0);
+		write (2, "minishell: ", 11);
+		write(2, path, ft_strlen(path));
+		write (2, " : No such file or directory\n", 29);
 		return NULL;
 	}
 	while (j < ft_strlen(envp[i]))
