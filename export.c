@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/01 11:18:11 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/01 11:20:29 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int	check_synt(char *str)
 	if (str[i] == '"')
 	while (str[i] && str[i] == '"')
 		i++;	
-	if (!ft_isalpha(str[0]) && str[0] != '\\')
+	if (!ft_isalpha(str[i]) && str[i] != '\\')
 		return (ft_print("minishell: export: not a valid identifier ​😉", 0), 1);
 	return 0;
 }
