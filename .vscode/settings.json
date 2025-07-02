@@ -1,9 +1,6 @@
 {
 	"files.associations": {
-		"readline.h": "c",
-		"random": "c",
 		"sstream": "c",
-		"minishell.h": "c",
-		"errno.h": "c"
+		"format": "c"
 	}
 }

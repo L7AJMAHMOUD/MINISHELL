@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/06/29 09:52:57 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/02 09:42:33 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,8 @@ void    read_input(char ***envp)
     while (1)
     {
         node = NULL;
-        // command = readline("\033[31m╔══[root@nightmare]—[]\n╚═\033[5m\033[0m\033[31m> \033[0m▄︻デ══━一 > ");
         signal(SIGINT, bash_sig_handler);
-        command = readline("▄︻デ══━一 > ");
+        command = readline("\033[31m▄︻デ══━一 > \033[0m");
         if (!command)
         {
             ft_print("\nexit", 0);
