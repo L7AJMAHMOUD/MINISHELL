@@ -92,7 +92,7 @@ void    read_input(char ***envp)
     {
         node = NULL;
         signal(SIGINT, bash_sig_handler);
-        command = readline("\033[31m▄︻デ══━一 > \033[0m");
+        command = readline("\033[31m▄\033[32m︻\033[33mデ\033[34m══━一 💥 > \033[0m");
         if (!command)
         {
             ft_print("\nexit", 0);
