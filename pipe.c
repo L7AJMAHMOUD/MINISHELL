@@ -19,9 +19,6 @@ int pip(t_node *node, char ***envp)
 	t_node *cmd1 = node;
 	t_node *cmd2 = node->next;
 
-	if (!cmd2)
-		return (fprintf(stderr, "Erreur : pas de deuxième commande\n"), 1);
-
 	if (pipe(pipefd) == -1)
 		return (perror("pipe"), 1);
 
