@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/03 18:13:48 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/03 18:20:30 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,8 @@ void    read_input(char ***envp)
 		}
 		else
 		{
-	        while (tmp)
-	        {
-	            if(check_command((tmp)->command, envp, node))
-	            {
-	                exe((tmp)->command, *envp, node);
-	            }
-	            tmp = (tmp) -> next;
-	        }
+            if(check_command((tmp)->command, envp, node))
+                exe((tmp)->command, *envp, node);
 	        free_all_node(node);
 		}
     }
