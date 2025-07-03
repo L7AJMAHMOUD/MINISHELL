@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/03 18:22:29 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/03 18:22:41 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void    read_input(char ***envp)
 		if (node -> next)
 		{
 			pip(node, envp);
-			// continue;
+			continue;
 		}
         if(check_command((tmp)->command, envp, node))
             exe((tmp)->command, *envp, node);
