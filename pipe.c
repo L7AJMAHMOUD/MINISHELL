@@ -1,69 +1,68 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 10:34:41 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/03 18:26:35 by user01           ###   ########.fr       */
-/*                                                                            */
+/*																		   	  */
+/*														:::	  ::::::::        */
+/*   pipe.c											 :+:	  :+:	:+:       */
+/*													+:+ +:+		 +:+		  */
+/*   By: user01 <user01@student.42.fr>			  +#+  +:+	   +#+			  */
+/*												+#+#+#+#+#+   +#+		   	  */
+/*   Created: 2025/05/05 10:34:41 by abkaram		   #+#	#+#			      */
+/*   Updated: 2025/07/03 18:29:25 by user01		   ###   ########.fr	      */
+/*																			  */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int pip(t_node *node, char ***envp)
 {
-	int id;
-	int i;
-	int j;
-	t_node *tmp;
-	int pipfd[2];
-	pid_t pid;
-	char *p = NULL;
-	char *path;
-	int fd[2];
-	i  = pipe(pipfd);
-	if (i == -1)
-		return (perror("Erreur de fork"), 1);
-	i = j = 0;
-	pid = fork();
-	pid_t pid1 = fork();
-	if (pid < 0) {
-		perror("Erreur de fork");
-		return 1;
-	}
-	if (pid == 0 && pid1 != 0) {
-		close (pipfd[1]);	
-		dup2(fd[1] ,STDOUT_FILENO);
-		dup2( pipfd[0], STDIN_FILENO);
-        tmp = node;
-        if(check_command((tmp)->command, envp, node))
-        {
-            exe((tmp)->command, *envp, node);
-        }
-        free_all_node(node);
-		exit (1);
-	}
-	else if (pid1 == 0 && pid != 0)
+	int pipefd[2];
+	pid_t pid1, pid2;
+	t_node *cmd1 = node;
+	t_node *cmd2 = node->next;
+
+	if (!cmd2)
+		return (fprintf(stderr, "Erreur : pas de deuxième commande\n"), 1);
+
+	if (pipe(pipefd) == -1)
+		return (perror("pipe"), 1);
+
+	pid1 = fork();
+	if (pid1 < 0)
+		return (perror("fork1"), 1);
+
+	if (pid1 == 0)
 	{
-		close (pipfd[0]);
-		dup2(fd[0],STDIN_FILENO);
-		dup2(pipfd[1], STDOUT_FILENO);
-        tmp = node -> next;
-        if(check_command((tmp)->command, envp, tmp))
-        {
-            exe((tmp)->command, *envp, tmp);
-        }
-        free_all_node(node);
-		exit (1);
+		dup2(pipefd[1], STDOUT_FILENO);
+		close(pipefd[0]);
+		close(pipefd[1]);
+
+		if (check_command(cmd1->command, envp, cmd1))
+			exe(cmd1->command, *envp, cmd1);
+
+		free_all_node(node);
+		exit(1);
 	}
-	else
+
+	pid2 = fork();
+	if (pid2 < 0)
+		return (perror("fork2"), 1);
+
+	if (pid2 == 0)
 	{
-		close(pipfd[0]);
-		close(pipfd[1]);
-		waitpid(pid, NULL, 0);
-		waitpid(pid1, NULL, 0);
+		dup2(pipefd[0], STDIN_FILENO);
+		close(pipefd[1]);
+		close(pipefd[0]);
+
+		if (check_command(cmd2->command, envp, cmd2))
+			exe(cmd2->command, *envp, cmd2);
+
+		free_all_node(node);
+		exit(1);
 	}
+	close(pipefd[0]);
+	close(pipefd[1]);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
+
 	return 0;
 }
+
