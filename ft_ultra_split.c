@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ultra_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/03 13:04:23 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/03 13:30:37 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,24 @@ static int	ln(char *s)
 	return (length - k);
 }
 
+void    ultra_skip_inside_quotes(char *command, int *i)
+{
+    if (command[*i] == '"')
+    {
+        *i += 1;
+        while(command[*i] != '"')
+            *i += 1;
+        *i += 1;
+    }
+    else if (command[*i] == '\'')
+    {
+        *i += 1;
+        while(command[*i] != '\'')
+            *i += 1;
+        *i += 1;
+    }
+}
+
 size_t	count_word(char const *str)
 {
 	int	i;
@@ -65,14 +83,14 @@ size_t	count_word(char const *str)
 	{
 		while (str[i] == ' ' && str[i])
 			i++;
-		skip_inside_quotes((char *)str, &i);
+		ultra_skip_inside_quotes((char *)str, &i);
 		if (!str[i])
 			break;
 		if ((str [i] != '|') && str[i])
 			k++;
 		while (str[i] != ' ' && str[i] && str[i] != '|')
 		{
-			skip_inside_quotes((char *)str, &i);
+			ultra_skip_inside_quotes((char *)str, &i);
 			if ((str[i] == '<' || str[i] =='>') && str[i] && i != 0 && (str[i - 1] != ' '))
 			{
 				while(str[i] == '<' || str[i] == '>')
@@ -178,7 +196,7 @@ char	**ft_ultra_split(char *s, int	i, int		j,char ** envp)
 }
 // int main ()
 // {
-// 	char **str = ft_ultra_split("export p=\"ks ks\"", 0 ,0, NULL);
+// 	char **str = ft_ultra_split("\"ls\" > ls", 0 ,0, NULL);
 // 	for (int i = 0; str[i]; i++)
 // 		printf("%s\n", str[i]);
 // }
