@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_applications.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:35:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/22 14:58:43 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/03 15:50:32 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	apply_redirections(char **command)
 	{
 		if (ft_strcmp(command[i], ">") == 0)
 			redirect_output_fd(command);
+		if (ft_strcmp(command[i], "<") == 0)
+			redirect_input_fd(command);
 		i++;
 	}
 
