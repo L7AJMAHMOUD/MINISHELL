@@ -21,11 +21,9 @@ int pip(t_node *node, char ***envp)
 
 	if (pipe(pipefd) == -1)
 		return (perror("pipe"), 1);
-
 	pid1 = fork();
 	if (pid1 < 0)
 		return (perror("fork1"), 1);
-
 	if (pid1 == 0)
 	{
 		dup2(pipefd[1], STDOUT_FILENO);
@@ -38,11 +36,9 @@ int pip(t_node *node, char ***envp)
 		free_all_node(node);
 		exit(1);
 	}
-
 	pid2 = fork();
 	if (pid2 < 0)
 		return (perror("fork2"), 1);
-
 	if (pid2 == 0)
 	{
 		dup2(pipefd[0], STDIN_FILENO);
@@ -59,7 +55,6 @@ int pip(t_node *node, char ***envp)
 	close(pipefd[1]);
 	waitpid(pid1, NULL, 0);
 	waitpid(pid2, NULL, 0);
-
 	return 0;
 }
 
