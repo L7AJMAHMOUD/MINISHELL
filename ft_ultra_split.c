@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/03 13:30:37 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/03 13:37:13 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ size_t	count_word(char const *str)
 	{
 		while (str[i] == ' ' && str[i])
 			i++;
+		if ((str [i] != '|') && str[i])
+			k++;
 		ultra_skip_inside_quotes((char *)str, &i);
 		if (!str[i])
 			break;
-		if ((str [i] != '|') && str[i])
-			k++;
 		while (str[i] != ' ' && str[i] && str[i] != '|')
 		{
 			ultra_skip_inside_quotes((char *)str, &i);
@@ -196,7 +196,7 @@ char	**ft_ultra_split(char *s, int	i, int		j,char ** envp)
 }
 // int main ()
 // {
-// 	char **str = ft_ultra_split("\"ls\" > ls", 0 ,0, NULL);
+// 	char **str = ft_ultra_split("\"ls > ls\"", 0 ,0, NULL);
 // 	for (int i = 0; str[i]; i++)
 // 		printf("%s\n", str[i]);
 // }
