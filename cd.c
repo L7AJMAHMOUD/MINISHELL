@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:32:43 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/02 09:52:01 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/03 14:14:58 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,11 @@ void cd(char ***envp, char *arg)
 	
 	if(!getcwd(buff,BUFFER_SIZE))
 		perror("getcwd");
-
+	if (!arg)
+	{	
+		chdir(getenv("HOME")); //// protection;
+		return ;
+	}
 	if (arg[0] == '/')
 	{
 		chdir (arg);
