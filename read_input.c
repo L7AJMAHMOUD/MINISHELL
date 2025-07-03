@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/03 10:21:31 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:13:48 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,22 @@ void    read_input(char ***envp)
         if(command_analyze(command) == 0)
 			command_tokenization(&node, command, *envp);
         tmp = node;
-        while (tmp)
-        {
-            if(check_command((tmp)->command, envp, node))
-            {
-                exe((tmp)->command, *envp, node);
-            }
-            tmp = (tmp) -> next;
-        }
-        free_all_node(node);
+		if (node -> next)
+		{
+			pip(node, envp);
+			// continue;
+		}
+		else
+		{
+	        while (tmp)
+	        {
+	            if(check_command((tmp)->command, envp, node))
+	            {
+	                exe((tmp)->command, *envp, node);
+	            }
+	            tmp = (tmp) -> next;
+	        }
+	        free_all_node(node);
+		}
     }
 }
