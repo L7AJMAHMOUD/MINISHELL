@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:34:41 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/03 18:11:29 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/03 18:26:35 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int pip(t_node *node, char ***envp)
 	else if (pid1 == 0 && pid != 0)
 	{
 		close (pipfd[0]);
+		dup2(fd[0],STDIN_FILENO);
+		dup2(pipfd[1], STDOUT_FILENO);
         tmp = node -> next;
         if(check_command((tmp)->command, envp, tmp))
         {
