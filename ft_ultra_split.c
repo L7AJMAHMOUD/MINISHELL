@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ultra_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/01 11:18:50 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/03 13:04:23 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,20 @@ size_t	count_word(char const *str)
 		while (str[i] == ' ' && str[i])
 			i++;
 		skip_inside_quotes((char *)str, &i);
+		if (!str[i])
+			break;
 		if ((str [i] != '|') && str[i])
 			k++;
 		while (str[i] != ' ' && str[i] && str[i] != '|')
 		{
 			skip_inside_quotes((char *)str, &i);
-			if ((str[i] == '<' || str[i] =='>') && i != 0 && (str[i - 1] != ' '))
+			if ((str[i] == '<' || str[i] =='>') && str[i] && i != 0 && (str[i - 1] != ' '))
 			{
 				while(str[i] == '<' || str[i] == '>')
 					i++;
 				k++;
 			}
-			else if ((str[i] == '<' || str[i] =='>') && i != 0 && (str[i + 1] != ' '))
+			else if ((str[i] == '<' || str[i] =='>') && str[i] && i != 0 && (str[i + 1] != ' '))
 			{
 				while(str[i] == '<' || str[i] == '>')
 					i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/02 09:42:33 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/03 10:21:31 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void    read_input(char ***envp)
     {
         node = NULL;
         signal(SIGINT, bash_sig_handler);
-        command = readline("\033[31m▄\033[32m︻\033[33mデ\033[34m══━一 💥 > \033[0m");
+        command = readline("\033[31m▄\033[32m︻\033[33mデ\033[34m══━\033[31m一\033[32m 💥 > \033[0m");
         if (!command)
         {
             ft_print("\nexit", 0);

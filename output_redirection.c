@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:56:00 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/06/06 14:56:01 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:48:36 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ void redirect_output_fd(char **command)
 	int fd;
 	
  	i = 0;
+	printf(".%s\n",command[0]);
+	printf("..%s\n",command[1]);
+	printf("...%s\n",command[2]);
+	printf("....%s\n",command[3]);
 	if (ft_strcmp(command[0], ">") == 0)
 	{
 		cmd_is_the_third(command);

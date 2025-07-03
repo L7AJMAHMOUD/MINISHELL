@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 00:30:54 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/21 11:07:24 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/03 10:53:16 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,7 @@ int	search_first(char *command)
 int	command_analyze(char *command)
 {
 	if (command[0] == '\0' || command[0] == ' ')
-	{
-		printf("\n");
 		return 0;
-	}
-	// printf("CMD = %s\n",command);
 	if (search_first(command) != 0)
 		return (printf("SYNTAX ERROR 0\n"), -1);
 	if (dsq_detector(command) != 0)
