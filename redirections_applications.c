@@ -20,8 +20,8 @@ void	apply_redirections(char **command)
 	{
 		if (ft_strcmp(command[i], ">") == 0)
 			redirect_output_fd(command);
-		if (ft_strcmp(command[i], "<") == 0)
-			redirect_input_fd(command);
+		// if (ft_strcmp(command[i], "<") == 0)
+		// 	redirect_input_fd(command);
 		i++;
 	}
 
