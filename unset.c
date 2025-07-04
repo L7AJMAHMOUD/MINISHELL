@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/06/26 10:17:48 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/04 18:37:54 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,11 @@ char **rm_to_envp(char **envp, char *ligne)
 	if (!envp || !ligne)
 		return NULL;
 	m = analyse_c(envp, ligne, &k);
-	if (k == -1)
+	if (m == -1)
+	{
+		printf ("heloo   %d\n",k);
 		return envp;
+	}
     while (envp[j])
         j++;
     str = malloc((j) * sizeof(char *));
@@ -81,7 +84,7 @@ char **rm_to_envp(char **envp, char *ligne)
         j++;
     }
     str[k] = NULL;
-    // free_all_ul_split(envp);
+    free_all_ul_split(envp);
     return str;
 }
 
@@ -95,8 +98,5 @@ void unset(char ***envp, char **command)
     i = 0;
     j = 1;
 	while(command[j])
-	{
-		tmp = rm_to_envp(*envp, command[j++]);
-		*envp = tmp;
-	}
+		*envp = rm_to_envp(*envp, command[j++]);
 }
