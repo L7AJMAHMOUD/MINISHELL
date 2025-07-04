@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/03 18:22:41 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/04 15:12:55 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,7 @@ void    read_input(char ***envp)
             free_all_ul_split(*envp);
             exit (127);
         }
-        if (command)
-            add_history(command);
+        add_history(command);
         if(command_analyze(command) == 0)
 			command_tokenization(&node, command, *envp);
         tmp = node;
@@ -109,7 +108,7 @@ void    read_input(char ***envp)
 			pip(node, envp);
 			continue;
 		}
-        if(check_command((tmp)->command, envp, node))
+        if((tmp)->command && check_command((tmp)->command, envp, node))
             exe((tmp)->command, *envp, node);
         free_all_node(node);
     }

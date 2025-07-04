@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:22 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/03 13:37:16 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/04 14:50:02 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ int main(int ac, char **av, char **envp)
 {
     (void)ac;
     (void)av;
-    envp = read_stock(envp);
     if (ac == 1)
+	{
+		envp = read_stock(envp);
         read_input(&envp);
+	}
     else
         invalid_param();
 }

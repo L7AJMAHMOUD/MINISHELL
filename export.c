@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/01 13:53:57 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/04 15:34:15 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,20 @@ char **add_to_envp(char **envp, char *ligne, int p)
     j = 0;
 	k = 2;
 	if (!envp || !ligne)
-	return NULL;
+		return NULL;
 	m = analyse_c(envp, ligne, &k);
 	if (p == 1 && k == 2)
 		return envp;
     while (envp[j])
         j++;
-    str = malloc((j + k) * sizeof(char *));
+    str = malloc((j + k) * sizeof(char *));/////////////////////////
     j = 0;
     while(envp[j])
     {
         i = 0;
 		if (k == 1 && j == m && analyse_d(envp[m], ligne))
 		{
-			str[j] = malloc(ft_strlen(ligne) + 1);
+			str[j] = malloc(ft_strlen(ligne) + 1);//////////////////
 			while(ligne[i])
 			{
 				str[j][i] = ligne[i];
@@ -89,7 +89,7 @@ char **add_to_envp(char **envp, char *ligne, int p)
 		}
 		else
 		{
-			str[j] = malloc(ft_strlen(envp[j]) + 1);
+			str[j] = malloc(ft_strlen(envp[j]) + 1);///////////////////////
 			while(envp[j][i])
 			{
 				str[j][i] = envp[j][i];
@@ -102,7 +102,7 @@ char **add_to_envp(char **envp, char *ligne, int p)
     i = 0;
 	if (k == 2)
 	{
-		str[j] = malloc(ft_strlen(ligne) + 1);
+		str[j] = malloc(ft_strlen(ligne) + 1);////////////////
 		while(ligne[i])
 		{
 			str[j][i] = ligne[i];
@@ -128,12 +128,12 @@ char **copy_envp(char **envp)
 		return NULL;
     while (envp[j])
         j++;
-    str = malloc((j + 1) * sizeof(char *));
+    str = malloc((j + 1) * sizeof(char *));/////////////////////////
     j = 0;
     while(envp[j])
     {
         i = 0;
-		str[j] = malloc(ft_strlen(envp[j]) + 1);
+		str[j] = malloc(ft_strlen(envp[j]) + 1);///////////////////////////////
 		while(envp[j][i])
 		{
 			str[j][i] = envp[j][i];
@@ -184,11 +184,10 @@ char **arr_sorted(char **str)
 {
 	int i;
 	int j;
-	int min;
-	int *arr;
+
 	if (!str)
 		return NULL;
-	char **tmp = copy_envp(str);
+	char **tmp = copy_envp(str);//////////////////
 	i = 0;
 	while(tmp[i])
 	{
@@ -212,9 +211,9 @@ void export(char ***envp, char **command)
 
     i = 0;
     j = 1;
-    tmp = arr_sorted(*envp);
     if (!command[1])
 	{
+		tmp = arr_sorted(*envp);////////////
         while (tmp[i])
         {
             j = 0;
@@ -226,9 +225,14 @@ void export(char ***envp, char **command)
                 if (tmp[i][j] == '=' || (!tmp[i][j + 1] && k == 1))
                 {
                     write(1, "\"", 1);
-                    k = 1;
+					if (k == 1)
+						k = -1;
+					else
+                    	k = 1;
                 }
                 j++;
+				if (k == 1 && !tmp[i][j])
+					write(1, "\"", 1);
             }
             write(1, "\n", 1);
             i++;
@@ -241,7 +245,7 @@ void export(char ***envp, char **command)
         {
 			if (check_synt(command[j]))
 				break;
-            tmp = add_to_envp(*envp, command[j++], 0);
+            tmp = add_to_envp(*envp, command[j++], 0);//////////////
             *envp = tmp;
         }
     }

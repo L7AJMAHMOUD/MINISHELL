@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:56:47 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/03 18:04:51 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/04 15:00:34 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ char	*ft_strstr_pare(char *command)
 void    command_tokenization(t_node **node, char *command, char **envp)
 {
 	int i;
-	
-	char *tmp;
 	t_node *t_mp;
 	t_node *t_p;
 	t_mp = NULL;
@@ -123,9 +121,6 @@ void    command_tokenization(t_node **node, char *command, char **envp)
 	i = 0;
 	if (!command)
 		return ;
-	tmp = ft_strstr_pare(command);
-	if (tmp)
-		command = tmp;
 	if(!*node)
 	{
 		*node = malloc(sizeof(t_node));

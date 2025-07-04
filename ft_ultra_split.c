@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ultra_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/03 14:24:32 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/04 15:11:06 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,9 @@ char	**ft_ultra_split(char *s, int	i, int		j,char ** envp)
 	}
 	arr[j] = NULL;
 	arr = dirham(arr, envp);
-	arr = wildcart(arr, envp);
+	if (!arr)
+		return NULL;
+	// arr = wildcart(arr, envp);
 	return (arr);
 }
 // int main ()

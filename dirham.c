@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dirham.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 06:00:23 by abkaram           #+#    #+#             */
-/*   Updated: 2025/06/29 10:35:39 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/04 15:10:46 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char **ft_regenerate_2arr(char **stro)
 	while(stro[i])
 		i++;
 	str = malloc ((i + 1) * sizeof(char *));
+	if (!str)
+		return NULL;
 	i = 0;
 	while (stro[i])
 	{
@@ -33,6 +35,12 @@ char **ft_regenerate_2arr(char **stro)
 			j++;
 		len = ft_strlen(&stro[i][j]);
 		str[i] = malloc(len + 1);
+		if (!str[i])
+		{
+			for (int l = 0; l < i; i++)
+				free(str[i]);
+			return NULL;
+		}
 		len = 0;
 		while(stro[i][j])
 			str[i][len++] = stro[i][j++];
@@ -108,6 +116,8 @@ char **regenerat_dol_with_env(char **stro, char *comm, int k)
 	while(stro[i])
 		i++;
 	str = malloc ((i + 1) * sizeof(char *));
+	if (!str)
+		return NULL;
 	i = 0;
 	while (stro[i])
 	{
@@ -118,6 +128,12 @@ char **regenerat_dol_with_env(char **stro, char *comm, int k)
 				j++;
 			len = ft_strlen(&comm[++j] + ft_strlen_(stro[i]));
 			str[i] = malloc(len + 1);
+			if (!str[i])
+			{
+				for (int l = 0; l < i; i++)
+					free(str[i]);
+				return NULL;
+			}
 			len = 0;
 			while (stro[i][x])
 			{
@@ -146,6 +162,7 @@ char **regenerat_dol_with_env(char **stro, char *comm, int k)
 		i++;
 	}
 	str[i] = 0;
+	free_all_ul_split(stro);
 	return str;	
 }
 
@@ -163,6 +180,12 @@ char **regenerat_dol_with_env_emply(char **stro, int k)
     {
         if (i == k) {
 			str[i] = malloc(ft_strlen_(stro[i]) + 1);
+			if (!str[i])
+			{
+				for (int l = 0; l < i; i++)
+					free(str[i]);
+				return NULL;
+			}
 			len = 0;
 			x = 0;
 			while (stro[i][x])
@@ -195,6 +218,7 @@ char **regenerat_dol_with_env_emply(char **stro, int k)
         i++;
     }
     str[z] = NULL;
+	free_all_ul_split(stro);
     return str;
 }
 
@@ -234,7 +258,9 @@ char **dirham(char **st, char **envp)
 				if (o != -1 || (str[i][j] <= 57 && str[i][j] >= 48))
 				{
 					st = regenerat_without_dol(st);
-							return(dirham(st,envp));
+					if (!st)
+						return NULL;
+					return(dirham(st,envp));
 				}
 				else
 				{
@@ -245,6 +271,8 @@ char **dirham(char **st, char **envp)
 						{
 							st = regenerat_dol_with_env(st, envp[b - 1], i);
 							b = -1;
+							if (!st)
+								return NULL;
 							return(dirham(st,envp));
 						}
 					}
@@ -252,6 +280,8 @@ char **dirham(char **st, char **envp)
 				if (b != -1)
 				{
 					st = regenerat_dol_with_env_emply(st, i);
+					if (!st)
+						return NULL;
 					while (str[i][j] && str[i][j + 1] != '$')
 						j++;
 				}
