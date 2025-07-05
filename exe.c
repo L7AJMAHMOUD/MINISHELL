@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/03 10:25:15 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/05 21:55:58 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,28 @@ char	*find_path(char *path, char **envp)
 {
 	char *tmp;
 	int i;
+	DIR *dir;
 	size_t j;
 	int k;
 
 	j = 5;
 	if ((path[0] == '/' || path[0] =='.') && access(path, F_OK) == 0)
 	{
-		if (access(path ,X_OK) == 0)
+		dir = opendir(path);
+		if (dir)
 		{
 			write (2, "minishell: ", 11);
 			write(2, path, ft_strlen(path));
 			write (2, " : Is a directory\n", 18);
+			closedir(dir);
+			return NULL;
+		}
+		if (access(path ,X_OK) != 0)
+		{
+			write (2, "minishell: ", 11);
+			write(2, path, ft_strlen(path));
+			write (2, " : Permission denied\n", 21);
+			return NULL;
 		}
 		return path;
 	}
@@ -132,8 +143,6 @@ char	*find_path(char *path, char **envp)
 			return tmp;
 		free(tmp);
 	}
-	// printf ("%s : command not found\n", path); // in str 2
-	// ft_print("path not found\n", 0);
 	write(2, path, ft_strlen(path));
 	write (2, " : command not found\n", 21);
 	return NULL;
