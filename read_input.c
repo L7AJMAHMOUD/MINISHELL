@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/06 17:42:41 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:23:19 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 void free_all_node(t_node *node)
 {
-    while (node)
-    {
-        free_all_ul_split(node->command);
-        free(node);
-        node = node->next;
-    }
-    
+	t_node *tmp;
+	while (node)
+	{
+		tmp = node->next;
+		free_all_ul_split(node->command);
+		free(node);
+		node = tmp;
+	}
 }
 
 void print_env(char **envp, char **command)
