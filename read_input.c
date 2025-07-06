@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/04 18:42:48 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/06 17:42:41 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,11 @@ void    read_input(char ***envp)
             ft_print("\nexit", 0);
             free_all_ul_split(*envp);
             exit (127);
+        }
+        if (ft_strcmp(command,"I LOVE YOU") == 0)
+        {
+            shy_emoji_banner();
+            continue;
         }
         add_history(command);
         if(command_analyze(command) == 0)

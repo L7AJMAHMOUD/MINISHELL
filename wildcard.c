@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wildcart.c                                         :+:      :+:    :+:   */
+/*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:57:15 by abkaram           #+#    #+#             */
-/*   Updated: 2025/06/26 14:10:16 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/06 17:37:33 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char **add_in_array(char **st, char *cmd, int i)
 {
-	return NULL;	
+	return NULL;
 }
 char **wildcart(char **str, char **envp)
 {

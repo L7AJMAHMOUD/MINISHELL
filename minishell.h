@@ -125,5 +125,6 @@ void redirect_output_fd(char **command);
 void redirect_input_fd(char **command);
 char **wildcart(char **st, char **envp);
 void    bash_sig_handler(int sig);
-void	cmd_is_the_third(char **command);
+void	cmd_final(char **command, int i);
+void shy_emoji_banner();
 #endif
