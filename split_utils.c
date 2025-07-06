@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:38:23 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/07 14:41:48 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/06 21:15:08 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ int	ft_strcmp(char *s1, char *s2)
 void free_all_ul_split(char **str)
 {
 	int i;
+	
+	if (!str)
+		return ;
 
 	i = 0;
 	while(str[i])

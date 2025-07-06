@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 06:00:23 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/04 15:10:46 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/06 21:21:06 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ char **ft_regenerate_2arr(char **stro)
 		str[i] = malloc(len + 1);
 		if (!str[i])
 		{
-			for (int l = 0; l < i; i++)
-				free(str[i]);
+			for (int l = 0; l < i; l++)
+				free(str[l]);
 			return NULL;
 		}
 		len = 0;
@@ -130,8 +130,8 @@ char **regenerat_dol_with_env(char **stro, char *comm, int k)
 			str[i] = malloc(len + 1);
 			if (!str[i])
 			{
-				for (int l = 0; l < i; i++)
-					free(str[i]);
+				for (int l = 0; l < i; l++)
+					free(str[l]);
 				return NULL;
 			}
 			len = 0;
@@ -182,8 +182,8 @@ char **regenerat_dol_with_env_emply(char **stro, int k)
 			str[i] = malloc(ft_strlen_(stro[i]) + 1);
 			if (!str[i])
 			{
-				for (int l = 0; l < i; i++)
-					free(str[i]);
+				for (int l = 0; l < i; l++)
+					free(str[l]);
 				return NULL;
 			}
 			len = 0;
@@ -218,7 +218,7 @@ char **regenerat_dol_with_env_emply(char **stro, int k)
         i++;
     }
     str[z] = NULL;
-	free_all_ul_split(stro);
+	free_all_ul_split(stro); // ca donne sgf pourquoi
     return str;
 }
 
@@ -232,7 +232,7 @@ char **dirham(char **st, char **envp)
 	char *tmp;
 	char **str;
 
-	str = st;
+	str = read_stock(st);
 
 	i = 0;
 	
@@ -291,5 +291,6 @@ char **dirham(char **st, char **envp)
 		}
 		i++;
 	}
+	free_all_ul_split(str);
 	return st;
 }
