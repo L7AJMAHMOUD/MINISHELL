@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/05 21:55:58 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/07 11:24:08 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,36 @@
 
 static int	ft_strleen(const char *str, int c)
 {
-int		i;
+	int		i;
 
-i = 0;
-if (!str)
-	return (0);
-while (str[i] && str[i] != c)
-	i++;
-return (i);
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i] && str[i] != c)
+		i++;
+	return (i);
 }
 
 static char	*ft_strduup(const char *src, int c, int *i)
 {
-char	*h;
+	char	*h;
 
-*i = 0;
-if (!src)
-	return (0);
-if (!src[*i])
-	return NULL;
-h = malloc(ft_strleen(src, c) * sizeof(char) + 1);
-if (!h)
-	return (0);
-while (src[*i] && src[*i] != c)
-{
-	h[*i] = src[*i];
+	*i = 0;
+	if (!src)
+		return (0);
+	if (!src[*i])
+		return NULL;
+	h = malloc(ft_strleen(src, c) * sizeof(char) + 1);
+	if (!h)
+		return (0);
+	while (src[*i] && src[*i] != c)
+	{
+		h[*i] = src[*i];
+		*i += 1;
+	}
+	h[*i] = '\0';
 	*i += 1;
-}
-h[*i] = '\0';
-*i += 1;
-return (h);
+	return (h);
 }
 char	*ft_strjoiin(char*s1, char *s2)
 {
@@ -150,7 +150,6 @@ char	*find_path(char *path, char **envp)
 void	exe(char **command, char **envp, t_node *node)
 {
 	char *path;
-	// int *fd;
 	int i = fork();
 	int status;
 	if (i == 0)

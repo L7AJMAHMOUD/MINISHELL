@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dirham.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 06:00:23 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/06 21:21:06 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/07 11:26:05 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,28 +179,28 @@ char **regenerat_dol_with_env_emply(char **stro, int k)
     while (stro[i])
     {
         if (i == k) {
-			str[i] = malloc(ft_strlen_(stro[i]) + 1);
-			if (!str[i])
-			{
-				for (int l = 0; l < i; l++)
-					free(str[l]);
-				return NULL;
-			}
-			len = 0;
-			x = 0;
-			while (stro[i][x])
-			{
-				if (stro[i][x] == '$')
-				{
-					while(stro[i][x] != 32 && stro[i][x])
-						x++;
-				}
-				else
-					str[i][len++] = stro[i][x++];
-			}
-			str[i][len] = 0;
+			// str[i] = malloc(ft_strlen_(stro[i]) + 1);
+			// if (!str[i])
+			// {
+			// 	for (int l = 0; l < i; l++)
+			// 		free(str[l]);
+			// 	return NULL;
+			// }
+			// len = 0;
+			// x = 0;
+			// while (stro[i][x])
+			// {
+			// 	if (stro[i][x] == '$')
+			// 	{
+			// 		while(stro[i][x] != 32 && stro[i][x])
+			// 			x++;
+			// 	}
+			// 	else
+			// 		str[i][len++] = stro[i][x++];
+			// }
+			// str[i][len] = 0;
             i++;
-			z++;
+			// z++;
             continue;
         }
         j = 0;
@@ -218,7 +218,7 @@ char **regenerat_dol_with_env_emply(char **stro, int k)
         i++;
     }
     str[z] = NULL;
-	free_all_ul_split(stro); // ca donne sgf pourquoi
+	free_all_ul_split(stro);
     return str;
 }
 
