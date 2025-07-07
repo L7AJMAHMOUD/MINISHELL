@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/04 15:34:15 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/07 10:45:01 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ void export(char ***envp, char **command)
             while(tmp[i][j])
             {
                 write(1, &tmp[i][j], 1);
-                if (tmp[i][j] == '=' || (!tmp[i][j + 1] && k == 1))
+                if (k == 0 && tmp[i][j] == '=' || (!tmp[i][j + 1] && k == 1))
                 {
                     write(1, "\"", 1);
 					if (k == 1)
