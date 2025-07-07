@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/07 10:45:01 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/07 10:47:19 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,8 @@ void export(char ***envp, char **command)
     if (!command[1])
 	{
 		tmp = arr_sorted(*envp);////////////
+		if (!tmp)
+			return ;
         while (tmp[i])
         {
             j = 0;
