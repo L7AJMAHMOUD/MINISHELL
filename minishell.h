@@ -25,6 +25,17 @@
 #include <sys/wait.h>
 #include <signal.h>
 
+/*
+ * DÉFINITIONS ET CONSTANTES
+ */
+#define SPACE_CHAR ' '
+#define PIPE_CHAR '|'
+#define REDIRECT_IN '<'
+#define REDIRECT_OUT '>'
+#define QUOTE_DOUBLE '"'
+#define QUOTE_SINGLE '\''
+#define false 0
+#define true 1
 #define BUFFER_SIZE 100000
 
 typedef struct s_node
@@ -96,7 +107,7 @@ void unset(char ***envp, char **command);
 char	*ft_shearch(char *haystack, char *needle);
 
 void baner();
-
+void    ultra_skip_inside_quotes(char *command, int *i);
 void	ft_print(char *s, int i);
 void	exe(char **command, char **envp, t_node *node);
 char	*find_path(char *path, char **envp);

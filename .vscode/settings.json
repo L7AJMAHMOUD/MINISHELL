@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"sstream": "c",
-		"format": "c"
+		"format": "c",
+		"minishell.h": "c"
 	}
 }

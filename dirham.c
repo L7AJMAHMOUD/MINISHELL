@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 06:00:23 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/07 11:26:05 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/07 14:25:32 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ char **regenerat_dol_with_env_emply(char **stro, int k)
 			// }
 			// str[i][len] = 0;
             i++;
-			// z++;
+			z++;
             continue;
         }
         j = 0;
