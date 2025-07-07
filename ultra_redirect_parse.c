@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ultra_redirect_parse.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:09:37 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/17 16:09:38 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:38:16 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int ultra_redirect_parsee(char *command)
 		{
 			while(command[i] == 32)
 				i++;
-			if(command[i] && (command[i] != '|' && command[i] != '&' && command[i] != ')'))
+			if(command[i] && (command[i] != PIPE_CHAR && command[i] != '&' && command[i] != ')'))
 				return 1;
 		}
 	}

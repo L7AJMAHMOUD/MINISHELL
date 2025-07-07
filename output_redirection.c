@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   output_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:56:00 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/06 18:08:07 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:36:49 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	count_word(char *s, char c)
 }
 int	ambg_check(char **command, int i)
 {
-	if (command[i + 1][0] == '\0' || count_word(command[i + 1], ' ') != 1)
+	if (command[i + 1][0] == '\0' || count_word(command[i + 1], SPACE_CHAR) != 1)
 	{
 		printf("ambiguous redirect\n");
 		command[0] = NULL;

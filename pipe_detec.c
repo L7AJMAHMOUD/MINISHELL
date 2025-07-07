@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   pipe_detec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:55:21 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/03 14:25:32 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:38:11 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int   pipe_detector(char *command)
     while (command[i])
     {
         skip_inside_quotes(command, &i);
-        if(command[i] == '|')
+        if(command[i] == PIPE_CHAR)
         {
-            while (command[++i] == ' ')
+            while (command[++i] == SPACE_CHAR)
                 i++;
             if (command[i] == '\0')
                 return (-1);

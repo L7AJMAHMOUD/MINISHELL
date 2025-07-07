@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/07 10:47:19 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/07 14:35:39 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,8 @@ int	check_synt(char *str)
 
 	i = 0;
 	j = 0;
-	if (str[i] == '"')
-	while (str[i] && str[i] == '"')
+	if (str[i] == QUOTE_DOUBLE)
+	while (str[i] && str[i] == QUOTE_DOUBLE)
 		i++;	
 	while (str[i] == '_')
 	{

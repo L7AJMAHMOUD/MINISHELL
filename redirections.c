@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:20 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/17 16:06:17 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:39:41 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ int	redirect_parse(char *command)
 	i = 0;
 	while (command[i])
 	{
-		if (command[i] == '<' || command[i] == '>')
+		if (command[i] == REDIRECT_IN || command[i] == REDIRECT_OUT)
 		{
-			if (command[i] == '>')
+			if (command[i] == REDIRECT_OUT)
 				is_right = 1;
-			if (command[i] == '<')
+			if (command[i] == REDIRECT_IN)
 				is_left = 1;
 			i++;
-			if (command[i] == '>' && is_left == 1 || command[i] == '<' && is_right == 1)
+			if (command[i] == REDIRECT_OUT && is_left == 1 || command[i] == REDIRECT_IN && is_right == 1)
 				err = -404;
 			i++;
-			while (command[i] == ' ')
+			while (command[i] == SPACE_CHAR)
 				i++;
-			if (command[i] == '>' || command[i] == '<')
+			if (command[i] == REDIRECT_OUT || command[i] == REDIRECT_IN)
 				err = -404;
 			if (is_something(command[i]) == 0)
 				err = 0;

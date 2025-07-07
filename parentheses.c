@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parentheses.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:58:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/05/22 12:23:05 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:36:54 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	cmd_between_par(char *command)
 		while(command[i] == '(')
 		{
 			i++;
-			while (command[i] == ' ')
+			while (command[i] == SPACE_CHAR)
 				i++;
 			if (ft_is_spc(command[i]) != 1)
 				return -1;

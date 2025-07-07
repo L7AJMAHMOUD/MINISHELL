@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:54:55 by abkaram           #+#    #+#             */
-/*   Updated: 2025/06/04 15:43:24 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/07 14:40:21 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strstr(char *haystack, char *needle)
 	while (haystack[i])
 	{
 		c = haystack[i];
-		if (c == '"' || c == '\'' || c == '(')
+		if (c == QUOTE_DOUBLE || c == QUOTE_SINGLE || c == '(')
 		{
 			i++;
 			if(c == '(')
@@ -117,7 +117,7 @@ int	ft_strt(char *haystack, char *needle)
 	while (haystack[i])
 	{
 		c = haystack[i];
-		if (c == '"' || c == '\'' || c == '(')
+		if (c == QUOTE_DOUBLE || c == QUOTE_SINGLE || c == '(')
 		{
 			i++;
 			if(c == '(')
