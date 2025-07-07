@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ultra_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/07 15:06:56 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/07 22:43:39 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -518,4 +518,3 @@ char	**ft_ultra_split(char *s, int	i, int		j,char ** envp)
 // echo "${VAR}abc"   expected -> valueabc    result -> empty
 
 // ==========================================
-
