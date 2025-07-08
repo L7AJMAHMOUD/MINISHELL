@@ -48,29 +48,35 @@ void	list(char **command)
 	
 	while(command[i])
 	{
-		printf("%s\n",command[i]);
+		printf("[%s] -> ",command[i]);
 		i++;
 	}
+	printf("NULL\n\n\n");
+
+	printf("i = %d\n\n\n", i);
 }
-void	cmd_final(char **command, int i)
+void	cmd_final(char ***command)
 {
 	int fd;
 	int ii;
-	
-	ii = 0;
-	while (command[ii])
-	{
-		if (ft_strcmp(command[ii], ">") == 0)
-		{
-			if (ambg_check(command, ii) == -1)
-				return ;
-			fd = open(command[ii + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
-			command[ii] = NULL;
-			// list(coommand);
-			dup2(fd, 1);
-			close(fd);
-		}
+	char **cmd;
 
+	ii = 0;
+	cmd = *command;
+	while (cmd[ii])
+	{
+		if (ft_strcmp(cmd[ii], ">") == 0)
+		{
+			fd = open(cmd[ii + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+			if (ft_strcmp(cmd[ii + 2], ">") != 0)
+			{
+				*command = &cmd[ii + 2];
+				cmd[ii] = NULL;
+				dup2(fd, 1);
+				close(fd);
+				// return ;
+			}
+		}
 		ii++;
 	}
 }
@@ -83,7 +89,8 @@ void redirect_output_fd(char **command)
 	
 	if (ft_strcmp(command[0], ">") == 0)
 	{
-		cmd_final(command, i);
+		cmd_final(&command);
+		list(command);
 		return ; 
 	}		
 	while (command[i])
