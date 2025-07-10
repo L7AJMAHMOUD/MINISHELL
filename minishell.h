@@ -38,6 +38,12 @@
 #define true 1
 #define BUFFER_SIZE 100000
 
+typedef struct s_command
+{
+	char *command;
+	int q;
+	int nbr;
+}   t_command;
 typedef struct s_node
 {
 	char **command;
@@ -46,6 +52,7 @@ typedef struct s_node
 	int or;
 	struct s_node *next;
 }   t_node;
+
 
 void    read_input(char ***envp);
 char	**ft_ultra_split(char *s, int	i, int		j, char **envp);
@@ -139,4 +146,5 @@ char **wildcart(char **st, char **envp);
 void    bash_sig_handler(int sig);
 void	cmd_final(char ***command);
 void shy_emoji_banner();
+char *cooking(char *str, char **envp);
 #endif
