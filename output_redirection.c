@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   output_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:56:00 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/07 14:36:49 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/10 19:24:31 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void	list(char **command)
 		i++;
 	}
 	printf("NULL\n\n\n");
-
-	printf("i = %d\n\n\n", i);
 }
 void	cmd_final(char ***command)
 {
@@ -71,7 +69,6 @@ void	cmd_final(char ***command)
 			if (ft_strcmp(cmd[ii + 2], ">") != 0)
 			{
 				*command = &cmd[ii + 2];
-				cmd[ii] = NULL;
 				dup2(fd, 1);
 				close(fd);
 				// return ;
@@ -80,7 +77,7 @@ void	cmd_final(char ***command)
 		ii++;
 	}
 }
-void redirect_output_fd(char **command)
+char **redirect_output_fd(char **command)
 {
 	int i;
 	int fd;
@@ -90,20 +87,20 @@ void redirect_output_fd(char **command)
 	if (ft_strcmp(command[0], ">") == 0)
 	{
 		cmd_final(&command);
-		list(command);
-		return ; 
-	}		
-	while (command[i])
-	{
-		if (ft_strcmp(command[i], ">") == 0)
-		{
-			if (ambg_check(command, i) == -1)
-				return ;
-			fd = open(command[i + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
-			command[i] = NULL;
-			dup2(fd, 1);
-			close(fd);
-		}
-		i++;
 	}
+	else
+		while (command[i])
+		{
+			if (ft_strcmp(command[i], ">") == 0)
+			{
+				if (ambg_check(command, i) == -1)
+					return NULL;
+				fd = open(command[i + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+				command[i] = NULL;
+				dup2(fd, 1);
+				close(fd);
+			}
+			i++;
+		}
+	return (command);
 }
