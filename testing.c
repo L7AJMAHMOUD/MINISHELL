@@ -197,7 +197,7 @@ void	expand(t_command *arr, char **envp)
 					arr[i].command[j - p - 1] = 0;
 					arr[i].command = ft_strjoin_(arr[i].command,val);
 					arr[i].command = ft_strjoin_(arr[i].command, str);
-					j = m;
+					j = --m;
 				}
 			}
 		}
