@@ -161,6 +161,7 @@ char **ft_arr_to_tab(t_command *arr, int words)
 {
 	char **tab;
 	int i;
+	int j;
 
 	if (!arr || words <= 0)
 		return (NULL);
@@ -168,9 +169,16 @@ char **ft_arr_to_tab(t_command *arr, int words)
 	if (!tab)
 		return (NULL);
 	i = 0;
+	j = 0;
 	while (i < words)
 	{
-		tab[i] = ft_strdup(arr[i].command);
+		if (arr[j].command[0] == 0 && i != 0) //////////////////////////////////////// ls $lsdjljds -l bach tkhdem
+		{
+			j++;
+			words--;
+			continue;
+		}
+		tab[i] = ft_strdup(arr[j].command);
 		if (!tab[i])
 		{
 			while (i--)
@@ -179,6 +187,7 @@ char **ft_arr_to_tab(t_command *arr, int words)
 			return (NULL);
 		}
 		i++;
+		j++;
 	}
 	tab[i] = NULL;
 	i = 0;
