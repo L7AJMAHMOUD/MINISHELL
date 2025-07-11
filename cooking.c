@@ -51,6 +51,7 @@ t_command *cleaning(char *str, int p)
         {
 			if (j != 0)
 			{
+				arr[k].command[j] = 0;
 				k++;
 				arr[k].command = malloc(sizeof(char) * (len + 1));
 			}
@@ -166,7 +167,7 @@ void	expand(t_command *arr, char **envp)
 		}
 		while(arr[i].command[j])
 		{
-			if(arr[i].command[j++] == '$')
+			if(arr[i].command[j++] == '$' && (arr[i].command[j] != QUOTE_SINGLE && arr[i].command[j] != QUOTE_DOUBLE))
 			{
 				p = 0;
 				m = j;
