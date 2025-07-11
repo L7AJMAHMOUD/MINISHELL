@@ -56,7 +56,6 @@ void free_all_ul_split(char **str)
 	
 	if (!str)
 		return ;
-
 	i = 0;
 	while(str[i])
 		free(str[i++]);

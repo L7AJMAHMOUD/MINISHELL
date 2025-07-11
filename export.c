@@ -57,94 +57,115 @@ int analyse_d(char *s1, char *s2)
 
 char **add_to_envp(char **envp, char *ligne, int p)
 {
-    int i;
-    int j;
-    int k;
-    int m;
-    char **str;
+	int i, j, k, m;
+	char **str;
 
-    j = 0;
-	k = 2;
 	if (!envp || !ligne)
 		return NULL;
+
+	k = 2;
 	m = analyse_c(envp, ligne, &k);
 	if (p == 1 && k == 2)
 		return envp;
-    while (envp[j])
-        j++;
-    str = malloc((j + k) * sizeof(char *));/////////////////////////
-    j = 0;
-    while(envp[j])
-    {
-        i = 0;
+
+	j = 0;
+	while (envp[j])
+		j++;
+
+	str = malloc((j + k) * sizeof(char *));
+	if (!str)
+		return envp;
+
+	j = 0;
+	while (envp[j])
+	{
+		i = 0;
 		if (k == 1 && j == m && analyse_d(envp[m], ligne))
 		{
-			str[j] = malloc(ft_strlen(ligne) + 1);//////////////////
-			while(ligne[i])
+			str[j] = malloc(ft_strlen(ligne) + 1);
+			if (!str[j])
+				return free_all_ul_split(str), envp;
+			while (ligne[i])
 			{
 				str[j][i] = ligne[i];
 				i++;
 			}
-			str[j][i] = 0;
+			str[j][i] = '\0';
 		}
 		else
 		{
-			str[j] = malloc(ft_strlen(envp[j]) + 1);///////////////////////
-			while(envp[j][i])
+			str[j] = malloc(ft_strlen(envp[j]) + 1);
+			if (!str[j])
+				return free_all_ul_split(str), envp;
+			while (envp[j][i])
 			{
 				str[j][i] = envp[j][i];
 				i++;
 			}
-			str[j][i] = 0;
+			str[j][i] = '\0';
 		}
-        j++;
-    }
-    i = 0;
+		j++;
+	}
+
 	if (k == 2)
 	{
-		str[j] = malloc(ft_strlen(ligne) + 1);////////////////
-		while(ligne[i])
+		i = 0;
+		str[j] = malloc(ft_strlen(ligne) + 1);
+		if (!str[j])
+			return free_all_ul_split(str), envp;
+		while (ligne[i])
 		{
 			str[j][i] = ligne[i];
 			i++;
 		}
-		str[j++][i] = 0;
+		str[j++][i] = '\0';
 	}
-    str[j] = NULL;
-    free_all_ul_split(envp);
-    return str;
+	str[j] = NULL;
+	free_all_ul_split(envp);
+	return str;
 }
+
+
 char **copy_envp(char **envp)
 {
-    int i;
-    int j;
-    int k;
-    int m;
-    char **str;
+	int i;
+	int j;
+	char **str;
 
-    j = 0;
-	k = 2;
 	if (!envp)
 		return NULL;
-    while (envp[j])
-        j++;
-    str = malloc((j + 1) * sizeof(char *));/////////////////////////
-    j = 0;
-    while(envp[j])
-    {
-        i = 0;
-		str[j] = malloc(ft_strlen(envp[j]) + 1);///////////////////////////////
-		while(envp[j][i])
+
+	j = 0;
+	while (envp[j])
+		j++;
+
+	str = malloc((j + 1) * sizeof(char *));
+	if (!str)
+		return NULL;
+
+	j = 0;
+	while (envp[j])
+	{
+		i = 0;
+		str[j] = malloc(ft_strlen(envp[j]) + 1);
+		if (!str[j])
+		{
+			free_all_ul_split(str);
+			return NULL;
+		}
+		while (envp[j][i])
 		{
 			str[j][i] = envp[j][i];
 			i++;
 		}
-		str[j][i] = 0;
-        j++;
+		str[j][i] = '\0';
+		j++;
 	}
-    str[j] = NULL;
-    return str;
+	str[j] = NULL;
+	return str;
 }
+
+
 
 int	check_synt(char *str)
 {
@@ -182,19 +203,23 @@ void ft_swap_str(char **s1, char **s2)
 
 char **arr_sorted(char **str)
 {
-	int i;
-	int j;
+	int i, j;
+	char **tmp;
 
 	if (!str)
 		return NULL;
-	char **tmp = copy_envp(str);//////////////////
+
+	tmp = copy_envp(str);
+	if (!tmp)
+		return NULL;
+
 	i = 0;
-	while(tmp[i])
+	while (tmp[i])
 	{
 		j = i + 1;
-		while(tmp[j])
+		while (tmp[j])
 		{
-			if(ft_strcmp(tmp[j], tmp[i]) < 0)
+			if (ft_strcmp(tmp[j], tmp[i]) < 0)
 				ft_swap_str(&tmp[j], &tmp[i]);
 			j++;
 		}
