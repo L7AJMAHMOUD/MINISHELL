@@ -28,7 +28,7 @@ char	*ft_strjoin_(char *s1, char *s2)
 	return (free(s1), free(s2), str);
 }
 
-t_command *cleaning(char *str)
+t_command *cleaning(char *str, int p)
 {
     int i = 0;  
     int j = 0;  
@@ -56,6 +56,13 @@ t_command *cleaning(char *str)
 			}
 			j = 0;
             c = str[i++];
+			if (c == str[i] && k == 0 && p == 0 && !str[i+1])
+			{
+				free(arr[k].command);
+				arr[k].command = ft_strdup("''");
+				j++;
+				continue;
+			}
 			arr[k].q = c;
             while (str[i] && str[i] != c) {
                 arr[k].command[j++] = str[i++];
@@ -217,9 +224,9 @@ char *ft_arr_to_str(t_command *arr)
 }
 
 
-char *cooking(char *str, char **envp)
+char *cooking(char *str, char **envp, int p)
 {
-	t_command *arr = cleaning(str);
+	t_command *arr = cleaning(str, p);
 	expand(arr, envp);
 	char *string = ft_arr_to_str(arr);
 	free(str);

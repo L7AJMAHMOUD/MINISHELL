@@ -222,17 +222,19 @@ char	**ft_ultra_split(char *str, int	i, int		j,char ** envp)
 		i++;
 		j++;
 	}
-	free(str);
+	// free(str);
 	for (int v = 0; v < words; v++)
-		arr[v].command = cooking(arr[v].command, envp);
+		arr[v].command = cooking(arr[v].command, envp, v);
 	char **tab = ft_arr_to_tab(arr, words);
 	return(tab);
 }
 
 // int main (int ac, char **av, char **envp)
 // {
-// 	char *tmp =ft_strdup("$USER");
+// 	char *tmp =ft_strdup("ls|ls");
 // 	char **str = ft_ultra_split(tmp, 0 ,0, envp);
+// 	for(int i = 0;str[i]; i++)
+// 		printf("%s\n",str[i]);
 // }
 
 // gcc ft_ultra_split.c utils.c split_utils.c split.c
