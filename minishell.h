@@ -151,4 +151,5 @@ char *cooking(char *str, char **envp, int p);
 void	list(char **command);
 char **clean_command(char **coammand);
 int 	is_redirection(char *command);
+void append_to_fd(char **command);
 #endif
