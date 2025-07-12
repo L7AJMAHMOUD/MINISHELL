@@ -133,14 +133,14 @@ int		parenth(char *command);
 char	*ft_strstr_pare(char *command);
 int ultra_redirect_parse(char *command);
 int ultra_redirect_parsee(char *command);
-char**	apply_redirections(char **command);
+char **apply_redirections(char **command);
 int	ft_str_cmp(char *s1, char *s2);
 int check_command(char **str, char ***envp, t_node *node);
 void free_all_node(t_node *node);
 int pip(t_node *node, char ***envp);
 char **add_to_envp(char **envp, char *ligne, int i);
 char **dirham(char **str, char **envp);
-char** redirect_output_fd(char **command);
+void  redirect_output_fd(char **command);
 void redirect_input_fd(char **command);
 char **wildcart(char **st, char **envp);
 void    bash_sig_handler(int sig);
@@ -150,4 +150,5 @@ char *cooking(char *str, char **envp, int p);
 
 void	list(char **command);
 char **clean_command(char **coammand);
+int 	is_redirection(char *command);
 #endif

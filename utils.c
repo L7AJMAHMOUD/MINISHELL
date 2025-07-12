@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:54:55 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/07 14:40:21 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/12 16:49:33 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*ft_strstr(char *haystack, char *needle)
 			return 0;
 		if (haystack[i] == needle[j])
 			if (ft_an(&haystack[i], needle) == 1)
-				return (&haystack[i + 2]);
+				return (&haystack[i + 1]);
 		i++;
 	}
 	return (0);

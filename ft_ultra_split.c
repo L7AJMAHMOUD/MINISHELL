@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ultra_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/12 10:36:59 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/12 13:37:21 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,19 +172,6 @@ char **ft_arr_to_tab(t_command *arr, int words)
 	j = 0;
 	while (j < words)
 	{
-		// if (arr[j].command[0] == 0 && i != 0) //////////////////////////////////////// ls $lsdjljds -l bach tkhdem
-		// {
-		// 	j++;
-		// 	words--;
-		// 	continue;
-		// }
-		// if (arr[j].command[0] == 2 && i != 0) //////////////////////////////////////// ls '' -l bach matkhdemch
-		// {
-		// 	tab[i] = ft_strdup("");
-		// 	j++;
-		// 	i++;
-		// 	continue;
-		// }
 		if (!arr[j].command)
 		{
 			j++;
@@ -224,13 +211,12 @@ char	**ft_ultra_split(char *str, int	i, int		j,char ** envp)
 	rev_(str);
 	words = count_words(str, ' ');
 	arr = malloc(sizeof(t_command) * words);
-	i = initialisation(arr, words);
 	i = 0;
 	while (j < words)
 	{
 		x = 0;
 		while(str[i] == 32)
-		i++;
+			i++;
 		arr[j].command=malloc(sizeof(char) * ln(&str[i]) + 1);
 		k = i + ln(&str[i]);
 		while (i < k)

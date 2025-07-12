@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:56:00 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/10 19:24:31 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/12 16:47:53 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,48 +53,48 @@ void	list(char **command)
 	}
 	printf("NULL\n\n\n");
 }
-void	cmd_final(char ***command)
-{
-	int fd;
-	int ii;
-	char **cmd;
+// void	cmd_final(char ***command)
+// {
+// 	int fd;
+// 	int ii;
+// 	char **cmd;
 
-	ii = 0;
-	cmd = *command;
-	while (cmd[ii])
-	{
-		if (ft_strcmp(cmd[ii], ">") == 0)
-		{
-			fd = open(cmd[ii + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
-			if (ft_strcmp(cmd[ii + 2], ">") != 0)
-			{
-				*command = &cmd[ii + 2];
-				dup2(fd, 1);
-				close(fd);
-				// return ;
-			}
-		}
-		ii++;
-	}
-}
-char **redirect_output_fd(char **command)
+// 	ii = 0;
+// 	cmd = *command;
+// 	while (cmd[ii])
+// 	{
+// 		if (ft_strcmp(cmd[ii], ">") == 0)
+// 		{
+// 			fd = open(cmd[ii + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+// 			if (ft_strcmp(cmd[ii + 2], ">") != 0)
+// 			{
+// 				*command = &cmd[ii + 2];
+// 				dup2(fd, 1);
+// 				close(fd);
+// 				// return ;
+// 			}
+// 		}
+// 		ii++;
+// 	}
+// }
+void redirect_output_fd(char **command)
 {
 	int i;
 	int fd;
 	
  	i = 0;
 	
-	if (ft_strcmp(command[0], ">") == 0)
-	{
-		cmd_final(&command);
-	}
-	else
+	// if (ft_strcmp(command[0], ">") == 0)
+	// {
+	// 	cmd_final(&command);
+	// }
+	// else
 		while (command[i])
 		{
 			if (ft_strcmp(command[i], ">") == 0)
 			{
 				if (ambg_check(command, i) == -1)
-					return NULL;
+					return ;
 				fd = open(command[i + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 				command[i] = NULL;
 				dup2(fd, 1);
@@ -102,5 +102,5 @@ char **redirect_output_fd(char **command)
 			}
 			i++;
 		}
-	return (command);
+	// return (command);
 }
