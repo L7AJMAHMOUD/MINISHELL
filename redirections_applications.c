@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:35:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/10 19:16:14 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/12 11:08:30 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ char **apply_redirections(char **command)
 		// 	redirect_input_fd(command);
 		i++;
 	}
-	return (command);
+	return (clean_command(command));
 }

@@ -57,22 +57,13 @@ t_command *cleaning(char *str, int p)
 			}
 			j = 0;
             c = str[i++];
-			if (c == str[i] && k == 0 && p == 0 && !str[i+1])
+			if (c == str[i] && p == 0 && !str[i+1])
 			{
 				free(arr[k].command);
 				arr[k].command = ft_strdup("''");
 				j += 2;
 				continue;
 			}
-			// if (c == str[i] && k == 0 && p != 0 && !str[i+1])
-			// {
-			// 	free(arr[k].command);
-			// 	arr[k].command = malloc(2);
-			// 	arr[k].command[0] = 2;
-			// 	arr[k].command[1] = 0;
-			// 	j += 2;
-			// 	continue;
-			// }
 			arr[k].q = c;
             while (str[i] && str[i] != c) {
                 arr[k].command[j++] = str[i++];
@@ -123,7 +114,7 @@ int strlen_(char *str)
 	i = 0;
 	if (!str)
 		return 0;
-	while (str[i] && str[i] != '$' && str[i] != QUOTE_SINGLE && str[i] != QUOTE_DOUBLE)
+	while (str[i] && str[i] != '$' && str[i] != QUOTE_SINGLE && str[i] != QUOTE_DOUBLE && str[i] != 32)
 	{
 		i++;
 	}
@@ -176,7 +167,7 @@ void	expand(t_command *arr, char **envp)
 		}
 		while(arr[i].command[j])
 		{
-			if(arr[i].command[j++] == '$' && (arr[i].command[j] != QUOTE_SINGLE && arr[i].command[j] != QUOTE_DOUBLE))
+			if(arr[i].command[j++] == '$')
 			{
 				p = 0;
 				m = j;
@@ -185,7 +176,7 @@ void	expand(t_command *arr, char **envp)
 					j++;
 					p++;
 				}
-				if (!arr[i].command[j])
+				if (!arr[i].command[j] && !arr[i + 1].command)
 					continue;
 				if (arr[i].q == 39 || p % 2 || (arr[i].command[j] >= '0' && arr[i].command[j] <= '9'))
 				{
@@ -193,16 +184,19 @@ void	expand(t_command *arr, char **envp)
 						str = ft_strdup(&(arr[i].command[j + 1]));
 					else
 						str = ft_strdup(&(arr[i].command[j]));
-					arr[i].command[j - ++p] = 0;
+					if (arr[i].command[j - (p + 1)] == '$')
+						arr[i].command[j - ++p] = 0;
+					else
+						arr[i].command[j - p] = 0;
 					arr[i].command = ft_strjoin_(arr[i].command, str);
 					j = m;
 				}
 				else
-				{	
+				{
 					var_len = strlen_(&(arr[i].command[j]));
 					varname = malloc(var_len + 1);
 					if (!varname)
-					return;
+						return;
 					strncpy(varname, &(arr[i].command[j]), var_len);
 					varname[var_len] = '\0';
 					tmp = get_variable(varname, envp);
@@ -211,15 +205,17 @@ void	expand(t_command *arr, char **envp)
 					else
 						val = NULL;
 					str = ft_strdup(&(arr[i].command[j + var_len]));
-					arr[i].command[j - p - 1] = 0;
-					arr[i].command = ft_strjoin_(arr[i].command,val);
+					arr[i].command[j - 1] = 0;
+					arr[i].command = ft_strjoin_(arr[i].command, val);
+					var_len = ft_strlen(arr[i].command);
 					arr[i].command = ft_strjoin_(arr[i].command, str);
-					j = --m;
+					j = var_len;
 				}
 			}
 		}
 		if (arr[i].command[0] == 0 && arr[i].q == 0)
 		{
+			free(arr[i].command);
 			arr[i].command = NULL;
 		}
 		i++;
@@ -233,11 +229,6 @@ char *ft_arr_to_str(t_command *arr)
 	str = NULL;
 	while (i < arr->nbr)
 	{
-		if (!arr[i].command)
-		{
-			i++;
-			continue;
-		}
 		str = ft_strjoin_(str, arr[i++].command);
 	}
 	free(arr);
