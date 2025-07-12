@@ -61,7 +61,7 @@ t_command *cleaning(char *str, int p)
 			{
 				free(arr[k].command);
 				arr[k].command = ft_strdup("''");
-				j++;
+				j += 2;
 				continue;
 			}
 			arr[k].q = c;
