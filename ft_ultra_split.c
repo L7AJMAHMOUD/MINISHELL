@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/12 09:47:29 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/12 10:36:59 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,19 +170,31 @@ char **ft_arr_to_tab(t_command *arr, int words)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (i < words)
+	while (j < words)
 	{
-		if (arr[j].command[0] == 0 && i != 0) //////////////////////////////////////// ls $lsdjljds -l bach tkhdem
+		// if (arr[j].command[0] == 0 && i != 0) //////////////////////////////////////// ls $lsdjljds -l bach tkhdem
+		// {
+		// 	j++;
+		// 	words--;
+		// 	continue;
+		// }
+		// if (arr[j].command[0] == 2 && i != 0) //////////////////////////////////////// ls '' -l bach matkhdemch
+		// {
+		// 	tab[i] = ft_strdup("");
+		// 	j++;
+		// 	i++;
+		// 	continue;
+		// }
+		if (!arr[j].command)
 		{
 			j++;
-			words--;
 			continue;
 		}
 		tab[i] = ft_strdup(arr[j].command);
 		if (!tab[i])
 		{
 			while (i--)
-			free(tab[i]);
+				free(tab[i]);
 			free(tab);
 			return (NULL);
 		}
@@ -240,7 +252,7 @@ char	**ft_ultra_split(char *str, int	i, int		j,char ** envp)
 
 // int main (int ac, char **av, char **envp)
 // {
-// 	char *tmp =ft_strdup("ls|ls");
+// 	char *tmp =ft_strdup("ls $kkkdkgg");
 // 	char **str = ft_ultra_split(tmp, 0 ,0, envp);
 // 	for(int i = 0;str[i]; i++)
 // 		printf("%s\n",str[i]);

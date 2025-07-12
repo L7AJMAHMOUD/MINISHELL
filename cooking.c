@@ -64,6 +64,15 @@ t_command *cleaning(char *str, int p)
 				j += 2;
 				continue;
 			}
+			// if (c == str[i] && k == 0 && p != 0 && !str[i+1])
+			// {
+			// 	free(arr[k].command);
+			// 	arr[k].command = malloc(2);
+			// 	arr[k].command[0] = 2;
+			// 	arr[k].command[1] = 0;
+			// 	j += 2;
+			// 	continue;
+			// }
 			arr[k].q = c;
             while (str[i] && str[i] != c) {
                 arr[k].command[j++] = str[i++];
@@ -209,6 +218,10 @@ void	expand(t_command *arr, char **envp)
 				}
 			}
 		}
+		if (arr[i].command[0] == 0 && arr[i].q == 0)
+		{
+			arr[i].command = NULL;
+		}
 		i++;
 	}
 }
@@ -219,7 +232,14 @@ char *ft_arr_to_str(t_command *arr)
 	char *str;
 	str = NULL;
 	while (i < arr->nbr)
+	{
+		if (!arr[i].command)
+		{
+			i++;
+			continue;
+		}
 		str = ft_strjoin_(str, arr[i++].command);
+	}
 	free(arr);
 	return str;
 }
