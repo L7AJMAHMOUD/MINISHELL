@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/07 14:35:39 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/13 10:47:02 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,7 +271,10 @@ void export(char ***envp, char **command)
         while(command[j])
         {
 			if (check_synt(command[j]))
-				break;
+			{
+				j++;
+				continue;
+			}
             tmp = add_to_envp(*envp, command[j++], 0);//////////////
             *envp = tmp;
         }
