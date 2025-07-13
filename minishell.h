@@ -58,7 +58,7 @@ typedef struct s_node
 
 void    read_input(char ***envp);
 char	**ft_ultra_split(char *s, int	i, int		j, char **envp);
-t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words);
+t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words, int e);
 void	invalid_param(void);
 
 /* **************************************************************** */
@@ -149,9 +149,10 @@ char **wildcart(char **st, char **envp);
 void    bash_sig_handler(int sig);
 void	cmd_final(char ***command);
 void shy_emoji_banner();
-t_command cooking(char *str, char **envp, int p);
+t_command cooking(char *str, char **envp, int p, int x);
 void	list(char **command);
 char **clean_command(char **coammand, t_command *arr);
 int 	is_redirection(char *command);
 void append_to_fd(char **command);
+void	here_doc(char **command, t_command *arr);
 #endif

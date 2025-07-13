@@ -200,7 +200,7 @@ char **ft_arr_to_tab(t_command *arr, int words)
 }
 
 
-t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words)
+t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words, int q)
 {
 	t_command *arr;
 	int x;
@@ -233,7 +233,7 @@ t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words)
 	}
 	for (int v = 0; v < *words; v++)
 	{
-		arr[v] = cooking(arr[v].command, envp, v);
+		arr[v] = cooking(arr[v].command, envp, v, q);
 	}
 	free(tmp);
 	return(arr);
@@ -242,7 +242,7 @@ t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words)
 char	**ft_ultra_split(char *str, int	i, int		j,char ** envp)
 {
 	int words;
-	t_command *arr = ft_ultr_split(str, i, j,envp, &words);
+	t_command *arr = ft_ultr_split(str, i, j,envp, &words, 0);
 	char **tab = ft_arr_to_tab(arr, words);
 	return(tab);
 }

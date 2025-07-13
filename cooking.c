@@ -236,12 +236,13 @@ char *ft_arr_to_str(t_command *arr)
 }
 
 
-t_command cooking(char *str, char **envp, int p)
+t_command cooking(char *str, char **envp, int p, int x)
 {
 	t_command arr2;
 	t_command *arr = cleaning(str, p);
 	arr2.q = arr[0].q;
-	expand(arr, envp);
+	if (!x)
+		expand(arr, envp);
 	arr2.command = ft_arr_to_str(arr);
 	free(str);
 	return arr2;

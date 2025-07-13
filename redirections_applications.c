@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:35:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/13 12:12:03 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:49:11 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char ** apply_redirections(char **command, t_command *arr)
 			redirect_input_fd(command);
 		if (ft_strcmp(command[i], ">>") == 0 && arr[i].q == 0)
 			append_to_fd(command);
+		if (ft_strcmp(command[i], "<<") == 0 && arr[i].q == 0)
+			here_doc(command, arr);
 		i++;
 	}
 	return (cmd);
