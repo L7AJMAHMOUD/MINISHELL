@@ -47,6 +47,8 @@ typedef struct s_command
 typedef struct s_node
 {
 	char **command;
+	t_command *arr;
+	int i;
 	int pipe;
 	int and;
 	int or;
@@ -138,7 +140,7 @@ char ** apply_redirections(char **command, t_command *arr);
 int	ft_str_cmp(char *s1, char *s2);
 int check_command(char **str, char ***envp, t_node *node);
 void free_all_node(t_node *node);
-int pip(t_node *node, char ***envp, t_command *arr);
+int pip(t_node *node, char ***envp);
 char **add_to_envp(char **envp, char *ligne, int i);
 char **dirham(char **str, char **envp);
 void  redirect_output_fd(char **command);

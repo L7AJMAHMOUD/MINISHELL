@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_tokenization.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:56:47 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/06 14:56:22 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/13 09:48:09 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,9 @@ void    command_tokenization(t_node **node, char *command, char **envp)
 		command_tokenization(node ,command, envp);
 	}
 	else
+	{
 		(*node)->command = ft_ultra_split(command, 0, 0, envp);
+		(*node)->arr = ft_ultr_split(command, 0, 0, envp, &(*node)->i);
+	}
 }
 

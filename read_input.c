@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/13 09:46:15 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/13 09:50:48 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,15 @@
 void free_all_node(t_node *node)
 {
 	t_node *tmp;
+    int i;
 	while (node)
 	{
 		tmp = node->next;
 		free_all_ul_split(node->command);
+        i = 0;
+        while (i < node->i)
+            free(node->arr[i++].command);
+        free(node->arr);
 		free(node);
 		node = tmp;
 	}
@@ -115,22 +120,12 @@ void    read_input(char ***envp)
 	        tmp = node;
 			if (node -> next)
 			{
-                arr = NULL;
-				pip(node, envp, arr);
+				pip(node, envp);
 				continue;
 			}
-            else
-                arr = ft_ultr_split(command, 0, 0, *envp, &i);
 	        if((tmp)->command && check_command((tmp)->command, envp, node))
-	            exe((tmp)->command, *envp, node, arr);
+	            exe((tmp)->command, *envp, node, (tmp)->arr);
 	        free_all_node(node);
-            j = 0;
-            if (arr)
-            {
-                while(j < i)
-                    free(arr[j++].command);
-                free(arr);
-            }
 		}
     }
 }
