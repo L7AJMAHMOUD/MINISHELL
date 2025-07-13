@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/13 09:51:45 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/13 09:57:47 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	exe(char **command, char **envp, t_node *node, t_command *arr)
 	if (i == 0)
 	{
 		// list(command);
-		// command = apply_redirections(command, arr);
+		command = apply_redirections(command, arr);
 		// list(command);
 		path = find_path(*command, envp);
 		if (!path)

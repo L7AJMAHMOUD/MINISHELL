@@ -114,7 +114,7 @@ int strlen_(char *str)
 	i = 0;
 	if (!str)
 		return 0;
-	while (str[i] && str[i] != '$' && str[i] != QUOTE_SINGLE && str[i] != QUOTE_DOUBLE && str[i] != 32)
+	while (str[i] && str[i] != '$' && str[i] != QUOTE_SINGLE && str[i] != QUOTE_DOUBLE && str[i] != 32 && str[i] != '<' && str[i] != '>')
 	{
 		i++;
 	}
