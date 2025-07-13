@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/12 16:46:03 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/13 09:31:47 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ char	*find_path(char *path, char **envp)
 	write (2, " : command not found\n", 21);
 	return NULL;
 }
-void	exe(char **command, char **envp, t_node *node)
+void	exe(char **command, char **envp, t_node *node, t_command *arr)
 {
 	char *path;
 	int i = fork();
@@ -155,7 +155,7 @@ void	exe(char **command, char **envp, t_node *node)
 	if (i == 0)
 	{
 		// list(command);
-		command = apply_redirections(command);
+		command = apply_redirections(command, arr);
 		// list(command);
 		path = find_path(*command, envp);
 		if (!path)

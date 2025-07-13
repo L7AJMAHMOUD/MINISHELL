@@ -56,6 +56,7 @@ typedef struct s_node
 
 void    read_input(char ***envp);
 char	**ft_ultra_split(char *s, int	i, int		j, char **envp);
+t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words);
 void	invalid_param(void);
 
 /* **************************************************************** */
@@ -116,7 +117,7 @@ char	*ft_shearch(char *haystack, char *needle);
 void baner();
 void    ultra_skip_inside_quotes(char *command, int *i);
 void	ft_print(char *s, int i);
-void	exe(char **command, char **envp, t_node *node);
+void	exe(char **command, char **envp, t_node *node, t_command *arr);
 char	*find_path(char *path, char **envp);
 
 int   	and(char *command, int i, int k);
@@ -133,11 +134,11 @@ int		parenth(char *command);
 char	*ft_strstr_pare(char *command);
 int ultra_redirect_parse(char *command);
 int ultra_redirect_parsee(char *command);
-char **apply_redirections(char **command);
+char ** apply_redirections(char **command, t_command *arr);
 int	ft_str_cmp(char *s1, char *s2);
 int check_command(char **str, char ***envp, t_node *node);
 void free_all_node(t_node *node);
-int pip(t_node *node, char ***envp);
+int pip(t_node *node, char ***envp, t_command *arr);
 char **add_to_envp(char **envp, char *ligne, int i);
 char **dirham(char **str, char **envp);
 void  redirect_output_fd(char **command);
@@ -148,7 +149,7 @@ void	cmd_final(char ***command);
 void shy_emoji_banner();
 t_command cooking(char *str, char **envp, int p);
 void	list(char **command);
-char **clean_command(char **coammand);
+char **clean_command(char **coammand, t_command *arr);
 int 	is_redirection(char *command);
 void append_to_fd(char **command);
 #endif

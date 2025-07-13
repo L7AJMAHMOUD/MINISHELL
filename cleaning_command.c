@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaning_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 11:06:32 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/12 16:46:38 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/13 09:43:45 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int new_cmd_size(char **command)
 	
 }
 
-char **copy_list(char **command)
+char **copy_list(char **command, t_command *arr)
 {
 	char **new;
 	int i;
@@ -54,7 +54,7 @@ char **copy_list(char **command)
 	new = malloc((new_cmd_size(command) + 1) * sizeof(char *));
 	while (command[i])
 	{
-		if (is_redirect(command[i]) == 0 && command[i + 1])
+		if (is_redirect(command[i]) == 0 && command[i + 1] && arr[i].q == 0)
 			i+=2;
 		else
 		{
@@ -67,10 +67,10 @@ char **copy_list(char **command)
 	return (new);
 }
 
-char **clean_command(char **command)       
+char **clean_command(char **command, t_command *arr)       
 {
 	// list(command);
-	char **clean = copy_list(command);
+	char **clean = copy_list(command, arr);
 	return(clean);
 }
 

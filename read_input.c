@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/06 21:23:19 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/13 09:46:15 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ void    read_input(char ***envp)
     char *command;
 	t_node *node;
 	t_node *tmp;
+    t_command *arr;
     char *str;
+    int i;
+    int j;
 
     while (1)
     {
@@ -108,16 +111,26 @@ void    read_input(char ***envp)
         add_history(command);
         if(command_analyze(command) == 0)
 		{
-			command_tokenization(&node, command, *envp);
+            command_tokenization(&node, command, *envp);
 	        tmp = node;
 			if (node -> next)
 			{
-				pip(node, envp);
+                arr = NULL;
+				pip(node, envp, arr);
 				continue;
 			}
+            else
+                arr = ft_ultr_split(command, 0, 0, *envp, &i);
 	        if((tmp)->command && check_command((tmp)->command, envp, node))
-	            exe((tmp)->command, *envp, node);
+	            exe((tmp)->command, *envp, node, arr);
 	        free_all_node(node);
+            j = 0;
+            if (arr)
+            {
+                while(j < i)
+                    free(arr[j++].command);
+                free(arr);
+            }
 		}
     }
 }
