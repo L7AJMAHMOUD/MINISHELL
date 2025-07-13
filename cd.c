@@ -40,48 +40,37 @@ static char    *strjoin(char *s1, char *s2)
     return (str);
 }
 
-void cd(char ***envp, char *arg)
+void cd(char ***envp, char *arg, t_data *data)
 {
     char buff[BUFFER_SIZE];
     char *tmp;
-    char **tmp1;
+    int i;
     char *str;
     DIR *dir;
     
-    if (arg)
+    str = getcwd(buff, BUFFER_SIZE);
+    if (str)
     {
+        if (!arg)
+        {
+            tmp = getenv("HOME");
+            if (!tmp)
+                return ;
+            chdir (tmp);
+            data->pwd = buff;
+            return;
+        }
         dir = opendir(arg);
         if (!dir)
         {
-            perror(arg);
-            return ;
+            perror("minishell");
+            return;
         }
-    }
-    if(!getcwd(buff, BUFFER_SIZE))
-        perror("pwd: error retrieving current directory: getcwd: cannot access parent directories");
-    if (!arg)
-    {    
-        if (!getenv("HOME") || chdir(getenv("HOME")))
-            perror("chdir");
+        chdir(arg);
+        data->pwd = buff;
+        closedir(dir);
         return ;
     }
-    if (arg[0] == '/')
-    {
-        chdir (arg);
-        tmp1 = add_to_envp(*envp, arg, 1);
-        *envp = tmp1;
-    }
-    else
-    {
-        tmp = strjoin(buff, "/");
-        str = strjoin(tmp, arg);
-        if (chdir (str))
-        {
-            tmp1 = add_to_envp(*envp, str, 1);
-            *envp = tmp1;
-        }
-        free(tmp);
-        free(str);
-    }
-    closedir(dir);
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    chdir(data->pwd);
 }

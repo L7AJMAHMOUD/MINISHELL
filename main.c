@@ -43,10 +43,22 @@ int main(int ac, char **av, char **envp)
 {
     (void)ac;
     (void)av;
+    t_data data;
+    char buff[BUFFER_SIZE];
+
+    data.pwd = getcwd(buff, BUFFER_SIZE);
+    data.path = ft_strdup("/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin");
+    if (!data.pwd || !data.pwd)
+    {
+        if (data.path)
+            free(data.path);
+        ft_print("minishell : Erreur initialisation",0);
+        return 1;
+    }
     if (ac == 1)
 	{
 		envp = read_stock(envp);
-        read_input(&envp);
+        read_input(&envp, &data);
 	}
     else
         invalid_param();

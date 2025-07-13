@@ -50,16 +50,16 @@ void minishell(char **str)
     else
         ft_print("minishell : invalid option\nminishell options:\n\t--version",0);
 }
-int check_command(char **str, char ***envp, t_node *node)
+int check_command(char **str, char ***envp, t_node *node, t_data *data)
 {
     if (!str || !*str)
 		return 0;
     if (!(ft_strcmp(str[0], "echo")))
         return (echo(str, 1, *envp), 0);
     if (!(ft_strcmp(str[0], "cd")))
-        return (cd(envp, str[1]), 0);
+        return (cd(envp, str[1], data), 0);
     if (!(ft_strcmp(str[0], "pwd")))
-        return (pwd(0), 0);
+        return (pwd(data), 0);
     if (!(ft_strcmp(str[0], "minishell")))
         return (minishell(str), 0);
     if (!(ft_strcmp(str[0], "export")))
@@ -87,7 +87,7 @@ int check_node_syntex(t_node *tmp)
     }
     return 1;
 }
-void    read_input(char ***envp)
+void    read_input(char ***envp, t_data *data)
 {
     char *command;
 	t_node *node;
@@ -120,11 +120,11 @@ void    read_input(char ***envp)
 	        tmp = node;
 			if (node -> next)
 			{
-				pip(node, envp);
+				pip(node, envp, data);
 				continue;
 			}
-	        if((tmp)->command && check_command((tmp)->command, envp, node))
-	            exe((tmp)->command, *envp, node, (tmp)->arr);
+	        if((tmp)->command && check_command((tmp)->command, envp, node, data))
+	            exe((tmp)->command, *envp, node, (tmp)->arr, data);
 	        free_all_node(node);
 		}
         else

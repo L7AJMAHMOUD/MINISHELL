@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int pip(t_node *node, char ***envp)
+int pip(t_node *node, char ***envp, t_data *data)
 {
 	int pipefd[2];
 	int i = -1;
@@ -43,8 +43,8 @@ int pip(t_node *node, char ***envp)
 				dup2(pipefd[1], STDOUT_FILENO);
 				close(pipefd[1]);
 			}
-			if (check_command(current->command, envp, current))
-				exe(current->command, *envp, current, current->arr);
+			if (check_command(current->command, envp, current, data))
+				exe(current->command, *envp, current, current->arr, data);
 			free_all_node(node);
 			exit(1);
 		}

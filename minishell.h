@@ -44,6 +44,14 @@ typedef struct s_command
 	int q;
 	int nbr;
 }   t_command;
+typedef struct s_data
+{
+	char *command;
+	char *pwd;
+	char *path;
+	int status;
+}   t_data;
+
 typedef struct s_node
 {
 	char **command;
@@ -56,7 +64,7 @@ typedef struct s_node
 }   t_node;
 
 
-void    read_input(char ***envp);
+void    read_input(char ***envp, t_data *data);
 char	**ft_ultra_split(char *s, int	i, int		j, char **envp);
 t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words, int e);
 void	invalid_param(void);
@@ -108,9 +116,9 @@ void free_all_ul_split(char **str);
 /*									*/
 /* **************************************************************** */
 
-void	pwd(int i);
+void	pwd(t_data *data);
 void echo(char **str, int fd, char **envp);
-void cd(char ***envp, char *arg);
+void cd(char ***envp, char *arg, t_data *data);
 void export(char ***envp, char **command);
 void unset(char ***envp, char **command);
 
@@ -119,9 +127,8 @@ char	*ft_shearch(char *haystack, char *needle);
 void baner();
 void    ultra_skip_inside_quotes(char *command, int *i);
 void	ft_print(char *s, int i);
-void	exe(char **command, char **envp, t_node *node, t_command *arr);
+void	exe(char **command, char **envp, t_node *node, t_command *arr, t_data *data);
 char	*find_path(char *path, char **envp);
-
 int   	and(char *command, int i, int k);
 int		redirect_parse(char *command);
 void	check_and_last(char *command);
@@ -138,9 +145,9 @@ int ultra_redirect_parse(char *command);
 int ultra_redirect_parsee(char *command);
 char ** apply_redirections(char **command, t_command *arr, char **envp);
 int	ft_str_cmp(char *s1, char *s2);
-int check_command(char **str, char ***envp, t_node *node);
+int check_command(char **str, char ***envp, t_node *node, t_data *data);
 void free_all_node(t_node *node);
-int pip(t_node *node, char ***envp);
+int pip(t_node *node, char ***envp, t_data *data);
 char **add_to_envp(char **envp, char *ligne, int i);
 char **dirham(char **str, char **envp);
 void  redirect_output_fd(char **command);

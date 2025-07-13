@@ -147,7 +147,7 @@ char	*find_path(char *path, char **envp)
 	write (2, " : command not found\n", 21);
 	return NULL;
 }
-void	exe(char **command, char **envp, t_node *node, t_command *arr)
+void	exe(char **command, char **envp, t_node *node, t_command *arr, t_data *data)
 {
 	char *path;
 	int i = fork();

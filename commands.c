@@ -124,13 +124,11 @@ void echo(char **str, int fd, char **envp)
 }
 
 
-void	pwd(int i)
+void	pwd(t_data *data)
 {
 	char buff[BUFFER_SIZE];
 
 	if(!getcwd(buff,BUFFER_SIZE))
-		perror("getcwd");
-	printf("%s",buff);
-	if (!i)
-		printf("\n");
+		printf("%s\n",data->pwd);
+	printf("%s\n",buff);
 }
