@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:56:00 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/13 12:40:24 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/13 13:56:14 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void redirect_output_fd(char **command)
 		{
 			if (ambg_check(command, i) == -1)
 				return ;
-			fd = open(command[i + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+			fd = open(command[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			if (fd == -1)
 			{
 				perror("minishell");

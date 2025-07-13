@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/13 11:48:22 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:03:36 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,7 @@ void    read_input(char ***envp)
 	            exe((tmp)->command, *envp, node, (tmp)->arr);
 	        // free_all_node(node);
 		}
+        else
+            printf("SYNTAX ERROR \n");
     }
 }
