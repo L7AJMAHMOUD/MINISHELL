@@ -205,23 +205,25 @@ t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words)
 	t_command *arr;
 	int x;
 	int k;
-	preparation(&str, 0);
-	rev_(str);
-	preparation(&str, 1);
-	rev_(str);
-	*words = count_words(str, ' ');
+	char *tmp;
+	tmp = ft_strdup(str);
+	preparation(&tmp, 0);
+	rev_(tmp);
+	preparation(&tmp, 1);
+	rev_(tmp);
+	*words = count_words(tmp, ' ');
 	arr = malloc(sizeof(t_command) * *words);
 	i = 0;
 	while (j < *words)
 	{
 		x = 0;
-		while(str[i] == 32)
+		while(tmp[i] == 32)
 			i++;
-		arr[j].command=malloc(sizeof(char) * ln(&str[i]) + 1);
-		k = i + ln(&str[i]);
+		arr[j].command=malloc(sizeof(char) * ln(&tmp[i]) + 1);
+		k = i + ln(&tmp[i]);
 		while (i < k)
 		{
-			arr[j].command[x] = str[i];
+			arr[j].command[x] = tmp[i];
 			i++;
 			x++;
 		}
@@ -229,27 +231,14 @@ t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words)
 		i++;
 		j++;
 	}
-	// free(str);
 	for (int v = 0; v < *words; v++)
 	{
 		arr[v] = cooking(arr[v].command, envp, v);
 	}
+	free(tmp);
 	return(arr);
 }
 
-// int main (int ac, char **av, char **envp)
-// {
-// 	char *tmp =ft_strdup("ls \'> l\'");
-// 	t_command *str = ft_ultra_split(tmp, 0 ,0, envp);
-// 	for(int i = 0;str[i].command; i++)
-// 		printf("%s  | %d \n",str[i].command, str[i].q);
-	// for(int i = 0;str[i].command; i++)
-		// free(str[i].command);
-// 	free(str);
-// 	free(tmp);
-// }
-
-// gcc ft_ultra_split.c utils.c split_utils.c split.c
 char	**ft_ultra_split(char *str, int	i, int		j,char ** envp)
 {
 	int words;

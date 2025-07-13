@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaning_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 11:06:32 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/13 09:43:45 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/13 11:37:26 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char **copy_list(char **command, t_command *arr)
 	new = malloc((new_cmd_size(command) + 1) * sizeof(char *));
 	while (command[i])
 	{
-		if (is_redirect(command[i]) == 0 && command[i + 1] && arr[i].q == 0)
+		if (is_redirect(command[i]) == 0 && command[i + 1])
 			i+=2;
 		else
 		{

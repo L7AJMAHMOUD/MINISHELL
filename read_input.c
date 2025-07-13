@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/13 09:50:48 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/13 11:48:22 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void    read_input(char ***envp)
 			}
 	        if((tmp)->command && check_command((tmp)->command, envp, node))
 	            exe((tmp)->command, *envp, node, (tmp)->arr);
-	        free_all_node(node);
+	        // free_all_node(node);
 		}
     }
 }
