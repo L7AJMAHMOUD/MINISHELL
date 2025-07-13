@@ -1,12 +1,13 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_ultra_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/12 13:37:21 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/12 20:03:31 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,20 +200,19 @@ char **ft_arr_to_tab(t_command *arr, int words)
 }
 
 
-char	**ft_ultra_split(char *str, int	i, int		j,char ** envp)
+t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words)
 {
 	t_command *arr;
-	int words;
 	int x;
 	int k;
 	preparation(&str, 0);
 	rev_(str);
 	preparation(&str, 1);
 	rev_(str);
-	words = count_words(str, ' ');
-	arr = malloc(sizeof(t_command) * words);
+	*words = count_words(str, ' ');
+	arr = malloc(sizeof(t_command) * *words);
 	i = 0;
-	while (j < words)
+	while (j < *words)
 	{
 		x = 0;
 		while(str[i] == 32)
@@ -230,8 +230,30 @@ char	**ft_ultra_split(char *str, int	i, int		j,char ** envp)
 		j++;
 	}
 	// free(str);
-	for (int v = 0; v < words; v++)
-		arr[v].command = cooking(arr[v].command, envp, v);
+	for (int v = 0; v < *words; v++)
+	{
+		arr[v] = cooking(arr[v].command, envp, v);
+	}
+	return(arr);
+}
+
+// int main (int ac, char **av, char **envp)
+// {
+// 	char *tmp =ft_strdup("ls \'> l\'");
+// 	t_command *str = ft_ultra_split(tmp, 0 ,0, envp);
+// 	for(int i = 0;str[i].command; i++)
+// 		printf("%s  | %d \n",str[i].command, str[i].q);
+	// for(int i = 0;str[i].command; i++)
+		// free(str[i].command);
+// 	free(str);
+// 	free(tmp);
+// }
+
+// gcc ft_ultra_split.c utils.c split_utils.c split.c
+char	**ft_ultra_split(char *str, int	i, int		j,char ** envp)
+{
+	int words;
+	t_command *arr = ft_ultr_split(str, i, j,envp, &words);
 	char **tab = ft_arr_to_tab(arr, words);
 	return(tab);
 }

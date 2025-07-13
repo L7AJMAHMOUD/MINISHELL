@@ -146,8 +146,7 @@ char **wildcart(char **st, char **envp);
 void    bash_sig_handler(int sig);
 void	cmd_final(char ***command);
 void shy_emoji_banner();
-char *cooking(char *str, char **envp, int p);
-
+t_command cooking(char *str, char **envp, int p);
 void	list(char **command);
 char **clean_command(char **coammand);
 int 	is_redirection(char *command);

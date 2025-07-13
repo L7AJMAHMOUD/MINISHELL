@@ -38,7 +38,7 @@ t_command *cleaning(char *str, int p)
     int len = ft_strlen(str);
 
     t_command *arr = malloc(sizeof(t_command) * (len + 1));
-    if (!arr) return NULL;
+    	if (!arr) return NULL;
 
     arr[k].command = malloc(sizeof(char) * (len + 1));
     if (!arr[k].command) {
@@ -236,11 +236,13 @@ char *ft_arr_to_str(t_command *arr)
 }
 
 
-char *cooking(char *str, char **envp, int p)
+t_command cooking(char *str, char **envp, int p)
 {
+	t_command arr2;
 	t_command *arr = cleaning(str, p);
+	arr2.q = arr[0].q;
 	expand(arr, envp);
-	char *string = ft_arr_to_str(arr);
+	arr2.command = ft_arr_to_str(arr);
 	free(str);
-	return string;
+	return arr2;
 }
