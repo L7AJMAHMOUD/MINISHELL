@@ -46,12 +46,16 @@ int main(int ac, char **av, char **envp)
     t_data data;
     char buff[BUFFER_SIZE];
 
-    data.pwd = getcwd(buff, BUFFER_SIZE);
-    data.path = ft_strdup("/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin");
-    if (!data.pwd || !data.pwd)
+    if(!getcwd(buff, BUFFER_SIZE))
     {
-        if (data.path)
-            free(data.path);
+        ft_print("minishell : Erreur initialisation",0);
+        return 1;
+    }
+    data.pwd = ft_strdup(buff);
+    data.path = ft_strdup("/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin");
+    if (!data.path)
+    {
+        free(data.pwd);
         ft_print("minishell : Erreur initialisation",0);
         return 1;
     }

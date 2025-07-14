@@ -129,6 +129,9 @@ void	pwd(t_data *data)
 	char buff[BUFFER_SIZE];
 
 	if(!getcwd(buff,BUFFER_SIZE))
+	{
 		printf("%s\n",data->pwd);
+		return ;
+	}
 	printf("%s\n",buff);
 }

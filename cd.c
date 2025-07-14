@@ -37,6 +37,7 @@ static char    *strjoin(char *s1, char *s2)
     while (s2[k])
         str[j++] = s2[k++];
     str[j] = '\0';
+    free(s1);
     return (str);
 }
 
@@ -47,17 +48,21 @@ void cd(char ***envp, char *arg, t_data *data)
     int i;
     char *str;
     DIR *dir;
-    
+
     str = getcwd(buff, BUFFER_SIZE);
     if (str)
     {
+        printf("hello\n");
         if (!arg)
         {
             tmp = getenv("HOME");
-            if (!tmp)
-                return ;
-            chdir (tmp);
-            data->pwd = buff;
+            if (!tmp || chdir(tmp) != 0)
+            {
+                perror("minishell");
+                return;
+            }
+            free (data->pwd);
+            data->pwd = ft_strdup(buff);
             return;
         }
         dir = opendir(arg);
@@ -67,10 +72,21 @@ void cd(char ***envp, char *arg, t_data *data)
             return;
         }
         chdir(arg);
-        data->pwd = buff;
+        free (data->pwd);
+        str = getcwd(buff, BUFFER_SIZE);
+        data->pwd = ft_strdup(buff);
         closedir(dir);
         return ;
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    chdir(data->pwd);
+    perror("minishell");
+    data->pwd = strjoin(data->pwd, "/..");
+    if (access(data->pwd, F_OK) == 0)
+    {
+        /////////////////////////////////////////////////////////////////////////////////////
+        chdir(data->pwd);
+        free (data->pwd);
+        str = getcwd(buff, BUFFER_SIZE);
+        data->pwd = ft_strdup(buff);
+        return ;
+    }
 }
