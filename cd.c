@@ -41,6 +41,13 @@ static char    *strjoin(char *s1, char *s2)
     return (str);
 }
 
+void refrech(char *buff, t_data *data, DIR *dir)
+{
+    free (data->pwd);
+    data->pwd = ft_strdup(buff);
+    closedir(dir);
+}
+
 void cd(char ***envp, char *arg, t_data *data)
 {
     char buff[BUFFER_SIZE];
@@ -54,7 +61,7 @@ void cd(char ***envp, char *arg, t_data *data)
             return(perror("minishell"));
         free (data->pwd);
         data->pwd = ft_strdup(buff);
-        return;
+        return ;
     }
     dir = opendir(arg);
     if (!dir)
@@ -62,12 +69,7 @@ void cd(char ***envp, char *arg, t_data *data)
     chdir(arg);
     str = getcwd(buff, BUFFER_SIZE);
     if (str)
-    {
-        free (data->pwd);
-        data->pwd = ft_strdup(buff);
-        closedir(dir);
-        return ;
-    }
+        return (refrech(buff, data, dir));
     perror("cd : erreur de détermination du répertoire actuel : \
     getcwd : ne peut accéder aux répertoires parents ");
     data->pwd = strjoin(data->pwd, "/..");
