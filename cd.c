@@ -54,11 +54,13 @@ void cd(char ***envp, char *arg, t_data *data)
     char *str;
     DIR *dir;
 
+    // if (arg[1])
+    //     return(ft_print("minishell: cd : too many args", 0));
     if (!arg)
     {
         str = getenv("HOME");
         if (!str || chdir(str) != 0)
-            return(perror("minishell"));
+            return(ft_print("minishell: HOME not set", 0));
         free (data->pwd);
         data->pwd = ft_strdup(buff);
         return ;
