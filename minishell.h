@@ -118,7 +118,7 @@ void free_all_ul_split(char **str);
 
 void	pwd(t_data *data);
 void echo(char **str, int fd, char **envp);
-void cd(char ***envp, char *arg, t_data *data);
+void cd(char ***envp, char **arg, t_data *data);
 void export(char ***envp, char **command);
 void unset(char ***envp, char **command);
 

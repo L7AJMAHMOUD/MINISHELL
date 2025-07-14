@@ -48,15 +48,15 @@ void refrech(char *buff, t_data *data, DIR *dir)
     closedir(dir);
 }
 
-void cd(char ***envp, char *arg, t_data *data)
+void cd(char ***envp, char **arg, t_data *data)
 {
     char buff[BUFFER_SIZE];
     char *str;
+    char *tmp = NULL;
+    int i;
     DIR *dir;
 
-    // if (arg[1])
-    //     return(ft_print("minishell: cd : too many args", 0));
-    if (!arg)
+    if (!arg || !arg[0])
     {
         str = getenv("HOME");
         if (!str || chdir(str) != 0)
@@ -65,10 +65,25 @@ void cd(char ***envp, char *arg, t_data *data)
         data->pwd = ft_strdup(buff);
         return ;
     }
-    dir = opendir(arg);
+    i = 0;
+    while (arg[i])
+    {
+        tmp = strjoin(tmp, arg[i]);
+        if (arg[i + 1])
+            tmp = strjoin(tmp, " ");
+        i++;
+    }
+    dir = opendir(tmp);
     if (!dir)
+    {
+        if (i != 1)
+        {
+            ft_print("minishell: cd: too many arguments", 0);
+            return;
+        }
         return(perror("minishell"));
-    chdir(arg);
+    }
+    chdir(tmp);
     str = getcwd(buff, BUFFER_SIZE);
     if (str)
         return (refrech(buff, data, dir));

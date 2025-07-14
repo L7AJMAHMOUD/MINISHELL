@@ -57,7 +57,7 @@ int check_command(char **str, char ***envp, t_node *node, t_data *data)
     if (!(ft_strcmp(str[0], "echo")))
         return (echo(str, 1, *envp), 0);
     if (!(ft_strcmp(str[0], "cd")))
-        return (cd(envp, str[1], data), 0);
+        return (cd(envp, &str[1], data), 0);
     if (!(ft_strcmp(str[0], "pwd")))
         return (pwd(data), 0);
     if (!(ft_strcmp(str[0], "minishell")))
