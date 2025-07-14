@@ -41,11 +41,18 @@ static char    *strjoin(char *s1, char *s2)
     return (str);
 }
 
-void refrech(char *buff, t_data *data, DIR *dir)
+void refrech(char *buff, t_data *data, DIR *dir, char ***envp)
 {
+    char **tmp;
+    char *command;
+
     free (data->pwd);
+    command = strjoin(ft_strdup("OLDPWD="), data->pwd);
+    tmp = add_to_envp(*envp, command, 1);
     data->pwd = ft_strdup(buff);
-    closedir(dir);
+    command = strjoin(ft_strdup("PWD="), data->pwd);
+    tmp = add_to_envp(*envp, command, 1);//////////////
+    *envp = tmp;
 }
 
 void cd(char ***envp, char **arg, t_data *data)
@@ -61,8 +68,7 @@ void cd(char ***envp, char **arg, t_data *data)
         str = getenv("HOME");
         if (!str || chdir(str) != 0)
             return(ft_print("minishell: HOME not set", 0));
-        free (data->pwd);
-        data->pwd = ft_strdup(buff);
+        refrech(buff, data, dir, envp);
         return ;
     }
     i = 0;
@@ -86,7 +92,7 @@ void cd(char ***envp, char **arg, t_data *data)
     chdir(tmp);
     str = getcwd(buff, BUFFER_SIZE);
     if (str)
-        return (refrech(buff, data, dir));
+        return (refrech(buff, data, dir, envp), (void)closedir(dir));
     perror("cd : erreur de détermination du répertoire actuel : \
     getcwd : ne peut accéder aux répertoires parents ");
     data->pwd = strjoin(data->pwd, "/..");
