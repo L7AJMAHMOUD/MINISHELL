@@ -44,49 +44,31 @@ static char    *strjoin(char *s1, char *s2)
 void cd(char ***envp, char *arg, t_data *data)
 {
     char buff[BUFFER_SIZE];
-    char *tmp;
-    int i;
     char *str;
     DIR *dir;
 
+    if (!arg)
+    {
+        str = getenv("HOME");
+        if (!str || chdir(str) != 0)
+            return(perror("minishell"));
+        free (data->pwd);
+        data->pwd = ft_strdup(buff);
+        return;
+    }
+    dir = opendir(arg);
+    if (!dir)
+        return(perror("minishell"));
+    chdir(arg);
     str = getcwd(buff, BUFFER_SIZE);
     if (str)
     {
-        printf("hello\n");
-        if (!arg)
-        {
-            tmp = getenv("HOME");
-            if (!tmp || chdir(tmp) != 0)
-            {
-                perror("minishell");
-                return;
-            }
-            free (data->pwd);
-            data->pwd = ft_strdup(buff);
-            return;
-        }
-        dir = opendir(arg);
-        if (!dir)
-        {
-            perror("minishell");
-            return;
-        }
-        chdir(arg);
         free (data->pwd);
-        str = getcwd(buff, BUFFER_SIZE);
         data->pwd = ft_strdup(buff);
         closedir(dir);
         return ;
     }
-    perror("minishell");
+    perror("cd : erreur de détermination du répertoire actuel : \
+    getcwd : ne peut accéder aux répertoires parents ");
     data->pwd = strjoin(data->pwd, "/..");
-    if (access(data->pwd, F_OK) == 0)
-    {
-        /////////////////////////////////////////////////////////////////////////////////////
-        chdir(data->pwd);
-        free (data->pwd);
-        str = getcwd(buff, BUFFER_SIZE);
-        data->pwd = ft_strdup(buff);
-        return ;
-    }
 }
