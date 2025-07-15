@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static char    *strjoin(char *s1, char *s2)
+char    *strjoin(char *s1, char *s2)
 {
     size_t    k;
     size_t    j;

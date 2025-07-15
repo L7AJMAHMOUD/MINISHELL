@@ -80,6 +80,7 @@ void	ft_lstadd_front(t_node **lst, t_node *new);
 void	ft_lstadd_back(t_node **lst, t_node *new);
 int ft_lstsize(t_node *lst);
 void delete_node(t_node **head);;
+char    *strjoin(char *s1, char *s2);
 
 /* **************************************************************** */
 /*									*/

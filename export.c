@@ -169,27 +169,26 @@ char **copy_envp(char **envp)
 
 int	check_synt(char *str)
 {
-	int i;
-	int j;
+	int	i;
 
-	i = 0;
-	j = 0;
-	if (str[i] == QUOTE_DOUBLE)
-	while (str[i] && str[i] == QUOTE_DOUBLE)
-		i++;	
-	while (str[i] == '_')
+	if (!str || !str[0])
+		return (ft_print("minishell: export: not a valid identifier", 0), 1);
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (ft_print("minishell: export: not a valid identifier", 0), 1);
+	i = 1;
+	while (str[i])
 	{
-		j++;
-		i++;	
+		if (str[i] == '=')
+			break ;
+		if (str[i] == '+' && str[i + 1] == '=')
+			break ;
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (ft_print("minishell: export: not a valid identifier", 0), 1);
+		i++;
 	}
-	if (j == 1)
-		return (1);
-	else if (j > 1 && (str[i] == '=' || !str[i]))
-		return (0);
-	if (!ft_isalpha(str[i]) && str[i] != '\\')
-		return (ft_print("minishell: export: not a valid identifier ​😉", 0), 1);
 	return 0;
 }
+
 
 void ft_swap_str(char **s1, char **s2)
 {
@@ -227,6 +226,36 @@ char **arr_sorted(char **str)
 	}
 	return tmp;
 }
+char *command_analyse(char *command, char **envp)
+{
+	int i;
+	int j;
+	char *str;
+	char *tmp;
+	char *cmd;
+
+	cmd = NULL;
+	i = 0;
+	j = 0;
+	if (!command || !envp)
+		return NULL;
+	while (command[i] && command[i] != '+' && command[i] != '=')
+	{
+		i++;
+	}
+	if (!command[i] || command[i] == '=')
+		return command;
+	tmp = ft_strdup(&command[i + 2]);
+	command[i] = 0;
+	str = get_variable(command, envp);
+	cmd = strjoin(cmd, command);
+	free(command);
+	cmd = strjoin(cmd, "=");
+	cmd = strjoin(cmd, str);
+	cmd = strjoin(cmd, tmp);
+	return cmd;
+}
+
 void export(char ***envp, char **command)
 {
     int i;
@@ -275,6 +304,7 @@ void export(char ***envp, char **command)
 				j++;
 				continue;
 			}
+			command[j] = command_analyse(command[j], *envp);
             tmp = add_to_envp(*envp, command[j++], 0);//////////////
             *envp = tmp;
         }
