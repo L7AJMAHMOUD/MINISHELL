@@ -14,8 +14,13 @@
 
 void    bash_sig_handler(int sig)
 {
-    write(1, "\n", 2);
+    // write(1, "\n", 2);
+    // rl_on_new_line();
+    // rl_replace_line("", 0);
+    // rl_redisplay();   
+    write(1, "\n", 1);
     rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();   
+    rl_point = 0;
+    rl_end = 0;
+    rl_redisplay();
 }
