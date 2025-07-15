@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:32:43 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/06 17:15:15 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/15 12:23:03 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ void refrech(char *buff, t_data *data, DIR *dir, char ***envp)
     char **tmp;
     char *command;
 
-    free (data->pwd);
     command = strjoin(ft_strdup("OLDPWD="), data->pwd);
+    free (data->pwd);
     tmp = add_to_envp(*envp, command, 1);
+    *envp = tmp;
     data->pwd = ft_strdup(buff);
     command = strjoin(ft_strdup("PWD="), data->pwd);
     tmp = add_to_envp(*envp, command, 1);//////////////

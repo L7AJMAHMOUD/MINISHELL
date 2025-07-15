@@ -20,6 +20,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <fcntl.h>
+#include <string.h>
 #include <errno.h>
 #include <dirent.h>
 #include <sys/wait.h>
