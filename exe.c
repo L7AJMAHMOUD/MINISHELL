@@ -136,6 +136,13 @@ char *find_path(char *path, char **envp)
     i = ft_locat(envp);
     if (i == -1)
     {
+		if (access(path, F_OK) == 0)
+        {
+			write(2, "minishell: ", 11);
+			write(2, path, ft_strlen(path));
+			write(2, ": Permission denied\n", 20);
+			return NULL;
+        }
         write(2, "minishell: ", 11);
         write(2, path, ft_strlen(path));
         write(2, ": No such file or directory\n", 28);

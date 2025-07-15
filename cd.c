@@ -68,7 +68,7 @@ void cd(char ***envp, char **arg, t_data *data)
 
     if (!arg || !arg[0])
     {
-        str = getenv("HOME");
+        str = get_variable("HOME", *envp);
         if (!str || chdir(str) != 0)
             return(ft_print("minishell: HOME not set", 0));
         refrech(buff, data, dir, envp);
