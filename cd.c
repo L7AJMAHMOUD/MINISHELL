@@ -49,10 +49,12 @@ void refrech(char *buff, t_data *data, DIR *dir, char ***envp)
     command = strjoin(ft_strdup("OLDPWD="), data->pwd);
     free (data->pwd);
     tmp = add_to_envp(*envp, command, 1);
+    free(command);
     *envp = tmp;
     data->pwd = ft_strdup(buff);
     command = strjoin(ft_strdup("PWD="), data->pwd);
-    tmp = add_to_envp(*envp, command, 1);//////////////
+    tmp = add_to_envp(*envp, command, 1);
+    free(command);
     *envp = tmp;
 }
 
