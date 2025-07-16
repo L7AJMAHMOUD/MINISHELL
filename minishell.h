@@ -166,4 +166,5 @@ void append_to_fd(char **command);
 void	here_doc(char **command, t_command *arr, char **envp);
 char	*ft_strjoin_(char *s1, char *s2);
 char* get_variable(char *str, char **envp);
+
 #endif

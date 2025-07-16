@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:22 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/12 10:37:02 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/16 12:12:57 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,11 @@ int main(int ac, char **av, char **envp)
     data.path = ft_strdup("/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin");
     if (!data.path)
     {
-        free(data.pwd);
+		free(data.pwd);
         ft_print("minishell : Erreur initialisation",0);
         return 1;
     }
+	data.status = 0;
     if (ac == 1)
 	{
 		envp = read_stock(envp);

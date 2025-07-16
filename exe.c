@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/16 11:24:21 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/16 12:15:04 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,5 +198,8 @@ void	exe(char **command, char **envp, t_node *node, t_command *arr, t_data *data
 	}
 	else
 		wait(&status);
+	data->status = status;
+	if (status == 1)
+		data->status = 127;
 	return ;
 }
