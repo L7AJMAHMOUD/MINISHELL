@@ -207,7 +207,7 @@ void	expand(t_command *arr, char **envp, t_data *data)
 						else
 							val = NULL;
 						str = ft_strdup(&(arr[i].command[j + var_len]));
-						arr[i].command[j - 1] = 0;
+						arr[i].command[j - 1 - p] = 0;
 						arr[i].command = ft_strjoin_(arr[i].command, val);
 						var_len = ft_strlen(arr[i].command);
 						arr[i].command = ft_strjoin_(arr[i].command, str);
@@ -226,7 +226,7 @@ void	expand(t_command *arr, char **envp, t_data *data)
 					else
 						val = NULL;
 					str = ft_strdup(&(arr[i].command[j + var_len]));
-					arr[i].command[j - 1] = 0;
+					arr[i].command[j - 1 - p] = 0;
 					arr[i].command = ft_strjoin_(arr[i].command, val);
 					var_len = ft_strlen(arr[i].command);
 					arr[i].command = ft_strjoin_(arr[i].command, str);
