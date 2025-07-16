@@ -120,7 +120,7 @@ char	*ft_itoa(int n);
 /* **************************************************************** */
 
 void	pwd(t_data *data);
-void echo(char **str, int fd, char **envp);
+void echo(char **str, int fd, char **envp, t_data *data);
 void cd(char ***envp, char **arg, t_data *data);
 void export(char ***envp, char **command);
 void unset(char ***envp, char **command, t_data *data);
@@ -167,4 +167,5 @@ void append_to_fd(char **command);
 void	here_doc(char **command, t_command *arr, char **envp, t_data *data);
 char	*ft_strjoin_(char *s1, char *s2);
 char* get_variable(char *str, char **envp);
+
 #endif

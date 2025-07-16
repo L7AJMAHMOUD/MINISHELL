@@ -70,7 +70,7 @@ void cd(char ***envp, char **arg, t_data *data)
     {
         str = get_variable("HOME", *envp);
         if (!str || chdir(str) != 0)
-            return(ft_print("minishell: HOME not set", 0));
+            return(data->status = 1, ft_print("minishell: HOME not set", 0));
         refrech(buff, data, dir, envp);
         return ;
     }
@@ -88,15 +88,18 @@ void cd(char ***envp, char **arg, t_data *data)
         if (i != 1)
         {
             ft_print("minishell: cd: too many arguments", 0);
+			data->status = 1;
             return;
         }
-        return(perror("minishell"));
+        return(data->status = 1, perror("minishell"));
     }
     chdir(tmp);
+	data->status = 0;
     str = getcwd(buff, BUFFER_SIZE);
     if (str)
         return (refrech(buff, data, dir, envp), (void)closedir(dir));
     perror("cd : erreur de détermination du répertoire actuel : \
     getcwd : ne peut accéder aux répertoires parents ");
+	data->status = 1;
     data->pwd = strjoin(data->pwd, "/..");
 }

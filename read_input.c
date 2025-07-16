@@ -41,27 +41,31 @@ void print_env(char **envp, char **command)
             printf("%s\n", envp[i++]);
     
 }
-void minishell(char **str)
+void minishell(char **str, t_data *data)
 {
+	data->status = 0;
     if (!str[1])
-        printf("\nWelcome in MINISHELL OF NIGHTMARES\n\033[7mEvery command has consequences...\033[0m\n\n");
+        printf("\ntry : ./minishell \n\033[7mEvery command has consequences...\033[0m\n\n");
     else if (!(ft_strcmp(str[1], "--version")) && !str[2])
         printf("\nMINISHELL OF NIGHTMARES, version 1.0.0-release (x64-pc-linux-gnu)\nCopyright (C) 2025 Free Software Foundation, Inc.\n\nThis is free software; you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n");
     else
+	{
+		data->status = 2;
         ft_print("minishell : invalid option\nminishell options:\n\t--version",0);
+	}
 }
 int check_command(char **str, char ***envp, t_node *node, t_data *data)
 {
     if (!str || !*str)
 		return 0;
     if (!(ft_strcmp(str[0], "echo")))
-        return (echo(str, 1, *envp), 0);
+        return (echo(str, 1, *envp, data), 0);
     if (!(ft_strcmp(str[0], "cd")))
         return (cd(envp, &str[1], data), 0);
     if (!(ft_strcmp(str[0], "pwd")))
         return (pwd(data), 0);
     if (!(ft_strcmp(str[0], "minishell")))
-        return (minishell(str), 0);
+        return (minishell(str, data), 0);
     if (!(ft_strcmp(str[0], "export")))
         return (export(envp, node->command), 0);
     if (!(ft_strcmp(str[0], "unset")))

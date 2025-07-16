@@ -90,7 +90,7 @@ void	priint(char *str, int k)
 	if (k != 0)
 		write(1, " ", 1);
 }
-void echo(char **str, int fd, char **envp)
+void echo(char **str, int fd, char **envp, t_data *data)
 {
 	int i;
 	int j;
@@ -121,6 +121,7 @@ void echo(char **str, int fd, char **envp)
 		if (!str[i] && p == 0)
 			write(1, "\n", 1);
 	}
+	data->status = 0;
 }
 
 
@@ -130,8 +131,10 @@ void	pwd(t_data *data)
 
 	if(!getcwd(buff,BUFFER_SIZE))
 	{
+		data->status = 0;
 		printf("%s\n",data->pwd);
 		return ;
 	}
+	data->status = 0;
 	printf("%s\n",buff);
 }
