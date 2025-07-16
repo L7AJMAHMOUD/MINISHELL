@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:49:37 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/13 18:13:43 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/16 03:34:04 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,19 @@ char	*expand_str(char *command, char **envp)
 	return command;
 }
 
+char *get_delimiter(char **command)
+{
+	int l7;
+
+	l7 = 0;
+	while (command[l7])
+	{
+		if (command[l7 + 1] == NULL)
+			return (command[l7]);
+		l7++;
+	}
+	return (NULL);
+}
 void	here_doc(char **command, t_command *arr, char **envp)
 {
 	int i;
@@ -128,8 +141,9 @@ void	here_doc(char **command, t_command *arr, char **envp)
 	char buff[1000000];
 
 	i = 0;
-	delim = NULL;
+	delim = get_delimiter(command);
 	com = NULL;
+	exit(0);
 	while (command[i])
 	{
 		if (ft_strcmp(command[i], "<<") == 0 && arr[i + 1].q == 0)
