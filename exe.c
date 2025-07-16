@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/16 12:33:11 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/16 12:52:19 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void	exe(char **command, char **envp, t_node *node, t_command *arr, t_data *data
 
 	if (i == 0)
 	{
-		command = apply_redirections(command, arr, envp);
+		command = apply_redirections(command, arr, envp, data);
 		path = find_path(*command, envp, data);
 		if (!path)
 			exit(1) ;
@@ -201,5 +201,7 @@ void	exe(char **command, char **envp, t_node *node, t_command *arr, t_data *data
 	data->status = status;
 	if (status == 256 || status == 1)
 		data->status = 127;
+	else if (status % 2 == 0 && status != 0)
+		data->status = status / 256;
 	return ;
 }

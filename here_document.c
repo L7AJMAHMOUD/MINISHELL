@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_document.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:49:37 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/16 03:34:04 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:46:04 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int strlen_(char *str)
 	return i;
 }
 
-char	*expand_str(char *command, char **envp)
+char	*expand_str(char *command, char **envp, t_data *data)
 {
 	char *str;
 	char *tmp;
@@ -89,6 +89,27 @@ char	*expand_str(char *command, char **envp)
 			}
 			else
 			{
+				if (command[j] == '?')
+				{
+					var_len = 1;
+					varname = malloc(var_len + 1);
+					if (!varname)
+						return NULL;
+					strncpy(varname, &(command[j]), var_len);
+					varname[var_len] = '\0';
+					tmp = ft_itoa(data->status);
+					if (tmp)
+						val = ft_strdup(tmp);
+					else
+						val = NULL;
+					str = ft_strdup(&(command[j + var_len]));
+					command[j - 1 - p] = 0;
+					command = ft_strjoin_(command, val);
+					var_len = ft_strlen(command);
+					command = ft_strjoin_(command, str);
+					j = var_len;
+					continue;
+				}
 				var_len = strlen_(&(command[j]));
 				varname = malloc(var_len + 1);
 				if (!varname)
@@ -101,7 +122,7 @@ char	*expand_str(char *command, char **envp)
 				else
 					val = NULL;
 				str = ft_strdup(&(command[j + var_len]));
-				command[j - 1] = 0;
+				command[j - 1 - p] = 0;
 				command = ft_strjoin_(command, val);
 				var_len = ft_strlen(command);
 				command = ft_strjoin_(command, str);
@@ -130,7 +151,7 @@ char *get_delimiter(char **command)
 	}
 	return (NULL);
 }
-void	here_doc(char **command, t_command *arr, char **envp)
+void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 {
 	int i;
 	int fd;
@@ -160,7 +181,7 @@ void	here_doc(char **command, t_command *arr, char **envp)
 				com = readline("> ");
 				if (com[0])
 				{
-					arr_ = expand_str(com, envp);
+					arr_ = expand_str(com, envp, data);
 					write(fd,arr_,ft_strlen(arr_));
 				}
 				

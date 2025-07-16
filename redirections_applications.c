@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_applications.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:35:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/16 02:41:06 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:46:56 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char ** apply_redirections(char **command, t_command *arr, char **envp)
+char ** apply_redirections(char **command, t_command *arr, char **envp, t_data *data)
 {
 	int i = 0;
 	int count = 0;
@@ -27,7 +27,7 @@ char ** apply_redirections(char **command, t_command *arr, char **envp)
 		if (ft_strcmp(command[i], ">>") == 0 && arr[i].q == 0)
 			append_to_fd(command);
 		if (ft_strcmp(command[i], "<<") == 0 && arr[i].q == 0)
-			here_doc(command, arr, envp);
+			here_doc(command, arr, envp, data);
 		i++;
 	}
 	return (cmd);

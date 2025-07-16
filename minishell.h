@@ -146,7 +146,7 @@ int		parenth(char *command);
 char	*ft_strstr_pare(char *command);
 int ultra_redirect_parse(char *command);
 int ultra_redirect_parsee(char *command);
-char ** apply_redirections(char **command, t_command *arr, char **envp);
+char ** apply_redirections(char **command, t_command *arr, char **envp, t_data *data);
 int	ft_str_cmp(char *s1, char *s2);
 int check_command(char **str, char ***envp, t_node *node, t_data *data);
 void free_all_node(t_node *node);
@@ -164,7 +164,7 @@ void	list(char **command);
 char **clean_command(char **coammand, t_command *arr);
 int 	is_redirection(char *command);
 void append_to_fd(char **command);
-void	here_doc(char **command, t_command *arr, char **envp);
+void	here_doc(char **command, t_command *arr, char **envp, t_data *data);
 char	*ft_strjoin_(char *s1, char *s2);
 char* get_variable(char *str, char **envp);
 #endif
