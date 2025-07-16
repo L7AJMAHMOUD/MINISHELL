@@ -143,7 +143,7 @@ char* get_variable(char *str, char **envp)
     return NULL;
 }
 
-void	expand(t_command *arr, char **envp)
+void	expand(t_command *arr, char **envp, t_data *data)
 {
 	char *str;
 	char *tmp;
@@ -193,6 +193,27 @@ void	expand(t_command *arr, char **envp)
 				}
 				else
 				{
+					if (arr[i].command[j] == '?')
+					{
+						var_len = 1;
+						varname = malloc(var_len + 1);
+						if (!varname)
+							return;
+						strncpy(varname, &(arr[i].command[j]), var_len);
+						varname[var_len] = '\0';
+						tmp = ft_itoa(data->status);
+						if (tmp)
+							val = ft_strdup(tmp);
+						else
+							val = NULL;
+						str = ft_strdup(&(arr[i].command[j + var_len]));
+						arr[i].command[j - 1] = 0;
+						arr[i].command = ft_strjoin_(arr[i].command, val);
+						var_len = ft_strlen(arr[i].command);
+						arr[i].command = ft_strjoin_(arr[i].command, str);
+						j = var_len;
+						continue;
+					}
 					var_len = strlen_(&(arr[i].command[j]));
 					varname = malloc(var_len + 1);
 					if (!varname)
@@ -236,13 +257,13 @@ char *ft_arr_to_str(t_command *arr)
 }
 
 
-t_command cooking(char *str, char **envp, int p, int x)
+t_command cooking(char *str, char **envp, int p, int x, t_data *data)
 {
 	t_command arr2;
 	t_command *arr = cleaning(str, p);
 	arr2.q = arr[0].q;
 	if (!x)
-		expand(arr, envp);
+		expand(arr, envp, data);
 	arr2.command = ft_arr_to_str(arr);
 	free(str);
 	return arr2;

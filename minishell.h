@@ -66,8 +66,8 @@ typedef struct s_node
 
 
 void    read_input(char ***envp, t_data *data);
-char	**ft_ultra_split(char *s, int	i, int		j, char **envp);
-t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words, int e);
+char	**ft_ultra_split(char *s, int	i, int		j, char **envp, t_data *data);
+t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words, int e, t_data *data);
 void	invalid_param(void);
 
 /* **************************************************************** */
@@ -108,9 +108,10 @@ int is_something(int cmd);
 /*						 command_tokenization_utils					*/
 /*									*/
 /* **************************************************************** */
-void	command_tokenization(t_node **node, char *command, char **envp);
+void	command_tokenization(t_node **node, char *command, char **envp, t_data *data);
 void node_null(t_node *node);
 void free_all_ul_split(char **str);
+char	*ft_itoa(int n);
 
 /* **************************************************************** */
 /*									*/
@@ -158,7 +159,7 @@ char **wildcart(char **st, char **envp);
 void    bash_sig_handler(int sig);
 void	cmd_final(char ***command);
 void shy_emoji_banner();
-t_command cooking(char *str, char **envp, int p, int x);
+t_command cooking(char *str, char **envp, int p, int x, t_data *data);
 void	list(char **command);
 char **clean_command(char **coammand, t_command *arr);
 int 	is_redirection(char *command);
@@ -166,5 +167,4 @@ void append_to_fd(char **command);
 void	here_doc(char **command, t_command *arr, char **envp);
 char	*ft_strjoin_(char *s1, char *s2);
 char* get_variable(char *str, char **envp);
-
 #endif

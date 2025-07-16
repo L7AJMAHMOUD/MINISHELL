@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_tokenization.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:56:47 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/13 17:19:04 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:30:45 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	*ft_strstr_pare(char *command)
 	return NULL;
 }
 
-void    command_tokenization(t_node **node, char *command, char **envp)
+void    command_tokenization(t_node **node, char *command, char **envp, t_data *data)
 {
 	int i;
 	t_node *t_mp;
@@ -130,7 +130,7 @@ void    command_tokenization(t_node **node, char *command, char **envp)
 	}
 	if (ft_strstr(command, "|"))
 	{
-		command_tokenization(&t_mp ,ft_strstr(command, "|"), envp);
+		command_tokenization(&t_mp ,ft_strstr(command, "|"), envp, data);
 		if (!(*node)->next)
 			(*node)->next = t_mp;
 		else
@@ -141,12 +141,12 @@ void    command_tokenization(t_node **node, char *command, char **envp)
 		}
 		i = ft_strt(command, "|");
 		command[i] = 0;
-		command_tokenization(node ,command, envp);
+		command_tokenization(node ,command, envp, data);
 	}
 	else
 	{
-		(*node)->arr = ft_ultr_split(command, 0, 0, envp, &(*node)->i, 1);
-		(*node)->command = ft_ultra_split(command, 0, 0, envp);
+		(*node)->arr = ft_ultr_split(command, 0, 0, envp, &(*node)->i, 1, data);
+		(*node)->command = ft_ultra_split(command, 0, 0, envp, data);
 	}
 }
 
