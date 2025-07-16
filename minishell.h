@@ -122,7 +122,7 @@ void	pwd(t_data *data);
 void echo(char **str, int fd, char **envp);
 void cd(char ***envp, char **arg, t_data *data);
 void export(char ***envp, char **command);
-void unset(char ***envp, char **command);
+void unset(char ***envp, char **command, t_data *data);
 
 char	*ft_shearch(char *haystack, char *needle);
 
@@ -130,7 +130,7 @@ void baner();
 void    ultra_skip_inside_quotes(char *command, int *i);
 void	ft_print(char *s, int i);
 void	exe(char **command, char **envp, t_node *node, t_command *arr, t_data *data);
-char	*find_path(char *path, char **envp);
+char *find_path(char *path, char **envp, t_data *data);
 int   	and(char *command, int i, int k);
 int		redirect_parse(char *command);
 void	check_and_last(char *command);

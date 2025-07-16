@@ -6,7 +6,7 @@
 /*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/04 18:37:54 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/16 11:27:34 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ char **rm_to_envp(char **envp, char *ligne)
 		return NULL;
 	m = analyse_c(envp, ligne, &k);
 	if (m == -1)
-	{
-		printf ("heloo   %d\n",k);
 		return envp;
-	}
     while (envp[j])
         j++;
     str = malloc((j) * sizeof(char *));
@@ -88,7 +85,7 @@ char **rm_to_envp(char **envp, char *ligne)
     return str;
 }
 
-void unset(char ***envp, char **command)
+void unset(char ***envp, char **command, t_data *data)
 {
     int i;
     int j;
@@ -98,5 +95,12 @@ void unset(char ***envp, char **command)
     i = 0;
     j = 1;
 	while(command[j])
+	{
+		if (!ft_strcmp("PATH",command[j]))
+		{
+			free(data->path);
+			data->path = NULL;
+		}
 		*envp = rm_to_envp(*envp, command[j++]);
+	}
 }

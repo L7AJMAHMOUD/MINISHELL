@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/16 01:31:42 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/16 11:24:21 by user01           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	ft_locat(char **envp)
 	return (-1);
 }
 
-char *find_path(char *path, char **envp)
+char *find_path(char *path, char **envp, t_data *data)
 {
     char *tmp;
     int i;
@@ -134,7 +134,7 @@ char *find_path(char *path, char **envp)
     }
     
     i = ft_locat(envp);
-    if (i == -1)
+    if (i == -1 && !data->path)
     {
 		if (access(path, F_OK) == 0)
         {
@@ -148,12 +148,16 @@ char *find_path(char *path, char **envp)
         write(2, ": No such file or directory\n", 28);
         return NULL;
     }
-    
+	if (i == -1)
+		envp[i] = data->path;
     while (j < ft_strlen(envp[i]))
     {
         tmp = ft_strduup(&envp[i][j], ':', &k);
         if (!tmp)
-            return NULL;
+        {
+			printf("hello\n");
+			return NULL;
+		}
         j += k;
         tmp = ft_strjoiin(tmp, path);
         if (!tmp)
@@ -173,7 +177,6 @@ char *find_path(char *path, char **envp)
         }
         free(tmp);
     }
-    
     write(2, "minishell: ", 11);
     write(2, path, ft_strlen(path));
     write(2, ": command not found\n", 20);
@@ -188,7 +191,7 @@ void	exe(char **command, char **envp, t_node *node, t_command *arr, t_data *data
 	if (i == 0)
 	{
 		command = apply_redirections(command, arr, envp);
-		path = find_path(*command, envp);
+		path = find_path(*command, envp, data);
 		if (!path)
 			exit(1) ;
 		exit (execve(path ,command, envp));
