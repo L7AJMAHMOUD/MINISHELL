@@ -256,7 +256,7 @@ char *command_analyse(char *command, char **envp)
 	return cmd;
 }
 
-void export(char ***envp, char **command)
+void export(char ***envp, char **command, t_data *data)
 {
     int i;
     int j;
@@ -269,7 +269,10 @@ void export(char ***envp, char **command)
 	{
 		tmp = arr_sorted(*envp);////////////
 		if (!tmp)
+		{
+			data->status = 1;
 			return ;
+		}
         while (tmp[i])
         {
             j = 0;
@@ -293,14 +296,17 @@ void export(char ***envp, char **command)
             write(1, "\n", 1);
             i++;
         }
+		data->status = 0;
 		free_all_ul_split(tmp);
 	}
     else
     {
+		data->status = 0;
         while(command[j])
         {
 			if (check_synt(command[j]))
 			{
+				data->status = 1;
 				j++;
 				continue;
 			}

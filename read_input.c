@@ -67,7 +67,7 @@ int check_command(char **str, char ***envp, t_node *node, t_data *data)
     if (!(ft_strcmp(str[0], "minishell")))
         return (minishell(str, data), 0);
     if (!(ft_strcmp(str[0], "export")))
-        return (export(envp, node->command), 0);
+        return (export(envp, node->command, data), 0);
     if (!(ft_strcmp(str[0], "unset")))
         return (unset(envp, str, data) ,0);
     if (!(ft_strcmp(str[0], "env")))

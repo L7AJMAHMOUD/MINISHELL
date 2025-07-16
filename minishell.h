@@ -122,7 +122,7 @@ char	*ft_itoa(int n);
 void	pwd(t_data *data);
 void echo(char **str, int fd, char **envp, t_data *data);
 void cd(char ***envp, char **arg, t_data *data);
-void export(char ***envp, char **command);
+void export(char ***envp, char **command, t_data *data);
 void unset(char ***envp, char **command, t_data *data);
 
 char	*ft_shearch(char *haystack, char *needle);
