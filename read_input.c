@@ -52,7 +52,13 @@ void minishell(char **str, t_data *data)
     if (!str[1])
         printf("\ntry : ./minishell \n\033[7mEvery command has consequences...\033[0m\n\n");
     else if (!(ft_strcmp(str[1], "--version")) && !str[2])
-        printf("\nMINISHELL OF NIGHTMARES, version 1.0.0-release (x64-pc-linux-gnu)\nCopyright (C) 2025 Free Software Foundation, Inc.\n\nThis is free software; you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n");
+    printf("\nMINISHELL OF NIGHTMARES, version 1.0.0-release (x64-pc-linux-gnu)\n"
+        "Copyright (C) 2025 Free Software Foundation, Inc.\n\n"
+        "This is free software; you are free to change and redistribute it.\n"
+        "There is NO WARRANTY, to the extent permitted by law.\n\n"
+        "Developers:\n"
+        "  Mahmoud En-Najy      --> maen-naj\n"
+        "  Abderrahman karam    --> abkaram\n\n");
     else
 	{
 		data->status = 2;
