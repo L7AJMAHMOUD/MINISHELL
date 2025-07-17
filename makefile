@@ -110,3 +110,35 @@ run:	$(NAME)
 	@./$(NAME)
 
 .PHONY : all clean fclean re
+
+# NAME = minishell
+# CC = cc
+# FLAGS = 
+# HEAD = minishell.h
+# RM = rm -f
+# SRCS = $(wildcard *.c)
+# OBJ = $(SRCS:.c=.o)
+
+# READLINE_INCLUDE = -I$(shell brew --prefix readline)/include
+# READLINE_LIB = -L$(shell brew --prefix readline)/lib -lreadline
+
+# all: $(NAME)
+
+# $(NAME): $(OBJ)
+# 	@$(CC) $(OBJ) $(READLINE_INCLUDE) $(READLINE_LIB) -o $(NAME)
+
+# %.o: %.c $(HEAD)
+# 	@$(CC) $(FLAGS) $(READLINE_INCLUDE) -c $< -o $@
+
+# clean:
+# 	$(RM) $(OBJ)
+
+# fclean: clean
+# 	$(RM) $(NAME)
+
+# re: fclean all
+
+# run: $(NAME)
+# 	@./$(NAME)
+
+# .PHONY: all clean fclean re run
