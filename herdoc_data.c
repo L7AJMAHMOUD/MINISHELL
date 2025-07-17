@@ -21,7 +21,6 @@ int file_already_exist()
     directory = opendir("/tmp/HEREDOC_DIR_SYSTEMD/");
     if (!directory)
         return -1;
-
     while (1)
     {
         struct dirent *entry;
@@ -29,7 +28,7 @@ int file_already_exist()
 
         while ((entry = readdir(directory)) != NULL)
         {
-            if (atoi(entry->d_name) == new_f)
+            if (entry->d_name[0] == 'H' && atoi(entry->d_name + 1) == new_f)
             {
                 found = 1;
                 new_f++;
@@ -39,7 +38,6 @@ int file_already_exist()
 
         if (!found)
             break;
-
         closedir(directory);
         directory = opendir("/tmp/HEREDOC_DIR_SYSTEMD/");
         if (!directory)
@@ -84,6 +82,8 @@ char *here_doc_data()
             char *dir[] = {"mkdir", "HEREDOC_DIR_SYSTEMD", NULL};
             chdir("/tmp/");
             execve("/bin/mkdir", dir, NULL);
+            perror("execve");
+            exit(1);
         }
         waitpid(i, NULL, 0);
     }
@@ -94,17 +94,16 @@ char *here_doc_data()
     if (f_index != -1)
     {
         file_num = ft_itoa(f_index);
-        i = fork();
-        if (i == 0)
-        {
-            char *fheredoc[] = {"touch", file_num, NULL};
-            execve("/usr/bin/touch", fheredoc, NULL);
-        }
-        waitpid(i, NULL, 0);
+        // i = fork();
+        // if (i == 0)
+        // {
+        //     char *fheredoc[] = {"touch", file_num, NULL};
+        //     execve("/usr/bin/touch", fheredoc, NULL);
+        // }
+        // waitpid(i, NULL, 0);
     }
     else
         return NULL;
-
     file_num = ft_itoa(f_index);
     file_name = ft_strjoin("H", file_num);
     free(file_num);
