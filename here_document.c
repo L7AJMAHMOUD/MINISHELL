@@ -155,6 +155,7 @@ char *get_delimiter(char **command)
 void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 {
 	int i;
+	int j;
 	int fd;
 	char *delim;
 	char *com;
@@ -168,6 +169,7 @@ void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 	char *file = here_doc_data();
 	while (command[i])
 	{
+		j = 0;
 		if (ft_strcmp(command[i], "<<") == 0 && arr[i + 1].q == 0)
 		{
 			fd = open(file, O_CREAT | O_RDWR, 0644); 
@@ -180,21 +182,23 @@ void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 			while (1)
 			{
 				com = readline("> ");
-				if (com[0])
-				{
-					arr_ = expand_str(com, envp, data);
-					write(fd,arr_,ft_strlen(arr_));
-				}
-				
-				write(fd,"\n",1);
-				if (ft_strcmp(com, delim) == 0)
+				if (!com || ft_strcmp(com, delim) == 0)
 				{
 					close(fd);
 					fd = open(file, O_CREAT | O_RDWR, 0644); 
 					read(fd, buff, 1000000);
 					printf("%s\n", buff);
+					close(fd);
 					exit (0);
 				}
+				if (j != 0)
+					write(fd,"\n",1);
+				if (com[0])
+				{
+					arr_ = expand_str(com, envp, data);
+					write(fd,arr_,ft_strlen(arr_));
+				}
+				j++;
 			}
 			
 		}
@@ -210,19 +214,21 @@ void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 			while (1)
 			{
 				com = readline("> ");
-				if (com[0])
-				{
-					write(fd,com,ft_strlen(com));
-				}
-				write(fd,"\n",1);
-				if (ft_strcmp(com, delim) == 0)
+				if (!com || ft_strcmp(com, delim) == 0)
 				{
 					close(fd);
 					fd = open(file, O_CREAT | O_RDWR, 0644); 
 					read(fd, buff, 1000000);
 					printf("%s\n", buff);
+					close(fd);
 					exit (0);
 				}
+				if (j != 0)
+					write(fd,"\n",1);
+				if (com[0])
+					write(fd,com,ft_strlen(com));
+				write(fd,"\n",1);
+				j++;
 			}
 			
 		}
