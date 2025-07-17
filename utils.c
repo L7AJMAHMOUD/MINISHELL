@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:54:55 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/13 11:51:46 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/17 05:29:30 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[k])
 		str[j++] = s2[k++];
 	str[j] = '\0';
-	return (free(s1), free(s2), str);
+	return (str);
 }
 char	*ft_strdup(char *src )
 {

@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 03:28:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/17 04:45:59 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/17 05:51:08 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,38 @@
 int file_already_exist()
 {
     DIR *directory;
-    struct dirent *entry;
     int new_f = 0;
+    int found = 1;
 
     directory = opendir("/tmp/HEREDOC_DIR_SYSTEMD/");
     if (!directory)
         return -1;
-    while ((entry = readdir(directory)) != NULL)
+
+    while (1)
     {
-        printf("%s\n", entry -> d_name);
-        if (new_f == atoi(entry ->d_name))
-            new_f++;
-        else
-            return (new_f);
+        struct dirent *entry;
+        found = 0;
+
+        while ((entry = readdir(directory)) != NULL)
+        {
+            if (atoi(entry->d_name) == new_f)
+            {
+                found = 1;
+                new_f++;
+                break;
+            }
+        }
+
+        if (!found)
+            break;
+
+        closedir(directory);
+        directory = opendir("/tmp/HEREDOC_DIR_SYSTEMD/");
+        if (!directory)
+            return -1;
     }
     closedir(directory);
-    return 0;
+    return new_f;
 }
 int    dir_already_exist()
 {
@@ -52,43 +68,59 @@ int    dir_already_exist()
     return 0;
 }
 
-void	here_doc_data()
+char *here_doc_data()
 {
-    int i = 0 ;
+    int i = 0;
     int d_exist = dir_already_exist();
-    int f_exist;
-    int hed_files = 0;
+    int f_index;
+    char *file_num;
+    char *file_name;
+
     if (d_exist != -1)
     {
         i = fork();
         if (i == 0)
         {
-            char *dir[3] = {"mkdir", "HEREDOC_DIR_SYSTEMD", NULL};
+            char *dir[] = {"mkdir", "HEREDOC_DIR_SYSTEMD", NULL};
             chdir("/tmp/");
             execve("/bin/mkdir", dir, NULL);
+            perror("mkdir failed");
+            exit(1);
         }
         waitpid(i, NULL, 0);
     }
-	chdir("/tmp/HEREDOC_DIR_SYSTEMD");
-    f_exist = file_already_exist();
-    if (f_exist != -1)
+
+    chdir("/tmp/HEREDOC_DIR_SYSTEMD");
+
+    f_index = file_already_exist();
+    if (f_index != -1)
     {
-	    i = fork();
+        file_num = ft_itoa(f_index);
+        i = fork();
         if (i == 0)
         {
-            exit(0);
-            char *fheredoc[3] = {"touch", ft_itoa(file_already_exist()), NULL};
+            char *fheredoc[] = {"touch", file_num, NULL};
             execve("/usr/bin/touch", fheredoc, NULL);
+            perror("touch failed");
+            free(file_num);
+            exit(1);
         }
         waitpid(i, NULL, 0);
     }
+    else
+        return NULL;
+
+    file_num = ft_itoa(f_index);
+    file_name = ft_strjoin("H", file_num);
+    free(file_num);
+    return file_name;
 }
 
 // int main()
 // {
-//     const char *path = "/tmp/HEREDOC_DIR_SYSTEMD";
-
-//     here_doc_data();
+//     char *t[] = {"cat", "<<", "0"};
+    
+//     here_doc_data(t);
 
 
 // }

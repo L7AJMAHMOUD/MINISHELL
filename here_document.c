@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:49:37 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/17 01:29:47 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/17 05:43:20 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,12 +165,12 @@ void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 	i = 0;
 	delim = NULL;
 	com = NULL;
-	// here_doc_data();
+	char *file = here_doc_data();
 	while (command[i])
 	{
 		if (ft_strcmp(command[i], "<<") == 0 && arr[i + 1].q == 0)
 		{
-			fd = open("name", O_CREAT | O_RDWR, 0644); 
+			fd = open(file, O_CREAT | O_RDWR, 0644); 
 			if (fd == -1)
 			{
 				perror("minishell");
@@ -190,7 +190,7 @@ void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 				if (ft_strcmp(com, delim) == 0)
 				{
 					close(fd);
-					fd = open("name", O_CREAT | O_RDWR, 0644); 
+					fd = open(file, O_CREAT | O_RDWR, 0644); 
 					read(fd, buff, 1000000);
 					printf("%s\n", buff);
 					exit (0);
@@ -200,7 +200,7 @@ void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 		}
 		else if (ft_strcmp(command[i], "<<") == 0)
 		{
-			fd = open("name", O_CREAT | O_RDWR, 0644); 
+			fd = open(file, O_CREAT | O_RDWR, 0644); 
 			if (fd == -1)
 			{
 				perror("minishell");
@@ -218,7 +218,7 @@ void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 				if (ft_strcmp(com, delim) == 0)
 				{
 					close(fd);
-					fd = open("name", O_CREAT | O_RDWR, 0644); 
+					fd = open(file, O_CREAT | O_RDWR, 0644); 
 					read(fd, buff, 1000000);
 					printf("%s\n", buff);
 					exit (0);
