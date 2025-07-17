@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 03:28:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/17 05:51:08 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/17 06:03:45 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ char *here_doc_data()
             char *dir[] = {"mkdir", "HEREDOC_DIR_SYSTEMD", NULL};
             chdir("/tmp/");
             execve("/bin/mkdir", dir, NULL);
-            perror("mkdir failed");
-            exit(1);
         }
         waitpid(i, NULL, 0);
     }
@@ -101,9 +99,6 @@ char *here_doc_data()
         {
             char *fheredoc[] = {"touch", file_num, NULL};
             execve("/usr/bin/touch", fheredoc, NULL);
-            perror("touch failed");
-            free(file_num);
-            exit(1);
         }
         waitpid(i, NULL, 0);
     }
