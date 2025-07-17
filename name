@@ -1,5 +1,0 @@
-cat << 1
-gsd
-user01
-user01    /home/user01/.local/bin:/home/user01/bin:/usr/local/bin:/usr/bin:/var/lib/snapd/snap/bin
-"user01"

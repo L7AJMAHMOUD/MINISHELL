@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_document.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:49:37 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/16 12:46:04 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/17 01:29:47 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ char *get_delimiter(char **command)
 	}
 	return (NULL);
 }
+
 void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 {
 	int i;
@@ -162,9 +163,9 @@ void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 	char buff[1000000];
 
 	i = 0;
-	delim = get_delimiter(command);
+	delim = NULL;
 	com = NULL;
-	exit(0);
+	// here_doc_data();
 	while (command[i])
 	{
 		if (ft_strcmp(command[i], "<<") == 0 && arr[i + 1].q == 0)
@@ -213,7 +214,6 @@ void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 				{
 					write(fd,com,ft_strlen(com));
 				}
-				
 				write(fd,"\n",1);
 				if (ft_strcmp(com, delim) == 0)
 				{
