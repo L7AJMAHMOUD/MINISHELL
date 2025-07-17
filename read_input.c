@@ -29,16 +29,21 @@ void free_all_node(t_node *node)
 	}
 }
 
-void print_env(char **envp, char **command)
+void print_env(char **envp, char **command, t_data *data)
 {
     int i;
 
     i = 0;
     if (command[1])
-        ft_print("my shell must implement env with no options or arguments ​😉​\n", 0);
+    {
+        ft_print("my shell must implement env with no options or arguments ​😉​", 0);
+        data->status = 125;
+        return;
+    }
     else
         while (envp && envp[i])
             printf("%s\n", envp[i++]);
+    data->status = 0;
     
 }
 void minishell(char **str, t_data *data)
@@ -71,7 +76,7 @@ int check_command(char **str, char ***envp, t_node *node, t_data *data)
     if (!(ft_strcmp(str[0], "unset")))
         return (unset(envp, str, data) ,0);
     if (!(ft_strcmp(str[0], "env")))
-        return (print_env(*envp, node->command), 0);
+        return (print_env(*envp, node->command, data), 0);
     if (!(ft_strcmp(str[0], "exit")))
         return (free_all_node(node), free_all_ul_split(*envp), ft_print("\nexit", 0), exit(127), 0);
     return (1);

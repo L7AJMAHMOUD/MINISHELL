@@ -94,6 +94,7 @@ void unset(char ***envp, char **command, t_data *data)
 
     i = 0;
     j = 1;
+	data->status = 0;
 	while(command[j])
 	{
 		if (!ft_strcmp("PATH",command[j]))
