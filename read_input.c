@@ -84,7 +84,7 @@ int check_command(char **str, char ***envp, t_node *node, t_data *data)
     if (!(ft_strcmp(str[0], "env")))
         return (print_env(*envp, node->command, data), 0);
     if (!(ft_strcmp(str[0], "exit")))
-        return (free_all_node(node), free_all_ul_split(*envp), ft_print("\nexit", 0), exit(127), 0);
+        return (free_all_node(node), free_all_ul_split(*envp), ft_print("\nexit", 0), exit(data->status), 0);
     return (1);
 }
 int check_node_syntex(t_node *tmp)
@@ -119,7 +119,7 @@ void    read_input(char ***envp, t_data *data)
             free_all_ul_split(*envp);
             free(data->path);
             free(data->pwd);
-            exit (127);
+            exit (data->status);
         }
         if (ft_strcmp(command,"I LOVE YOU") == 0)
         {
@@ -141,7 +141,10 @@ void    read_input(char ***envp, t_data *data)
 	        free_all_node(node);
 		}
         else
+        {
             ft_print("SYNTAX ERROR", 0);
+            data->status = 2;
+        }
         free(command);
     }
 }
