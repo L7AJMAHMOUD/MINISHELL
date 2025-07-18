@@ -64,8 +64,6 @@ void redirect_output_fd(char **command)
 	{
 		if (ft_strcmp(command[i], ">") == 0)
 		{
-			if (ambg_check(command, i) == -1)
-				return ;
 			fd = open(command[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			if (fd == -1)
 			{
