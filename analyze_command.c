@@ -82,7 +82,7 @@ int	command_analyze(char *command)
 	if(redirect_parse(command) != 0)
 		return (-1);
 	if (command[0] == '\0' || command[0] == SPACE_CHAR)
-		return 0;
+		return 1;
 	// if (there_a_parntheses(command) == -33)
 	// 	if (parenth(command) != 0)
 	// 		return (printf("SYNTAX ERROR 6\n"), -1);

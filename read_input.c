@@ -65,6 +65,56 @@ void minishell(char **str, t_data *data)
         ft_print("minishell : invalid option\nminishell options:\n\t--version",0);
 	}
 }
+
+int	ft_strisdigit(char *c)
+{
+	int i = 0;
+
+	if (!c || c[0] == '\0')
+		return (0);
+	if (c[0] == '-' || c[0] == '+')
+		i++;
+	if (c[i] == '\0')
+		return (0);
+	while (c[i])
+	{
+		if (c[i] < '0' || c[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+
+
+void	ft_exit(char ***envp, t_node *node, t_data *data)
+{
+	printf("exit\n");
+
+	if (node->command[1] && node->command[2])
+	{
+		ft_print("exit: too many arguments", 0);
+		data->status = 1;
+		return ;
+	}
+	if (node->command[1])
+	{
+		if (ft_strisdigit(node->command[1]))
+			data->status = ft_atoi(node->command[1]) % 256;
+		else
+		{
+			ft_print("exit: numeric argument required", 0);
+			data->status = 2;
+		}
+	}
+	free_all_ul_split(*envp);
+	free_all_node(node);
+	free(data->path);
+	free(data->pwd);
+	exit(data->status);
+}
+
+
 int check_command(char **str, char ***envp, t_node *node, t_data *data)
 {
     if (!str || !*str)
@@ -84,7 +134,7 @@ int check_command(char **str, char ***envp, t_node *node, t_data *data)
     if (!(ft_strcmp(str[0], "env")))
         return (print_env(*envp, node->command, data), 0);
     if (!(ft_strcmp(str[0], "exit")))
-        return (free_all_node(node), free_all_ul_split(*envp), ft_print("\nexit", 0), exit(data->status), 0);
+        return (ft_exit(envp, node, data), 0);
     return (1);
 }
 int check_node_syntex(t_node *tmp)
@@ -130,19 +180,26 @@ void    read_input(char ***envp, t_data *data)
         if(command_analyze(command) == 0)
 		{
             command_tokenization(&node, command, *envp, data);
+            if (!check_node_syntex(node))
+            {
+                free_all_node(node);
+                free(command);
+                continue;
+            }
 	        tmp = node;
 			if (node -> next)
 			{
 				pip(node, envp, data);
+                free(command);
 				continue;
 			}
 	        if((tmp)->command && check_command((tmp)->command, envp, node, data))
 	            exe(*envp, node, data);
 	        free_all_node(node);
 		}
-        else
+        else if (command_analyze(command) == -1)
         {
-            ft_print("SYNTAX ERROR", 0);
+            ft_print("minishell: syntax error near unexpected token `nightmare' 😉.​", 0);
             data->status = 2;
         }
         free(command);

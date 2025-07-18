@@ -12,3 +12,39 @@ void	*ft_memset(void *b, int c, size_t len)
 	}
 	return (b);
 }
+
+static int	norm(int n)
+{
+	if (n == -1)
+		return (0);
+	return (-1);
+}
+
+int	ft_atoi(const char *str)
+{
+	int			i;
+	long double	m;
+	int			n;
+
+	n = 1;
+	i = 0;
+	m = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+	{
+		i++;
+	}
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			n = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		m = (m * 10) + (str[i] - 48);
+		if (m > 9223372036854775807)
+			return (norm(n));
+		i++;
+	}
+	return (n * (long) m);
+}

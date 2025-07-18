@@ -66,6 +66,7 @@ typedef struct s_node
 	struct s_node *next;
 }   t_node;
 
+int	ft_atoi(const char *str);
 
 void    read_input(char ***envp, t_data *data);
 char	**ft_ultra_split(char *s, int	i, int		j, char **envp, t_data *data);
