@@ -212,6 +212,7 @@ void	expand(t_command *arr, char **envp, t_data *data)
 						var_len = ft_strlen(arr[i].command);
 						arr[i].command = ft_strjoin_(arr[i].command, str);
 						j = var_len;
+						free(varname);
 						continue;
 					}
 					var_len = strlen_(&(arr[i].command[j]));
@@ -230,6 +231,7 @@ void	expand(t_command *arr, char **envp, t_data *data)
 					arr[i].command = ft_strjoin_(arr[i].command, val);
 					var_len = ft_strlen(arr[i].command);
 					arr[i].command = ft_strjoin_(arr[i].command, str);
+					free(varname);
 					j = var_len;
 				}
 			}

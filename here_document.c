@@ -107,6 +107,7 @@ char	*expand_str(char *command, char **envp, t_data *data)
 					var_len = ft_strlen(command);
 					command = ft_strjoin_(command, str);
 					j = var_len;
+					free(varname);
 					continue;
 				}
 				var_len = strlen_(&(command[j]));
@@ -126,6 +127,7 @@ char	*expand_str(char *command, char **envp, t_data *data)
 				var_len = ft_strlen(command);
 				command = ft_strjoin_(command, str);
 				j = var_len;
+				free(varname);
 			}
 		}
 	}
