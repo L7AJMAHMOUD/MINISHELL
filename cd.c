@@ -75,17 +75,11 @@ void cd(char ***envp, char **arg, t_data *data)
         return ;
     }
     i = 0;
-    while (arg[i])
-    {
-        tmp = strjoin(tmp, arg[i]);
-        if (arg[i + 1])
-            tmp = strjoin(tmp, " ");
-        i++;
-    }
+    tmp = strjoin(tmp, arg[i]);
     dir = opendir(tmp);
-    if (!dir)
+    if (!dir || arg[i + 1])
     {
-        if (i != 1)
+        if (arg[i + 1])
         {
             free(tmp);
             ft_print("minishell: cd: too many arguments", 0);
