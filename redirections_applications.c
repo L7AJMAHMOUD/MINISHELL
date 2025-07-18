@@ -30,5 +30,7 @@ char ** apply_redirections(char **command, t_command *arr, char **envp, t_data *
 			here_doc(command, arr, envp, data);
 		i++;
 	}
+	i  = 0;
+	free_all_ul_split(command);
 	return (cmd);
 }

@@ -109,7 +109,7 @@ void	preparation(char **s, int j)
 				i++;
 			tmp = ft_strdup(&(*s)[i]);
 			(*s)[i] = 0;
-			*s = ft_strjoin(*s, tmp);
+			*s = ft_strjoin_(*s, tmp);
 			i++;
 			continue;
 		}
