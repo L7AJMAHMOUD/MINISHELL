@@ -61,23 +61,18 @@ int count_words(char *s, char sep, int i, int count)
     }
     return count;
 }
-void	preparation(char **s)
+void	preparation(char **s, int i)
 {
-	int i;
 	int c;
 	char *tmp;
 
-	i = 0;
 	while ((*s)[i])
 	{
 		if ((*s)[i] == QUOTE_SINGLE || (*s)[i] == QUOTE_DOUBLE)
 		{
-			c = (*s)[i];
-			i++;
+			c = (*s)[i++];
 			while ((*s)[i] != c)
-			{
 				i++;
-			}
 			i++;
 			continue;
 		}
@@ -87,9 +82,8 @@ void	preparation(char **s)
 			while ((*s)[i] == c && (*s)[i])
 				i++;
 			tmp = ft_strdup(&(*s)[i]);
-			(*s)[i] = 0;
+			(*s)[i++] = 0;
 			*s = ft_strjoin(*s, tmp);
-			i++;
 			continue;
 		}
 		i++;
@@ -186,9 +180,9 @@ t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words, int 
 	int k;
 	char *tmp;
 	tmp = ft_strdup(str);
-	preparation(&tmp);
+	preparation(&tmp, 0);
 	rev_(tmp);
-	preparation(&tmp);
+	preparation(&tmp, 0);
 	rev_(tmp);
 	printf("%s\n",tmp);
 	*words = count_words(tmp, ' ', 0, 0);
