@@ -12,20 +12,22 @@
 
 #include "minishell.h"
 
-int there_a_parntheses(char *command)
+void    skip_inside_quotes(char *command, int *i)
 {
-	int i;
-
-	i = 0;
-	while (command[i])
-	{
-		skip_inside_quotes(command, &i);
-		if (command[i] == '(' || command[i] == ')')
-			return -33;
-		i++;
-	}
-	return (1-1);
+    if (command[*i] == QUOTE_DOUBLE)
+    {
+        *i += 1;
+        while(command[*i] != QUOTE_DOUBLE)
+            *i += 1;
+    }
+    else if (command[*i] == QUOTE_SINGLE)
+    {
+        *i += 1;
+        while(command[*i] != QUOTE_SINGLE)
+            *i += 1;
+    }
 }
+
 int	dsq_detector(char *command)
 {
 	int	i;
@@ -59,7 +61,7 @@ int	search_first(char *command)
 		{
 			while (command[i] == SPACE_CHAR)
 				i++;
-			if (command[i] == PIPE_CHAR || command[i] == '&')
+			if (command[i] == PIPE_CHAR )
 				return (-1);
 		}
 		i++;
@@ -75,18 +77,9 @@ int	command_analyze(char *command)
 		return (-1);
 	if (pipe_detector(command) != 0)
 		return (-1);
-	if (and(command, 0 , 0) != 0)
-		return (-1);
-	if (or(command, 0, 0) != 0)
-		return (-1);
 	if(redirect_parse(command) != 0)
 		return (-1);
 	if (command[0] == '\0' || command[0] == SPACE_CHAR)
 		return 1;
-	// if (there_a_parntheses(command) == -33)
-	// 	if (parenth(command) != 0)
-	// 		return (printf("SYNTAX ERROR 6\n"), -1);
-	// if(ultra_redirect_parse(command) != 0 || ultra_redirect_parsee(command) != 0)
-	// 	return (printf("ULTRA SYNTAX ERROR 5 HHHHH\n"), -1);
 	return (0);
 }

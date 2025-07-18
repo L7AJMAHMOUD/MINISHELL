@@ -178,7 +178,7 @@ void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 				perror("minishell");
 				return ;
 			}
-			delim = get_delimiter(command);
+			delim = get_delimiters(command);
 			while (1)
 			{
 				com = readline("> ");
