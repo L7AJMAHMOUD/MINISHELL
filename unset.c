@@ -37,7 +37,7 @@ static int analyse_d(char *s1, char *s2)
 	i = 0;
 	while (s1[i] == s2[i] && s1[i] && s1[i] != '=')
 		i++;
-	if (s1[i] == '=' && s2[i] != '=')
+	if ((s1[i] == '=' && s2[i] != '=') || (!s1[i] && !s2[i]))
 		return 0;
 	return 1;
 }
@@ -60,6 +60,8 @@ char **rm_to_envp(char **envp, char *ligne)
     while (envp[j])
         j++;
     str = malloc((j) * sizeof(char *));
+	if (!str)
+		return NULL;
     j = 0;
 	k = 0;
     while(envp[j])
@@ -68,6 +70,8 @@ char **rm_to_envp(char **envp, char *ligne)
 		if (j != m || analyse_d(envp[m], ligne))
 		{
 			str[k] = malloc(ft_strlen(envp[j]) + 1);
+			if (!str[k])
+				return(free_all_ul_split(str), NULL);
 			while(envp[j][i])
 			{
 				str[k][i] = envp[j][i];
@@ -86,6 +90,7 @@ char **rm_to_envp(char **envp, char *ligne)
 void unset(char ***envp, char **command, t_data *data)
 {
     int j;
+	char **tmp;
 
     j = 1;
 	data->status = 0;
@@ -96,6 +101,8 @@ void unset(char ***envp, char **command, t_data *data)
 			free(data->path);
 			data->path = NULL;
 		}
-		*envp = rm_to_envp(*envp, command[j++]);
+		tmp = rm_to_envp(*envp, command[j++]);
+		if (tmp)
+			*envp = tmp;
 	}
 }
