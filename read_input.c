@@ -121,6 +121,8 @@ void    read_input(char ***envp, t_data *data)
         {
             ft_print("\nexit", 0);
             free_all_ul_split(*envp);
+            free(data->path);
+            free(data->pwd);
             exit (127);
         }
         if (ft_strcmp(command,"I LOVE YOU") == 0)
@@ -143,6 +145,7 @@ void    read_input(char ***envp, t_data *data)
 	        free_all_node(node);
 		}
         else
-            printf("SYNTAX ERROR \n");
+            ft_print("SYNTAX ERROR", 0);
+        free(command);
     }
 }

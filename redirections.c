@@ -24,6 +24,9 @@ int	redirect_parse(char *command)
 	int err;
 	
 	i = 0;
+	is_left = 0;
+	is_right = 0;
+	err = 0;
 	while (command[i])
 	{
 		if (command[i] == REDIRECT_IN || command[i] == REDIRECT_OUT)

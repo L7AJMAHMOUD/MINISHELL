@@ -159,6 +159,7 @@ void  redirect_output_fd(char **command);
 void redirect_input_fd(char **command);
 char **wildcart(char **st, char **envp);
 void    bash_sig_handler(int sig);
+void	*ft_memset(void *b, int c, size_t len);
 void	cmd_final(char ***command);
 void shy_emoji_banner();
 t_command cooking(char *str, char **envp, int p, int x, t_data *data);

@@ -39,7 +39,7 @@ t_command *cleaning(char *str, int p)
 
     t_command *arr = malloc(sizeof(t_command) * (len + 1));
     	if (!arr) return NULL;
-
+	ft_memset(arr, 0, sizeof(t_command) * (len + 1));
     arr[k].command = malloc(sizeof(char) * (len + 1));
     if (!arr[k].command) {
         free(arr);
