@@ -1,16 +1,3 @@
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_ultra_split.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 13:36:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/12 20:03:31 by abkaram          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h" 
 
 void rev_(char *s)
@@ -34,34 +21,33 @@ void rev_(char *s)
         j--;
     }
 }
-int count_words(char *s, char sep)
-{
-    int i = 0;
-    int count = 0;
-    char quote;
 
+void comp_(char *s, int *i, int *count)
+{
+	char quote;
+
+	if (*i == 0 || s[*i - 1] == SPACE_CHAR || s[*i - 1] == ' ')
+		*count = *count + 1;
+	quote = s[*i];
+	*i += 1;
+	while ((s[*i] && s[*i] != quote && s[*i] != PIPE_CHAR))
+		*i += 1;
+	if (s[*i] == quote)
+		*i += 1;
+}
+
+int count_words(char *s, char sep, int i, int count)
+{
     if (!s)
         return 0;
-
     while (s[i] && s[i] != PIPE_CHAR)
     {
         while (s[i] == SPACE_CHAR)
             i++;
-
         if (!s[i] || s[i] == PIPE_CHAR)
             break;
-
-        if (s[i] == QUOTE_SINGLE || s[i] == QUOTE_DOUBLE)
-        {
-            if (i == 0 || s[i - 1] == SPACE_CHAR || s[i - 1] == sep)
-                count++;
-            
-            quote = s[i++];
-            while ((s[i] && s[i] != quote && s[i] != PIPE_CHAR))
-                i++;
-            if (s[i] == quote)
-                i++;
-        }
+		if (s[i] == QUOTE_SINGLE || s[i] == QUOTE_DOUBLE)
+        	comp_(s, &i, &count);
         else if (s[i] != sep)
         {
 			if (i == 0 || s[i - 1] == SPACE_CHAR || s[i - 1] == sep)
@@ -71,15 +57,10 @@ int count_words(char *s, char sep)
                 i++;
         }
         else
-        {
             i++;
-        }
     }
     return count;
 }
-
-
-
 void	preparation(char **s)
 {
 	int i;
@@ -107,7 +88,7 @@ void	preparation(char **s)
 				i++;
 			tmp = ft_strdup(&(*s)[i]);
 			(*s)[i] = 0;
-			*s = ft_strjoin_(*s, tmp);
+			*s = ft_strjoin(*s, tmp);
 			i++;
 			continue;
 		}
@@ -209,7 +190,8 @@ t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words, int 
 	rev_(tmp);
 	preparation(&tmp);
 	rev_(tmp);
-	*words = count_words(tmp, ' ');
+	printf("%s\n",tmp);
+	*words = count_words(tmp, ' ', 0, 0);
 	arr = malloc(sizeof(t_command) * *words);
 	i = 0;
 	while (j < *words)
@@ -244,13 +226,3 @@ char	**ft_ultra_split(char *str, int	i, int		j,char ** envp, t_data *data)
 	char **tab = ft_arr_to_tab(arr, words);
 	return(tab);
 }
-
-// int main (int ac, char **av, char **envp)
-// {
-// 	char *tmp =ft_strdup("ls $kkkdkgg");
-// 	char **str = ft_ultra_split(tmp, 0 ,0, envp);
-// 	for(int i = 0;str[i]; i++)
-// 		printf("%s\n",str[i]);
-// }
-
-// gcc ft_ultra_split.c utils.c split_utils.c split.c
