@@ -117,6 +117,7 @@ void	command_tokenization(t_node **node, char *command, char **envp, t_data *dat
 void node_null(t_node *node);
 void free_all_ul_split(char **str);
 char	*ft_itoa(int n);
+int validate_pipe_syntax(char *command);
 
 /* **************************************************************** */
 /*									*/

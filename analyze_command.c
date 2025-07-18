@@ -79,6 +79,8 @@ int	command_analyze(char *command)
 		return (-1);
 	if(redirect_parse(command) != 0)
 		return (-1);
+	if(validate_pipe_syntax(command) != 0)
+		return (-1);
 	if (command[0] == '\0' || command[0] == SPACE_CHAR)
 		return 1;
 	return (0);

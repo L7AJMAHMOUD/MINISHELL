@@ -213,7 +213,7 @@ t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words, int 
 	return(arr);
 }
 
-char	**ft_ultra_split(char *str, int	i, int		j,char ** envp, t_data *data)
+char	**ft_ultra_split(char *str, int	i, int	j,char ** envp, t_data *data)
 {
 	int words;
 	t_command *arr = ft_ultr_split(str, i, j,envp, &words, 0, data);
