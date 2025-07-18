@@ -29,26 +29,24 @@ int there_a_parntheses(char *command)
 int	dsq_detector(char *command)
 {
 	int	i;
-	int	count;
 	int	c;
 
 	i = 0;
-	count = 0;
-	c = 0;
 	while (command[i])
 	{
 		if (command[i] == QUOTE_DOUBLE || command[i] == QUOTE_SINGLE)
 		{
 			c = command[i++];
-			while (command[i] != c && command[i])
+			while (command[i] && command[i] != c)
 				i++;
 			if (!command[i])
 				return 1;
 		}
 		i++;
 	}
-	return (0);
+	return (0); 
 }
+
 
 int	search_first(char *command)
 {
@@ -71,11 +69,9 @@ int	search_first(char *command)
 
 int	command_analyze(char *command)
 {
-	if (command[0] == '\0' || command[0] == SPACE_CHAR)
-		return 0;
-	if (search_first(command) != 0)
-		return (-1);
 	if (dsq_detector(command) != 0)
+		return (-1);
+	if (search_first(command) != 0)
 		return (-1);
 	if (pipe_detector(command) != 0)
 		return (-1);
@@ -85,6 +81,8 @@ int	command_analyze(char *command)
 		return (-1);
 	if(redirect_parse(command) != 0)
 		return (-1);
+	if (command[0] == '\0' || command[0] == SPACE_CHAR)
+		return 0;
 	// if (there_a_parntheses(command) == -33)
 	// 	if (parenth(command) != 0)
 	// 		return (printf("SYNTAX ERROR 6\n"), -1);
