@@ -41,12 +41,6 @@
 #define true 1
 #define BUFFER_SIZE 100000
 
-typedef struct s_command
-{
-	char *command;
-	int q;
-	int nbr;
-}   t_command;
 typedef struct s_data
 {
 	char *command;
@@ -54,6 +48,14 @@ typedef struct s_data
 	char *path;
 	int status;
 }   t_data;
+typedef struct s_command
+{
+	char *command;
+	char **envp;
+	t_data *data;
+	int q;
+	int nbr;
+}   t_command;
 
 typedef struct s_node
 {
