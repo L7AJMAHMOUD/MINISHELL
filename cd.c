@@ -87,6 +87,7 @@ void cd(char ***envp, char **arg, t_data *data)
     {
         if (i != 1)
         {
+            free(tmp);
             ft_print("minishell: cd: too many arguments", 0);
 			data->status = 1;
             return;
