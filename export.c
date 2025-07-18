@@ -19,7 +19,7 @@ int	ft_str_cmp(char *s1, char *s2)
 	i = 0;
 	while (s1[i] == s2[i] && s1[i] && s1[i] != '=')
 		i++;
-	if (s1[i] == '=' && !s2[i] || s2[i] == '=' && !s1[i])
+	if ((s1[i] == '=' && !s2[i]) || (s2[i] == '=' && !s1[i]))
 		return 0;
 	return (*(unsigned char *)(s1 + i) - *(unsigned char *)(s2 + i));
 }
@@ -27,12 +27,10 @@ int	ft_str_cmp(char *s1, char *s2)
 int analyse_c(char **envp, char *ligne, int *k)
 {
 	int i;
-	int j;
 
 	i = 0;
 	while (envp[i])
 	{
-		j  = 0;
 		if (!ft_str_cmp(envp[i], ligne))
 		{
 			*k = 1;
@@ -229,14 +227,12 @@ char **arr_sorted(char **str)
 char *command_analyse(char *command, char **envp)
 {
 	int i;
-	int j;
 	char *str;
 	char *tmp;
 	char *cmd;
 
 	cmd = NULL;
 	i = 0;
-	j = 0;
 	if (!command || !envp)
 		return NULL;
 	while (command[i] && command[i] != '+' && command[i] != '=')
@@ -281,7 +277,7 @@ void export(char ***envp, char **command, t_data *data)
             while(tmp[i][j])
             {
                 write(1, &tmp[i][j], 1);
-                if (k == 0 && tmp[i][j] == '=' || (!tmp[i][j + 1] && k == 1))
+                if ((k == 0 && tmp[i][j] == '=') || (!tmp[i][j + 1] && k == 1))
                 {
                     write(1, "\"", 1);
 					if (k == 1)

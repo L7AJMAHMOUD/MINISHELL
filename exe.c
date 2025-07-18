@@ -182,7 +182,7 @@ char *find_path(char *path, char **envp, t_data *data)
     write(2, ": command not found\n", 20);
     return NULL;
 }
-void	exe(char **command, char **envp, t_node *node, t_command *arr, t_data *data)
+void	exe(char **envp, t_node *node, t_data *data)
 {
 	char *path;
 	int i = fork();
@@ -190,11 +190,11 @@ void	exe(char **command, char **envp, t_node *node, t_command *arr, t_data *data
 
 	if (i == 0)
 	{
-		command = apply_redirections(command, arr, envp, data);
-		path = find_path(*command, envp, data);
+		node->command = apply_redirections(node->command, node->arr, envp, data);
+		path = find_path(*(node->command), envp, data);
 		if (!path)
 			exit(1) ;
-		exit (execve(path ,command, envp));
+		exit (execve(path ,node->command, envp));
 	}
 	else
 		wait(&status);

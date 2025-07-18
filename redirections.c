@@ -12,10 +12,6 @@
 
 #include "minishell.h"
 
-int	is_redirection(char *command)
-{
-	return 0;
-}
 int	redirect_parse(char *command)
 {
 	int i;
@@ -36,7 +32,7 @@ int	redirect_parse(char *command)
 			if (command[i] == REDIRECT_IN)
 				is_left = 1;
 			i++;
-			if (command[i] == REDIRECT_OUT && is_left == 1 || command[i] == REDIRECT_IN && is_right == 1)
+			if ((command[i] == REDIRECT_OUT && is_left == 1) || (command[i] == REDIRECT_IN && is_right == 1))
 				err = -404;
 			i++;
 			while (command[i] == SPACE_CHAR)

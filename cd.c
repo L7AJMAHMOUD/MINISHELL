@@ -41,7 +41,7 @@ char    *strjoin(char *s1, char *s2)
     return (str);
 }
 
-void refrech(char *buff, t_data *data, DIR *dir, char ***envp)
+void refrech(char *buff, t_data *data, char ***envp)
 {
     char **tmp;
     char *command;
@@ -71,7 +71,7 @@ void cd(char ***envp, char **arg, t_data *data)
         str = get_variable("HOME", *envp);
         if (!str || chdir(str) != 0)
             return(data->status = 1, ft_print("minishell: HOME not set", 0));
-        refrech(buff, data, dir, envp);
+        refrech(buff, data, envp);
         return ;
     }
     i = 0;
@@ -93,7 +93,7 @@ void cd(char ***envp, char **arg, t_data *data)
 	data->status = 0;
     str = getcwd(buff, BUFFER_SIZE);
     if (str)
-        return (refrech(buff, data, dir, envp), (void)closedir(dir));
+        return (refrech(buff, data, envp), (void)closedir(dir));
     perror("cd : erreur de détermination du répertoire actuel : \
     getcwd : ne peut accéder aux répertoires parents ");
 	data->status = 1;

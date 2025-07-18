@@ -44,7 +44,7 @@ int pip(t_node *node, char ***envp, t_data *data)
 				close(pipefd[1]);
 			}
 			if (check_command(current->command, envp, current, data))
-				exe(current->command, *envp, current, current->arr, data);
+				exe(*envp, current, data);
 			free_all_node(node);
 			exit(1);
 		}

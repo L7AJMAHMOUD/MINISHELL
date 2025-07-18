@@ -90,18 +90,13 @@ void	priint(char *str, int k)
 	if (k != 0)
 		write(1, " ", 1);
 }
-void echo(char **str, int fd, char **envp, t_data *data)
+void echo(char **str, t_data *data)
 {
 	int i;
 	int j;
-	int k;
 	int p;
-	int o;
-	int b;
-	char *tmp;
 
 	i = 1;
-	k = 0;
 	p = 0;
 	j = 0;
 	while (str && str[i] && ft_check(str[i]))

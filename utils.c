@@ -44,7 +44,7 @@ char	*ft_strstr(char *haystack, char *needle)
 				while(haystack[i] != ')')
 					i++;
 			else
-				while(haystack[i] != c)
+				while(haystack[i] != (char)c)
 					i++;
 			i++;
 		}
@@ -124,7 +124,7 @@ int	ft_strt(char *haystack, char *needle)
 				while(haystack[i] != ')')
 					i++;
 			else
-				while(haystack[i] != c)
+				while(haystack[i] != (char)c)
 					i++;
 			i++;
 		}

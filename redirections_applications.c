@@ -15,7 +15,6 @@
 char ** apply_redirections(char **command, t_command *arr, char **envp, t_data *data)
 {
 	int i = 0;
-	int count = 0;
 	char **cmd = clean_command(command, arr);
 
 	while (command[i])

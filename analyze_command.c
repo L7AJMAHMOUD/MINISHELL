@@ -29,11 +29,9 @@ int there_a_parntheses(char *command)
 int	dsq_detector(char *command)
 {
 	int	i;
-	int	count;
 	int	c;
 
 	i = 0;
-	count = 0;
 	c = 0;
 	while (command[i])
 	{

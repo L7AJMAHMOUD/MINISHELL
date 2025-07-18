@@ -54,7 +54,6 @@ char	*expand_str(char *command, char **envp, t_data *data)
 	char *tmp;
 	char *varname;
 	char *val;
-	int i;
 	int j;
 	int var_len;
 	int p;
@@ -159,7 +158,6 @@ void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 	int fd;
 	char *delim;
 	char *com;
-	char *name;
 	char *arr_;
 	char buff[1000000];
 

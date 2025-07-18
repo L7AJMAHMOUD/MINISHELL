@@ -80,11 +80,10 @@ int count_words(char *s, char sep)
 
 
 
-void	preparation(char **s, int j)
+void	preparation(char **s)
 {
 	int i;
 	int c;
-	int k;
 	char *tmp;
 
 	i = 0;
@@ -103,7 +102,6 @@ void	preparation(char **s, int j)
 		}
 		if ((*s)[i] == '<' || (*s)[i] == '>' || (*s)[i] == '|')
 		{
-			k = 0;
 			c = (*s)[i];
 			while ((*s)[i] == c && (*s)[i])
 				i++;
@@ -207,9 +205,9 @@ t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words, int 
 	int k;
 	char *tmp;
 	tmp = ft_strdup(str);
-	preparation(&tmp, 0);
+	preparation(&tmp);
 	rev_(tmp);
-	preparation(&tmp, 1);
+	preparation(&tmp);
 	rev_(tmp);
 	*words = count_words(tmp, ' ');
 	arr = malloc(sizeof(t_command) * *words);

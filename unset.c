@@ -16,12 +16,10 @@
 static int analyse_c(char **envp, char *ligne, int *k)
 {
 	int i;
-	int j;
 
 	i = 0;
 	while (envp[i])
 	{
-		j  = 0;
 		if (!ft_str_cmp(envp[i], ligne))
 		{
 			*k = 1;
@@ -87,12 +85,8 @@ char **rm_to_envp(char **envp, char *ligne)
 
 void unset(char ***envp, char **command, t_data *data)
 {
-    int i;
     int j;
-    char **tmp;
-    int k;
 
-    i = 0;
     j = 1;
 	data->status = 0;
 	while(command[j])

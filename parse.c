@@ -14,15 +14,15 @@
 
 int	ft_is_spc(int cmd)
 {
-
-    if (33 <= cmd && cmd <= 40 || 42 <= cmd && cmd <= 126)
+    if ((33 <= cmd && cmd <= 40) || (42 <= cmd && cmd <= 126))
         return (1);
-	return (-1);
+    else
+	    return (-1);
 }
 
 int is_something(int cmd)
 {
-    if (33 <= cmd && cmd <= 59 || cmd == 61 || 63 <= cmd && cmd <= 126)
+    if ((33 <= cmd && cmd <= 59) || (cmd == 61) || (63 <= cmd && cmd <= 126))
         return (0);
     return -1;
 }

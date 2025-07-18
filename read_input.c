@@ -70,7 +70,7 @@ int check_command(char **str, char ***envp, t_node *node, t_data *data)
     if (!str || !*str)
 		return 0;
     if (!(ft_strcmp(str[0], "echo")))
-        return (echo(str, 1, *envp, data), 0);
+        return (echo(str, data), 0);
     if (!(ft_strcmp(str[0], "cd")))
         return (cd(envp, &str[1], data), 0);
     if (!(ft_strcmp(str[0], "pwd")))
@@ -107,10 +107,6 @@ void    read_input(char ***envp, t_data *data)
     char *command;
 	t_node *node;
 	t_node *tmp;
-    t_command *arr;
-    char *str;
-    int i;
-    int j;
 
     while (1)
     {
@@ -141,7 +137,7 @@ void    read_input(char ***envp, t_data *data)
 				continue;
 			}
 	        if((tmp)->command && check_command((tmp)->command, envp, node, data))
-	            exe((tmp)->command, *envp, node, (tmp)->arr, data);
+	            exe(*envp, node, data);
 	        free_all_node(node);
 		}
         else
