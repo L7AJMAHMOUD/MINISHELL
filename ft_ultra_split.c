@@ -147,7 +147,7 @@ char **ft_arr_to_tab(t_command *arr, int words, int i, int j)
 		return (NULL);
 	tab = malloc(sizeof(char *) * (words + 1));
 	if (!tab)
-		return (NULL);
+		return (free_arr(arr, words) ,NULL);
 	while (j < words)
 	{
 		if (!arr[j].command)
@@ -157,7 +157,7 @@ char **ft_arr_to_tab(t_command *arr, int words, int i, int j)
 		}
 		tab[i] = ft_strdup(arr[j].command);
 		if (!tab[i++])
-			return(free_all_ul_split(tab), NULL);
+			return(free_arr(arr, words), free_all_ul_split(tab), NULL);
 		j++;
 	}
 	free_arr(arr, j);
