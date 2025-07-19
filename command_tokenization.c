@@ -117,8 +117,7 @@ void    command_tokenization(t_node **node, char *command, char **envp, t_data *
 	t_node *t_mp;
 	t_node *t_p;
 	t_mp = NULL;
-	
-	printf("HELLO\n");
+
 	i = 0;
 	if (!command)
 		return ;

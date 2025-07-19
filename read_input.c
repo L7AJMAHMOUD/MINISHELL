@@ -183,12 +183,6 @@ void    read_input(char ***envp, t_data *data)
         if(command_analyze(command) == 0)
 		{
             command_tokenization(&node, command, *envp, data);
-            if (!check_node_syntex(node))
-            {
-                free_all_node(node);
-                free(command);
-                continue;
-            }
 	        tmp = node;
 			if (node -> next)
 			{
@@ -196,6 +190,7 @@ void    read_input(char ***envp, t_data *data)
                 free(command);
 				continue;
 			}
+
             tmp->command = apply_redirections(tmp->command, tmp->arr, *envp, data, 0);
 	        if((tmp)->command && check_command((tmp)->command, envp, node, data))
             {

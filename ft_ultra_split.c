@@ -22,6 +22,14 @@ void rev_(char *s)
     }
 }
 
+
+void free_arr(t_command *arr, int i)
+{
+	while (i >= 0)
+		free(arr[i--].command);
+	free(arr);
+}
+
 void comp_(char *s, int *i, int *count)
 {
 	char quote;
@@ -131,19 +139,15 @@ static int	ln(char *s)
 }
 
 
-char **ft_arr_to_tab(t_command *arr, int words)
+char **ft_arr_to_tab(t_command *arr, int words, int i, int j)
 {
 	char **tab;
-	int i;
-	int j;
 
 	if (!arr || words <= 0)
 		return (NULL);
 	tab = malloc(sizeof(char *) * (words + 1));
 	if (!tab)
 		return (NULL);
-	i = 0;
-	j = 0;
 	while (j < words)
 	{
 		if (!arr[j].command)
@@ -152,30 +156,15 @@ char **ft_arr_to_tab(t_command *arr, int words)
 			continue;
 		}
 		tab[i] = ft_strdup(arr[j].command);
-		if (!tab[i])
-		{
-			while (i--)
-				free(tab[i]);
-			free(tab);
-			return (NULL);
-		}
-		i++;
+		if (!tab[i++])
+			return(free_all_ul_split(tab), NULL);
 		j++;
 	}
 	tab[i] = NULL;
-	i = 0;
-	while (i < words)
-		free(arr[i++].command);
-	free(arr);
+	free_arr(arr, i);
 	return (tab);
 }
 
-void free_arr(t_command *arr, int i)
-{
-	while (i >= 0)
-		free(arr[i--].command);
-	free(arr);
-}
 
 int complit_(t_command *arr, int words, int *j, char *tmp)
 {
@@ -227,6 +216,7 @@ t_command *ft_ultr_split(char *str, char ** envp, int q, t_data *data)
 		arr[j] = cooking(arr[j].command, envp, j, q, data);
 		j++;
 	}
+
 	free(tmp);
 	return(arr->nbr = words, arr);
 }
@@ -234,6 +224,6 @@ t_command *ft_ultr_split(char *str, char ** envp, int q, t_data *data)
 char	**ft_ultra_split(char *str ,char ** envp, t_data *data)
 {
 	t_command *arr = ft_ultr_split(str, envp, 0, data);
-	char **tab = ft_arr_to_tab(arr, arr->nbr);
+	char **tab = ft_arr_to_tab(arr, arr->nbr, 0, 0);
 	return(tab);
 }
