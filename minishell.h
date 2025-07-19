@@ -68,8 +68,17 @@ typedef struct s_node
 	struct s_node *next;
 }   t_node;
 
-int	ft_atoi(const char *str);
+typedef struct s_indexes
+{
+	int	i;
+	int	j;
+	int	k;
+	int	p;
+	int	c;
+}	t_indexes;
 
+int	ft_atoi(const char *str);
+void free_arr(t_command *arr, int i);
 void    read_input(char ***envp, t_data *data);
 char	**ft_ultra_split(char *s, char **envp, t_data *data);
 t_command *ft_ultr_split(char *str, char ** envp, int e, t_data *data);

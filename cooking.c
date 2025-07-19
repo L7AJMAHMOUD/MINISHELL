@@ -38,81 +38,91 @@ void free_(t_command *arr, int k)
 	free(arr);
 }
 
-void malloc_(t_command *arr, char *str, int *k, int j)
+int malloc_(t_command *arr, char *str, int *k, int j)
 {
 	arr[*k].command[j] = 0;
 	*k += 1;
 	arr[*k].command = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (!arr[*k].command)
+		return(free_arr(arr, *k), 1);
+	return 0;
+}
+
+int complt_(t_command *arr, char *str, t_indexes *ind)
+{
+	arr[ind->k].q = ind->c;
+	while (str[ind->i] && str[ind->i] != ind->c)
+		arr[ind->k].command[ind->j++] = str[ind->i++];
+	if (str[ind->i] == ind->c)
+		ind->i++;
+
+	arr[ind->k].command[ind->j] = '\0';
+	ind->k++;
+	ind->j = 0;
+	if (!str[ind->i])
+	{
+		arr[ind->k].command = NULL;
+		arr->nbr = ind->k;
+		return 2;
+	}
+	arr[ind->k].command = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (!arr[ind->k].command)
+		return (free_(arr, ind->k), 1);
+	return 0;
 }
 
 t_command *cleaning(char *str, int p)
 {
-    t_command *arr;
-    int i = 0;  
-    int j = 0;  
-    int k = 0;  
-    int c;
+	t_command *arr;
+	t_indexes indx = {0};
 
 	arr = malloc(sizeof(t_command) * (ft_strlen(str) + 1));
-    if (!arr)
+	if (!arr)
 		return NULL;
 	ft_memset(arr, 0, sizeof(t_command) * (ft_strlen(str) + 1));
-    arr[k].command = malloc(sizeof(char) * (ft_strlen(str) + 1));
-    if (!arr[k].command)
-        return (free(arr), NULL);
-    while (str[i])
+	arr[indx.k].command = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (!arr[indx.k].command)
+		return (free(arr), NULL);
+
+	while (str[indx.i])
 	{
-        if (str[i] == QUOTE_SINGLE || str[i] == QUOTE_DOUBLE)
-        {
-			if (j != 0)
-				malloc_(arr, str, &k, j);
-			j = 0;
-            c = str[i++];
-			if (c == str[i] && p == 0 && !str[i+1])
+		if (str[indx.i] == QUOTE_SINGLE || str[indx.i] == QUOTE_DOUBLE)
+		{
+			if (indx.j != 0)
+				if (malloc_(arr, str, &indx.k, indx.j))
+					return NULL;
+			indx.j = 0;
+			indx.c = str[indx.i++];
+
+			if (indx.c == str[indx.i] && p == 0 && !str[indx.i + 1])
 			{
-				free(arr[k].command);
-				arr[k].command = ft_strdup("''");
-				j += 2;
+				free(arr[indx.k].command);
+				arr[indx.k].command = ft_strdup("''");
+				if (!arr[indx.k].command)
+					return(free_arr(arr, indx.k), NULL);
+				indx.j = 0;
+				indx.k++;
+				arr[indx.k].command = malloc(sizeof(char) * (ft_strlen(str) + 1));
+				if (!arr[indx.k].command)
+					return (free_(arr, indx.k), NULL);
 				continue;
 			}
-			arr[k].q = c;
-            while (str[i] && str[i] != c)
-                arr[k].command[j++] = str[i++];
-            if (str[i] == c)
-                i++;
-            arr[k++].command[j] = '\0';
-            j = 0;
-			if (!str[i])
-			{
-				arr[k].command = NULL;
-				arr->nbr = k;
+			indx.c = complt_(arr, str, &indx);
+			if (indx.c == 1)
+				return NULL;
+			if (indx.c == 2)
 				return arr;
-			}
-            arr[k].command = malloc(sizeof(char) * (ft_strlen(str) + 1));
-            if (!arr[k].command)
-                return (free_(arr, k), NULL);
-        }
-        else
-            arr[k].command[j++] = str[i++];
-    }
-    arr[k++].command[j] = '\0';
-    arr[k].command = NULL;
-    arr->nbr = k;
-    return arr;
+		}
+		else
+			arr[indx.k].command[indx.j++] = str[indx.i++];
+	}
+	arr[indx.k].command[indx.j] = '\0';
+	arr[++indx.k].command = NULL;
+	arr->nbr = indx.k;
+	return arr;
 }
 
-char *get_from_envp(char *str, char **envp)
-{
-	int b = 0;
-	char *tmp;
-	while(envp[b])
-	{
-		tmp = ft_shearch(str, envp[b++]);
-		if (tmp)
-			return(tmp);
-	}
-	return NULL;
-}
+
 int strlen_(char *str)
 {
 	int i;
