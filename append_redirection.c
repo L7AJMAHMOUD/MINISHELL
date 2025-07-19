@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 
-void append_to_fd(char **command)
+int append_to_fd(char **command, t_data *data)
 {
 	int i;
 	int fd;
@@ -26,12 +26,14 @@ void append_to_fd(char **command)
 			fd = open(command[i + 1], O_CREAT | O_WRONLY | O_APPEND, 0644);
 			if (fd == -1)
 			{
+				data->status = 1;
 				perror("minishell");
-				exit(0);
+				return -1;
 			}
 			dup2(fd, 1);
 			close(fd);
 		}
 		i++;
 	}
+	return 0;
 }

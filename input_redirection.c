@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 
-void redirect_input_fd(char **command)
+int redirect_input_fd(char **command, t_data *data)
 {
 	int i;
 	int fd;
@@ -26,12 +26,14 @@ void redirect_input_fd(char **command)
 			fd = open(command[i + 1], O_RDONLY , 0644);
 			if (fd == -1)
 			{
+				data->status = 1;
 				perror("minishell");
-				exit(0);
+				return -1;
 			}
 			dup2(fd, 0);
 			close(fd);
 		}
 		i++;
 	}
+	return 0;
 }

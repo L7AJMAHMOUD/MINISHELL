@@ -53,7 +53,7 @@ void	list(char **command)
 	}
 	printf("NULL\n\n\n");
 }
-void redirect_output_fd(char **command)
+int redirect_output_fd(char **command, t_data *data)
 {
 	int i;
 	int fd;
@@ -67,12 +67,14 @@ void redirect_output_fd(char **command)
 			fd = open(command[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			if (fd == -1)
 			{
+				data->status = 1;
 				perror("minishell");
-				exit(0);
+				return -1;
 			}
 			dup2(fd, 1);
 			close(fd);
 		}
 		i++;
 	}
+	return 0;
 }

@@ -198,7 +198,9 @@ void    read_input(char ***envp, t_data *data)
 			}
             tmp->command = apply_redirections(tmp->command, tmp->arr, *envp, data, 0);
 	        if((tmp)->command && check_command((tmp)->command, envp, node, data))
+            {
                 exe(*envp, node, data);
+            }
             apply_redirections(tmp->command, tmp->arr, *envp, data, 1);
 	        free_all_node(node);
 		}
