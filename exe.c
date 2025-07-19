@@ -191,7 +191,6 @@ void	exe(char **envp, t_node *node, t_data *data)
 
 	if (i == 0)
 	{
-		node->command = apply_redirections(node->command, node->arr, envp, data);
 		path = find_path(*(node->command), envp, data);
 		if (!path)
 			exit(1) ;

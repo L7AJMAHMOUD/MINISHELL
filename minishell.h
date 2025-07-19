@@ -152,7 +152,7 @@ int		parenth(char *command);
 char	*ft_strstr_pare(char *command);
 int ultra_redirect_parse(char *command);
 int ultra_redirect_parsee(char *command);
-char ** apply_redirections(char **command, t_command *arr, char **envp, t_data *data);
+char ** apply_redirections(char **command, t_command *arr, char **envp, t_data *data, int a);
 int	ft_str_cmp(char *s1, char *s2);
 int check_command(char **str, char ***envp, t_node *node, t_data *data);
 void free_all_node(t_node *node);
