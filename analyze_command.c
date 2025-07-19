@@ -69,6 +69,20 @@ int	search_first(char *command)
 	return (0);
 }
 
+int is_space(char *c)
+{
+	int i;
+
+	i = 0;
+	while (c[i])
+	{
+		if (c[i++] > 32)
+			return 0;
+	}
+	return 1;
+	
+}
+
 int	command_analyze(char *command)
 {
 	if (search_first(command) != 0)
@@ -81,7 +95,7 @@ int	command_analyze(char *command)
 		return (-1);
 	if(validate_pipe_syntax(command) != 0)
 		return (-1);
-	if (command[0] == '\0' || command[0] == SPACE_CHAR)
+	if (command[0] == '\0' || is_space(command))
 		return 1;
 	return (0);
 }
