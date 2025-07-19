@@ -100,7 +100,6 @@ char *find_path(char *path, char **envp, t_data *data)
     j = 5;
     if ((path[0] == '/' || path[0] == '.') && access(path, F_OK) == 0)
     {
-		printf("%s\n", path);
 		if (ft_strcmp("..", path) == 0)
 		{
 			write(2, "minishell: ", 11);
@@ -156,7 +155,6 @@ char *find_path(char *path, char **envp, t_data *data)
         tmp = ft_strduup(&envp[i][j], ':', &k);
         if (!tmp)
         {
-			printf("hello\n");
 			return NULL;
 		}
         j += k;
