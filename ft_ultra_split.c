@@ -172,6 +172,13 @@ char **ft_arr_to_tab(t_command *arr, int words)
 	return (tab);
 }
 
+void free_arr(t_command *arr, int i)
+{
+	while (i >= 0)
+		free(arr[i--].command);
+	free(arr->command);
+	free(arr);
+}
 
 t_command *ft_ultr_split(char *str, char ** envp, int *words, int q, t_data *data)
 {
@@ -191,6 +198,8 @@ t_command *ft_ultr_split(char *str, char ** envp, int *words, int q, t_data *dat
 	rev_(tmp);
 	*words = count_words(tmp, ' ', 0, 0);
 	arr = malloc(sizeof(t_command) * *words);
+	if (!arr)
+		return (NULL);
 	i = 0;
 	while (j < *words)
 	{
@@ -198,12 +207,13 @@ t_command *ft_ultr_split(char *str, char ** envp, int *words, int q, t_data *dat
 		while(tmp[i] == 32)
 			i++;
 		arr[j].command=malloc(sizeof(char) * ln(&tmp[i]) + 1);
+		if (!arr[j].command)
+			return 	(free_arr(arr, j), NULL);
 		k = i + ln(&tmp[i]);
 		while (i < k)
 			arr[j].command[x++] = tmp[i++];
-		arr[j].command[x] = 0;
+		arr[j++].command[x] = 0;
 		i++;
-		j++;
 	}
 	for (int v = 0; v < *words; v++)
 		arr[v] = cooking(arr[v].command, envp, v, q, data);
