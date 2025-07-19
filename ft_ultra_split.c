@@ -180,51 +180,59 @@ void free_arr(t_command *arr, int i)
 	free(arr);
 }
 
-t_command *ft_ultr_split(char *str, char ** envp, int *words, int q, t_data *data)
+int complit_(t_command *arr, int words, int *j, char *tmp)
 {
-	t_command *arr;
 	int x;
-	int k;
 	int i;
-	int j;
-	char *tmp;
+	int k;
 
 	i = 0;
+	while (*j < words)
+	{
+		x = 0;
+		while(tmp[i] == 32)
+			i++;
+		arr[*j].command=malloc(sizeof(char) * ln(&tmp[i]) + 1);
+		if (!arr[*j].command)
+			return 	(free_arr(arr, *j), 1);
+		k = i + ln(&tmp[i]);
+		while (i < k)
+			arr[*j].command[x++] = tmp[i++];
+		arr[*j].command[x] = 0;
+			*j += 1;
+		i++;
+	}
+	return 0;
+}
+
+t_command *ft_ultr_split(char *str, char ** envp, int q, t_data *data)
+{
+	t_command *arr;
+	int j;
+	int words;
+	char *tmp;
+
 	j = 0;
 	tmp = ft_strdup(str);
 	preparation(&tmp, 0);
 	rev_(tmp);
 	preparation(&tmp, 0);
 	rev_(tmp);
-	*words = count_words(tmp, ' ', 0, 0);
-	arr = malloc(sizeof(t_command) * *words);
+	words = count_words(tmp, ' ', 0, 0);
+	arr = malloc(sizeof(t_command) * words);
 	if (!arr)
 		return (NULL);
-	i = 0;
-	while (j < *words)
-	{
-		x = 0;
-		while(tmp[i] == 32)
-			i++;
-		arr[j].command=malloc(sizeof(char) * ln(&tmp[i]) + 1);
-		if (!arr[j].command)
-			return 	(free_arr(arr, j), NULL);
-		k = i + ln(&tmp[i]);
-		while (i < k)
-			arr[j].command[x++] = tmp[i++];
-		arr[j++].command[x] = 0;
-		i++;
-	}
-	for (int v = 0; v < *words; v++)
+	if (complit_(arr, words, &j, tmp))
+		return NULL;
+	for (int v = 0; v < words; v++)
 		arr[v] = cooking(arr[v].command, envp, v, q, data);
 	free(tmp);
-	return(arr);
+	return(arr->nbr = words, arr);
 }
 
 char	**ft_ultra_split(char *str ,char ** envp, t_data *data)
 {
-	int words;
-	t_command *arr = ft_ultr_split(str, envp, &words, 0, data);
-	char **tab = ft_arr_to_tab(arr, words);
+	t_command *arr = ft_ultr_split(str, envp, 0, data);
+	char **tab = ft_arr_to_tab(arr, arr->nbr);
 	return(tab);
 }

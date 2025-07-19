@@ -145,7 +145,8 @@ void    command_tokenization(t_node **node, char *command, char **envp, t_data *
 	}
 	else
 	{
-		(*node)->arr = ft_ultr_split(command, envp, &(*node)->i, 1, data);
+		(*node)->arr = ft_ultr_split(command, envp, 1, data);
+		(*node)->i = (*node)->arr->nbr;
 		(*node)->command = ft_ultra_split(command, envp, data);
 	}
 }
