@@ -115,11 +115,8 @@ int check_(t_indexes *indx, char *str)
 	return (0);
 }
 
-t_command *cleaning(char *str, int p)
+t_command *cleaning(char *str, int p, t_command *arr, t_indexes indx)
 {
-	t_command *arr;
-	t_indexes indx;
-
 	if(com_(&arr, &indx, str))
 		return (NULL);
 	while (str[indx.i])
@@ -330,7 +327,8 @@ t_command cooking(char *str, char **envp, int p, int x, t_data *data)
 {
 	t_command arr2;
 	t_command *arr;
-	arr = cleaning(str, p);
+	t_indexes indx;
+	arr = cleaning(str, p, NULL, indx);
 	arr2.q = arr[0].q;
 	arr->data = data;
 	arr->envp = envp;
