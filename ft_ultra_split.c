@@ -184,7 +184,6 @@ t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words, int 
 	rev_(tmp);
 	preparation(&tmp, 0);
 	rev_(tmp);
-	printf("%s\n",tmp);
 	*words = count_words(tmp, ' ', 0, 0);
 	arr = malloc(sizeof(t_command) * *words);
 	i = 0;

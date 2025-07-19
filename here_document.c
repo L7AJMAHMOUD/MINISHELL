@@ -139,20 +139,57 @@ char	*expand_str(char *command, char **envp, t_data *data)
 	return command;
 }
 
-char *get_delimiter(char **command)
+int	delimiters_counter(char **command)
 {
-	int l7;
+	int i = 0;
+	int count  = 0;
 
-	l7 = 0;
-	while (command[l7])
+	while (command[i])
 	{
-		if (command[l7 + 1] == NULL)
-			return (command[l7]);
-		l7++;
+		if (ft_strcmp(command[i], "<<") == 0 && command[i + 1])
+		{
+			i += 2;
+			count++;
+		}
+		else
+			i++;
 	}
-	return (NULL);
+	return (count);
+}
+char **get_delimiters(char **command)
+{
+	int delim = delimiters_counter(command);
+
+	char **deli_stack = malloc((delim  + 1) * sizeof(char *));
+
+	int i = 0;
+	int j = 0;
+	while (command[i])
+	{
+		if (ft_strcmp(command[i], "<<") == 0 && command[i + 1])
+		{
+			deli_stack[j] = command[i + 1];
+			i++;
+			j++;
+		}
+		else
+			i++;
+	}
+	deli_stack[j] = NULL;
+	return (deli_stack);
 }
 
+long long file_size(int fd)
+{
+	struct stat st;
+    if (fstat(fd, &st) == -1) 
+	{
+        perror("fstat");
+        close(fd);
+        return 1;
+    }
+	return (st.st_size);
+}
 void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 {
 	int i;
@@ -161,12 +198,15 @@ void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 	char *delim;
 	char *com;
 	char *arr_;
+	int no;
 	char buff[1000000];
 
 	i = 0;
 	delim = NULL;
 	com = NULL;
 	char *file = here_doc_data();
+	char **limiters =  get_delimiters(command);
+	no = 0;
 	while (command[i])
 	{
 		j = 0;
@@ -178,27 +218,28 @@ void	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 				perror("minishell");
 				return ;
 			}
-			delim = get_delimiter(command);
 			while (1)
 			{
 				com = readline("> ");
-				if (!com || ft_strcmp(com, delim) == 0)
+				if ((ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL)) // !com || 
 				{
 					close(fd);
-					fd = open(file, O_CREAT | O_RDWR, 0644); 
-					read(fd, buff, 1000000);
+					fd = open(file, O_RDWR , 0644); 
+					read(fd, buff, file_size(fd));
 					printf("%s\n", buff);
 					close(fd);
 					exit (0);
 				}
-				if (j != 0)
-					write(fd,"\n",1);
-				if (com[0])
+				// if (j != 0)
+				write(fd,"\n",1);
+				if (limiters[no + 1] == NULL) // com[0]
 				{
 					arr_ = expand_str(com, envp, data);
 					write(fd,arr_,ft_strlen(arr_));
 				}
 				j++;
+				if (ft_strcmp(com, limiters[no]) == 0)
+					no++;
 			}
 			
 		}
