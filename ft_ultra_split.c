@@ -165,9 +165,7 @@ char **ft_arr_to_tab(t_command *arr, int words)
 	tab[i] = NULL;
 	i = 0;
 	while (i < words)
-	{
 		free(arr[i++].command);
-	}
 	free(arr);
 	return (tab);
 }
@@ -223,8 +221,12 @@ t_command *ft_ultr_split(char *str, char ** envp, int q, t_data *data)
 		return (NULL);
 	if (complit_(arr, words, &j, tmp))
 		return NULL;
-	for (int v = 0; v < words; v++)
-		arr[v] = cooking(arr[v].command, envp, v, q, data);
+	j = 0;
+	while(j < words)
+	{
+		arr[j] = cooking(arr[j].command, envp, j, q, data);
+		j++;
+	}
 	free(tmp);
 	return(arr->nbr = words, arr);
 }
