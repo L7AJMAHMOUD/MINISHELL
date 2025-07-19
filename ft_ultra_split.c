@@ -160,8 +160,7 @@ char **ft_arr_to_tab(t_command *arr, int words, int i, int j)
 			return(free_all_ul_split(tab), NULL);
 		j++;
 	}
-	tab[i] = NULL;
-	free_arr(arr, i);
+	free_arr(arr, j);
 	return (tab);
 }
 

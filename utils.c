@@ -54,7 +54,7 @@ char	*ft_strstr(char *haystack, char *needle)
 	return (0);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2) /////////////////////////////////////////////////////////////////////////////////////// double free
 {
 	size_t	k;
 	size_t	j;
@@ -65,9 +65,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s2 && !s1)
 		return (NULL);
 	if (!s1)
-		return (ft_strdup(s2));
+		return (s2);
 	if (!s2)
-		return (ft_strdup(s1));
+		return (s1);
 	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 2);
 	if (str == NULL)
 		return (0);
@@ -80,7 +80,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[k])
 		str[j++] = s2[k++];
 	str[j] = '\0';
-	return (str);
+	return (free(s1), free(s2), str);
 }
 char	*ft_strdup(char *src )
 {
