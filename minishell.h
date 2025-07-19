@@ -71,8 +71,8 @@ typedef struct s_node
 int	ft_atoi(const char *str);
 
 void    read_input(char ***envp, t_data *data);
-char	**ft_ultra_split(char *s, int	i, int		j, char **envp, t_data *data);
-t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words, int e, t_data *data);
+char	**ft_ultra_split(char *s, char **envp, t_data *data);
+t_command *ft_ultr_split(char *str, char ** envp, int *words, int e, t_data *data);
 void	invalid_param(void);
 
 /* **************************************************************** */

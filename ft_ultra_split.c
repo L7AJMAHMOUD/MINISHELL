@@ -173,12 +173,17 @@ char **ft_arr_to_tab(t_command *arr, int words)
 }
 
 
-t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words, int q, t_data *data)
+t_command *ft_ultr_split(char *str, char ** envp, int *words, int q, t_data *data)
 {
 	t_command *arr;
 	int x;
 	int k;
+	int i;
+	int j;
 	char *tmp;
+
+	i = 0;
+	j = 0;
 	tmp = ft_strdup(str);
 	preparation(&tmp, 0);
 	rev_(tmp);
@@ -195,27 +200,21 @@ t_command *ft_ultr_split(char *str, int	i, int		j,char ** envp, int *words, int 
 		arr[j].command=malloc(sizeof(char) * ln(&tmp[i]) + 1);
 		k = i + ln(&tmp[i]);
 		while (i < k)
-		{
-			arr[j].command[x] = tmp[i];
-			i++;
-			x++;
-		}
+			arr[j].command[x++] = tmp[i++];
 		arr[j].command[x] = 0;
 		i++;
 		j++;
 	}
 	for (int v = 0; v < *words; v++)
-	{
 		arr[v] = cooking(arr[v].command, envp, v, q, data);
-	}
 	free(tmp);
 	return(arr);
 }
 
-char	**ft_ultra_split(char *str, int	i, int	j,char ** envp, t_data *data)
+char	**ft_ultra_split(char *str ,char ** envp, t_data *data)
 {
 	int words;
-	t_command *arr = ft_ultr_split(str, i, j,envp, &words, 0, data);
+	t_command *arr = ft_ultr_split(str, envp, &words, 0, data);
 	char **tab = ft_arr_to_tab(arr, words);
 	return(tab);
 }

@@ -30,6 +30,6 @@ char ** apply_redirections(char **command, t_command *arr, char **envp, t_data *
 		i++;
 	}
 	i  = 0;
-	free_all_ul_split(command);
+	// free_all_ul_split(command);
 	return (cmd);
 }
