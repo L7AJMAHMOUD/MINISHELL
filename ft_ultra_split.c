@@ -71,7 +71,7 @@ void	preparation(char **s, int i)
 		if ((*s)[i] == QUOTE_SINGLE || (*s)[i] == QUOTE_DOUBLE)
 		{
 			c = (*s)[i++];
-			while ((*s)[i] != c)
+			while ((*s)[i] != c && (*s)[i])
 				i++;
 			i++;
 			continue;
@@ -176,7 +176,6 @@ void free_arr(t_command *arr, int i)
 {
 	while (i >= 0)
 		free(arr[i--].command);
-	free(arr->command);
 	free(arr);
 }
 

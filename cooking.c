@@ -230,13 +230,11 @@ void while_(t_command *arr, int *i, int *j, int *p)
 	}
 }
 
-void	handle_dollar(t_command *arr, int i)
+void	handle_dollar(t_command *arr, int i, int j)
 {
-	int	j;
 	int	p;
 	int	m;
 
-	j = 0;
 	while (arr[i].command[j])
 	{
 		if (arr[i].command[j++] == '$')
@@ -268,7 +266,7 @@ void	expand(t_command *arr)
 	while (i < arr->nbr)
 	{
 		if (arr[i].q != 39)
-			handle_dollar(arr, i);
+			handle_dollar(arr, i, 0);
 		if (arr[i].command[0] == 0 && arr[i].q == 0)
 		{
 			free(arr[i].command);
@@ -296,7 +294,8 @@ char *ft_arr_to_str(t_command *arr)
 t_command cooking(char *str, char **envp, int p, int x, t_data *data)
 {
 	t_command arr2;
-	t_command *arr = cleaning(str, p);
+	t_command *arr;
+	arr = cleaning(str, p);
 	arr2.q = arr[0].q;
 	arr->data = data;
 	arr->envp = envp;
