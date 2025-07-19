@@ -37,15 +37,11 @@ char	*ft_strstr(char *haystack, char *needle)
 	while (haystack[i])
 	{
 		c = haystack[i];
-		if (c == QUOTE_DOUBLE || c == QUOTE_SINGLE || c == '(')
+		if (c == QUOTE_DOUBLE || c == QUOTE_SINGLE )
 		{
 			i++;
-			if(c == '(')
-				while(haystack[i] != ')')
-					i++;
-			else
-				while(haystack[i] != (char)c)
-					i++;
+			while(haystack[i] != (char)c && haystack[i])
+				i++;
 			i++;
 		}
 		if (haystack[i] == 0)
