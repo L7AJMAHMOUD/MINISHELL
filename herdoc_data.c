@@ -92,29 +92,11 @@ char *here_doc_data()
 
     f_index = file_already_exist();
     if (f_index != -1)
-    {
         file_num = ft_itoa(f_index);
-        // i = fork();
-        // if (i == 0)
-        // {
-        //     char *fheredoc[] = {"touch", file_num, NULL};
-        //     execve("/usr/bin/touch", fheredoc, NULL);
-        // }
-        // waitpid(i, NULL, 0);
-    }
     else
         return NULL;
     file_num = ft_itoa(f_index);
-    file_name = ft_strjoin("H", file_num);
+    file_name = join_strings("H", file_num);
     free(file_num);
     return file_name;
 }
-
-// int main()
-// {
-//     char *t[] = {"cat", "<<", "0"};
-    
-//     here_doc_data(t);
-
-
-// }

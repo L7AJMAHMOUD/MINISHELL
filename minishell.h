@@ -184,4 +184,5 @@ void	here_doc(char **command, t_command *arr, char **envp, t_data *data);
 char	*ft_strjoin_(char *s1, char *s2);
 char* get_variable(char *str, char **envp);
 char *	here_doc_data();
+char	*join_strings(char *s1, char *s2);
 #endif
