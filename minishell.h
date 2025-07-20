@@ -171,7 +171,7 @@ char **dirham(char **str, char **envp);
 int  redirect_output_fd(char **command, t_data *data);
 int redirect_input_fd(char **command, t_data *data);
 char **wildcart(char **st, char **envp);
-void    bash_sig_handler(int sig);
+void    bash_sig_handler();
 void	*ft_memset(void *b, int c, size_t len);
 void	cmd_final(char ***command);
 void shy_emoji_banner();

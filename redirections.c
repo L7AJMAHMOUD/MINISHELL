@@ -37,14 +37,3 @@ int	redirect_parse(char *command)
 	}
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-// > : REDIRECT THE OUTPUT TO A FILE ==> 1> STDOUT, 2> STDERR
