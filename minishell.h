@@ -75,6 +75,7 @@ typedef struct s_indexes
 	int	k;
 	int	p;
 	int	c;
+	int	m;
 }	t_indexes;
 
 int	ft_atoi(const char *str);

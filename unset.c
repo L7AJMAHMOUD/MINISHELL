@@ -42,49 +42,49 @@ static int analyse_d(char *s1, char *s2)
 	return 1;
 }
 
+int comp(char **envp, char *ligne, t_indexes *indx, char **str)
+{
+	indx->i = 0;
+	if (indx->j != indx->m || analyse_d(envp[indx->m], ligne))
+	{
+		str[indx->k] = malloc(ft_strlen(envp[indx->j]) + 1);
+		if (!str[indx->k])
+			return(free_all_ul_split(str), 1);
+		while(envp[indx->j][indx->i])
+		{
+			str[indx->k][indx->i] = envp[indx->j][indx->i];
+			indx->i++;
+		}
+		str[indx->k++][indx->i] = 0;
+	}
+	indx->j++;
+    return 0;
+}
+
 char **rm_to_envp(char **envp, char *ligne)
 {
-    int i;
-    int j;
-    int k;
-    int m;
+    t_indexes indx;
     char **str;
 
-    j = 0;
-	k = 1;
+    indx.j = 0;
+	indx.k = 1;
 	if (!envp || !ligne)
 		return NULL;
-	m = analyse_c(envp, ligne, &k);
-	if (m == -1)
+	indx.m = analyse_c(envp, ligne, &indx.k);
+	if (indx.m == -1)
 		return envp;
-    while (envp[j])
-        j++;
-    str = malloc((j) * sizeof(char *));
+    while (envp[indx.j])
+        indx.j++;
+    str = malloc((indx.j) * sizeof(char *));
 	if (!str)
 		return NULL;
-    j = 0;
-	k = 0;
-    while(envp[j])
-    {
-        i = 0;
-		if (j != m || analyse_d(envp[m], ligne))
-		{
-			str[k] = malloc(ft_strlen(envp[j]) + 1);
-			if (!str[k])
-				return(free_all_ul_split(str), NULL);
-			while(envp[j][i])
-			{
-				str[k][i] = envp[j][i];
-				i++;
-			}
-			str[k][i] = 0;
-			k++;
-		}
-        j++;
-    }
-    str[k] = NULL;
-    free_all_ul_split(envp);
-    return str;
+    indx.j = 0;
+	indx.k = 0;
+    while(envp[indx.j])
+        if (comp(envp, ligne, &indx, str))
+			return NULL;
+    str[indx.k] = NULL;
+    return (free_all_ul_split(envp), str);
 }
 
 void unset(char ***envp, char **command, t_data *data)
