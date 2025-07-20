@@ -14,42 +14,30 @@
 
 int	redirect_parse(char *command)
 {
-	int i;
-	int is_right;
-	int is_left;
-	int err;
-	
-	i = 0;
-	is_left = 0;
-	is_right = 0;
-	err = 0;
+	int i = 0;
+	char current;
+
 	while (command[i])
 	{
 		if (command[i] == REDIRECT_IN || command[i] == REDIRECT_OUT)
 		{
-			if (command[i] == REDIRECT_OUT)
-				is_right = 1;
-			if (command[i] == REDIRECT_IN)
-				is_left = 1;
+			current = command[i];
 			i++;
-			if ((command[i] == REDIRECT_OUT && is_left == 1) || (command[i] == REDIRECT_IN && is_right == 1))
-				err = -404;
-			i++;
+			if (command[i] == current)
+				i++;
 			while (command[i] == SPACE_CHAR)
 				i++;
-			if (command[i] == REDIRECT_OUT || command[i] == REDIRECT_IN)
-				err = -404;
-			if (is_something(command[i]) == 0)
-				err = 0;
-			if (command[i] == '\0')
-				err = -404;
+			if (command[i] == REDIRECT_IN || command[i] == REDIRECT_OUT || command[i] == '\0')
+				return -1;
+			if (!is_something(&command[i]))
+				return -1;
 		}
-		i++;
+		else
+			i++;
 	}
-	if (err == -404)
-		return  -1;
 	return 0;
 }
+
 
 
 

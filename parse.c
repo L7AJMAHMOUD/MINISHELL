@@ -20,12 +20,20 @@ int	ft_is_spc(int cmd)
 	    return (-1);
 }
 
-int is_something(int cmd)
+int is_something(char *cmd)
 {
-    if ((33 <= cmd && cmd <= 59) || (cmd == 61) || (63 <= cmd && cmd <= 126))
-        return (0);
-    return -1;
+	int i = 0;
+	if (!cmd || cmd[0] == '\0')
+		return 0;
+	while (cmd[i] == ' ' || cmd[i] == '\t')
+		i++;
+	if (!cmd[i])
+		return 0;
+	if (cmd[i] == '<' || cmd[i] == '>' || cmd[i] == '|' || cmd[i] == '&')
+		return 0;
+	return 1;
 }
+
 // 33 -> 37
 
 // 39  -> 123

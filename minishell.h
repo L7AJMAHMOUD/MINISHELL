@@ -115,7 +115,7 @@ char	**ft_split(char const *s, char c);
 int	ft_strt(char *haystack, char *needle);
 int	ft_strcmp(char *s1, char *s2);
 int	ft_is_spc(int cmd);
-int is_something(int cmd);
+int is_something(char *cmd);
 
 /* **************************************************************** */
 /*									*/

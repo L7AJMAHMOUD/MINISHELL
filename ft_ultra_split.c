@@ -224,6 +224,5 @@ char	**ft_ultra_split(char *str ,char ** envp, t_data *data)
 {
 	t_command *arr = ft_ultr_split(str, envp, 0, data);
 	char **tab = ft_arr_to_tab(arr, arr->nbr, 0, 0);
-	printf("hello\n");
 	return(tab);
 }
