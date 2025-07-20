@@ -20,13 +20,13 @@ int	ft_str_cmp(char *s1, char *s2)
 	while (s1[i] == s2[i] && s1[i] && s1[i] != '=')
 		i++;
 	if ((s1[i] == '=' && !s2[i]) || (s2[i] == '=' && !s1[i]))
-		return 0;
+		return (0);
 	return (*(unsigned char *)(s1 + i) - *(unsigned char *)(s2 + i));
 }
 
-int analyse_c(char **envp, char *ligne, int *k)
+int	analyse_c(char **envp, char *ligne, int *k)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp[i])
@@ -34,136 +34,138 @@ int analyse_c(char **envp, char *ligne, int *k)
 		if (!ft_str_cmp(envp[i], ligne))
 		{
 			*k = 1;
-			return i;
+			return (i);
 		}
 		i++;
 	}
-	return 0;
+	return (0);
 }
 
-int analyse_d(char *s1, char *s2)
+int	analyse_d(char *s1, char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s1[i] == s2[i] && s1[i] && s1[i] != '=')
 		i++;
 	if (s1[i] == '=' && s2[i] != '=')
-		return 0;
-	return 1;
+		return (0);
+	return (1);
 }
 
-int arrlen(char **envp)
+int	arrlen(char **envp)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp[i])
 		i++;
-	return i;
+	return (i);
 }
 
-int compl(char **str, char *ligne, t_indexes *indx)
+int	compl(char **str, char *ligne, t_indexes *indx)
 {
 	str[indx->j] = malloc(ft_strlen(ligne) + 1);
 	if (!str[indx->j])
-		return free_all_ul_split(str), 1;
+		return (free_all_ul_split(str), 1);
 	while (ligne[indx->i])
 	{
 		str[indx->j][indx->i] = ligne[indx->i];
 		indx->i++;
 	}
 	str[indx->j][indx->i] = '\0';
-	return 0;
+	return (0);
 }
-int comple(char **str, char **envp, t_indexes *indx)
+
+int	comple(char **str, char **envp, t_indexes *indx)
 {
 	str[indx->j] = malloc(ft_strlen(envp[indx->j]) + 1);
 	if (!str[indx->j])
-		return free_all_ul_split(str), 1;
+		return (free_all_ul_split(str), 1);
 	while (envp[indx->j][indx->i])
 	{
 		str[indx->j][indx->i] = envp[indx->j][indx->i];
 		indx->i++;
 	}
 	str[indx->j][indx->i] = '\0';
-	return 0;
+	return (0);
 }
-int complet(char **str, char *ligne, t_indexes *indx)
+
+int	complet(char **str, char *ligne, t_indexes *indx)
 {
 	indx->i = 0;
 	str[indx->j] = malloc(ft_strlen(ligne) + 1);
 	if (!str[indx->j])
-		return free_all_ul_split(str), 1;
+		return (free_all_ul_split(str), 1);
 	while (ligne[indx->i])
 	{
 		str[indx->j][indx->i] = ligne[indx->i];
 		indx->i++;
 	}
 	str[indx->j++][indx->i] = '\0';
-	return 0;
+	return (0);
 }
 
-int ini(char **envp, char *ligne, t_indexes *indx, int p)
+int	ini(char **envp, char *ligne, t_indexes *indx, int p)
 {
 	if (!envp)
-		return 1;
+		return (1);
 	indx->p = p;
 	indx->k = 2;
 	indx->m = analyse_c(envp, ligne, &indx->k);
 	indx->j = 0;
 	if (indx->p == 1 && indx->k == 2)
-		return 1;
-	return 0;
+		return (1);
+	return (0);
 }
 
-char **add_to_envp(char **envp, char *ligne, int p)
+char	**add_to_envp(char **envp, char *ligne, int p)
 {
-	t_indexes indx;
-	char **str;
+	t_indexes	indx;
+	char		**str;
 
 	if (!ligne || ini(envp, ligne, &indx, p))
-		return envp;
+		return (envp);
 	str = malloc((arrlen(envp) + indx.k) * sizeof(char *));
 	if (!str)
-		return envp;
+		return (envp);
 	while (envp[indx.j])
 	{
 		indx.i = 0;
 		if (indx.k == 1 && indx.j == indx.m && analyse_d(envp[indx.m], ligne))
 		{
 			if (compl(str, ligne, &indx))
-				return envp;
+				return (envp);
 		}
 		else
+		{
 			if (comple(str, envp, &indx))
-				return envp;
+				return (envp);
+		}
 		indx.j++;
 	}
 	if (indx.k == 2)
+	{
 		if (complet(str, ligne, &indx))
-				return envp;
-	return free_all_ul_split(envp), str[indx.j] = NULL, str;
+			return (envp);
+	}
+	return (free_all_ul_split(envp), str[indx.j] = NULL, str);
 }
 
-
-char **copy_envp(char **envp)
+char	**copy_envp(char **envp)
 {
-	int i;
-	int j;
-	char **str;
+	int		i;
+	int		j;
+	char	**str;
 
 	if (!envp)
-		return NULL;
-
+		return (NULL);
 	j = 0;
 	while (envp[j])
 		j++;
-
 	str = malloc((j + 1) * sizeof(char *));
 	if (!str)
-		return NULL;
-
+		return (NULL);
 	j = 0;
 	while (envp[j])
 	{
@@ -172,7 +174,7 @@ char **copy_envp(char **envp)
 		if (!str[j])
 		{
 			free_all_ul_split(str);
-			return NULL;
+			return (NULL);
 		}
 		while (envp[j][i])
 		{
@@ -183,10 +185,8 @@ char **copy_envp(char **envp)
 		j++;
 	}
 	str[j] = NULL;
-	return str;
+	return (str);
 }
-
-
 
 int	check_synt(char *str)
 {
@@ -207,32 +207,29 @@ int	check_synt(char *str)
 			return (ft_print("minishell: export: not a valid identifier", 0), 1);
 		i++;
 	}
-	return 0;
+	return (0);
 }
 
-
-void ft_swap_str(char **s1, char **s2)
+void	ft_swap_str(char **s1, char **s2)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = *s1;
 	*s1 = *s2;
 	*s2 = tmp;
-	
 }
 
-char **arr_sorted(char **str)
+char	**arr_sorted(char **str)
 {
-	int i, j;
-	char **tmp;
+	int		i;
+	int		j;
+	char	**tmp;
 
 	if (!str)
-		return NULL;
-
+		return (NULL);
 	tmp = copy_envp(str);
 	if (!tmp)
-		return NULL;
-
+		return (NULL);
 	i = 0;
 	while (tmp[i])
 	{
@@ -245,25 +242,26 @@ char **arr_sorted(char **str)
 		}
 		i++;
 	}
-	return tmp;
+	return (tmp);
 }
-char *command_analyse(char *command, char **envp)
+
+char	*command_analyse(char *command, char **envp)
 {
-	int i;
-	char *str;
-	char *tmp;
-	char *cmd;
+	int		i;
+	char	*str;
+	char	*tmp;
+	char	*cmd;
 
 	cmd = NULL;
 	i = 0;
 	if (!command || !envp)
-		return NULL;
+		return (NULL);
 	while (command[i] && command[i] != '+' && command[i] != '=')
 	{
 		i++;
 	}
 	if (!command[i] || command[i] == '=')
-		return command;
+		return (command);
 	tmp = ft_strdup(&command[i + 2]);
 	command[i] = 0;
 	str = get_variable(command, envp);
@@ -272,67 +270,57 @@ char *command_analyse(char *command, char **envp)
 	cmd = strjoin(cmd, "=");
 	cmd = strjoin(cmd, str);
 	cmd = strjoin(cmd, tmp);
-	return cmd;
+	return (cmd);
 }
 
-void export(char ***envp, char **command, t_data *data)
+void	print_env_export(char **tmp)
 {
-    int i;
-    int j;
-    char **tmp;
-    int k;
+	int	i;
+	int	j;
+	int	k;
 
-    i = 0;
-    j = 1;
-    if (!command[1])
+	i = -1;
+	while (tmp[++i])
+	{
+		j = -1;
+		k = 0;
+		write(1, "declare -x ", 11);
+		while (tmp[i][++j])
+		{
+			write(1, &tmp[i][j], 1);
+			if ((k == 0 && tmp[i][j] == '=') || (!tmp[i][j + 1] && k == 1))
+			{
+				write(1, "\"", 1);
+				k = (k == 1) ? -1 : 1;
+			}
+		}
+		if (k == 1)
+			write(1, "\"", 1);
+		write(1, "\n", 1);
+	}
+}
+
+void	export(char ***envp, char **cmd, t_data *data)
+{
+	char	**tmp;
+	int		j;
+
+	j = 1;
+	if (!cmd[1])
 	{
 		tmp = arr_sorted(*envp);
 		if (!tmp)
-		{
-			data->status = 1;
-			return ;
-		}
-        while (tmp[i])
-        {
-            j = 0;
-            k = 0;
-            write(1, "declare -x ", 12); 
-            while(tmp[i][j])
-            {
-                write(1, &tmp[i][j], 1);
-                if ((k == 0 && tmp[i][j] == '=') || (!tmp[i][j + 1] && k == 1))
-                {
-                    write(1, "\"", 1);
-					if (k == 1)
-						k = -1;
-					else
-                    	k = 1;
-                }
-                j++;
-				if (k == 1 && !tmp[i][j])
-					write(1, "\"", 1);
-            }
-            write(1, "\n", 1);
-            i++;
-        }
-		data->status = 0;
+			return (data->status = 1, (void)0);
+		print_env_export(tmp);
 		free_all_ul_split(tmp);
+		return ((void)(data->status = 0));
 	}
-    else
-    {
-		data->status = 0;
-        while(command[j])
-        {
-			if (check_synt(command[j]))
-			{
-				data->status = 1;
-				j++;
-				continue;
-			}
-			command[j] = command_analyse(command[j], *envp);
-            tmp = add_to_envp(*envp, command[j++], 0);
-            *envp = tmp;
-        }
-    }
+	data->status = 0;
+	while (cmd[j])
+	{
+		if (check_synt(cmd[j++]))
+			return (data->status = 1, (void)0);
+		tmp = add_to_envp(*envp, command_analyse(cmd[j - 1], *envp), 0);
+		*envp = tmp;
+	}
 }
-
