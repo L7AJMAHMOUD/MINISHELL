@@ -116,6 +116,13 @@ char *find_path(char *path, char **envp, t_data *data)
 		write(2, ": No such file or directory\n", 29);
 		return NULL;
 	}
+	if (ft_strcmp("..", path) == 0)
+	{
+		write(2, "minishell: ", 11);
+		write(2, path, ft_strlen(path));
+		write(2, ": command not found\n", 20);
+		return NULL;
+	}
 	if (path[1] == '/' && path[0] == '.')
 		return ft_strdup(path);
 	if (ft_strchr(path, '/'))
