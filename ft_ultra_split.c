@@ -147,7 +147,7 @@ char **ft_arr_to_tab(t_command *arr, int words, int i, int j)
 		return (NULL);
 	tab = malloc(sizeof(char *) * (words + 1));
 	if (!tab)
-		return (free_arr(arr, words) ,NULL);
+		return (free_arr(arr, --words) ,NULL);
 	while (j < words)
 	{
 		if (!arr[j].command)
@@ -157,11 +157,11 @@ char **ft_arr_to_tab(t_command *arr, int words, int i, int j)
 		}
 		tab[i] = ft_strdup(arr[j].command);
 		if (!tab[i++])
-			return(free_arr(arr, words), free_all_ul_split(tab), NULL);
+			return(free_arr(arr, --words), free_all_ul_split(tab), NULL);
 		j++;
 	}
 	tab[i] = 0;
-	free_arr(arr, j);
+	free_arr(arr, --words);
 	return (tab);
 }
 
@@ -224,5 +224,6 @@ char	**ft_ultra_split(char *str ,char ** envp, t_data *data)
 {
 	t_command *arr = ft_ultr_split(str, envp, 0, data);
 	char **tab = ft_arr_to_tab(arr, arr->nbr, 0, 0);
+	printf("hello\n");
 	return(tab);
 }

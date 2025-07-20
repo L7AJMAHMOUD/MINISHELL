@@ -44,7 +44,7 @@ int malloc_(t_command *arr, char *str, int *k, int j)
 	*k += 1;
 	arr[*k].command = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!arr[*k].command)
-		return(free_arr(arr, *k), 1);
+		return(free_arr(arr, *k - 1), 1);
 	return 0;
 }
 
@@ -75,7 +75,7 @@ int compl_(t_command *arr, t_indexes *indx, char *str)
 	free(arr[indx->k].command);
 	arr[indx->k].command = ft_strdup("''");
 	if (!arr[indx->k].command)
-		return(free_arr(arr, indx->k), 1);
+		return(free_arr(arr, indx->k - 1), 1);
 	indx->j = 0;
 	indx->k++;
 	arr[indx->k].command = malloc(sizeof(char) * (ft_strlen(str) + 1));
