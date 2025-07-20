@@ -53,74 +53,97 @@ int analyse_d(char *s1, char *s2)
 	return 1;
 }
 
+int arrlen(char **envp)
+{
+	int i;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	return i;
+}
+
+int compl(char **str, char *ligne, t_indexes *indx)
+{
+	str[indx->j] = malloc(ft_strlen(ligne) + 1);
+	if (!str[indx->j])
+		return free_all_ul_split(str), 1;
+	while (ligne[indx->i])
+	{
+		str[indx->j][indx->i] = ligne[indx->i];
+		indx->i++;
+	}
+	str[indx->j][indx->i] = '\0';
+	return 0;
+}
+int comple(char **str, char **envp, t_indexes *indx)
+{
+	str[indx->j] = malloc(ft_strlen(envp[indx->j]) + 1);
+	if (!str[indx->j])
+		return free_all_ul_split(str), 1;
+	while (envp[indx->j][indx->i])
+	{
+		str[indx->j][indx->i] = envp[indx->j][indx->i];
+		indx->i++;
+	}
+	str[indx->j][indx->i] = '\0';
+	return 0;
+}
+int complet(char **str, char *ligne, t_indexes *indx)
+{
+	indx->i = 0;
+	str[indx->j] = malloc(ft_strlen(ligne) + 1);
+	if (!str[indx->j])
+		return free_all_ul_split(str), 1;
+	while (ligne[indx->i])
+	{
+		str[indx->j][indx->i] = ligne[indx->i];
+		indx->i++;
+	}
+	str[indx->j++][indx->i] = '\0';
+	return 0;
+}
+
+int ini(char **envp, char *ligne, t_indexes *indx, int p)
+{
+	if (!envp)
+		return 1;
+	indx->p = p;
+	indx->k = 2;
+	indx->m = analyse_c(envp, ligne, &indx->k);
+	indx->j = 0;
+	if (indx->p == 1 && indx->k == 2)
+		return 1;
+	return 0;
+}
+
 char **add_to_envp(char **envp, char *ligne, int p)
 {
 	t_indexes indx;
 	char **str;
 
-	if (!envp || !ligne)
-		return NULL;
-	indx.p = p;
-	indx.k = 2;
-	indx.m = analyse_c(envp, ligne, &indx.k);
-	if (indx.p == 1 && indx.k == 2)
+	if (!ligne || ini(envp, ligne, &indx, p))
 		return envp;
-
-	indx.j = 0;
-	while (envp[indx.j])
-		indx.j++;
-
-	str = malloc((indx.j + indx.k) * sizeof(char *));
+	str = malloc((arrlen(envp) + indx.k) * sizeof(char *));
 	if (!str)
 		return envp;
-
-	indx.j = 0;
 	while (envp[indx.j])
 	{
 		indx.i = 0;
 		if (indx.k == 1 && indx.j == indx.m && analyse_d(envp[indx.m], ligne))
 		{
-			str[indx.j] = malloc(ft_strlen(ligne) + 1);
-			if (!str[indx.j])
-				return free_all_ul_split(str), envp;
-			while (ligne[indx.i])
-			{
-				str[indx.j][indx.i] = ligne[indx.i];
-				indx.i++;
-			}
-			str[indx.j][indx.i] = '\0';
+			if (compl(str, ligne, &indx))
+				return envp;
 		}
 		else
-		{
-			str[indx.j] = malloc(ft_strlen(envp[indx.j]) + 1);
-			if (!str[indx.j])
-				return free_all_ul_split(str), envp;
-			while (envp[indx.j][indx.i])
-			{
-				str[indx.j][indx.i] = envp[indx.j][indx.i];
-				indx.i++;
-			}
-			str[indx.j][indx.i] = '\0';
-		}
+			if (comple(str, envp, &indx))
+				return envp;
 		indx.j++;
 	}
-
 	if (indx.k == 2)
-	{
-		indx.i = 0;
-		str[indx.j] = malloc(ft_strlen(ligne) + 1);
-		if (!str[indx.j])
-			return free_all_ul_split(str), envp;
-		while (ligne[indx.i])
-		{
-			str[indx.j][indx.i] = ligne[indx.i];
-			indx.i++;
-		}
-		str[indx.j++][indx.i] = '\0';
-	}
-	str[indx.j] = NULL;
-	free_all_ul_split(envp);
-	return str;
+		if (complet(str, ligne, &indx))
+				return envp;
+	return free_all_ul_split(envp), str[indx.j] = NULL, str;
 }
 
 
