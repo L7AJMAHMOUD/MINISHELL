@@ -42,7 +42,8 @@ char	*ft_strstr(char *haystack, char *needle)
 			i++;
 			while(haystack[i] != (char)c && haystack[i])
 				i++;
-			i++;
+			if (haystack[i] != 0)
+				i++;
 		}
 		if (haystack[i] == 0)
 			return 0;
