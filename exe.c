@@ -12,6 +12,18 @@
 
 #include "minishell.h"
 
+char	*ft_strchr(const char *str, int c)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != (char)c && str[i])
+		i++;
+	if (str[i] == (char)c)
+		return ((char *)str + i);
+	return (NULL);
+}
+
 static int	ft_strleen(const char *str, int c)
 {
 	int		i;
@@ -91,96 +103,76 @@ int	ft_locat(char **envp)
 
 char *find_path(char *path, char **envp, t_data *data)
 {
-    char *tmp;
-    int i;
-    DIR *dir;
-    size_t j;
-    int k;
+	char	*tmp;
+	DIR *dir;
+	int		i;
+	size_t	j;
+	int		k;
 
-    j = 5;
-    if ((path[0] == '/' || path[0] == '.') && access(path, F_OK) == 0)
-    {
-		if (ft_strcmp("..", path) == 0)
-		{
-			write(2, "minishell: ", 11);
-			write(2, path, ft_strlen(path));
-			write(2, ": command not found\n", 20);
-			return NULL;
-		}
-        dir = opendir(path);
-        if (dir)
-        {
-            write(2, "minishell: ", 11);
-            write(2, path, ft_strlen(path));
-            write(2, ": Is a directory\n", 17);
-            closedir(dir);
-            return NULL;
-        }
-        if (access(path, X_OK) != 0)
-        {
-            write(2, "minishell: ", 11);
-            write(2, path, ft_strlen(path));
-            write(2, ": Permission denied\n", 20);
-            return NULL;
-        }
-        return ft_strdup(path);
-    }
-    else if ((path[0] == '/' || path[0] == '.'))
-    {
-        write(2, "minishell: ", 11);
-        write(2, path, ft_strlen(path));
-        write(2, ": No such file or directory\n", 28);
-        return NULL;
-    }
-    
-    i = ft_locat(envp);
-    if (i == -1 && !data->path)
-    {
+	if (ft_strchr(path, ':'))
+	{
+		write(2, "minishell: ", 11);
+		write(2, path, ft_strlen(path));
+		write(2, ": No such file or directory\n", 29);
+		return NULL;
+	}
+	dir = opendir(path);
+	if (dir)
+	{
+		write(2, "minishell: ", 11);
+		write(2, path, ft_strlen(path));
+		write(2, ": is a dir\n", 12);
+		return NULL;
+	}
+	i = ft_locat(envp);
+	if (i == -1 && !data->path)
+	{
 		if (access(path, F_OK) == 0)
-        {
+		{
 			write(2, "minishell: ", 11);
 			write(2, path, ft_strlen(path));
 			write(2, ": Permission denied\n", 20);
 			return NULL;
-        }
-        write(2, "minishell: ", 11);
-        write(2, path, ft_strlen(path));
-        write(2, ": No such file or directory\n", 28);
-        return NULL;
-    }
+		}
+		write(2, "minishell: ", 11);
+		write(2, path, ft_strlen(path));
+		write(2, ": No such file or directory\n", 28);
+		return NULL;
+	}
+
 	if (i == -1)
 		envp[i] = data->path;
-    while (j < ft_strlen(envp[i]))
-    {
-        tmp = ft_strduup(&envp[i][j], ':', &k);
-        if (!tmp)
-        {
+	j = 5;
+	while (j < ft_strlen(envp[i]))
+	{
+		tmp = ft_strduup(&envp[i][j], ':', &k);
+		if (!tmp)
 			return NULL;
+		j += k;
+		tmp = ft_strjoiin(tmp, path);
+		if (!tmp)
+			return NULL;
+		if (access(tmp, F_OK) == 0)
+		{
+			if (access(tmp, X_OK) == 0)
+				return tmp;
+			else
+			{
+				free(tmp);
+				write(2, "minishell: ", 11);
+				write(2, path, ft_strlen(path));
+				write(2, ": Permission denied\n", 20);
+				return NULL;
+			}
 		}
-        j += k;
-        tmp = ft_strjoiin(tmp, path);
-        if (!tmp)
-            return NULL;
-        if (access(tmp, F_OK) == 0)
-        {
-            if (access(tmp, X_OK) == 0)
-                return tmp;
-            else
-            {
-                free(tmp);
-                write(2, "minishell: ", 11);
-                write(2, path, ft_strlen(path));
-                write(2, ": Permission denied\n", 20);
-                return NULL;
-            }
-        }
-        free(tmp);
-    }
-    write(2, "minishell: ", 11);
-    write(2, path, ft_strlen(path));
-    write(2, ": command not found\n", 20);
-    return NULL;
+		free(tmp);
+	}
+	write(2, "minishell: ", 11);
+	write(2, path, ft_strlen(path));
+	write(2, ": command not found\n", 20);
+	return NULL;
 }
+
 void	exe(char **envp, t_node *node, t_data *data)
 {
 	char *path;
@@ -192,7 +184,11 @@ void	exe(char **envp, t_node *node, t_data *data)
 		path = find_path(*(node->command), envp, data);
 		if (!path)
 			exit(1) ;
-		exit (execve(path ,node->command, envp));
+		execve(path ,node->command, envp);
+		write(2, "minishell: ", 11);
+		write(2, path, ft_strlen(path));
+		write(2, ": Permission denied\n", 20);
+		exit (1);
 	}
 	else
 		wait(&status);

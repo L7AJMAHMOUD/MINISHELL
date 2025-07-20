@@ -14,11 +14,28 @@
 
 int	redirect_parse(char *command)
 {
-	int i = 0;
-	char current;
+	int		i = 0;
+	char	current;
 
 	while (command[i])
 	{
+		if (ft_isdigit(command[i]) && (command[i + 1] == '>' || command[i + 1] == '<'))
+		{
+			i++;
+			if (command[i] == command[i + 1])
+				i++;
+			else
+				i++;
+
+			while (command[i] == ' ')
+				i++;
+			if (ft_isdigit(command[i]) && command[i + 1] == '>')
+				return (-1); 
+			if (command[i] == '\0')
+				return (-1);
+			if (command[i] == '>' || command[i] == '<')
+				return (-1);
+		}
 		if (command[i] == REDIRECT_IN || command[i] == REDIRECT_OUT)
 		{
 			current = command[i];
@@ -27,13 +44,16 @@ int	redirect_parse(char *command)
 				i++;
 			while (command[i] == SPACE_CHAR)
 				i++;
-			if (command[i] == REDIRECT_IN || command[i] == REDIRECT_OUT || command[i] == '\0')
-				return -1;
+			if (command[i] == '\0')
+				return (-1);
+			if (command[i] == REDIRECT_IN || command[i] == REDIRECT_OUT)
+				return (-1);
 			if (!is_something(&command[i]))
-				return -1;
+				return (-1);
 		}
 		else
 			i++;
 	}
-	return 0;
+	return (0);
 }
+
