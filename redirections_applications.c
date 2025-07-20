@@ -48,7 +48,7 @@ char **apply_redirections(char **command, t_command *arr, char **envp, t_data *d
 			i++;
 		}
 		cmd = clean_command(command, arr);
-		// free_all_ul_split(command);
+		free_all_ul_split(command);
 		return (cmd);
 	}
 	if (s_in == -1 || s_out == -1)

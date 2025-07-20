@@ -55,70 +55,70 @@ int analyse_d(char *s1, char *s2)
 
 char **add_to_envp(char **envp, char *ligne, int p)
 {
-	int i, j, k, m;
+	t_indexes indx;
 	char **str;
 
 	if (!envp || !ligne)
 		return NULL;
-
-	k = 2;
-	m = analyse_c(envp, ligne, &k);
-	if (p == 1 && k == 2)
+	indx.p = p;
+	indx.k = 2;
+	indx.m = analyse_c(envp, ligne, &indx.k);
+	if (indx.p == 1 && indx.k == 2)
 		return envp;
 
-	j = 0;
-	while (envp[j])
-		j++;
+	indx.j = 0;
+	while (envp[indx.j])
+		indx.j++;
 
-	str = malloc((j + k) * sizeof(char *));
+	str = malloc((indx.j + indx.k) * sizeof(char *));
 	if (!str)
 		return envp;
 
-	j = 0;
-	while (envp[j])
+	indx.j = 0;
+	while (envp[indx.j])
 	{
-		i = 0;
-		if (k == 1 && j == m && analyse_d(envp[m], ligne))
+		indx.i = 0;
+		if (indx.k == 1 && indx.j == indx.m && analyse_d(envp[indx.m], ligne))
 		{
-			str[j] = malloc(ft_strlen(ligne) + 1);
-			if (!str[j])
+			str[indx.j] = malloc(ft_strlen(ligne) + 1);
+			if (!str[indx.j])
 				return free_all_ul_split(str), envp;
-			while (ligne[i])
+			while (ligne[indx.i])
 			{
-				str[j][i] = ligne[i];
-				i++;
+				str[indx.j][indx.i] = ligne[indx.i];
+				indx.i++;
 			}
-			str[j][i] = '\0';
+			str[indx.j][indx.i] = '\0';
 		}
 		else
 		{
-			str[j] = malloc(ft_strlen(envp[j]) + 1);
-			if (!str[j])
+			str[indx.j] = malloc(ft_strlen(envp[indx.j]) + 1);
+			if (!str[indx.j])
 				return free_all_ul_split(str), envp;
-			while (envp[j][i])
+			while (envp[indx.j][indx.i])
 			{
-				str[j][i] = envp[j][i];
-				i++;
+				str[indx.j][indx.i] = envp[indx.j][indx.i];
+				indx.i++;
 			}
-			str[j][i] = '\0';
+			str[indx.j][indx.i] = '\0';
 		}
-		j++;
+		indx.j++;
 	}
 
-	if (k == 2)
+	if (indx.k == 2)
 	{
-		i = 0;
-		str[j] = malloc(ft_strlen(ligne) + 1);
-		if (!str[j])
+		indx.i = 0;
+		str[indx.j] = malloc(ft_strlen(ligne) + 1);
+		if (!str[indx.j])
 			return free_all_ul_split(str), envp;
-		while (ligne[i])
+		while (ligne[indx.i])
 		{
-			str[j][i] = ligne[i];
-			i++;
+			str[indx.j][indx.i] = ligne[indx.i];
+			indx.i++;
 		}
-		str[j++][i] = '\0';
+		str[indx.j++][indx.i] = '\0';
 	}
-	str[j] = NULL;
+	str[indx.j] = NULL;
 	free_all_ul_split(envp);
 	return str;
 }
@@ -263,7 +263,7 @@ void export(char ***envp, char **command, t_data *data)
     j = 1;
     if (!command[1])
 	{
-		tmp = arr_sorted(*envp);////////////
+		tmp = arr_sorted(*envp);
 		if (!tmp)
 		{
 			data->status = 1;

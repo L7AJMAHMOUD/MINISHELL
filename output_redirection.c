@@ -57,13 +57,17 @@ int redirect_output_fd(char **command, t_data *data)
 {
 	int i;
 	int fd;
+	int j;
 	
  	i = 0;
-	
-	while (command[i])
-	{
+	 
+	 while (command[i])
+	 {
+		j = 0;
 		if (ft_strcmp(command[i], ">") == 0)
 		{
+			while (j < 100000)
+				j++;
 			fd = open(command[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			if (fd == -1)
 			{
