@@ -12,8 +12,9 @@
 
 #include "minishell.h"
 
-void    bash_sig_handler()
+void    bash_sig_handler(int sig)
 {
+    (void)sig;
     write(1, "\n", 2);
     rl_on_new_line();
     rl_replace_line("", 0);

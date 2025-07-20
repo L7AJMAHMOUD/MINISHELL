@@ -123,9 +123,10 @@ t_command *cleaning(char *str, int p, t_command *arr, t_indexes indx)
 	{
 		if (str[indx.i] == QUOTE_SINGLE || str[indx.i] == QUOTE_DOUBLE)
 		{
-			if (check_(&indx, str) && indx.j != 0)
-				if (malloc_(arr, str, &indx.k, indx.j))
+			if (indx.j != 0)
+				if (malloc_(arr, str, &(indx.k), indx.j))
 					return NULL;
+			check_(&indx, str);
 			if (indx.c == str[indx.i] && p == 0 && !str[indx.i + 1])
 			{
 				if(compl_(arr, &indx, str))
@@ -140,8 +141,7 @@ t_command *cleaning(char *str, int p, t_command *arr, t_indexes indx)
 			arr[indx.k].command[indx.j++] = str[indx.i++];
 	}
 	arr[indx.k].command[indx.j] = '\0';
-	arr[++indx.k].command = NULL;
-	return (arr->nbr = indx.k, arr);
+	return (arr[++indx.k].command = NULL, arr->nbr = indx.k, arr);
 }
 
 
