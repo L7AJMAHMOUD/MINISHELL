@@ -278,7 +278,7 @@ void	handle_dollar(t_command *arr, int i, int j)
 			p = 0;
 			m = j;
 			while_(arr, &i, &j, &p);
-			if (!arr[i].command[j] && !arr[i + 1].command)
+			if (arr[i].command[j] <= 32 && !arr[i + 1].command)
 				continue ;
 			if (arr[i].q == 39 || p % 2
 				|| (arr[i].command[j] >= '0' && arr[i].command[j] <= '9'))

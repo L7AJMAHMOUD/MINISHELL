@@ -307,7 +307,7 @@ void export(char ***envp, char **command, t_data *data)
 				continue;
 			}
 			command[j] = command_analyse(command[j], *envp);
-            tmp = add_to_envp(*envp, command[j++], 0);//////////////
+            tmp = add_to_envp(*envp, command[j++], 0);
             *envp = tmp;
         }
     }
