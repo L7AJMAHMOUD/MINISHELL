@@ -42,7 +42,7 @@ char **apply_redirections(char **command, t_command *arr, char **envp, t_data *d
 			}
 			else if (ft_strcmp(command[i], "<<") == 0 && arr[i].q == 0)
 			{
-				here_doc(command, arr, envp, data);
+				here_doc(command, arr, envp, data); // data-> fd ;
 			}
 			i++;
 		}
