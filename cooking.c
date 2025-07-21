@@ -25,7 +25,7 @@ char	*ft_strjoin_(char *s1, char *s2)
 	while (s2[k])
 		str[j++] = s2[k++];
 	str[j] = '\0';
-	return (free(s1), free(s2), str);
+	return (free(s1), s1 = NULL , free(s2), s2 = NULL, str);
 }
 
 void	free_(t_command *arr, int k)
@@ -34,8 +34,12 @@ void	free_(t_command *arr, int k)
 
 	m = 0;
 	while (m < k)
-		free(arr[m++].command);
+	{
+		free(arr[m].command);
+		arr[m++].command = NULL;
+	}
 	free(arr);
+	arr = NULL;
 }
 
 int	malloc_(t_command *arr, char *str, int *k, int j)
@@ -97,7 +101,7 @@ int	com_(t_command **arr, t_indexes *indx, char *str)
 	ft_memset(*arr, 0, sizeof(t_command) * (ft_strlen(str) + 1));
 	(*arr)[indx->k].command = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!(*arr)[indx->k].command)
-		return (free(arr), 1);
+		return (free(arr), arr = NULL, 1);
 	return (0);
 }
 

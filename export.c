@@ -267,6 +267,7 @@ char	*command_analyse(char *command, char **envp)
 	str = get_variable(command, envp);
 	cmd = strjoin(cmd, command);
 	free(command);
+	command = NULL;
 	cmd = strjoin(cmd, "=");
 	cmd = strjoin(cmd, str);
 	cmd = strjoin(cmd, tmp);

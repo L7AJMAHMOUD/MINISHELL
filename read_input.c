@@ -15,15 +15,11 @@
 void free_all_node(t_node *node)
 {
 	t_node *tmp;
-    int i;
 	while (node)
 	{
 		tmp = node->next;
 		free_all_ul_split(node->command);
-        i = 0;
-        while (i < node->i)
-            free(node->arr[i++].command);
-        free(node->arr);
+        free_arr(node->arr, node->i - 1);
 		free(node);
 		node = tmp;
 	}
@@ -190,6 +186,7 @@ void    read_input(char ***envp, t_data *data)
 			{
 				pip(node, envp, data);
                 free(command);
+                command = NULL;
 				continue;
 			}
             tmp->command = apply_redirections(tmp->command, tmp->arr, *envp, data, 0);
@@ -206,5 +203,6 @@ void    read_input(char ***envp, t_data *data)
             data->status = 2;
         }
         free(command);
+        command = NULL;
     }
 }

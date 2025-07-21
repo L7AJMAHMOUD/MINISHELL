@@ -81,7 +81,7 @@ char	*ft_strjoin(char *s1, char *s2) ///////////////////////////////////////////
 	while (s2[k])
 		str[j++] = s2[k++];
 	str[j] = '\0';
-	return (free(s1), free(s2), str);
+	return (free(s1), free(s2),s1 = NULL, s2 = NULL, str);
 }
 char	*ft_strdup(char *src )
 {

@@ -22,10 +22,17 @@ void	rev_(char *s)
 
 void	free_arr(t_command *arr, int i)
 {
+	if (!arr)
+		return;
 	while (i >= 0)
-		free(arr[i--].command);
+	{
+		free(arr[i].command);
+		arr[i].command = NULL;
+		i--;
+	}
 	free(arr);
 }
+
 
 void	comp_(char *s, int *i, int *count)
 {
@@ -178,7 +185,7 @@ int	complit_(t_command *arr, int words, int *j, char *tmp)
 			i++;
 		arr[*j].command = malloc(sizeof(char) * ln(&tmp[i]) + 1);
 		if (!arr[*j].command)
-			return (free_arr(arr, *j), 1);
+			return (free_arr(arr, *j - 1), 1);
 		k = i + ln(&tmp[i]);
 		while (i < k)
 			arr[*j].command[x++] = tmp[i++];

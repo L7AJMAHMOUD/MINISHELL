@@ -38,7 +38,7 @@ char    *strjoin(char *s1, char *s2)
         str[j++] = s2[k++];
     str[j] = '\0';
     free(s1);
-    return (str);
+    return (s1 = NULL, str);
 }
 
 void refrech(char *buff, t_data *data, char ***envp)

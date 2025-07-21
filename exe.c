@@ -84,7 +84,7 @@ char	*ft_strjoiin(char *s1, char *s2)
 	while (s2[k])
 		str[j++] = s2[k++];
 	str[j] = '\0';
-	return (free(s1), str);
+	return (free(s1), s1 = NULL, str);
 }
 
 int	ft_locat(char **envp)
