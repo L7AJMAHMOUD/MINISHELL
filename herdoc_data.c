@@ -91,6 +91,7 @@ char *here_doc_data()
     chdir("/tmp/HEREDOC_DIR_SYSTEMD");
 
     f_index = file_already_exist();
+
     if (f_index != -1)
         file_num = ft_itoa(f_index);
     else

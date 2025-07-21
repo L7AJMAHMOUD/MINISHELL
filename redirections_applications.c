@@ -17,7 +17,6 @@ char **apply_redirections(char **command, t_command *arr, char **envp, t_data *d
 	static int s_out = -1;
 	int i = 0;
 	char **cmd;
-
 	if (p == 0)
 	{
 		s_in = dup(0);
