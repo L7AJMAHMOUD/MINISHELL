@@ -266,11 +266,11 @@ void	exe(char **envp, t_node *node, t_data *data)
 	i = fork();
 	if (i == 0)
 	{
-		// if (data->fd != -1)
-		// {
-			// lseek(data->fd, 0, SEEK_SET);
-		// 	dup2(data->fd, 0);
-		// }
+		if (data->fd != -1)
+		{
+			lseek(data->fd, 0, SEEK_SET);
+			dup2(data->fd, 0);
+		}
 		path = find_path(*(node->command), envp, data);
 		if (!path)
 			exit(1);
