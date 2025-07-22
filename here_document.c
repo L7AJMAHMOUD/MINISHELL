@@ -198,12 +198,15 @@ int	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 	char *com;
 	char *arr_;
 	int no;
+	int nbr_del = 0;
 
 	i = 0;
 	com = NULL;
 	char *file = here_doc_data();
 
 	char **limiters =  get_delimiters(command);
+	while (limiters[nbr_del])
+		nbr_del++;
 	no = 0;
 	while (command[i])
 	{
@@ -221,7 +224,7 @@ int	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 				com = readline("> ");
 				if ((!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))) 
 				{
-
+					data->i = nbr_del;
 					data->fd = fd;
 					return 0;
 				}
@@ -231,7 +234,6 @@ int	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 				{
 					arr_ = expand_str(com, envp, data);
 					write(fd,arr_,ft_strlen(arr_));
-					
 				}
 				j++;
 				if (ft_strcmp(com, limiters[no]) == 0)
@@ -253,6 +255,7 @@ int	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 				if (!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))
 				{
 					data->fd = fd;
+					data->i = nbr_del;
 					return 0;
 				}
 				if (j != 0)

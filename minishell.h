@@ -47,6 +47,7 @@ typedef struct s_data
 	char *pwd;
 	char *path;
 	int fd;
+	int i;
 	int status;
 }   t_data;
 typedef struct s_command

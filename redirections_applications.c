@@ -26,6 +26,7 @@ char **apply_redirections(char **command, t_command *arr, char **envp, t_data *d
 			return (NULL);
 		while (command[i])
 		{
+			data->i = 0;
 			if (ft_strcmp(command[i], ">") == 0 && arr[i].q == 0)
 			{
 				if (redirect_output_fd(command, data) == -1)
@@ -46,6 +47,8 @@ char **apply_redirections(char **command, t_command *arr, char **envp, t_data *d
 			{
 				if (here_doc(command, arr, envp, data)  == -1 && arr[i].q == 0)
 					return (NULL);
+				i += (data->i) * 2;
+				continue;
 			}
 			i++;
 		}
