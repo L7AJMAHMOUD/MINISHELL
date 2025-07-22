@@ -19,6 +19,7 @@ char **apply_redirections(char **command, t_command *arr, char **envp, t_data *d
 	char **cmd;
 	if (p == 0)
 	{
+
 		s_in = dup(0);
 		s_out = dup(1);
 		if (s_in == -1 || s_out == -1)
@@ -29,6 +30,7 @@ char **apply_redirections(char **command, t_command *arr, char **envp, t_data *d
 			{
 				if (redirect_output_fd(command, data) == -1)
 					return (NULL);
+				
 			}
 			else if (ft_strcmp(command[i], ">>") == 0 && arr[i].q == 0)
 			{
@@ -42,7 +44,7 @@ char **apply_redirections(char **command, t_command *arr, char **envp, t_data *d
 			}
 			else if (ft_strcmp(command[i], "<<") == 0 && arr[i].q == 0)
 			{
-				if (here_doc(command, arr, envp, data)  == -1 && arr[i].q == 0) // data-> fd ;
+				if (here_doc(command, arr, envp, data)  == -1 && arr[i].q == 0)
 					return (NULL);
 			}
 			i++;

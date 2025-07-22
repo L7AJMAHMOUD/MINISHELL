@@ -28,7 +28,7 @@ int file_already_exist()
 
         while ((entry = readdir(directory)) != NULL)
         {
-            if (entry->d_name[0] == 'H' && atoi(entry->d_name + 1) == new_f)
+            if (entry->d_name[0] == 'h' && atoi(entry->d_name + 1) == new_f)
             {
                 found = 1;
                 new_f++;
@@ -73,6 +73,11 @@ char *here_doc_data()
     int f_index;
     char *file_num;
     char *file_name;
+    char *full_path;
+    char *curr_wor_dir = malloc(100 * sizeof(char));
+
+    if (!getcwd(curr_wor_dir, 100))
+        return NULL;
 
     if (d_exist != -1)
     {
@@ -91,13 +96,20 @@ char *here_doc_data()
     chdir("/tmp/HEREDOC_DIR_SYSTEMD");
 
     f_index = file_already_exist();
-
-    if (f_index != -1)
-        file_num = ft_itoa(f_index);
-    else
+    if (f_index == -1)
+    {
+        chdir(curr_wor_dir);
         return NULL;
+    }
+
     file_num = ft_itoa(f_index);
-    file_name = join_strings("H", file_num);
+    file_name = join_strings("h", file_num);
+    full_path = join_strings("/tmp/HEREDOC_DIR_SYSTEMD/", file_name);
+
     free(file_num);
-    return file_name;
+    free(file_name);
+    chdir(curr_wor_dir);
+    free(curr_wor_dir);
+
+    return full_path;
 }
