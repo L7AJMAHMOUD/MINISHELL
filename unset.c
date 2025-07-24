@@ -20,7 +20,7 @@ static int analyse_c(char **envp, char *ligne, int *k)
 	i = 0;
 	while (envp[i])
 	{
-		if (!ft_str_cmp(envp[i], ligne))
+		if (!strcmp_until_equal(envp[i], ligne))
 		{
 			*k = 1;
 			return i;

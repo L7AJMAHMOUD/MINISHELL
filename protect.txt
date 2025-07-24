@@ -16,3 +16,65 @@
 * protection dyl malloc f clean_command function atkhalini ndir return l wahd NULL check tani dyl NULL kyn f apply_redirections dert comment l / if(cmd) - free_all_ul_split(command) hta tchuf had blan lmohim howa protection dyl malloc f clean command
 
 * protection dyl malloc str f read_stock function 
+
+==================================
+
+(analyze_command.c) is_space / only_space
+
+
+(cd.c) strjoin / strmerge_and_free
+       refrech / update_pwd_vars
+       node_null / reset_node_flags
+
+(command_tokenization.c) ft_strdup_p check ft_strstr_pare analyze, ila kano dyl bonus haydhom o 3wd pushi
+        ft_shearch ==> ban lia makheddam fiha f hta blassa ila bssh hayedha
+
+(commands.c) ft_check / is_echo_n_flag
+             print > ban lia makhdamch biha
+             priint / print_env_value_escaped
+
+
+(cooking.c) ft_strjoin_ kadir nefs lkhedmma dyl strmerge_and_free chuf ila kan bsh 3ayt liha mn (cd.c)
+            free_ / free_commands_array
+            malloc_ / allocate_next_command
+            complt_ / complete_quoted_command
+            compl_ / handle_empty_quote_command
+            com_ / init_command_array
+            return_ / return_null_if_one
+            check_ / init_quote_state
+            strlen_ / strlen_until_special
+            ul_expand / expand_env_variable
+            ulr_expand / expand_exit_status
+            ultra_expand / remove_positional_parameter
+            while_ / skip_dollar_signs
+
+
+(exe.c)  ft_strleen / strlen_until_char
+         ft_strduup / strdup_until_char
+         ft_strjoiin / strjoin_with_slash
+         ft_locat / find_path_index
+         che_ck / check_invalid_path_or_command
+         che_ck_ / check_path_directory_or_missing
+         check__ / check_if_directory
+         check___ / print_access_error
+         check____ / print_no_such_file_error
+         check_____ / print_permission_denied_error
+         check______ / print_command_not_found_error
+         che / check_executable_or_error
+         cnt_ / find_executable_in_path ----> KHuya lah iyakhod fk lhaq ela qalet smiat hhhhhhhhhhhhh
+
+
+
+(export.c) ft_str_cmp / strcmp_until_equal
+            analyse_c / find_env_var_index --> kyna b7alha f unset.c ila kant hya 3ayt liha mn (export.c)
+            analyse_d / is_prefix_equal_until_equal_sign --> hta hya kyna bhalha f unset.c
+            compl / duplicate_line_to_array
+            comple / duplicate_envp_entry
+            complet / duplicate_line_and_increment_index
+            ini / initialize_indexes_and_find_env
+
+
+
+sff lblan hna kola function smia lqdima / smia jdida wlkin ra smiat knti dayr lahoma barik hhhhhhhhhhhhhhhhh
+
+*GOOD LUCK* > blan sift lk f watss + heredoc mea pip + heredoc bo7do mea cat mataln khass fch ikteb hadakchi ikun newline f lakher hna makidirooch  

@@ -69,7 +69,7 @@ int	search_first(char *command)
 	return (0);
 }
 
-int is_space(char *c)
+int only_space(char *c)
 {
 	int i;
 
@@ -95,7 +95,7 @@ int	command_analyze(char *command)
 		return (-1);
 	if(validate_pipe_syntax(command) != 0)
 		return (-1);
-	if (command[0] == '\0' || is_space(command))
+	if (command[0] == '\0' || only_space(command))
 		return 1;
 	return (0);
 }

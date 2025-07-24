@@ -77,11 +77,3 @@ char **clean_command(char **command, t_command *arr)
 		return (NULL);
 	return(clean);
 }
-
-// int main()
-// {
-// 	char *tab[] = { ">" , "1", "ls", "-la", ">", "3", NULL};
-// 	char **t = clean_command(tab);
-// 	list(t);
-// 	// execve("/usr/bin/ls", t, NULL);
-// }

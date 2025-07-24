@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	ft_str_cmp(char *s1, char *s2)
+int	strcmp_until_equal(char *s1, char *s2)
 {
 	size_t	i;
 
@@ -24,14 +24,14 @@ int	ft_str_cmp(char *s1, char *s2)
 	return (*(unsigned char *)(s1 + i) - *(unsigned char *)(s2 + i));
 }
 
-int	analyse_c(char **envp, char *ligne, int *k)
+int	find_env_var_index(char **envp, char *ligne, int *k)
 {
 	int	i;
 
 	i = 0;
 	while (envp[i])
 	{
-		if (!ft_str_cmp(envp[i], ligne))
+		if (!strcmp_until_equal(envp[i], ligne))
 		{
 			*k = 1;
 			return (i);
@@ -41,7 +41,7 @@ int	analyse_c(char **envp, char *ligne, int *k)
 	return (0);
 }
 
-int	analyse_d(char *s1, char *s2)
+int	is_prefix_equal_until_equal_sign(char *s1, char *s2)
 {
 	int	i;
 
@@ -53,7 +53,7 @@ int	analyse_d(char *s1, char *s2)
 	return (1);
 }
 
-int	arrlen(char **envp)
+int	envp_array_length(char **envp)
 {
 	int	i;
 
@@ -63,7 +63,7 @@ int	arrlen(char **envp)
 	return (i);
 }
 
-int	compl(char **str, char *ligne, t_indexes *indx)
+int	duplicate_line_to_array(char **str, char *ligne, t_indexes *indx)
 {
 	str[indx->j] = malloc(ft_strlen(ligne) + 1);
 	if (!str[indx->j])
@@ -77,7 +77,7 @@ int	compl(char **str, char *ligne, t_indexes *indx)
 	return (0);
 }
 
-int	comple(char **str, char **envp, t_indexes *indx)
+int	duplicate_envp_entry(char **str, char **envp, t_indexes *indx)
 {
 	str[indx->j] = malloc(ft_strlen(envp[indx->j]) + 1);
 	if (!str[indx->j])
@@ -91,7 +91,7 @@ int	comple(char **str, char **envp, t_indexes *indx)
 	return (0);
 }
 
-int	complet(char **str, char *ligne, t_indexes *indx)
+int	duplicate_line_and_increment_index(char **str, char *ligne, t_indexes *indx)
 {
 	indx->i = 0;
 	str[indx->j] = malloc(ft_strlen(ligne) + 1);
@@ -106,13 +106,13 @@ int	complet(char **str, char *ligne, t_indexes *indx)
 	return (0);
 }
 
-int	ini(char **envp, char *ligne, t_indexes *indx, int p)
+int	initialize_indexes_and_find_env(char **envp, char *ligne, t_indexes *indx, int p)
 {
 	if (!envp)
 		return (1);
 	indx->p = p;
 	indx->k = 2;
-	indx->m = analyse_c(envp, ligne, &indx->k);
+	indx->m = find_env_var_index(envp, ligne, &indx->k);
 	indx->j = 0;
 	if (indx->p == 1 && indx->k == 2)
 		return (1);
@@ -124,29 +124,29 @@ char	**add_to_envp(char **envp, char *ligne, int p)
 	t_indexes	indx;
 	char		**str;
 
-	if (!ligne || ini(envp, ligne, &indx, p))
+	if (!ligne || initialize_indexes_and_find_env(envp, ligne, &indx, p))
 		return (envp);
-	str = malloc((arrlen(envp) + indx.k) * sizeof(char *));
+	str = malloc((envp_array_length(envp) + indx.k) * sizeof(char *));
 	if (!str)
 		return (envp);
 	while (envp[indx.j])
 	{
 		indx.i = 0;
-		if (indx.k == 1 && indx.j == indx.m && analyse_d(envp[indx.m], ligne))
+		if (indx.k == 1 && indx.j == indx.m && is_prefix_equal_until_equal_sign(envp[indx.m], ligne))
 		{
-			if (compl(str, ligne, &indx))
+			if (duplicate_line_to_array(str, ligne, &indx))
 				return (envp);
 		}
 		else
 		{
-			if (comple(str, envp, &indx))
+			if (duplicate_envp_entry(str, envp, &indx))
 				return (envp);
 		}
 		indx.j++;
 	}
 	if (indx.k == 2)
 	{
-		if (complet(str, ligne, &indx))
+		if (duplicate_line_and_increment_index(str, ligne, &indx))
 			return (envp);
 	}
 	return (free_all_ul_split(envp), str[indx.j] = NULL, str);
@@ -265,12 +265,12 @@ char	*command_analyse(char *command, char **envp)
 	tmp = ft_strdup(&command[i + 2]);
 	command[i] = 0;
 	str = get_variable(command, envp);
-	cmd = strjoin(cmd, command);
+	cmd = strmerge_and_free(cmd, command);
 	free(command);
 	command = NULL;
-	cmd = strjoin(cmd, "=");
-	cmd = strjoin(cmd, str);
-	cmd = strjoin(cmd, tmp);
+	cmd = strmerge_and_free(cmd, "=");
+	cmd = strmerge_and_free(cmd, str);
+	cmd = strmerge_and_free(cmd, tmp);
 	return (cmd);
 }
 

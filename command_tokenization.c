@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void node_null(t_node *node)
+void reset_node_flags(t_node *node)
 {
 	node->command = 0;
 	node->pipe = 0;
@@ -126,7 +126,7 @@ void    command_tokenization(t_node **node, char *command, char **envp, t_data *
 		*node = malloc(sizeof(t_node));
 		if (!(*node))
 			return ;
-		node_null(*node);
+		reset_node_flags(*node);
 	}
 	if (ft_strstr(command, "|"))
 	{

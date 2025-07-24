@@ -28,7 +28,7 @@ char	*ft_strjoin_(char *s1, char *s2)
 	return (free(s1), s1 = NULL , free(s2), s2 = NULL, str);
 }
 
-void	free_(t_command *arr, int k)
+void	free_commands_array(t_command *arr, int k)
 {
 	int	m;
 
@@ -42,7 +42,7 @@ void	free_(t_command *arr, int k)
 	arr = NULL;
 }
 
-int	malloc_(t_command *arr, char *str, int *k, int j)
+int	allocate_next_command(t_command *arr, char *str, int *k, int j)
 {
 	arr[*k].command[j] = 0;
 	*k += 1;
@@ -52,7 +52,7 @@ int	malloc_(t_command *arr, char *str, int *k, int j)
 	return (0);
 }
 
-int	complt_(t_command *arr, char *str, t_indexes *ind)
+int	complete_quoted_command(t_command *arr, char *str, t_indexes *ind)
 {
 	arr[ind->k].q = ind->c;
 	while (str[ind->i] && str[ind->i] != ind->c)
@@ -70,11 +70,11 @@ int	complt_(t_command *arr, char *str, t_indexes *ind)
 	}
 	arr[ind->k].command = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!arr[ind->k].command)
-		return (free_(arr, ind->k), 1);
+		return (free_commands_array(arr, ind->k), 1);
 	return (0);
 }
 
-int	compl_(t_command *arr, t_indexes *indx, char *str)
+int	handle_empty_quote_command(t_command *arr, t_indexes *indx, char *str)
 {
 	free(arr[indx->k].command);
 	arr[indx->k].command = ft_strdup("''");
@@ -84,11 +84,11 @@ int	compl_(t_command *arr, t_indexes *indx, char *str)
 	indx->k++;
 	arr[indx->k].command = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!arr[indx->k].command)
-		return (free_(arr, indx->k), 1);
+		return (free_commands_array(arr, indx->k), 1);
 	return (0);
 }
 
-int	com_(t_command **arr, t_indexes *indx, char *str)
+int	init_command_array(t_command **arr, t_indexes *indx, char *str)
 {
 	indx->c = 0;
 	indx->i = 0;
@@ -105,14 +105,14 @@ int	com_(t_command **arr, t_indexes *indx, char *str)
 	return (0);
 }
 
-t_command	*return_(t_command *arr, int i)
+t_command	*return_null_if_one(t_command *arr, int i)
 {
 	if (i == 1)
 		return (NULL);
 	return (arr);
 }
 
-int	check_(t_indexes *indx, char *str)
+int	init_quote_state(t_indexes *indx, char *str)
 {
 	indx->j = 0;
 	indx->c = str[indx->i++];
@@ -121,25 +121,25 @@ int	check_(t_indexes *indx, char *str)
 
 t_command	*cleaning(char *str, int p, t_command *arr, t_indexes indx)
 {
-	if (com_(&arr, &indx, str))
+	if (init_command_array(&arr, &indx, str))
 		return (NULL);
 	while (str[indx.i])
 	{
 		if (str[indx.i] == QUOTE_SINGLE || str[indx.i] == QUOTE_DOUBLE)
 		{
 			if (indx.j != 0)
-				if (malloc_(arr, str, &(indx.k), indx.j))
+				if (allocate_next_command(arr, str, &(indx.k), indx.j))
 					return (NULL);
-			check_(&indx, str);
+			init_quote_state(&indx, str);
 			if (indx.c == str[indx.i] && p == 0 && !str[indx.i + 1])
 			{
-				if (compl_(arr, &indx, str))
+				if (handle_empty_quote_command(arr, &indx, str))
 					return (NULL);
 				continue ;
 			}
-			indx.c = complt_(arr, str, &indx);
+			indx.c = complete_quoted_command(arr, str, &indx);
 			if (indx.c == 1 || indx.c == 2)
-				return (return_(arr, indx.c));
+				return (return_null_if_one(arr, indx.c));
 		}
 		else
 			arr[indx.k].command[indx.j++] = str[indx.i++];
@@ -148,7 +148,7 @@ t_command	*cleaning(char *str, int p, t_command *arr, t_indexes indx)
 	return (arr[++indx.k].command = NULL, arr->nbr = indx.k, arr);
 }
 
-int	strlen_(char *str)
+int	strlen_until_special(char *str)
 {
 	int	i;
 
@@ -173,7 +173,7 @@ char	*get_variable(char *str, char **envp)
 	i = 0;
 	if (!str || !envp)
 		return (NULL);
-	len = strlen_(str);
+	len = strlen_until_special(str);
 	while (envp[i])
 	{
 		if (strncmp(envp[i], str, len) == 0 && envp[i][len] == '=')
@@ -187,7 +187,7 @@ char	*get_variable(char *str, char **envp)
 	return (NULL);
 }
 
-void	ul_expand(t_command *arr, int i, int *j, int p)
+void	expand_env_variable(t_command *arr, int i, int *j, int p)
 {
 	int		var_len;
 	char	*varname;
@@ -195,7 +195,7 @@ void	ul_expand(t_command *arr, int i, int *j, int p)
 	char	*tmp;
 	char	*str;
 
-	var_len = strlen_(&(arr[i].command[*j]));
+	var_len = strlen_until_special(&(arr[i].command[*j]));
 	varname = malloc(var_len + 1);
 	if (!varname)
 		return ;
@@ -215,7 +215,7 @@ void	ul_expand(t_command *arr, int i, int *j, int p)
 	*j = var_len;
 }
 
-void	ulr_expand(t_command *arr, int i, int *j, int p)
+void	expand_exit_status(t_command *arr, int i, int *j, int p)
 {
 	int		var_len;
 	char	*varname;
@@ -243,7 +243,7 @@ void	ulr_expand(t_command *arr, int i, int *j, int p)
 	free(varname);
 }
 
-void	ultra_expand(t_command *arr, int i, int *p, int j)
+void	remove_positional_parameter(t_command *arr, int i, int *p, int j)
 {
 	char	*str;
 
@@ -261,7 +261,7 @@ void	ultra_expand(t_command *arr, int i, int *p, int j)
 	arr[i].command = ft_strjoin_(arr[i].command, str);
 }
 
-void	while_(t_command *arr, int *i, int *j, int *p)
+void	skip_dollar_signs(t_command *arr, int *i, int *j, int *p)
 {
 	while (arr[*i].command[*j] == '$')
 	{
@@ -281,19 +281,19 @@ void	handle_dollar(t_command *arr, int i, int j)
 		{
 			p = 0;
 			m = j;
-			while_(arr, &i, &j, &p);
+			skip_dollar_signs(arr, &i, &j, &p);
 			if (arr[i].command[j] <= 32 && !arr[i + 1].command)
 				continue ;
 			if (arr[i].q == 39 || p % 2
 				|| (arr[i].command[j] >= '0' && arr[i].command[j] <= '9'))
 			{
-				ultra_expand(arr, i, &p, j);
+				remove_positional_parameter(arr, i, &p, j);
 				j = m;
 			}
 			else if (arr[i].command[j] == '?')
-				ulr_expand(arr, i, &j, p);
+				expand_exit_status(arr, i, &j, p);
 			else
-				ul_expand(arr, i, &j, p);
+				expand_env_variable(arr, i, &j, p);
 		}
 	}
 }

@@ -165,7 +165,7 @@ char	*ft_strstr_pare(char *command);
 int ultra_redirect_parse(char *command);
 int ultra_redirect_parsee(char *command);
 char ** apply_redirections(char **command, t_command *arr, char **envp, t_data *data, int a);
-int	ft_str_cmp(char *s1, char *s2);
+int	strcmp_until_equal(char *s1, char *s2);
 int check_command(char **str, char ***envp, t_node *node, t_data *data);
 void free_all_node(t_node *node);
 int pip(t_node *node, char ***envp, t_data *data);
@@ -189,4 +189,5 @@ char* get_variable(char *str, char **envp);
 char *	here_doc_data();
 char	*join_strings(char *s1, char *s2);
 void	signal_init();
+char *strmerge_and_free(char *s1, char *s2);
 #endif

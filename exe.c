@@ -24,7 +24,7 @@ char	*ft_strchr(const char *str, int c)
 	return (NULL);
 }
 
-static int	ft_strleen(const char *str, int c)
+static int	strlen_until_char(const char *str, int c)
 {
 	int	i;
 
@@ -36,7 +36,7 @@ static int	ft_strleen(const char *str, int c)
 	return (i);
 }
 
-static char	*ft_strduup(const char *src, int c, int *i)
+static char	*strdup_until_char(const char *src, int c, int *i)
 {
 	char	*h;
 
@@ -45,7 +45,7 @@ static char	*ft_strduup(const char *src, int c, int *i)
 		return (0);
 	if (!src[*i])
 		return (NULL);
-	h = malloc(ft_strleen(src, c) * sizeof(char) + 1);
+	h = malloc(strlen_until_char(src, c) * sizeof(char) + 1);
 	if (!h)
 		return (0);
 	while (src[*i] && src[*i] != c)
@@ -58,7 +58,7 @@ static char	*ft_strduup(const char *src, int c, int *i)
 	return (h);
 }
 
-char	*ft_strjoiin(char *s1, char *s2)
+char	*strjoin_with_slash(char *s1, char *s2)
 {
 	size_t	k;
 	size_t	j;
@@ -87,7 +87,7 @@ char	*ft_strjoiin(char *s1, char *s2)
 	return (free(s1), s1 = NULL, str);
 }
 
-int	ft_locat(char **envp)
+int	find_path_index(char **envp)
 {
 	int	i;
 
@@ -102,7 +102,7 @@ int	ft_locat(char **envp)
 	return (-1);
 }
 
-int	che_ck(char *path)
+int	check_invalid_path_or_command(char *path)
 {
 	if (ft_strchr(path, ':'))
 	{
@@ -121,7 +121,7 @@ int	che_ck(char *path)
 	return (0);
 }
 
-int	che_ck_(char *path)
+int	check_path_directory_or_missing(char *path)
 {
 	DIR	*dir;
 
@@ -144,7 +144,7 @@ int	che_ck_(char *path)
 	return (0);
 }
 
-int	check__(char *path)
+int	check_if_directory(char *path)
 {
 	DIR	*dir;
 
@@ -160,7 +160,7 @@ int	check__(char *path)
 	return (0);
 }
 
-char	*check___(char *path)
+char	*print_access_error(char *path)
 {
 	if (access(path, F_OK) == 0)
 	{
@@ -175,7 +175,7 @@ char	*check___(char *path)
 	return (NULL);
 }
 
-char	*check____(char *path)
+char	*print_no_such_file_error(char *path)
 {
 	write(2, "minishell: ", 11);
 	write(2, path, ft_strlen(path));
@@ -183,7 +183,7 @@ char	*check____(char *path)
 	return (NULL);
 }
 
-char	*check_____(char *path)
+char	*print_permission_denied_error(char *path)
 {
 	write(2, "minishell: ", 11);
 	write(2, path, ft_strlen(path));
@@ -191,7 +191,7 @@ char	*check_____(char *path)
 	return (NULL);
 }
 
-char	*check______(char *path)
+char	*print_command_not_found_error(char *path)
 {
 	write(2, "minishell: ", 11);
 	write(2, path, ft_strlen(path));
@@ -199,62 +199,62 @@ char	*check______(char *path)
 	return (NULL);
 }
 
-char	*che(char *tmp, char *path)
+char	*check_executable_or_error(char *tmp, char *path)
 {
 	if (access(tmp, X_OK) == 0)
 		return (tmp);
-	return (check_____(path));
+	return (print_permission_denied_error(path));
 }
 
-char	*cnt_(char **envp, t_data *data, char *path, int *j)
+char	*find_executable_in_path(char **envp, t_data *data, char *path, int *j)
 {
 	int		i;
 	int		k;
 	char	*tmp;
 
-	i = ft_locat(envp);
+	i = find_path_index(envp);
 	if (i == -1 && !data->path)
-		return (check___(path));
+		return (print_access_error(path));
 	if (i == -1)
 		envp[i] = data->path;
 	*j = 5;
 	while ((size_t)*j < ft_strlen(envp[i]))
 	{
-		tmp = ft_strduup(&envp[i][*j], ':', &k);
+		tmp = strdup_until_char(&envp[i][*j], ':', &k);
 		if (!tmp)
 			return (NULL);
 		*j += k;
-		tmp = ft_strjoiin(tmp, path);
+		tmp = strjoin_with_slash(tmp, path);
 		if (!tmp)
 			return (NULL);
 		if (access(tmp, F_OK) == 0)
-			return (che(tmp, path));
+			return (check_executable_or_error(tmp, path));
 		free(tmp);
 	}
-	return (check______(path));
+	return (print_command_not_found_error(path));
 }
 
 char	*find_path(char *path, char **envp, t_data *data)
 {
 	int	j;
 
-	if (che_ck(path))
+	if (check_invalid_path_or_command(path))
 		return (NULL);
 	if (path[1] == '/' && path[0] == '.')
 	{
-		if (che_ck_(path))
+		if (check_path_directory_or_missing(path))
 			return (NULL);
 		return (ft_strdup(path));
 	}
 	if (ft_strchr(path, '/'))
 	{
-		if (check__(path))
+		if (check_if_directory(path))
 			return (NULL);
 		if (access(path, F_OK) == 0)
 			return (path);
-		return (check____(path));
+		return (print_no_such_file_error(path));
 	}
-	return (cnt_(envp, data, path, &j));
+	return (find_executable_in_path(envp, data, path, &j));
 }
 
 void	exe(char **envp, t_node *node, t_data *data)

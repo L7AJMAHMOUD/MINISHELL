@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char    *strjoin(char *s1, char *s2)
+char *strmerge_and_free(char *s1, char *s2)
 {
     size_t    k;
     size_t    j;
@@ -41,18 +41,18 @@ char    *strjoin(char *s1, char *s2)
     return (s1 = NULL, str);
 }
 
-void refrech(char *buff, t_data *data, char ***envp)
+void update_pwd_vars(char *buff, t_data *data, char ***envp)
 {
     char **tmp;
     char *command;
 
-    command = strjoin(ft_strdup("OLDPWD="), data->pwd);
+    command = strmerge_and_free(ft_strdup("OLDPWD="), data->pwd);
     free (data->pwd);
     tmp = add_to_envp(*envp, command, 1);
     free(command);
     *envp = tmp;
     data->pwd = ft_strdup(buff);
-    command = strjoin(ft_strdup("PWD="), data->pwd);
+    command = strmerge_and_free(ft_strdup("PWD="), data->pwd);
     tmp = add_to_envp(*envp, command, 1);
     free(command);
     *envp = tmp;
@@ -71,11 +71,11 @@ void cd(char ***envp, char **arg, t_data *data)
         str = get_variable("HOME", *envp);
         if (!str || chdir(str) != 0)
             return(data->status = 1, ft_print("minishell: HOME not set", 0));
-        refrech(buff, data, envp);
+        update_pwd_vars(buff, data, envp);
         return ;
     }
     i = 0;
-    tmp = strjoin(tmp, arg[i]);
+    tmp = strmerge_and_free(tmp, arg[i]);
     dir = opendir(tmp);
     if (!dir || arg[i + 1])
     {
@@ -96,9 +96,9 @@ void cd(char ***envp, char **arg, t_data *data)
 	data->status = 0;
     str = getcwd(buff, BUFFER_SIZE);
     if (str)
-        return (refrech(buff, data, envp), (void)closedir(dir));
+        return (update_pwd_vars(buff, data, envp), (void)closedir(dir));
     perror("cd : erreur de détermination du répertoire actuel : \
     getcwd : ne peut accéder aux répertoires parents ");
 	data->status = 1;
-    data->pwd = strjoin(data->pwd, "/..");
+    data->pwd = strmerge_and_free(data->pwd, "/..");
 }
