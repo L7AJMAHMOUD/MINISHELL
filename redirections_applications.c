@@ -3,20 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_applications.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:35:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/16 12:46:56 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/24 21:51:41 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-char **apply_redirections(char **command, t_command *arr, char **envp, t_data *data, int p)
+
+char	**apply_redirections(char **command, t_command *arr, char **envp, t_data *data, int p)
 {
-	static int s_in = -1;
-	static int s_out = -1;
-	int i = 0;
+	static int s_in;
+	static int s_out;
+	int i;
 	char **cmd;
+
+	i = 0;
+	s_in = -1;
+	s_out = -1;
 	if (p == 0)
 	{
 

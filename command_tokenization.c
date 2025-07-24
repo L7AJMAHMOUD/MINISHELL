@@ -6,45 +6,46 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:56:47 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/16 23:30:57 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:36:00 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void reset_node_flags(t_node *node)
+void	reset_node_flags(t_node *node)
 {
 	node->command = 0;
 	node->pipe = 0;
 	node->and = 0;
 	node->or = 0;
-    node->next = 0;
+	node->next = 0;
 }
-char *ft_strdup_p(char *command)
+
+char	*ft_strdup_p(char *command)
 {
-	int i;
-	char *str;
-	
+	int		i;
+	char	*str;
+
 	i = ft_strlen(command);
 	while (command[i] != ')')
 		i--;
 	str = malloc (i + 1);
 	if (!str)
-	return NULL;
+		return (NULL);
 	str[i--] = 0;
 	while (i >= 0)
 	{
 		str[i] = command[i];
 		i--;
 	}
-	return str;
+	return (str);
 }
 
-int analyse(char *command)
+int	analyse(char *command)
 {
-	int i;
-	int j;
-	int k;
+	int	i;
+	int	j;
+	int	k;
 
 	i = 0;
 	while(command[i] == '(')

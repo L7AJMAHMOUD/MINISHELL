@@ -6,33 +6,33 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 11:06:32 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/13 12:12:58 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:32:49 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-int 	is_redirect(char *command)
+int	is_redirect(char *command)
 {
 	if (ft_strcmp(command, ">") == 0
 		|| ft_strcmp(command, "<") == 0
 		|| ft_strcmp(command, ">>") == 0
 		|| ft_strcmp(command, "<<") == 0)
-			return 0;
-	return -1;
+		return (0);
+	return (-1);
 }
-int new_cmd_size(char **command)
+
+int	new_cmd_size(char **command)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;
 	while (command[i])
 	{
 		if (is_redirect(command[i]) == 0 && command[i + 1])
-			i+= 2;
+			i += 2;
 		else
 		{
 			count++;
@@ -40,15 +40,14 @@ int new_cmd_size(char **command)
 		}
 	}
 	return (count);
-	
 }
 
-char **copy_list(char **command, t_command *arr)
+char	**copy_list(char **command, t_command *arr)
 {
-	char **new;
-	int i;
-	int j;
-	
+	char	**new;
+	int		i;
+	int		j;
+
 	i = 0;
 	j = 0;
 	new = malloc((new_cmd_size(command) + 1) * sizeof(char *));
@@ -57,7 +56,7 @@ char **copy_list(char **command, t_command *arr)
 	while (command[i])
 	{
 		if (is_redirect(command[i]) == 0 && command[i + 1] && arr[i].q == 0)
-			i+=2;
+			i += 2;
 		else
 		{
 			new[j] = ft_strdup(command[i]);
@@ -69,11 +68,12 @@ char **copy_list(char **command, t_command *arr)
 	return (new);
 }
 
-char **clean_command(char **command, t_command *arr)       
+char	**clean_command(char **command, t_command *arr)
 {
-	// list(command);
-	char **clean = copy_list(command, arr);
+	char	**clean;
+
+	clean = copy_list(command, arr);
 	if (!clean)
 		return (NULL);
-	return(clean);
+	return (clean);
 }

@@ -6,7 +6,7 @@
 /*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:54:55 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/17 05:29:30 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:38:53 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ char	*ft_strstr(char *haystack, char *needle)
 	while (haystack[i])
 	{
 		c = haystack[i];
-		if (c == QUOTE_DOUBLE || c == QUOTE_SINGLE )
+		if (c == QUOTE_DOUBLE || c == QUOTE_SINGLE)
 		{
 			i++;
-			while(haystack[i] != (char)c && haystack[i])
+			while (haystack[i] != (char)c && haystack[i])
 				i++;
 			if (haystack[i] != 0)
 				i++;
 		}
 		if (haystack[i] == 0)
-			return 0;
+			return (0);
 		if (haystack[i] == needle[j])
 			if (ft_an(&haystack[i], needle) == 1)
 				return (&haystack[i + 1]);
@@ -55,7 +55,7 @@ char	*ft_strstr(char *haystack, char *needle)
 	return (0);
 }
 
-char	*ft_strjoin(char *s1, char *s2) /////////////////////////////////////////////////////////////////////////////////////// double free
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	k;
 	size_t	j;
@@ -81,8 +81,9 @@ char	*ft_strjoin(char *s1, char *s2) ///////////////////////////////////////////
 	while (s2[k])
 		str[j++] = s2[k++];
 	str[j] = '\0';
-	return (free(s1), free(s2),s1 = NULL, s2 = NULL, str);
+	return (free(s1), free(s2), s1 = NULL, s2 = NULL, str);
 }
+
 char	*ft_strdup(char *src )
 {
 	size_t	i;
@@ -117,16 +118,16 @@ int	ft_strt(char *haystack, char *needle)
 		if (c == QUOTE_DOUBLE || c == QUOTE_SINGLE || c == '(')
 		{
 			i++;
-			if(c == '(')
-				while(haystack[i] != ')')
+			if (c == '(')
+				while (haystack[i] != ')')
 					i++;
 			else
-				while(haystack[i] != (char)c)
+				while (haystack[i] != (char)c)
 					i++;
 			i++;
 		}
 		if (haystack[i] == 0)
-			return 0;
+			return (0);
 		if (haystack[i] == needle[j])
 			if (ft_an(&haystack[i], needle) == 1)
 				return (i);

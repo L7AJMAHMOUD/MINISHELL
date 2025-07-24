@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 11:20:20 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/07 14:39:41 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/24 21:50:28 by maen-naj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,24 @@
 
 int	redirect_parse(char *command)
 {
-	int		i = 0;
+	int		i;
 	char	current;
 
+	i = 0;
 	while (command[i])
 	{
-		if (ft_isdigit(command[i]) && (command[i + 1] == '>' || command[i + 1] == '<'))
+		if (ft_isdigit(command[i]) && (command[i + 1] == '>'
+				|| command[i + 1] == '<'))
 		{
 			i++;
 			if (command[i] == command[i + 1])
 				i++;
 			else
 				i++;
-
 			while (command[i] == ' ')
 				i++;
 			if (ft_isdigit(command[i]) && command[i + 1] == '>')
-				return (-1); 
+				return (-1);
 			if (command[i] == '\0')
 				return (-1);
 			if (command[i] == '>' || command[i] == '<')
@@ -56,4 +57,3 @@ int	redirect_parse(char *command)
 	}
 	return (0);
 }
-
