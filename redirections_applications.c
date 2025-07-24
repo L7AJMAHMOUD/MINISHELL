@@ -31,7 +31,6 @@ char **apply_redirections(char **command, t_command *arr, char **envp, t_data *d
 			{
 				if (redirect_output_fd(command, data) == -1)
 					return (NULL);
-				
 			}
 			else if (ft_strcmp(command[i], ">>") == 0 && arr[i].q == 0)
 			{
@@ -53,8 +52,10 @@ char **apply_redirections(char **command, t_command *arr, char **envp, t_data *d
 			i++;
 		}
 		cmd = clean_command(command, arr);
-		if (cmd)
-			free_all_ul_split(command);
+		if (!cmd)
+			return (NULL);
+		// if (cmd)
+		// 	free_all_ul_split(command);
 		return (cmd);
 	}
 	if (s_in == -1 || s_out == -1)

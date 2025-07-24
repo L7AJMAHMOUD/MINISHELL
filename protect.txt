@@ -1,0 +1,18 @@
+* ZEDT PROTECTION DYL SIGNALS F signal_init() function
+
+* proection dyl dup2 o close f redirections kamlin 
+
+
+* protection dyl fork , chdir , malloc f here_doc_data function 
+
+* protection dyl fork , dup2 , execve f exe function 
+
+* lseek li foooq dup2 ra fobidden hhhhhhhhhh
+
+* protection dyl rl_on_new_line f bash_sig_handler function galk tqder dir fail ila 3ayti liah qbel readline , sa3a makayn walo nssaw hadi ra 2025 hhhhhhhh , lmohim nhoto protection dylha 
+
+* protection dyl wahd chdir f cd function , khlit fiha ghi perror chuf achno khassk treturni tema o hadik getcwd li tahtha ra tahya khass protection dylha mabghitch nqissha ela hssab chno ghdi traje3 
+
+* protection dyl malloc f clean_command function atkhalini ndir return l wahd NULL check tani dyl NULL kyn f apply_redirections dert comment l / if(cmd) - free_all_ul_split(command) hta tchuf had blan lmohim howa protection dyl malloc f clean command
+
+* protection dyl malloc str f read_stock function 

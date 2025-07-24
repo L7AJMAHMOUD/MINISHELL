@@ -12,47 +12,6 @@
 
 #include "minishell.h"
 
-static int	count_word(char *s, char c)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (s[i])
-	{
-		if (s[i] != c)
-		{
-			while (s[i] && s[i] != c)
-				i++;
-			count++;
-		}
-		else
-			i++;
-	}
-	return (count);
-}
-int	ambg_check(char **command, int i)
-{
-	if (command[i + 1][0] == '\0' || count_word(command[i + 1], SPACE_CHAR) != 1)
-	{
-		printf("ambiguous redirect\n");
-		command[0] = NULL;
-		return -1;
-	}
-	return 0;
-}
-void	list(char **command)
-{
-	int i = 0;
-	
-	while(command[i])
-	{
-		printf("[%s] -> ",command[i]);
-		i++;
-	}
-	printf("NULL\n\n\n");
-}
 int redirect_output_fd(char **command, t_data *data)
 {
 	int i;
@@ -75,8 +34,10 @@ int redirect_output_fd(char **command, t_data *data)
 				perror("minishell");
 				return -1;
 			}
-			dup2(fd, 1);
-			close(fd);
+			if (dup2(fd, 1) == -1)
+				return (perror("dup2 failed"), -1);
+			if (close(fd) == -1)
+				return (perror("close failed"), -1);
 		}
 		i++;
 	}

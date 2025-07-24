@@ -30,8 +30,10 @@ int redirect_input_fd(char **command, t_data *data)
 				perror("minishell");
 				return -1;
 			}
-			dup2(fd, 0);
-			close(fd);
+			if (dup2(fd, 0) == -1)
+				return (perror("dup2 failed"), -1);
+			if (close(fd) == -1)
+				return (perror("close failed"), -1);
 		}
 		i++;
 	}

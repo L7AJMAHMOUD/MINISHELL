@@ -157,8 +157,7 @@ void    read_input(char ***envp, t_data *data)
     while (1)
     {
         node = NULL;
-        signal(SIGINT, bash_sig_handler);
-        signal(SIGQUIT, SIG_IGN);
+        signal_init();
 		data->fd = -1;
         if (data->status == 0)
             command = readline("\033[31m▄\033[32m︻\033[33mデ\033[34m══━\033[31m一\033[32m 🎯 > \033[0m" );
@@ -171,11 +170,6 @@ void    read_input(char ***envp, t_data *data)
             free(data->path);
             free(data->pwd);
             exit (data->status);
-        }
-        if (ft_strcmp(command,"I LOVE YOU") == 0)
-        {
-            shy_emoji_banner();
-            continue;
         }
         add_history(command);
         if(command_analyze(command) == 0)

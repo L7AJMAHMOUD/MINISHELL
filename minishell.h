@@ -188,4 +188,5 @@ char	*ft_strjoin_(char *s1, char *s2);
 char* get_variable(char *str, char **envp);
 char *	here_doc_data();
 char	*join_strings(char *s1, char *s2);
+void	signal_init();
 #endif

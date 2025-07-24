@@ -164,6 +164,9 @@ char **get_delimiters(char **command)
 
 	int i = 0;
 	int j = 0;
+
+	if (!deli_stack)
+		return (NULL);
 	while (command[i])
 	{
 		if (ft_strcmp(command[i], "<<") == 0 && command[i + 1])
@@ -205,6 +208,8 @@ int	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 	char *file = here_doc_data();
 
 	char **limiters =  get_delimiters(command);
+	if (!limiters || !file)
+		return -1;
 	while (limiters[nbr_del])
 		nbr_del++;
 	no = 0;

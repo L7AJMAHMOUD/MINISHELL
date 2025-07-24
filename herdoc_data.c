@@ -68,7 +68,7 @@ int    dir_already_exist()
 
 char *here_doc_data()
 {
-    int i = 0;
+    int pid = 0;
     int d_exist = dir_already_exist();
     int f_index;
     char *file_num;
@@ -76,25 +76,40 @@ char *here_doc_data()
     char *full_path;
     char *curr_wor_dir = malloc(100 * sizeof(char));
 
-    if (!getcwd(curr_wor_dir, 100))
+    if (!getcwd(curr_wor_dir, 100) || !curr_wor_dir)
         return NULL;
 
     if (d_exist != -1)
     {
-        i = fork();
-        if (i == 0)
+        pid = fork();
+        if (pid == -1)
         {
-            char *dir[] = {"mkdir", "HEREDOC_DIR_SYSTEMD", NULL};
-            chdir("/tmp/");
-            execve("/bin/mkdir", dir, NULL);
-            perror("execve");
+            perror("fork");
             exit(1);
         }
-        waitpid(i, NULL, 0);
+        else if (pid == 0)
+        {
+            char *dir[] = {"mkdir", "HEREDOC_DIR_SYSTEMD", NULL};
+            if (chdir("/tmp/") == -1)
+            {
+                perror("chdir");
+                exit(1);
+            }
+            if (execve("/bin/mkdir", dir, NULL) == -1)
+            {
+                perror("execve");
+                exit(1);
+            }
+        }
+        else
+            waitpid(pid, NULL, 0);
     }
 
-    chdir("/tmp/HEREDOC_DIR_SYSTEMD");
-
+    if (chdir("/tmp/HEREDOC_DIR_SYSTEMD") == -1)
+    {
+        perror("chdir");
+        return NULL;
+    }
     f_index = file_already_exist();
     if (f_index == -1)
     {

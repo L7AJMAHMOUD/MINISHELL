@@ -264,17 +264,29 @@ void	exe(char **envp, t_node *node, t_data *data)
 	int		status;
 
 	i = fork();
-	if (i == 0)
+	if (i == -1)
+	{
+		exit(1);
+	}
+	else if (i == 0)
 	{
 		if (data->fd != -1)
 		{
 			lseek(data->fd, 0, SEEK_SET);
-			dup2(data->fd, 0);
+			if (dup2(data->fd, 0) == -1)
+			{
+				perror("dup2");
+				exit(1);
+			}
 		}
 		path = find_path(*(node->command), envp, data);
 		if (!path)
 			exit(1);
-		execve(path, node->command, envp);
+		if (execve(path, node->command, envp) == -1)
+		{
+			perror("execve");
+			exit(1);
+		}
 		write(2, "minishell: ", 11);
 		write(2, path, ft_strlen(path));
 		write(2, ": Permission denied\n", 20);

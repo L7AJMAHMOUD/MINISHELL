@@ -23,6 +23,8 @@ char **read_stock(char **envp)
         j++;
     str = malloc((j + 1) * sizeof(char *));
     j = 0;
+    if (!str)
+        return (NULL);
     while(envp[j])
     {
         i = 0;
@@ -69,6 +71,8 @@ int main(int ac, char **av, char **envp)
     if (ac == 1)
 	{
 		envp = read_stock(envp);
+        if (!envp)
+            return (1);
         read_input(&envp, &data);
 	}
     else

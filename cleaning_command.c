@@ -52,6 +52,8 @@ char **copy_list(char **command, t_command *arr)
 	i = 0;
 	j = 0;
 	new = malloc((new_cmd_size(command) + 1) * sizeof(char *));
+	if (!new)
+		return (NULL);
 	while (command[i])
 	{
 		if (is_redirect(command[i]) == 0 && command[i + 1] && arr[i].q == 0)
@@ -71,6 +73,8 @@ char **clean_command(char **command, t_command *arr)
 {
 	// list(command);
 	char **clean = copy_list(command, arr);
+	if (!clean)
+		return (NULL);
 	return(clean);
 }
 
