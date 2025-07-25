@@ -12,25 +12,6 @@
 
 #include "minishell.h"
 
-char	*ft_shearch(char *haystack, char *needle)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	while (haystack && haystack[i] && haystack[i] != 32)
-	{
-		if (haystack[i] != needle[j])
-			return 0;
-		i++;
-		j++;
-	}
-	if (needle[i] == '=')
-		return &needle[i];
-	return 0;
-}
-
 int is_echo_n_flag(char *str)
 {
 	int i;
@@ -46,18 +27,6 @@ int is_echo_n_flag(char *str)
 	return 1;
 }
 
-void print(char *str)
-{
-	int i;
-	i = 0;
-
-	while (str && str[i])
-	{
-		if (str[i++] == '=')
-			while(str[i])
-				write(1, &str[i++], 1);
-	}
-}
 
 void	print_env_value_escaped(char *str, int k)
 {

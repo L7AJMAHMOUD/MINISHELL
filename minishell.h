@@ -142,10 +142,10 @@ void echo(char **str, t_data *data);
 void cd(char ***envp, char **arg, t_data *data);
 void export(char ***envp, char **command, t_data *data);
 void unset(char ***envp, char **command, t_data *data);
-
-char	*ft_shearch(char *haystack, char *needle);
-
+int	find_env_var_index(char **envp, char *ligne, int *k);
 void baner();
+int	is_prefix_equal_until_equal_sign(char *s1, char *s2);
+
 void    ultra_skip_inside_quotes(char *command, int *i);
 void	ft_print(char *s, int i);
 void	exe(char **envp, t_node *node, t_data *data);

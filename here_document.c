@@ -229,6 +229,8 @@ int	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 				com = readline("> ");
 				if ((!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))) 
 				{
+					close(fd);
+					fd = open(file, O_CREAT | O_RDWR, 0644); 
 					data->i = nbr_del;
 					data->fd = fd;
 					return 0;
@@ -259,6 +261,8 @@ int	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 				com = readline("> ");
 				if (!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))
 				{
+					close(fd);
+					fd = open(file, O_CREAT | O_RDWR, 0644); 
 					data->fd = fd;
 					data->i = nbr_del;
 					return 0;

@@ -12,39 +12,11 @@
 
 #include "minishell.h"
 
-static int	analyse_c(char **envp, char *ligne, int *k)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (!strcmp_until_equal(envp[i], ligne))
-		{
-			*k = 1;
-			return (i);
-		}
-		i++;
-	}
-	return (-1);
-}
-
-static int	analyse_d(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s1[i] == s2[i] && s1[i] && s1[i] != '=')
-		i++;
-	if ((s1[i] == '=' && s2[i] != '=') || (!s1[i] && !s2[i]))
-		return (0);
-	return (1);
-}
 
 int	comp(char **envp, char *ligne, t_indexes *indx, char **str)
 {
 	indx->i = 0;
-	if (indx->j != indx->m || analyse_d(envp[indx->m], ligne))
+	if (indx->j != indx->m || is_prefix_equal_until_equal_sign(envp[indx->m], ligne))
 	{
 		str[indx->k] = malloc(ft_strlen(envp[indx->j]) + 1);
 		if (!str[indx->k])
@@ -69,7 +41,7 @@ char	**rm_to_envp(char **envp, char *ligne)
 	indx.k = 1;
 	if (!envp || !ligne)
 		return (NULL);
-	indx.m = analyse_c(envp, ligne, &indx.k);
+	indx.m = find_env_var_index(envp, ligne, &indx.k);
 	if (indx.m == -1)
 		return (envp);
 	while (envp[indx.j])

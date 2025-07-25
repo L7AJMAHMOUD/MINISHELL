@@ -29,6 +29,8 @@ char **read_stock(char **envp)
     {
         i = 0;
         str[j] = malloc(ft_strlen(envp[j]) +1);
+        if (!str[i])
+            return (free_all_ul_split(str), NULL);
         while(envp[j][i])
         {
             str[j][i] = envp[j][i];
@@ -72,7 +74,7 @@ int main(int ac, char **av, char **envp)
 	{
 		envp = read_stock(envp);
         if (!envp)
-            return (1);
+            return (free(data.pwd), free(data.path), 1);
         read_input(&envp, &data);
 	}
     else

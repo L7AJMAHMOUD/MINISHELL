@@ -48,7 +48,7 @@ int	is_prefix_equal_until_equal_sign(char *s1, char *s2)
 	i = 0;
 	while (s1[i] == s2[i] && s1[i] && s1[i] != '=')
 		i++;
-	if (s1[i] == '=' && s2[i] != '=')
+	if ((s1[i] == '=' && s2[i] != '=') || (!s1[i] && !s2[i]))
 		return (0);
 	return (1);
 }
