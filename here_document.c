@@ -193,7 +193,7 @@ long long file_size(int fd)
     }
 	return (st.st_size);
 }
-int	here_doc(char **command, t_command *arr, char **envp, t_data *data)
+int	here_doc(t_node* node, char **envp, t_data *data)
 {
 	int i;
 	int j;
@@ -206,17 +206,17 @@ int	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 	i = 0;
 	com = NULL;
 	char *file = here_doc_data();
-
-	char **limiters =  get_delimiters(command);
+	// node->hd = 1; //////////fail
+	char **limiters =  get_delimiters(node->command);
 	if (!limiters || !file)
 		return -1;
 	while (limiters[nbr_del])
 		nbr_del++;
 	no = 0;
-	while (command[i])
+	while (node->command[i])
 	{
 		j = 0;
-		if (ft_strcmp(command[i], "<<") == 0 && arr[i + 1].q == 0)
+		if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i + 1].q == 0)
 		{
 			fd = open(file, O_CREAT | O_RDWR, 0644); 
 			if (fd == -1)
@@ -248,7 +248,7 @@ int	here_doc(char **command, t_command *arr, char **envp, t_data *data)
 			}
 			
 		}
-		else if (ft_strcmp(command[i], "<<") == 0)
+		else if (ft_strcmp(node->command[i], "<<") == 0)
 		{
 			fd = open(file, O_CREAT | O_RDWR, 0644); 
 			if (fd == -1)

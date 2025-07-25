@@ -43,10 +43,10 @@ int pip(t_node *node, char ***envp, t_data *data)
 				dup2(pipefd[1], STDOUT_FILENO);
 				close(pipefd[1]);
 			}
-			current->command = apply_redirections(current->command, current->arr, *envp, data, 0);
+			current->command = apply_redirections(current, *envp, data, 0);
 	        if((current)->command && check_command((current)->command, envp, node, data))
                 exe(*envp, current, data);
-            apply_redirections(current->command, current->arr, *envp, data, 1);
+            apply_redirections(current, *envp, data, 1);
 			free_all_node(node);
 			exit(1);
 		}

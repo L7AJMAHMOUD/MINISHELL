@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	**apply_redirections(char **command, t_command *arr, char **envp, t_data *data, int p)
+char	**apply_redirections(t_node *node, char **envp, t_data *data, int p)
 {
 	static int s_in;
 	static int s_out;
@@ -29,34 +29,34 @@ char	**apply_redirections(char **command, t_command *arr, char **envp, t_data *d
 		s_out = dup(1);
 		if (s_in == -1 || s_out == -1)
 			return (NULL);
-		while (command[i])
+		while (node->command[i])
 		{
 			data->i = 0;
-			if (ft_strcmp(command[i], ">") == 0 && arr[i].q == 0)
+			if (ft_strcmp(node->command[i], ">") == 0 && node->arr[i].q == 0)
 			{
-				if (redirect_output_fd(command, data) == -1)
+				if (redirect_output_fd(node->command, data) == -1)
 					return (NULL);
 			}
-			else if (ft_strcmp(command[i], ">>") == 0 && arr[i].q == 0)
+			else if (ft_strcmp(node->command[i], ">>") == 0 && node->arr[i].q == 0)
 			{
-				if (append_to_fd(command, data) == -1)
+				if (append_to_fd(node->command, data) == -1)
 					return (NULL);
 			}
-			else if (ft_strcmp(command[i], "<") == 0 && arr[i].q == 0)
+			else if (ft_strcmp(node->command[i], "<") == 0 && node->arr[i].q == 0)
 			{
-				if (redirect_input_fd(command, data) == -1)
+				if (redirect_input_fd(node->command, data) == -1)
 					return (NULL);
 			}
-			else if (ft_strcmp(command[i], "<<") == 0 && arr[i].q == 0)
+			else if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i].q == 0)
 			{
-				if (here_doc(command, arr, envp, data)  == -1 && arr[i].q == 0)
+				if (here_doc(node, envp, data)  == -1 && node->arr[i].q == 0)
 					return (NULL);
 				i += (data->i) * 2;
 				continue;
 			}
 			i++;
 		}
-		cmd = clean_command(command, arr);
+		cmd = clean_command(node->command, node->arr);
 		if (!cmd)
 			return (NULL);
 		// if (cmd)

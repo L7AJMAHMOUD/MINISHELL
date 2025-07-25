@@ -183,7 +183,7 @@ void    read_input(char ***envp, t_data *data)
                 command = NULL;
 				continue;
 			}
-            tmp->command = apply_redirections(tmp->command, tmp->arr, *envp, data, 0);
+            tmp->command = apply_redirections(tmp, *envp, data, 0);
 	        if((tmp)->command && check_command((tmp)->command, envp, node, data))
             {
                 exe(*envp, node, data);
@@ -191,7 +191,7 @@ void    read_input(char ***envp, t_data *data)
 					close(data->fd);
             }
 
-            apply_redirections(tmp->command, tmp->arr, *envp, data, 1);
+            apply_redirections(tmp, *envp, data, 1);
 	        free_all_node(node);
 		}
         else if (command_analyze(command) == -1)

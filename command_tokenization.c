@@ -38,6 +38,7 @@ void    command_tokenization(t_node **node, char *command, char **envp, t_data *
 			return ;
 		reset_node_flags(*node);
 	}
+	(*node)->hd = 0;
 	if (ft_strstr(command, "|"))
 	{
 		command_tokenization(&t_mp ,ft_strstr(command, "|"), envp, data);
