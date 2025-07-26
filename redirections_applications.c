@@ -20,8 +20,6 @@ char	**apply_redirections(t_node *node, char **envp, t_data *data, int p)
 	char **cmd;
 
 	i = 0;
-	s_in = -1;
-	s_out = -1;
 	if (p == 0)
 	{
 
@@ -63,13 +61,13 @@ char	**apply_redirections(t_node *node, char **envp, t_data *data, int p)
 		// 	free_all_ul_split(command);
 		return (cmd);
 	}
-	if (s_in == -1 || s_out == -1)
+	if (s_in == 0 || s_out == 0)
 		return (NULL);
 	if (dup2(s_in, 0) == -1 || dup2(s_out, 1) == -1)
 		return (NULL);
 	close(s_in);
 	close(s_out);
-	s_in = -1;
-	s_out = -1;
+	s_in = 0;
+	s_out = 0;
 	return (NULL);
 }
