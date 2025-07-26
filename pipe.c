@@ -17,10 +17,21 @@ int pip(t_node *node, char ***envp, t_data *data)
 	int pipefd[2];
 	int i = -1;
 	pid_t pid;
+	int k;
 	t_node *current = node;
 
 	while (current)
 	{
+		k = 0;
+		while (current->command[k])
+		{
+			if (ft_strcmp(current->command[k], "<<") == 0 && current->arr[k].q == 0)
+			{
+				k = -1;
+				break;
+			}
+			k++;
+		}
 		if (current->next)
 		{
 			if (pipe(pipefd) == -1)
@@ -32,25 +43,25 @@ int pip(t_node *node, char ***envp, t_data *data)
 
 		if (pid == 0)
 		{
+
 			if (i != -1)
 			{
 				dup2(i, STDIN_FILENO);
 				close(i);
 			}
+			current->command = apply_redirections(current, *envp, data, 0);
 			if (current->next)
 			{
 				close(pipefd[0]);
 				dup2(pipefd[1], STDOUT_FILENO);
 				close(pipefd[1]);
 			}
-			current->command = apply_redirections(current, *envp, data, 0);
 	        if((current)->command && check_command((current)->command, envp, node, data))
                 exe(*envp, current, data);
-            apply_redirections(current, *envp, data, 1);
+            // apply_redirections(current, *envp, data, 1);
 			free_all_node(node);
 			exit(1);
 		}
-
 		if (i != -1)
 			close(i);
 		if (current->next)
@@ -58,6 +69,8 @@ int pip(t_node *node, char ***envp, t_data *data)
 			close(pipefd[1]);
 			i = pipefd[0];
 		}
+		// if (k == -1)
+		// 	wait(NULL);
 		current = current->next;
 	}
 	while (wait(NULL) > 0);
