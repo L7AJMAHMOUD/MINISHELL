@@ -48,13 +48,18 @@ void minishell(char **str, t_data *data)
     if (!str[1])
         printf("\ntry : ./minishell \n\033[7mEvery command has consequences...\033[0m\n\n");
     else if (!(ft_strcmp(str[1], "--version")) && !str[2])
-    printf("\nMINISHELL OF NIGHTMARES, version 1.0.0-release (x64-pc-linux-gnu)\n"
-        "Copyright (C) 2025 Free Software Foundation, Inc.\n\n"
-        "This is free software; you are free to change and redistribute it.\n"
-        "There is NO WARRANTY, to the extent permitted by law.\n\n"
-        "Developers:\n"
-        "  Mahmoud En-Najy      --> maen-naj\n"
-        "  Abderrahman karam    --> abkaram\n\n");
+    printf("\nMINISHELL, version 1.0.0 (x64-pc-linux-gnu)\n"
+            "Copyright (C) 2025 Free Software Foundation, Inc.\n\n"
+            "This is free software: you are free to modify and redistribute it\n"
+            "under the terms of the GNU General Public License.\n"
+            "There is NO WARRANTY, to the extent permitted by law.\n\n"
+            "Developed by:\n"
+            "  Abderrahman Karam      (abkaram)\n"
+            "  Mahmoud En-Najy       (maen-naj)\n\n"
+            "Forged in sleepless nights ☕, driven by pure logic 🧠,\n"
+            "and crafted with heart ❤, byte by byte.\n"
+            "Inspired by the soul of /bin/bash and the ghosts of UNIX past 👻.\n"
+            "Every line of code written under the watchful eye of Norminette 😤.\n");
     else
 	{
 		data->status = 2;
@@ -196,7 +201,7 @@ void    read_input(char ***envp, t_data *data)
 		}
         else if (command_analyze(command) == -1)
         {
-            ft_print("minishell: syntax error near unexpected token `nightmare' 😉.​", 0);
+            ft_print("minishell: syntax error near unexpected token .", 0);
             data->status = 2;
         }
         free(command);
