@@ -169,7 +169,7 @@ char **get_delimiters(t_command *arr)
 		return (NULL);
 	while (arr[i].command)
 	{
-		if (ft_strcmp(arr[i].command, "<<") == 0)
+		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command)
 		{
 			deli_stack[j] = arr[i + 1].command;
 			i++;
