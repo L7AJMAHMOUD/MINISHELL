@@ -57,7 +57,7 @@ int pip(t_node *node, char ***envp, t_data *data)
 		if (pid == 0)
 		{
 			current->command = apply_redirections(current, *envp, data, 0);
-			if (k != -1 && i != -1)
+			if (k != -1 && i != -1) // && (current->next == NULL || is_n_hd(current->next->command, current->next->arr)
 			{
 				dup2(i, STDIN_FILENO);
 				close(i);
@@ -81,7 +81,7 @@ int pip(t_node *node, char ***envp, t_data *data)
 			i = pipefd[0];
 		}
 		if (k == -1)
-			wait(NULL);
+			waitpid(pid, NULL, 0);
 		current = current->next;
 	}
 	while (wait(NULL) > 0);
