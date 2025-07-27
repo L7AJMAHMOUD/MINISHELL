@@ -139,14 +139,14 @@ char	*expand_str(char *command, char **envp, t_data *data)
 	return command;
 }
 
-int	delimiters_counter(char **command)
+int	delimiters_counter(t_command *arr)
 {
 	int i = 0;
 	int count  = 0;
 
-	while (command[i])
+	while (arr[i].command)
 	{
-		if (ft_strcmp(command[i], "<<") == 0 && command[i + 1])
+		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command)
 		{
 			i += 2;
 			count++;
@@ -156,9 +156,9 @@ int	delimiters_counter(char **command)
 	}
 	return (count);
 }
-char **get_delimiters(char **command)
+char **get_delimiters(t_command *arr)
 {
-	int delim = delimiters_counter(command);
+	int delim = delimiters_counter(arr);
 
 	char **deli_stack = malloc((delim  + 1) * sizeof(char *));
 
@@ -167,11 +167,11 @@ char **get_delimiters(char **command)
 
 	if (!deli_stack)
 		return (NULL);
-	while (command[i])
+	while (arr[i].command)
 	{
-		if (ft_strcmp(command[i], "<<") == 0 && command[i + 1])
+		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command)
 		{
-			deli_stack[j] = command[i + 1];
+			deli_stack[j] = arr[i + 1].command;
 			i++;
 			j++;
 		}
@@ -207,7 +207,7 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 	com = NULL;
 	char *file = here_doc_data();
 	// node->hd = 1; //////////fail
-	char **limiters =  get_delimiters(node->command);
+	char **limiters =  get_delimiters(node->arr);
 
 	if (!limiters || !file)
 		return -1;
