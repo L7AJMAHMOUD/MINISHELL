@@ -44,6 +44,7 @@ int pip(t_node *node, char ***envp, t_data *data)
         if (pid == 0) 
         {
             int s_d = dup(1);
+            close(s_d);
 			if (k != -1 && i != -1) 
             {
 				dup2(i, STDIN_FILENO);
