@@ -85,6 +85,8 @@ void echo(char **str, t_data *data)
 		if (!str[i] && p == 0)
 			write(1, "\n", 1);
 	}
+	if (!str[1])
+		write(1, "\n", 1);
 	data->status = 0;
 }
 

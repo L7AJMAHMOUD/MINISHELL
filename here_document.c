@@ -227,6 +227,8 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 			while (1)
 			{
 				com = readline("> ");
+				if (j != 0)
+					write(fd,"\n",1);
 				if ((!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))) 
 				{
 					close(fd);
@@ -235,8 +237,6 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 					data->fd = fd;
 					return 0;
 				}
-				if (j != 0)
-					write(fd,"\n",1);
 				if (com[0] && limiters[no + 1] == NULL)
 				{
 					arr_ = expand_str(com, envp, data);
@@ -259,6 +259,8 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 			while (1)
 			{
 				com = readline("> ");
+				if (j != 0)
+					write(fd,"\n",1);
 				if (!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))
 				{
 					close(fd);
@@ -267,8 +269,6 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 					data->i = nbr_del;
 					return 0;
 				}
-				if (j != 0)
-					write(fd,"\n",1);
 				if (com[0] && limiters[no + 1] == NULL)
 					write(fd,com,ft_strlen(com));
 				j++;
