@@ -18,6 +18,8 @@ int pip(t_node *node, char ***envp, t_data *data)
     int i = -1;
     pid_t pid;
     int k;
+    int s_in;
+    int s_out;
     t_node *current = node;
 
     while (current) 
@@ -43,29 +45,26 @@ int pip(t_node *node, char ***envp, t_data *data)
 
         if (pid == 0) 
         {
-            int s_d = dup(1);
-            close(s_d);
-			if (k != -1 && i != -1) 
+			if (i != -1) 
             {
+                s_in = dup(0);
 				dup2(i, STDIN_FILENO);
                 close(i);
             }
-			if (k == -1)
-				current->command = apply_redirections(current, *envp, data, 0);
-            if (current->next && dup(1) == s_d) 
+            if (current->next) 
             {
+                s_out = dup(1);
                 close(pipefd[0]);
                 dup2(pipefd[1], STDOUT_FILENO);
                 close(pipefd[1]);
             }
-			if (k != -1)
-				current->command = apply_redirections(current, *envp, data, 0);
+			current->command = apply_redirections(current, *envp, data, s_in, s_out, 0);
             if (current->command && check_command(current->command, envp, node, data))
                 exe(*envp, current, data);
             free_all_node(node);
             exit(1);
         }
-        if (i != -1 && k != -1)
+        if (i != -1)
             close(i);
             
         if (current->next) 

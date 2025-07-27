@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/16 23:29:50 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/27 21:44:37 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void    read_input(char ***envp, t_data *data)
                 command = NULL;
 				continue;
 			}
-            tmp->command = apply_redirections(tmp, *envp, data, 0);
+            tmp->command = apply_redirections(tmp, *envp, data, -1, -1, 0);
 	        if((tmp)->command && check_command((tmp)->command, envp, node, data))
             {
                 exe(*envp, node, data);
@@ -196,7 +196,7 @@ void    read_input(char ***envp, t_data *data)
 					close(data->fd);
             }
 
-            apply_redirections(tmp, *envp, data, 1);
+            apply_redirections(tmp, *envp, data, -1, -1, 1);
 	        free_all_node(node);
 		}
         else if (command_analyze(command) == -1)

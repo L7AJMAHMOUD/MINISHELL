@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_applications.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:35:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/24 21:51:41 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/27 21:43:53 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**apply_redirections(t_node *node, char **envp, t_data *data, int p)
+char	**apply_redirections(t_node *node, char **envp, t_data *data,int s_int, int s_ou, int p)
 {
 	static int s_in;
 	static int s_out;
@@ -50,11 +50,17 @@ char	**apply_redirections(t_node *node, char **envp, t_data *data, int p)
 			{
 				// apply_redirections(node, envp, data, 1);
 				s_p = dup(1);
-				dup2(s_out, 1);
+				int s_po = dup(0);
+				if (s_ou != -1 && s_int != -1)
+				{
+					dup2(s_ou, 1);
+					dup2(s_int, 0);
+				}
 				if (here_doc(node, envp, data)  == -1 && node->arr[i].q == 0)
 					return (NULL);
 				i += (data->i) * 2;
 				dup2(s_p, 1);
+				dup2(s_po, 0);
 				// close(s_p);
 				continue;
 			}

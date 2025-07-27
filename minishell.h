@@ -146,7 +146,7 @@ void unset(char ***envp, char **command, t_data *data);
 int	find_env_var_index(char **envp, char *ligne, int *k);
 void baner();
 int	is_prefix_equal_until_equal_sign(char *s1, char *s2);
-char	**apply_redirections(t_node *node, char **envp, t_data *data, int p);
+char	**apply_redirections(t_node *node, char **envp, t_data *data,int s_int, int s_ou, int p);
 void    ultra_skip_inside_quotes(char *command, int *i);
 void	ft_print(char *s, int i);
 void	exe(char **envp, t_node *node, t_data *data);
