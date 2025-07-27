@@ -43,14 +43,14 @@ int pip(t_node *node, char ***envp, t_data *data)
 
         if (pid == 0) 
         {
-            if (k != -1 && i != -1) 
+			if (k != -1 && i != -1) 
             {
-                dup2(i, STDIN_FILENO);
+				dup2(i, STDIN_FILENO);
                 close(i);
             }
 			if (k == -1)
 				current->command = apply_redirections(current, *envp, data, 0);
-            if (current->next) 
+            else if (current->next) 
             {
                 close(pipefd[0]);
                 dup2(pipefd[1], STDOUT_FILENO);
