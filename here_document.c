@@ -206,7 +206,6 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 	i = 0;
 	com = NULL;
 	char *file = here_doc_data();
-	// node->hd = 1; //////////fail
 	char **limiters =  get_delimiters(node->arr);
 
 	if (!limiters || !file)
