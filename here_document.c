@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_document.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:49:37 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/24 21:06:12 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/27 21:17:54 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,12 +139,12 @@ char	*expand_str(char *command, char **envp, t_data *data)
 	return command;
 }
 
-int	delimiters_counter(t_command *arr)
+int	delimiters_counter(t_command *arr,char **h)
 {
 	int i = 0;
 	int count  = 0;
 
-	while (i > arr->nbr)
+	while (h[i])
 	{
 		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command)
 		{
@@ -156,9 +156,9 @@ int	delimiters_counter(t_command *arr)
 	}
 	return (count);
 }
-char **get_delimiters(t_command *arr)
+char **get_delimiters(t_command *arr, char **h)
 {
-	int delim = delimiters_counter(arr);
+	int delim = delimiters_counter(arr, h);
 	char **deli_stack = malloc((delim  + 1) * sizeof(char *));
 
 	int i = 0;
@@ -166,7 +166,7 @@ char **get_delimiters(t_command *arr)
 
 	if (!deli_stack)
 		return (NULL);
-	while (i < arr->nbr)
+	while (h[i])
 	{
 		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command)
 		{
@@ -205,7 +205,7 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 	i = 0;
 	com = NULL;
 	char *file = here_doc_data();
-	char **limiters =  get_delimiters(node->arr);
+	char **limiters =  get_delimiters(node->arr, node->command);
 	if (!limiters || !file)
 		return -1;
 	while (limiters[nbr_del])
@@ -238,7 +238,8 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 				if (com[0] && limiters[no + 1] == NULL)
 				{
 					arr_ = expand_str(com, envp, data);
-					write(fd,arr_,ft_strlen(arr_));
+					if (arr_)
+						write(fd,arr_,ft_strlen(arr_));
 				}
 				j++;
 				if (ft_strcmp(com, limiters[no]) == 0)
