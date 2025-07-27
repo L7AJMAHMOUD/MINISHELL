@@ -12,12 +12,26 @@
 
 #include "minishell.h"
 
+int is_n_hd(char **command, t_command *arr)
+{
+	int k;
+	k = 0;
+	while (command[k])
+	{
+		if (ft_strcmp(command[k], "<<") == 0 && arr[k].q == 0)
+			return 0;
+		k++;
+	}
+	return 1;
+}
+
 int pip(t_node *node, char ***envp, t_data *data)
 {
 	int pipefd[2];
 	int i = -1;
 	pid_t pid;
 	int k;
+	int sd;
 	t_node *current = node;
 
 	while (current)
@@ -40,16 +54,14 @@ int pip(t_node *node, char ***envp, t_data *data)
 		pid = fork();
 		if (pid < 0)
 			return (perror("fork"), 1);
-
 		if (pid == 0)
 		{
-
-			if (i != -1)
+			current->command = apply_redirections(current, *envp, data, 0);
+			if (k != -1 && i != -1)
 			{
 				dup2(i, STDIN_FILENO);
 				close(i);
 			}
-			current->command = apply_redirections(current, *envp, data, 0);
 			if (current->next)
 			{
 				close(pipefd[0]);
@@ -58,7 +70,6 @@ int pip(t_node *node, char ***envp, t_data *data)
 			}
 	        if((current)->command && check_command((current)->command, envp, node, data))
                 exe(*envp, current, data);
-            // apply_redirections(current, *envp, data, 1);
 			free_all_node(node);
 			exit(1);
 		}
@@ -69,8 +80,8 @@ int pip(t_node *node, char ***envp, t_data *data)
 			close(pipefd[1]);
 			i = pipefd[0];
 		}
-		// if (k == -1)
-		// 	wait(NULL);
+		if (k == -1)
+			wait(NULL);
 		current = current->next;
 	}
 	while (wait(NULL) > 0);
