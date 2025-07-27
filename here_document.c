@@ -144,7 +144,7 @@ int	delimiters_counter(t_command *arr)
 	int i = 0;
 	int count  = 0;
 
-	while (arr[i].command)
+	while (i > arr->nbr)
 	{
 		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command)
 		{
@@ -159,7 +159,6 @@ int	delimiters_counter(t_command *arr)
 char **get_delimiters(t_command *arr)
 {
 	int delim = delimiters_counter(arr);
-
 	char **deli_stack = malloc((delim  + 1) * sizeof(char *));
 
 	int i = 0;
@@ -167,7 +166,7 @@ char **get_delimiters(t_command *arr)
 
 	if (!deli_stack)
 		return (NULL);
-	while (arr[i].command)
+	while (i < arr->nbr)
 	{
 		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command)
 		{
@@ -207,7 +206,6 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 	com = NULL;
 	char *file = here_doc_data();
 	char **limiters =  get_delimiters(node->arr);
-
 	if (!limiters || !file)
 		return -1;
 	while (limiters[nbr_del])
