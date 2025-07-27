@@ -56,7 +56,6 @@ int pip(t_node *node, char ***envp, t_data *data)
 			return (perror("fork"), 1);
 		if (pid == 0)
 		{
-			current->command = apply_redirections(current, *envp, data, 0);
 			if (k != -1 && i != -1) // && (current->next == NULL || is_n_hd(current->next->command, current->next->arr)
 			{
 				dup2(i, STDIN_FILENO);
@@ -68,6 +67,7 @@ int pip(t_node *node, char ***envp, t_data *data)
 				dup2(pipefd[1], STDOUT_FILENO);
 				close(pipefd[1]);
 			}
+			current->command = apply_redirections(current, *envp, data, 0);
 	        if((current)->command && check_command((current)->command, envp, node, data))
                 exe(*envp, current, data);
 			free_all_node(node);

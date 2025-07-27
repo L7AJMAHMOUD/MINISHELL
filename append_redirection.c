@@ -26,7 +26,10 @@ int	append_to_fd(char **command, t_data *data)
 			if (fd == -1)
 			{
 				data->status = 1;
-				perror("minishell");
+				write(2, "minishell : ", 14);
+				write(2, command[i + 1], ft_strlen(command[i + 1]));
+				write(2, " : ", 3);
+				perror(NULL);
 				return (-1);
 			}
 			if (dup2(fd, 1) == -1)
