@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:32:43 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/24 21:28:00 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:01:39 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	cd(char ***envp, char **arg, t_data *data)
 	tmp = NULL;
 	if (!arg || !arg[0])
 	{
-		str = get_variable("HOME", *envp);
+		str = get_variable("HOME", *envp, data);
 		if (!str || chdir(str) != 0)
 			return (data->status = 1, ft_print("minishell: HOME not set", 0));
 		update_pwd_vars(buff, data, envp);

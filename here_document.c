@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:49:37 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/27 21:17:54 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/27 22:03:47 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char	*expand_str(char *command, char **envp, t_data *data)
 					return NULL;
 				strncpy(varname, &(command[j]), var_len);
 				varname[var_len] = '\0';
-				tmp = get_variable(varname, envp);
+				tmp = get_variable(varname, envp, data);
 				if (tmp)
 					val = ft_strdup(tmp);
 				else

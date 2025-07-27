@@ -185,7 +185,7 @@ char **clean_command(char **coammand, t_command *arr);
 int 	is_redirection(char *command);
 int append_to_fd(char **command, t_data *data);
 char	*ft_strjoin_(char *s1, char *s2);
-char* get_variable(char *str, char **envp);
+char    *get_variable(char *str, char **envp, t_data *data);
 char *	here_doc_data();
 char	*join_strings(char *s1, char *s2);
 void	signal_init();

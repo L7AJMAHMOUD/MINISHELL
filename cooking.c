@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cooking.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 20:04:09 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/24 20:04:10 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:10:17 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ int	strlen_until_special(char *str)
 	return (i);
 }
 
-char	*get_variable(char *str, char **envp)
+char	*get_variable(char *str, char **envp, t_data *data)
 {
 	int		i;
 	int		len;
@@ -196,10 +196,12 @@ char	*get_variable(char *str, char **envp)
 		}
 		i++;
 	}
+	if (strcmp("PATH", str) == 0 &&data->path)
+		return (data->path);
 	return (NULL);
 }
 
-void	expand_env_variable(t_command *arr, int i, int *j, int p)
+void	expand_env_variable(t_command *arr, int i, int *j, int p, t_data *data)
 {
 	int		var_len;
 	char	*varname;
@@ -213,7 +215,7 @@ void	expand_env_variable(t_command *arr, int i, int *j, int p)
 		return ;
 	strncpy(varname, &(arr[i].command[*j]), var_len);
 	varname[var_len] = '\0';
-	tmp = get_variable(varname, arr->envp);
+	tmp = get_variable(varname, arr->envp, data);
 	if (tmp)
 		val = ft_strdup(tmp);
 	else
@@ -282,7 +284,7 @@ void	skip_dollar_signs(t_command *arr, int *i, int *j, int *p)
 	}
 }
 
-void	handle_dollar(t_command *arr, int i, int j)
+void	handle_dollar(t_command *arr, int i, int j, t_data *data)
 {
 	int	p;
 	int	m;
@@ -305,12 +307,12 @@ void	handle_dollar(t_command *arr, int i, int j)
 			else if (arr[i].command[j] == '?')
 				expand_exit_status(arr, i, &j, p);
 			else
-				expand_env_variable(arr, i, &j, p);
+				expand_env_variable(arr, i, &j, p, data);
 		}
 	}
 }
 
-void	expand(t_command *arr)
+void	expand(t_command *arr, t_data *data)
 {
 	int	i;
 
@@ -318,7 +320,7 @@ void	expand(t_command *arr)
 	while (i < arr->nbr)
 	{
 		if (arr[i].q != 39)
-			handle_dollar(arr, i, 0);
+			handle_dollar(arr, i, 0, data);
 		if (arr[i].command[0] == 0 && arr[i].q == 0)
 		{
 			free(arr[i].command);
@@ -354,7 +356,7 @@ t_command	cooking(char *str, char **envp, int p, int x, t_data *data)
 	arr->data = data;
 	arr->envp = envp;
 	if (!x)
-		expand(arr);
+		expand(arr, data);
 	arr2.command = ft_arr_to_str(arr);
 	free(str);
 	return (arr2);

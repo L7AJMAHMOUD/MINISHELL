@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/13 10:47:02 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/27 22:03:26 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ char	**arr_sorted(char **str)
 	return (tmp);
 }
 
-char	*command_analyse(char *command, char **envp)
+char	*command_analyse(char *command, char **envp, t_data *data)
 {
 	int		i;
 	char	*str;
@@ -264,7 +264,7 @@ char	*command_analyse(char *command, char **envp)
 		return (command);
 	tmp = ft_strdup(&command[i + 2]);
 	command[i] = 0;
-	str = get_variable(command, envp);
+	str = get_variable(command, envp, data);
 	cmd = strmerge_and_free(cmd, command);
 	free(command);
 	command = NULL;
@@ -321,7 +321,7 @@ void	export(char ***envp, char **cmd, t_data *data)
 	{
 		if (check_synt(cmd[j++]))
 			return (data->status = 1, (void)0);
-		tmp = add_to_envp(*envp, command_analyse(cmd[j - 1], *envp), 0);
+		tmp = add_to_envp(*envp, command_analyse(cmd[j - 1], *envp, data), 0);
 		*envp = tmp;
 	}
 }
