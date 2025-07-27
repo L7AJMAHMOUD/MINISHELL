@@ -208,6 +208,7 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 	char *file = here_doc_data();
 	// node->hd = 1; //////////fail
 	char **limiters =  get_delimiters(node->command);
+
 	if (!limiters || !file)
 		return -1;
 	while (limiters[nbr_del])
@@ -280,4 +281,20 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 		i++;
 	}
 	return 0;
+}
+
+
+
+void	list(char **command)
+{
+	int i = 0;
+
+	while (command[i])
+	{
+		printf("[%s] ->",command[i]);
+		i++;
+	}
+	if (command[i] == NULL)
+		printf("NULL\n");
+	
 }

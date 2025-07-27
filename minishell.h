@@ -190,4 +190,5 @@ char *	here_doc_data();
 char	*join_strings(char *s1, char *s2);
 void	signal_init();
 char *strmerge_and_free(char *s1, char *s2);
+void	list(char **command);
 #endif
