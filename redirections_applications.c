@@ -16,6 +16,7 @@ char	**apply_redirections(t_node *node, char **envp, t_data *data, int p)
 {
 	static int s_in;
 	static int s_out;
+	int s_p;
 	int i;
 	char **cmd;
 
@@ -47,10 +48,14 @@ char	**apply_redirections(t_node *node, char **envp, t_data *data, int p)
 			}
 			else if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i].q == 0)
 			{
-				apply_redirections(node, envp, data, 1);
+				// apply_redirections(node, envp, data, 1);
+				s_p = dup(1);
+				dup2(s_out, 1);
 				if (here_doc(node, envp, data)  == -1 && node->arr[i].q == 0)
 					return (NULL);
 				i += (data->i) * 2;
+				dup2(s_p, 1);
+				// close(s_p);
 				continue;
 			}
 			i++;
