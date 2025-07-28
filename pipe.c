@@ -22,6 +22,8 @@ int pip(t_node *node, char ***envp, t_data *data)
     int s_out;
     t_node *current = node;
 
+    s_in = dup(0);
+    s_out = dup(1);
     while (current) 
     {
         k = 0;
@@ -47,13 +49,11 @@ int pip(t_node *node, char ***envp, t_data *data)
         {
 			if (i != -1) 
             {
-                s_in = dup(0);
 				dup2(i, STDIN_FILENO);
                 close(i);
             }
             if (current->next) 
             {
-                s_out = dup(1);
                 close(pipefd[0]);
                 dup2(pipefd[1], STDOUT_FILENO);
                 close(pipefd[1]);
