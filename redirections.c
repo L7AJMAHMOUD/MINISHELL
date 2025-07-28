@@ -20,6 +20,7 @@ int	redirect_parse(char *command)
 	i = 0;
 	while (command[i])
 	{
+		skip_inside_quotes(command, &i);
 		if (ft_isdigit(command[i]) && (command[i + 1] == '>'
 				|| command[i + 1] == '<'))
 		{
