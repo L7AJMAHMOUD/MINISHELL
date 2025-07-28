@@ -20,7 +20,7 @@ int	append_to_fd(char **command, t_data *data)
 	i = 0;
 	while (command[i])
 	{
-		if (ft_strcmp(command[i], ">>") == 0)
+		if (ft_strcmp(command[i++], ">>") == 0)
 		{
 			fd = open(command[i + 1], O_CREAT | O_WRONLY | O_APPEND, 0644);
 			if (fd == -1)
@@ -37,7 +37,6 @@ int	append_to_fd(char **command, t_data *data)
 			if (close(fd) == -1)
 				return (perror("close failed"), -1);
 		}
-		i++;
 	}
 	return (0);
 }

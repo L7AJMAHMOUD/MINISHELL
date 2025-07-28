@@ -47,7 +47,7 @@ void	update_pwd_vars(char *buff, t_data *data, char ***envp)
 	char	*command;
 
 	command = strmerge_and_free(ft_strdup("OLDPWD="), data->pwd);
-	free (data->pwd);
+	free(data->pwd);
 	tmp = add_to_envp(*envp, command, 1);
 	free(command);
 	*envp = tmp;
@@ -58,49 +58,52 @@ void	update_pwd_vars(char *buff, t_data *data, char ***envp)
 	*envp = tmp;
 }
 
+int	complete(char ***envp, char **arg, t_data *data, char **tmp)
+{
+	char	buff[BUFFER_SIZE];
+	DIR		*dir;
+	int		i;
+
+	if (!arg || !arg[0])
+	{
+		*tmp = get_variable("HOME", *envp, data);
+		if (!*tmp || chdir(*tmp) != 0)
+			return (data->status = 1,
+				ft_print("minishell: HOME not set", 0), 1);
+		return (update_pwd_vars(buff, data, envp), 1);
+	}
+	i = 0;
+	*tmp = strmerge_and_free(*tmp, arg[i]);
+	dir = opendir(*tmp);
+	if (!dir || arg[i + 1])
+	{
+		if (arg[i + 1])
+		{
+			ft_print("minishell: cd: too many arguments", 0);
+			return (free(*tmp), data->status = 1, 1);
+		}
+		return (data->status = 1, perror("minishell"), 1);
+	}
+	return (closedir(dir), 0);
+}
+
 void	cd(char ***envp, char **arg, t_data *data)
 {
 	char	buff[BUFFER_SIZE];
 	char	*str;
 	char	*tmp;
-	int		i;
-	DIR		*dir;
 
 	tmp = NULL;
-	if (!arg || !arg[0])
-	{
-		str = get_variable("HOME", *envp, data);
-		if (!str || chdir(str) != 0)
-			return (data->status = 1, ft_print("minishell: HOME not set", 0));
-		update_pwd_vars(buff, data, envp);
+	if (complete(envp, arg, data, &tmp))
 		return ;
-	}
-	i = 0;
-	tmp = strmerge_and_free(tmp, arg[i]);
-	dir = opendir(tmp);
-	if (!dir || arg[i + 1])
-	{
-		if (arg[i + 1])
-		{
-			free(tmp);
-			ft_print("minishell: cd: too many arguments", 0);
-			data->status = 1;
-			return ;
-		}
-		return (data->status = 1, perror("minishell"));
-	}
-	// if (chdir(tmp) == -1)
-	// {
-	// 	perror("chdir");
-	// }
 	chdir(tmp);
 	free(tmp);
 	data->status = 0;
 	str = getcwd(buff, BUFFER_SIZE);
 	if (str)
-		return (update_pwd_vars(buff, data, envp), (void)closedir(dir));
+		return (update_pwd_vars(buff, data, envp));
 	perror("cd : erreur de détermination du répertoire actuel : \
-	getcwd : ne peut accéder aux répertoires parents ");
+getcwd : ne peut accéder aux répertoires parents ");
 	data->status = 1;
 	data->pwd = strmerge_and_free(data->pwd, "/..");
 }
