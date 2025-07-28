@@ -69,8 +69,8 @@ char	**apply_redirections(t_node *node, char **envp, t_data *data,int s_int, int
 		cmd = clean_command(node->command, node->arr);
 		if (!cmd)
 			return (NULL);
-		// if (cmd)
-		// 	free_all_ul_split(command);
+		if (cmd)
+			free_all_ul_split(node->command);
 		return (cmd);
 	}
 	if (s_in == 0 || s_out == 0)
