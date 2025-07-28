@@ -112,6 +112,7 @@ void	ft_exit(char ***envp, t_node *node, t_data *data)
 	free_all_node(node);
 	free(data->path);
 	free(data->pwd);
+	free(data->pid);
 	exit(data->status);
 }
 
@@ -162,8 +163,11 @@ void    read_input(char ***envp, t_data *data)
     while (1)
     {
         node = NULL;
-        signal_init();
+        signal_init(data);
 		data->fd = -1;
+        for (int k = 0; k < 2000; k++) //////////////
+            data->pid[k] = 0;
+        data->id = 0;
         if (data->status == 0)
             command = readline("\033[31m▄\033[32m︻\033[33mデ\033[34m══━\033[31m一\033[32m 🎯 > \033[0m" );
         else
@@ -174,6 +178,7 @@ void    read_input(char ***envp, t_data *data)
             free_all_ul_split(*envp);
             free(data->path);
             free(data->pwd);
+            free(data->pid);
             exit (data->status);
         }
         add_history(command);
@@ -195,7 +200,6 @@ void    read_input(char ***envp, t_data *data)
 				if (data->fd != -1)
 					close(data->fd);
             }
-
             apply_redirections(tmp, *envp, data, -1, -1, 1);
 	        free_all_node(node);
 		}

@@ -93,6 +93,7 @@ void	cd(char ***envp, char **arg, t_data *data)
 	// {
 	// 	perror("chdir");
 	// }
+	chdir(tmp);
 	free(tmp);
 	data->status = 0;
 	str = getcwd(buff, BUFFER_SIZE);

@@ -265,8 +265,11 @@ void	exe(char **envp, t_node *node, t_data *data)
 
 	i = fork();
 	if (i == -1)
-		exit(1);
-	else if (i == 0)
+	{
+		perror("minishell");
+		return ;
+	}
+	if (i == 0)
 	{
 		if (data->fd != -1)
 		{
@@ -278,7 +281,7 @@ void	exe(char **envp, t_node *node, t_data *data)
 		}
 		path = find_path(*(node->command), envp, data);
 		if (!path)
-			exit(1);
+		exit(1);
 		if (execve(path, node->command, envp) == -1)
 		{
 			perror("execve");
@@ -289,8 +292,8 @@ void	exe(char **envp, t_node *node, t_data *data)
 		write(2, ": Permission denied\n", 20);
 		exit(1);
 	}
-	else
-		wait(&status);
+	data->pid[data->id++] = i;
+	wait(&status);
 	data->status = status;
 	if (status == 256 || status == 1)
 		data->status = 127;

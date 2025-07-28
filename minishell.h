@@ -46,7 +46,9 @@ typedef struct s_data
 	char *command;
 	char *pwd;
 	char *path;
+	int *pid;
 	int fd;
+	int id;
 	int i;
 	int status;
 }   t_data;
@@ -188,7 +190,7 @@ char	*ft_strjoin_(char *s1, char *s2);
 char    *get_variable(char *str, char **envp, t_data *data);
 char *	here_doc_data();
 char	*join_strings(char *s1, char *s2);
-void	signal_init();
+void    signal_init(t_data *data);
 char *strmerge_and_free(char *s1, char *s2);
 void	list(char **command);
 #endif

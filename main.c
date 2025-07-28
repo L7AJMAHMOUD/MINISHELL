@@ -65,7 +65,15 @@ int main(int ac, char **av, char **envp)
     data.path = ft_strdup("/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin");
     if (!data.path)
     {
-		free(data.pwd);
+        free(data.pwd);
+        ft_print("minishell : Erreur initialisation",0);
+        return 1;
+    }
+    data.pid = malloc(2000 * sizeof(int));
+    if (!data.pid)
+    {
+        free(data.pwd);
+        free(data.path);
         ft_print("minishell : Erreur initialisation",0);
         return 1;
     }

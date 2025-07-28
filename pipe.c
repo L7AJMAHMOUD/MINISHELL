@@ -72,6 +72,7 @@ int pip(t_node *node, char ***envp, t_data *data)
             close(pipefd[1]);
             i = pipefd[0];
         }
+        data->pid[data->id++] = pid; 
         if (k == -1)
             waitpid(pid, NULL, 0);
         current = current->next;
