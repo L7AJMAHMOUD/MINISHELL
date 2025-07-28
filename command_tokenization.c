@@ -23,8 +23,9 @@ void	reset_node_flags(t_node *node)
 
 int	count_args(char **tab)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	while (tab && tab[i])
 		i++;
 	return (i);
@@ -32,12 +33,17 @@ int	count_args(char **tab)
 
 char	**ft_join_arr(char **first, char **second)
 {
-	int	len1 = count_args(first);
-	int	len2 = count_args(second);
-	char	**result = malloc(sizeof(char *) * (len1 + len2 + 1));
-	int	i = 0;
-	int	j = 0;
+	int		len1;
+	int		len2;
+	char	**result;
+	int		i;
+	int		j;
 
+	i = 0;
+	j = 0;
+	result = malloc(sizeof(char *) * (len1 + len2 + 1));
+	len2 = count_args(second);
+	len1 = count_args(first);
 	if (!result)
 		return (NULL);
 	while (i < len1)
@@ -50,10 +56,8 @@ char	**ft_join_arr(char **first, char **second)
 		result[i + j] = ft_strdup(second[j]);
 		j++;
 	}
-	free_all_ul_split(second);
-	free_all_ul_split(first);
 	result[i + j] = NULL;
-	return (result);
+	return (free_all_ul_split(first), free_all_ul_split(second), result);
 }
 
 char	**split_fini(char **command, t_command *arr)

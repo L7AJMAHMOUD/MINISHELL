@@ -48,7 +48,6 @@ char	**apply_redirections(t_node *node, char **envp, t_data *data,int s_int, int
 			}
 			else if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i].q == 0)
 			{
-				// apply_redirections(node, envp, data, 1);
 				s_p = dup(1);
 				int s_po = dup(0);
 				if (s_ou != -1 && s_int != -1)
