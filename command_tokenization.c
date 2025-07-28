@@ -42,12 +42,12 @@ char	**ft_join_arr(char **first, char **second)
 		return (NULL);
 	while (i < len1)
 	{
-		result[i] = strdup(first[i]);
+		result[i] = ft_strdup(first[i]);
 		i++;
 	}
 	while (j < len2)
 	{
-		result[i + j] = strdup(second[j]);
+		result[i + j] = ft_strdup(second[j]);
 		j++;
 	}
 	free_all_ul_split(second);
