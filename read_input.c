@@ -182,7 +182,7 @@ void    read_input(char ***envp, t_data *data)
             exit (data->status);
         }
         add_history(command);
-        if(command_analyze(command) == 0)
+        if(command_analyze(command, data) == 0)
 		{
             command_tokenization(&node, command, *envp, data);
 	        tmp = node;
@@ -203,11 +203,6 @@ void    read_input(char ***envp, t_data *data)
             apply_redirections(tmp, *envp, data, -1, -1, 1);
 	        free_all_node(node);
 		}
-        else if (command_analyze(command) == -1)
-        {
-            ft_print("minishell: syntax error near unexpected token .", 0);
-            data->status = 2;
-        }
         free(command);
         command = NULL;
     }

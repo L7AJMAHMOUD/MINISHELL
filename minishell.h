@@ -162,7 +162,7 @@ void	and_single_operator(char *command, int *i);
 void	or_single_operator(char *command, int *i);
 void	check_or_last(char *command);
 void	skip_inside_quotes(char *command, int *i);
-int		command_analyze(char *command);
+int		command_analyze(char *command, t_data *data);
 int		parenth(char *command);
 char	*ft_strstr_pare(char *command);
 int ultra_redirect_parse(char *command);
@@ -193,4 +193,5 @@ char	*join_strings(char *s1, char *s2);
 void    signal_init(t_data *data);
 char *strmerge_and_free(char *s1, char *s2);
 void	list(char **command);
+
 #endif

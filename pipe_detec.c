@@ -14,22 +14,24 @@
 #include "minishell.h"
 
 
-int   pipe_detector(char *command)
+int pipe_detector(char *command)
 {
-    int i;
+    int i = 0;
 
-    i = 0;
     while (command[i])
     {
         skip_inside_quotes(command, &i);
-        if(command[i] == PIPE_CHAR)
+        if (command[i] == PIPE_CHAR)
         {
-            while (command[++i] == SPACE_CHAR)
+            i++;
+            while (command[i] == SPACE_CHAR)
                 i++;
             if (command[i] == '\0')
                 return (-1);
         }
-        i++;
+        else
+            i++;
     }
     return (0);
 }
+
