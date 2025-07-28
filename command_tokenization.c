@@ -57,17 +57,17 @@ char	**ft_join_arr(char **first, char **second)
 		j++;
 	}
 	result[i + j] = NULL;
-	return (free_all_ul_split(first), free_all_ul_split(second), result);
+	return (free_all_ul_split(first), result);
 }
 
 char	**split_fini(char **command, t_command *arr)
 {
 	char	**str;
 
-	if (ft_strcmp(command[0], arr[0].command) != 0)
+	if (command[0] && command[0][0] && ft_strcmp(command[0], arr[0].command) != 0)
 	{
 		str = ft_split(command[0], ' ');
-		command = ft_join_arr(str, command);
+		command = ft_join_arr(str, &command[1]);
 		return (command);
 	}
 	return (command);
@@ -120,7 +120,7 @@ void	command_tokenization(t_node **node, char
 	{
 		(*node)->arr = ft_ultr_split(command, envp, 1, data);
 		(*node)->i = (*node)->arr->nbr;
-		(*node)->command = split_fini(ft_ultra_split(command, envp, data),
-				(*node)->arr);
+		// (*node)->command = split_fini(ft_ultra_split(command, envp, data), (*node)->arr);
+		(*node)->command = ft_ultra_split(command, envp, data);
 	}
 }
