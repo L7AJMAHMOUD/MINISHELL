@@ -32,6 +32,23 @@ int	comp(char **envp, char *ligne, t_indexes *indx, char **str)
 	return (0);
 }
 
+int	find_env_var_inde(char **envp, char *ligne, int *k)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (!strcmp_until_equal(envp[i], ligne))
+		{
+			*k = 1;
+			return (i);
+		}
+		i++;
+	}
+	return (-1);
+}
+
 char	**rm_to_envp(char **envp, char *ligne)
 {
 	t_indexes	indx;
@@ -41,9 +58,9 @@ char	**rm_to_envp(char **envp, char *ligne)
 	indx.k = 1;
 	if (!envp || !ligne)
 		return (NULL);
-	indx.m = find_env_var_index(envp, ligne, &indx.k);
+	indx.m = find_env_var_inde(envp, ligne, &indx.k);
 	if (indx.m == -1)
-		return (envp);
+		return (NULL);
 	while (envp[indx.j])
 		indx.j++;
 	str = malloc((indx.j) * sizeof(char *));
@@ -55,7 +72,7 @@ char	**rm_to_envp(char **envp, char *ligne)
 		if (comp(envp, ligne, &indx, str))
 			return (NULL);
 	str[indx.k] = NULL;
-	return (free_all_ul_split(envp), str);
+	return (str);
 }
 
 void	unset(char ***envp, char **command, t_data *data)
@@ -72,8 +89,12 @@ void	unset(char ***envp, char **command, t_data *data)
 			free(data->path);
 			data->path = NULL;
 		}
-		tmp = rm_to_envp(*envp, command[j++]);
+		tmp = rm_to_envp(*envp, command[j]);
 		if (tmp)
+		{
+			free_all_ul_split(*envp);
 			*envp = tmp;
+		}
+		j++;
 	}
 }

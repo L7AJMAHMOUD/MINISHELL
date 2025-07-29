@@ -234,19 +234,21 @@ int here_doc(t_node* node, char **envp, t_data *data)
 				if (fd == -1)
 				{
 					perror("minishell");
+					free_all_ul_split(limiters);
 					exit (-1);
 				}
 				while (1)
 				{
 					com = readline("> ");
 					if (j != 0 && com)
-					write(fd,"\n",1);
+						write(fd,"\n",1);
 					if ((!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))) 
 					{
 						close(fd);
-						fd = open(file, O_CREAT | O_RDWR, 0644); 
+						fd = open(file, O_CREAT | O_RDWR, 0644); \
 						data->i = nbr_del;
 						data->fd = fd;
+						free_all_ul_split(limiters);
 						exit (0);
 					}
 					if (com[0] && limiters[no + 1] == NULL)
@@ -257,7 +259,8 @@ int here_doc(t_node* node, char **envp, t_data *data)
 					}
 					j++;
 					if (ft_strcmp(com, limiters[no]) == 0)
-					no++;
+						no++;
+					free(com);
 				}
 				
 			}
@@ -267,39 +270,45 @@ int here_doc(t_node* node, char **envp, t_data *data)
 				if (fd == -1)
 				{
 					perror("minishell");
+					free_all_ul_split(limiters);
 					exit (-1);
 				}
 				while (1)
 				{
 					com = readline("> ");
 					if (j != 0 && com)
-					write(fd,"\n",1);
+						write(fd,"\n",1);
 					if (!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))
 					{
 						close(fd);
 						fd = open(file, O_CREAT | O_RDWR, 0644); 
 						data->fd = fd;
 						data->i = nbr_del;
+						free_all_ul_split(limiters);
 						exit (0);
 					}
 					if (com[0] && limiters[no + 1] == NULL)
 					write(fd,com,ft_strlen(com));
-					j++;
+						j++;
 					if (ft_strcmp(com, limiters[no]) == 0)
-					no++;
+						no++;
+					free(com);
 				}
 				
 			}
 			i++;
 		}
+		free_all_ul_split(limiters);
         exit(0);
     }
     else
     {
 		waitpid(pid, &status, 0);
+		free_all_ul_split(limiters);
         if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
         {
 			fd = open(file, O_RDONLY);
+			free(file);
             if (fd == -1)
             {
 				perror("minishell");
@@ -310,6 +319,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
             data->i = nbr_del;
             return 0;
         }
+		free(file);
 		data->status = WEXITSTATUS(status);
 		return -1;
     }

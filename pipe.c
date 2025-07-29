@@ -100,9 +100,7 @@ int	pip(t_node *node, char ***envp, t_data *data, t_node *cur)
 	while (1)
 		if (wait(NULL) <= 0)
 			break;
-	if (data->status == 256 || data->status == 1)
-		data->status = 127;
-	else if (data->status % 2 == 0 && data->status != 0)
+	if (data->status % 2 == 0 && data->status != 0)
 		data->status = data->status / 256;
 	return (0);
 }

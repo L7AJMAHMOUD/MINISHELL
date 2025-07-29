@@ -114,7 +114,7 @@ char    *strjoin(char *s1, char *s2);
 char	*ft_strstr(char *haystack, char *needle);
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(char *src );
-char **read_stock(char **envp);
+char **read_stock(char **envp, t_data *data);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strjoin(char *s1, char *s2);
 int	ft_isalpha(int c);

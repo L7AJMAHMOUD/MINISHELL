@@ -12,13 +12,25 @@
 
 #include "minishell.h"
 
-char **read_stock(char **envp)
+char **read_stock(char **envp, t_data *data)
 {
     int i;
     int j;
     char **str;
 
     j = 0;
+    if (!envp)
+    {
+        str = malloc((3 + 1) * sizeof(char *));
+        j = 0;
+        if (!str)
+            return (NULL);
+        str[j] = ft_strdup("OLDPWD");
+        str[j++] = join_strings("PWD", data->pwd);
+        str[j++] = ft_strdup("SHLVL=1");
+        str[j] = 0;
+        return str;
+    }
     while (envp[j])
         j++;
     str = malloc((j + 1) * sizeof(char *));
@@ -80,7 +92,7 @@ int main(int ac, char **av, char **envp)
 	data.status = 0;
     if (ac == 1)
 	{
-		envp = read_stock(envp);
+        envp = read_stock(envp, &data);
         if (!envp)
             return (free(data.pwd), free(data.path), 1);
         read_input(&envp, &data);

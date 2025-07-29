@@ -197,8 +197,10 @@ void    read_input(char ***envp, t_data *data)
         if (!command)
         {
             ft_print("\nexit", 0);
-            free_all_ul_split(*envp);
-            free(data->path);
+            if (*envp)
+                free_all_ul_split(*envp);
+            if (data->path)
+                free(data->path);
             free(data->pwd);
             free(data->pid);
             exit (data->status);
