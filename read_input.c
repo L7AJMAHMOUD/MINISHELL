@@ -163,11 +163,11 @@ int wait_for_child(pid_t pid)
 	signal(SIGQUIT, SIG_IGN);
 
 	waitpid(pid, &status, 0);
-    if ((status & 0x7F) == SIGINT) // SIGINT is usually 2
-        write(1, "\n", 1);
+    // if ((status & 0x7F) == SIGINT) // SIGINT is usually 2
+    //     write(1, "\n", 1);
 
-    // if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-    // write(1, "\n", 1);
+    if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+        write(1, "\n", 1);
 
 	//  Restore handlers after child ends
 	signal(SIGINT, bash_sig_handler);
