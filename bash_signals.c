@@ -52,7 +52,7 @@ void	signal_init_here(t_data *data)
 		return ;
 	}
 	// data->status = 130;  hadi khasa dar mni 
-	int i = 0;
-	while(i < data->id)
-		kill(data->pid[i++], SIGTERM);
+	// int i = 0;
+	// while(i < data->id)
+	// 	kill(data->pid[i++], SIGTERM);
 }

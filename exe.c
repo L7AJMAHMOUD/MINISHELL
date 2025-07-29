@@ -129,7 +129,7 @@ int	check_path_directory_or_missing(char *path)
 	if (dir)
 	{
 		write(2, "minishell: ", 11);
-		write(2, path, ft_strlen(path));
+		write(2, &path[2], ft_strlen(path));
 		write(2, ": Is a directory\n", 18);
 		closedir(dir);
 		return (1);
@@ -137,7 +137,7 @@ int	check_path_directory_or_missing(char *path)
 	if (access(path, F_OK) != 0)
 	{
 		write(2, "minishell: ", 11);
-		write(2, path, ft_strlen(path));
+		write(2, &path[2], ft_strlen(path));
 		write(2, ": No such file or directory\n", 28);
 		return (1);
 	}
@@ -244,7 +244,7 @@ char	*find_path(char *path, char **envp, t_data *data)
 	{
 		if (check_path_directory_or_missing(path))
 			return (NULL);
-		return (ft_strdup(path));
+		return (ft_strdup(&path[2]));
 	}
 	if (ft_strchr(path, '/'))
 	{
@@ -261,7 +261,6 @@ void	exe(char **envp, t_node *node, t_data *data)
 {
 	char	*path;
 	int		i;
-	int		status;
 
 	i = fork();
 	if (i == -1)
@@ -284,7 +283,10 @@ void	exe(char **envp, t_node *node, t_data *data)
 			exit(1);
 		if (execve(path, node->command, envp) == -1)
 		{
-			perror("execve");
+			write(2, "minishell: ", 11);
+			write(2, path, ft_strlen(path));
+			write(2, ": ", 3);
+			perror(NULL);
 			exit(1);
 		}
 		write(2, "minishell: ", 11);
@@ -292,13 +294,11 @@ void	exe(char **envp, t_node *node, t_data *data)
 		write(2, ": Permission denied\n", 20);
 		exit(1);
 	}
-	// else 
 	data->pid[data->id++] = i;
-	// wait(&status);
 	data->status = wait_for_child(i);
-	if (status == 256 || status == 1)
+	if (data->status == 256 || data->status == 1)
 		data->status = 127;
-	else if (status % 2 == 0 && status != 0)
-		data->status = status / 256;
+	else if (data->status % 2 == 0 && data->status != 0)
+		data->status = data->status / 256;
 	return ;
 }

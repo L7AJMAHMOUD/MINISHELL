@@ -62,7 +62,7 @@ int pip(t_node *node, char ***envp, t_data *data)
             if (current->command && check_command(current->command, envp, node, data))
                 exe(*envp, current, data);
             free_all_node(node);
-            exit(1);
+            exit(data->status);
         }
         if (i != -1)
             close(i);
@@ -74,9 +74,15 @@ int pip(t_node *node, char ***envp, t_data *data)
         }
         data->pid[data->id++] = pid; 
         if (k == -1)
-            waitpid(pid, NULL, 0);
+            waitpid(pid, &data->status, 0);
+		if (!current->next && k != -1)
+			waitpid(pid, &data->status, 0);
         current = current->next;
     }
     while (wait(NULL) > 0);
+	if (data->status == 256 || data->status == 1)
+		data->status = 127;
+	else if (data->status % 2 == 0 && data->status != 0)
+		data->status = data->status / 256;
     return 0;
 }

@@ -214,7 +214,7 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 		nbr_del++;
 	no = 0;
 	g_hsig = 0;
-	signal_init_here(data);
+	// signal_init_here(data);
 	while (node->command[i])
 	{
 		j = 0;
