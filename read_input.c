@@ -185,17 +185,15 @@ void    read_input(char ***envp, t_data *data)
     {
         g_hsig = 0;
         node = NULL;
-        signal_init(data);
 		data->fd = -1;
-        for (int k = 0; k < 2000; k++) //////////////
+        for (int k = 0; k < 2000; k++)
             data->pid[k] = 0;
         data->id = 0;
+        signal_init(data);
         // if (data->status == 0)
             command = readline("\033[31m▄\033[32m︻\033[33mデ\033[34m══━\033[31m一\033[32m 🎯 > \033[0m" );
 		// else
         //     command = readline("\033[31m▄\033[32m︻\033[33mデ\033[34m══━\033[31m一\033[32m 💀 > \033[0m" );
-
-            
         if (!command)
         {
             ft_print("\nexit", 0);

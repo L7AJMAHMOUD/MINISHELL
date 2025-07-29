@@ -132,7 +132,7 @@ int	check_path_directory_or_missing(char *path)
 		write(2, &path[2], ft_strlen(path));
 		write(2, ": Is a directory\n", 18);
 		closedir(dir);
-		return (1);
+		exit (-1);
 	}
 	if (access(path, F_OK) != 0)
 	{
@@ -155,7 +155,7 @@ int	check_if_directory(char *path)
 		write(2, path, ft_strlen(path));
 		write(2, ": Is a directory\n", 18);
 		closedir(dir);
-		return (1);
+		exit (-1);
 	}
 	return (0);
 }
@@ -298,6 +298,8 @@ void	exe(char **envp, t_node *node, t_data *data)
 	data->status = wait_for_child(i);
 	if (data->status == 256 || data->status == 1)
 		data->status = 127;
+	else if (WEXITSTATUS(data->status) == 255)
+		data->status = 126;
 	else if (data->status % 2 == 0 && data->status != 0)
 		data->status = data->status / 256;
 	return ;
