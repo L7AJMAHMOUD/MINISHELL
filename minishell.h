@@ -47,6 +47,7 @@ typedef struct s_data
 {
 	char *command;
 	char *pwd;
+	char ***envp;
 	char *path;
 	int *pid;
 	int fd;
@@ -173,7 +174,7 @@ int	here_doc(t_node* node, char **envp, t_data *data);
 int	strcmp_until_equal(char *s1, char *s2);
 int check_command(char **str, char ***envp, t_node *node, t_data *data);
 void free_all_node(t_node *node);
-int pip(t_node *node, char ***envp, t_data *data);
+int	pip(t_node *node, char ***envp, t_data *data, t_node *cur);
 char **add_to_envp(char **envp, char *ligne, int i);
 char **dirham(char **str, char **envp);
 int  redirect_output_fd(char **command, t_data *data);
@@ -198,4 +199,5 @@ void	list(char **command);
 int	wait_for_child(pid_t pid);
 void	heredoc_sigint_handler(int sig);
 void	signal_init_here(t_data *data);
+
 #endif

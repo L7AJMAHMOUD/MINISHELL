@@ -211,9 +211,10 @@ void    read_input(char ***envp, t_data *data)
 	        tmp = node;
 			if (node -> next)
 			{
-				pip(node, envp, data);
+				pip(node, envp, data, node);
                 free(command);
                 command = NULL;
+				free_all_node(node);
 				continue;
 			}
             tmp->command = apply_redirections(tmp, *envp, data, -1, -1, 0);
@@ -230,3 +231,4 @@ void    read_input(char ***envp, t_data *data)
         command = NULL;
     }
 }
+
