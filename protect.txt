@@ -78,3 +78,21 @@
 sff lblan hna kola function smia lqdima / smia jdida wlkin ra smiat knti dayr lahoma barik hhhhhhhhhhhhhhhhh
 
 *GOOD LUCK* > blan sift lk f watss + heredoc mea pip + heredoc bo7do mea cat mataln khass fch ikteb hadakchi ikun newline f lakher hna makidirooch  
+
+------------------------------------------------------------
+
+
+=====> exit status 
+
+
+echo hi | echo >>./outfiles/outfile01 bye >./test_files/invalid_permission
+
+echo hi | echo bye >>./test_files/invalid_permission
+
+echo hi | echo bye >./test_files/invalid_permission >./outfiles/outfile01
+
+echo hi | >./outfiles/outfile01 echo bye >./test_files/invalid_permission 
+
+echo hi | echo bye >./test_files/invalid_permission
+
+export GHOST=123 | env | grep GHOST
