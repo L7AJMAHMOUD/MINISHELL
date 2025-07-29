@@ -158,7 +158,7 @@ void wait_for_child(pid_t pid)
 {
 	int status;
 
-	// ❗ Temporarily ignore SIGINT to prevent double prompt
+	//  Temporarily ignore SIGINT to prevent double prompt
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 
@@ -169,7 +169,7 @@ void wait_for_child(pid_t pid)
     // if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
     // write(1, "\n", 1);
 
-	// ✅ Restore handlers after child ends
+	//  Restore handlers after child ends
 	signal(SIGINT, bash_sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 }

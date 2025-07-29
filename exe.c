@@ -292,8 +292,8 @@ void	exe(char **envp, t_node *node, t_data *data)
 		write(2, ": Permission denied\n", 20);
 		exit(1);
 	}
-	else 
-		wait_for_child(i);
+	// else 
+	// 	wait_for_child(i);
 	data->pid[data->id++] = i;
 	wait(&status);
 	data->status = status;
