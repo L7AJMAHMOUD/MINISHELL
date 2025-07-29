@@ -213,7 +213,8 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 	while (limiters[nbr_del])
 		nbr_del++;
 	no = 0;
-	signal_init_here(data);
+	g_hsig = 0;
+	signal_init(data);
 	while (node->command[i])
 	{
 		j = 0;
@@ -225,7 +226,6 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 				perror("minishell");
 				return -1;
 			}
-			g_hsig = 0;
 			while (1)
 			{
 				com = readline("> ");
@@ -265,12 +265,9 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 				perror("minishell");
 				return -1;
 			}
-			signal_init_here(data);
-			g_hsig = 0;
 			while (1)
 			{
 				com = readline("> ");
-				printf("hshaa2 = %d\n",g_hsig);
 
 				if (g_hsig == 1)
 				{
@@ -302,6 +299,13 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 }
 
 
+void heredoc_sigint_handler(int sig)
+{
+	(void)sig;
+	g_hsig = 1;
+	write(1,"\n", 1);
+	
+}
 
 void	list(char **command)
 {
