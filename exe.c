@@ -281,7 +281,7 @@ void	exe(char **envp, t_node *node, t_data *data)
 		}
 		path = find_path(*(node->command), envp, data);
 		if (!path)
-		exit(1);
+			exit(1);
 		if (execve(path, node->command, envp) == -1)
 		{
 			perror("execve");
@@ -292,6 +292,8 @@ void	exe(char **envp, t_node *node, t_data *data)
 		write(2, ": Permission denied\n", 20);
 		exit(1);
 	}
+	else 
+		wait_for_child(i);
 	data->pid[data->id++] = i;
 	wait(&status);
 	data->status = status;

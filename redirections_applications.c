@@ -23,7 +23,6 @@ char	**apply_redirections(t_node *node, char **envp, t_data *data,int s_int, int
 	i = 0;
 	if (p == 0)
 	{
-
 		s_in = dup(0);
 		s_out = dup(1);
 		if (s_in == -1 || s_out == -1)

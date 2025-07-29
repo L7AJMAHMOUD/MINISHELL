@@ -154,6 +154,26 @@ int check_node_syntex(t_node *tmp)
     }
     return 1;
 }
+void wait_for_child(pid_t pid)
+{
+	int status;
+
+	// ❗ Temporarily ignore SIGINT to prevent double prompt
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+
+	waitpid(pid, &status, 0);
+    if ((status & 0x7F) == SIGINT) // SIGINT is usually 2
+        write(1, "\n", 1);
+
+    // if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+    // write(1, "\n", 1);
+
+	// ✅ Restore handlers after child ends
+	signal(SIGINT, bash_sig_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
 void    read_input(char ***envp, t_data *data)
 {
     char *command;
@@ -172,6 +192,7 @@ void    read_input(char ***envp, t_data *data)
             command = readline("\033[31m▄\033[32m︻\033[33mデ\033[34m══━\033[31m一\033[32m 🎯 > \033[0m" );
         else
             command = readline("\033[31m▄\033[32m︻\033[33mデ\033[34m══━\033[31m一\033[32m 💀 > \033[0m" );
+            
         if (!command)
         {
             ft_print("\nexit", 0);
