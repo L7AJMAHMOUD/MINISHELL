@@ -18,14 +18,12 @@ void bash_sig_handler(int signum)
     write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
     rl_replace_line("", 0);
-    rl_redisplay();
+    // rl_redisplay();
 }
 
 void heredoc_sigint_handler(int signum)
 {
-	// (void)signum;
-	// g_hsig = 1;
-	// write(STDOUT_FILENO, "\n", 1);
+	exit(130);
 }
 
 void signal_init(t_data *data)
@@ -38,7 +36,7 @@ void signal_init(t_data *data)
 	}
 	int i = 0;
 	while (i < data->id)
-		kill(data->pid[i++], SIGTERM);
+		kill(data->pid[i++], SIGKILL);
 }
 
 void signal_init_here(t_data *data)
@@ -49,7 +47,4 @@ void signal_init_here(t_data *data)
 		perror("signal failed");
 		return;
 	}
-	int i = 0;
-	while (i < data->id)
-		kill(data->pid[i++], SIGTERM);
 }

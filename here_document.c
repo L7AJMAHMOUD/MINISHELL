@@ -204,27 +204,27 @@ int here_doc(t_node* node, char **envp, t_data *data)
     int no = 0;
     int nbr_del = 0;
     int status;
-
+	
     char *file = here_doc_data();
     char **limiters = get_delimiters(node->arr, node->command);
     if (!limiters || !file)
-        return -1;
+	return -1;
     
     while (limiters[nbr_del])
-        nbr_del++;
-
+	nbr_del++;
+	
     pid_t pid = fork();
     
     if (pid == -1)
     {
-        perror("fork");
+		perror("fork");
         return -1;
     }
     
     if (pid == 0)
     {
-        signal_init_here(data);
-        while (node->command[i])
+		signal_init_here(data);
+		while (node->command[i])
 		{
 			j = 0;
 			if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i + 1].q == 0)
@@ -245,7 +245,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 						exit (-1);
 					}
 					if (j != 0 && com)
-						write(fd,"\n",1);
+					write(fd,"\n",1);
 					if ((!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))) 
 					{
 						close(fd);
@@ -258,11 +258,11 @@ int here_doc(t_node* node, char **envp, t_data *data)
 					{
 						arr_ = expand_str(com, envp, data);
 						if (arr_)
-							write(fd,arr_,ft_strlen(arr_));
+						write(fd,arr_,ft_strlen(arr_));
 					}
 					j++;
 					if (ft_strcmp(com, limiters[no]) == 0)
-						no++;
+					no++;
 				}
 				
 			}
@@ -277,7 +277,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 				while (1)
 				{
 					com = readline("> ");
-
+					
 					if (g_hsig == 1)
 					{
 						free(com);
@@ -285,7 +285,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 						exit (-1);
 					}
 					if (j != 0 && com)
-						write(fd,"\n",1);
+					write(fd,"\n",1);
 					if (!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))
 					{
 						close(fd);
@@ -295,10 +295,10 @@ int here_doc(t_node* node, char **envp, t_data *data)
 						exit (0);
 					}
 					if (com[0] && limiters[no + 1] == NULL)
-						write(fd,com,ft_strlen(com));
+					write(fd,com,ft_strlen(com));
 					j++;
 					if (ft_strcmp(com, limiters[no]) == 0)
-						no++;
+					no++;
 				}
 				
 			}
@@ -308,8 +308,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
     }
     else
     {
-		data->pid[data->id++] = pid;
-        waitpid(pid, &status, 0);
+		waitpid(pid, &status, 0);
         if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
         {
             fd = open(file, O_RDONLY);
