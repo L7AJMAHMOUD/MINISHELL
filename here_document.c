@@ -205,6 +205,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
     int nbr_del = 0;
     int status;
 	
+	g_hsig = 1;
     char *file = here_doc_data();
     char **limiters = get_delimiters(node->arr, node->command);
     if (!limiters || !file)
@@ -238,12 +239,6 @@ int here_doc(t_node* node, char **envp, t_data *data)
 				while (1)
 				{
 					com = readline("> ");
-					if (g_hsig == 1)
-					{
-						free(com);
-						close(fd);
-						exit (-1);
-					}
 					if (j != 0 && com)
 					write(fd,"\n",1);
 					if ((!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))) 
@@ -277,13 +272,6 @@ int here_doc(t_node* node, char **envp, t_data *data)
 				while (1)
 				{
 					com = readline("> ");
-					
-					if (g_hsig == 1)
-					{
-						free(com);
-						close(fd);
-						exit (-1);
-					}
 					if (j != 0 && com)
 					write(fd,"\n",1);
 					if (!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))
@@ -311,18 +299,19 @@ int here_doc(t_node* node, char **envp, t_data *data)
 		waitpid(pid, &status, 0);
         if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
         {
-            fd = open(file, O_RDONLY);
+			fd = open(file, O_RDONLY);
             if (fd == -1)
             {
-                perror("minishell");
+				perror("minishell");
                 return -1;
             }
             data->fd = fd;
+            data->status = WEXITSTATUS(status);
             data->i = nbr_del;
             return 0;
         }
-        else
-            return -1;
+		data->status = WEXITSTATUS(status);
+		return -1;
     }
 }
 

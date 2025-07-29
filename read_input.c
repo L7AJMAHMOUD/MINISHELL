@@ -183,6 +183,7 @@ void    read_input(char ***envp, t_data *data)
 
     while (1)
     {
+        g_hsig = 0;
         node = NULL;
         signal_init(data);
 		data->fd = -1;

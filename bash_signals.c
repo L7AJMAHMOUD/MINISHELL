@@ -18,7 +18,8 @@ void bash_sig_handler(int signum)
     write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
     rl_replace_line("", 0);
-    // rl_redisplay();
+	if (g_hsig == 0)
+    	rl_redisplay();
 }
 
 void heredoc_sigint_handler(int signum)
