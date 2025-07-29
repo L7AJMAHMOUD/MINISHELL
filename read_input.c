@@ -166,7 +166,7 @@ int wait_for_child(pid_t pid)
     // if ((status & 0x7F) == SIGINT) // SIGINT is usually 2
     //     write(1, "\n", 1);
 
-    if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+    if (WTERMSIG(status) == SIGINT)
         write(1, "\n", 1);
 
 	//  Restore handlers after child ends
