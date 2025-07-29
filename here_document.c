@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+int g_hsig;
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	j;
@@ -211,6 +213,7 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 	while (limiters[nbr_del])
 		nbr_del++;
 	no = 0;
+	signal_init_here(data);
 	while (node->command[i])
 	{
 		j = 0;
@@ -222,9 +225,16 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 				perror("minishell");
 				return -1;
 			}
+			g_hsig = 0;
 			while (1)
 			{
 				com = readline("> ");
+				if (g_hsig == 1)
+				{
+					free(com);
+					close(fd);
+					return -1;
+				}
 				if (j != 0 && com)
 					write(fd,"\n",1);
 				if ((!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))) 
@@ -255,9 +265,19 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 				perror("minishell");
 				return -1;
 			}
+			signal_init_here(data);
+			g_hsig = 0;
 			while (1)
 			{
 				com = readline("> ");
+				printf("hshaa2 = %d\n",g_hsig);
+
+				if (g_hsig == 1)
+				{
+					free(com);
+					close(fd);
+					return -1;
+				}
 				if (j != 0 && com)
 					write(fd,"\n",1);
 				if (!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))
