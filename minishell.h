@@ -193,5 +193,5 @@ char	*join_strings(char *s1, char *s2);
 void    signal_init(t_data *data);
 char *strmerge_and_free(char *s1, char *s2);
 void	list(char **command);
-void wait_for_child(pid_t pid);
+int wait_for_child(pid_t pid);
 #endif

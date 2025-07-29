@@ -293,10 +293,9 @@ void	exe(char **envp, t_node *node, t_data *data)
 		exit(1);
 	}
 	// else 
-	// 	wait_for_child(i);
 	data->pid[data->id++] = i;
-	wait(&status);
-	data->status = status;
+	// wait(&status);
+	data->status = wait_for_child(i);
 	if (status == 256 || status == 1)
 		data->status = 127;
 	else if (status % 2 == 0 && status != 0)

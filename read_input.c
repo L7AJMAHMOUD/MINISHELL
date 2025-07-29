@@ -154,7 +154,7 @@ int check_node_syntex(t_node *tmp)
     }
     return 1;
 }
-void wait_for_child(pid_t pid)
+int wait_for_child(pid_t pid)
 {
 	int status;
 
@@ -172,6 +172,7 @@ void wait_for_child(pid_t pid)
 	//  Restore handlers after child ends
 	signal(SIGINT, bash_sig_handler);
 	signal(SIGQUIT, SIG_IGN);
+    return status;
 }
 
 void    read_input(char ***envp, t_data *data)
@@ -188,10 +189,9 @@ void    read_input(char ***envp, t_data *data)
         for (int k = 0; k < 2000; k++) //////////////
             data->pid[k] = 0;
         data->id = 0;
-        if (data->status == 0)
+        // if (data->status == 0)
             command = readline("\033[31m▄\033[32m︻\033[33mデ\033[34m══━\033[31m一\033[32m 🎯 > \033[0m" );
-        else
-            command = readline("\033[31m▄\033[32m︻\033[33mデ\033[34m══━\033[31m一\033[32m 💀 > \033[0m" );
+
             
         if (!command)
         {
