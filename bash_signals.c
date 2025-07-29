@@ -16,7 +16,7 @@
 void	signal_init(t_data *data)
 {
 	if (signal(SIGINT, bash_sig_handler) == SIG_ERR
-		|| signal(SIGQUIT, SIG_IGN) == SIG_ERR || signal(SIGINT, heredoc_sigint_handler) == SIG_ERR)
+		|| signal(SIGQUIT, SIG_IGN) == SIG_ERR)
 	{
 		perror("signal failed");
 		return ;
@@ -35,18 +35,24 @@ void	bash_sig_handler()
     rl_redisplay();
 }
 
+void heredoc_sigint_handler(int sig)
+{
+	(void)sig;
+	g_hsig = 1;
+	write(1,"\n", 1);
+	
+}
 
-
-// void	signal_init_here(t_data *data)
-// {
-// 	if (signal(SIGINT, heredoc_sigint_handler) == SIG_ERR
-// 		|| signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-// 	{
-// 		perror("signal failed");
-// 		return ;
-// 	}
-// 	// data->status = 130;  hadi khasa dar mni 
-// 	int i = 0;
-// 	while(i < data->id)
-// 		kill(data->pid[i++], SIGTERM);
-// }
+void	signal_init_here(t_data *data)
+{
+	if (signal(SIGINT, heredoc_sigint_handler) == SIG_ERR
+		|| signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+	{
+		perror("signal failed");
+		return ;
+	}
+	// data->status = 130;  hadi khasa dar mni 
+	int i = 0;
+	while(i < data->id)
+		kill(data->pid[i++], SIGTERM);
+}

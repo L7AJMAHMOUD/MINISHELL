@@ -214,7 +214,7 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 		nbr_del++;
 	no = 0;
 	g_hsig = 0;
-	signal_init(data);
+	signal_init_here(data);
 	while (node->command[i])
 	{
 		j = 0;
@@ -299,13 +299,6 @@ int	here_doc(t_node* node, char **envp, t_data *data)
 }
 
 
-void heredoc_sigint_handler(int sig)
-{
-	(void)sig;
-	g_hsig = 1;
-	write(1,"\n", 1);
-	
-}
 
 void	list(char **command)
 {

@@ -196,6 +196,6 @@ void    signal_init(t_data *data);
 char *strmerge_and_free(char *s1, char *s2);
 void	list(char **command);
 int	wait_for_child(pid_t pid);
-// void	heredoc_sigint_handler(int sig);
-void heredoc_sigint_handler(int sig);
+void	heredoc_sigint_handler(int sig);
+void	signal_init_here(t_data *data);
 #endif
