@@ -194,108 +194,137 @@ long long file_size(int fd)
     }
 	return (st.st_size);
 }
-int	here_doc(t_node* node, char **envp, t_data *data)
+int here_doc(t_node* node, char **envp, t_data *data)
 {
-	int i;
-	int j;
-	int fd;
-	char *com;
-	char *arr_;
-	int no;
-	int nbr_del = 0;
+    int i = 0;
+    int j;
+    int fd;
+    char *com;
+    char *arr_;
+    int no = 0;
+    int nbr_del = 0;
+    int status;
 
-	i = 0;
-	com = NULL;
-	char *file = here_doc_data();
-	char **limiters =  get_delimiters(node->arr, node->command);
-	if (!limiters || !file)
-		return -1;
-	while (limiters[nbr_del])
-		nbr_del++;
-	no = 0;
-	g_hsig = 0;
-	// signal_init_here(data);
-	while (node->command[i])
-	{
-		j = 0;
-		if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i + 1].q == 0)
-		{
-			fd = open(file, O_CREAT | O_RDWR, 0644); 
-			if (fd == -1)
-			{
-				perror("minishell");
-				return -1;
-			}
-			while (1)
-			{
-				com = readline("> ");
-				if (g_hsig == 1)
-				{
-					free(com);
-					close(fd);
-					return -1;
-				}
-				if (j != 0 && com)
-					write(fd,"\n",1);
-				if ((!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))) 
-				{
-					close(fd);
-					fd = open(file, O_CREAT | O_RDWR, 0644); 
-					data->i = nbr_del;
-					data->fd = fd;
-					return 0;
-				}
-				if (com[0] && limiters[no + 1] == NULL)
-				{
-					arr_ = expand_str(com, envp, data);
-					if (arr_)
-						write(fd,arr_,ft_strlen(arr_));
-				}
-				j++;
-				if (ft_strcmp(com, limiters[no]) == 0)
-					no++;
-			}
-			
-		}
-		else if (ft_strcmp(node->command[i], "<<") == 0)
-		{
-			fd = open(file, O_CREAT | O_RDWR, 0644); 
-			if (fd == -1)
-			{
-				perror("minishell");
-				return -1;
-			}
-			while (1)
-			{
-				com = readline("> ");
+    char *file = here_doc_data();
+    char **limiters = get_delimiters(node->arr, node->command);
+    if (!limiters || !file)
+        return -1;
+    
+    while (limiters[nbr_del])
+        nbr_del++;
 
-				if (g_hsig == 1)
+    pid_t pid = fork();
+    
+    if (pid == -1)
+    {
+        perror("fork");
+        return -1;
+    }
+    
+    if (pid == 0)
+    {
+        signal_init_here(data);
+        while (node->command[i])
+		{
+			j = 0;
+			if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i + 1].q == 0)
+			{
+				fd = open(file, O_CREAT | O_RDWR, 0644); 
+				if (fd == -1)
 				{
-					free(com);
-					close(fd);
-					return -1;
+					perror("minishell");
+					exit (-1);
 				}
-				if (j != 0 && com)
-					write(fd,"\n",1);
-				if (!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))
+				while (1)
 				{
-					close(fd);
-					fd = open(file, O_CREAT | O_RDWR, 0644); 
-					data->fd = fd;
-					data->i = nbr_del;
-					return 0;
+					com = readline("> ");
+					if (g_hsig == 1)
+					{
+						free(com);
+						close(fd);
+						exit (-1);
+					}
+					if (j != 0 && com)
+						write(fd,"\n",1);
+					if ((!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))) 
+					{
+						close(fd);
+						fd = open(file, O_CREAT | O_RDWR, 0644); 
+						data->i = nbr_del;
+						data->fd = fd;
+						exit (0);
+					}
+					if (com[0] && limiters[no + 1] == NULL)
+					{
+						arr_ = expand_str(com, envp, data);
+						if (arr_)
+							write(fd,arr_,ft_strlen(arr_));
+					}
+					j++;
+					if (ft_strcmp(com, limiters[no]) == 0)
+						no++;
 				}
-				if (com[0] && limiters[no + 1] == NULL)
-					write(fd,com,ft_strlen(com));
-				j++;
-				if (ft_strcmp(com, limiters[no]) == 0)
-					no++;
+				
 			}
-			
+			else if (ft_strcmp(node->command[i], "<<") == 0)
+			{
+				fd = open(file, O_CREAT | O_RDWR, 0644); 
+				if (fd == -1)
+				{
+					perror("minishell");
+					exit (-1);
+				}
+				while (1)
+				{
+					com = readline("> ");
+
+					if (g_hsig == 1)
+					{
+						free(com);
+						close(fd);
+						exit (-1);
+					}
+					if (j != 0 && com)
+						write(fd,"\n",1);
+					if (!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))
+					{
+						close(fd);
+						fd = open(file, O_CREAT | O_RDWR, 0644); 
+						data->fd = fd;
+						data->i = nbr_del;
+						exit (0);
+					}
+					if (com[0] && limiters[no + 1] == NULL)
+						write(fd,com,ft_strlen(com));
+					j++;
+					if (ft_strcmp(com, limiters[no]) == 0)
+						no++;
+				}
+				
+			}
+			i++;
 		}
-		i++;
-	}
-	return 0;
+        exit(0);
+    }
+    else
+    {
+		data->pid[data->id++] = pid;
+        waitpid(pid, &status, 0);
+        if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
+        {
+            fd = open(file, O_RDONLY);
+            if (fd == -1)
+            {
+                perror("minishell");
+                return -1;
+            }
+            data->fd = fd;
+            data->i = nbr_del;
+            return 0;
+        }
+        else
+            return -1;
+    }
 }
 
 

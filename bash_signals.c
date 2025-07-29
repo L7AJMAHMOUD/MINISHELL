@@ -12,47 +12,44 @@
 
 #include "minishell.h"
 
-// int g_hsig;
-void	signal_init(t_data *data)
+void bash_sig_handler(int signum)
 {
-	if (signal(SIGINT, bash_sig_handler) == SIG_ERR
-		|| signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-	{
-		perror("signal failed");
-		return ;
-	}
-	// data->status = 130;  hadi khasa dar mni 
-	int i = 0;
-	while(i < data->id)
-		kill(data->pid[i++], SIGTERM);
-}
-
-void	bash_sig_handler()
-{
+    (void)signum;
     write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
     rl_replace_line("", 0);
     rl_redisplay();
 }
 
-void heredoc_sigint_handler(int sig)
+void heredoc_sigint_handler(int signum)
 {
-	(void)sig;
-	g_hsig = 1;
-	write(1,"\n", 1);
-	
+	// (void)signum;
+	// g_hsig = 1;
+	// write(STDOUT_FILENO, "\n", 1);
 }
 
-void	signal_init_here(t_data *data)
+void signal_init(t_data *data)
+{
+	if (signal(SIGINT, bash_sig_handler) == SIG_ERR
+		|| signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+	{
+		perror("signal failed");
+		return;
+	}
+	int i = 0;
+	while (i < data->id)
+		kill(data->pid[i++], SIGTERM);
+}
+
+void signal_init_here(t_data *data)
 {
 	if (signal(SIGINT, heredoc_sigint_handler) == SIG_ERR
 		|| signal(SIGQUIT, SIG_IGN) == SIG_ERR)
 	{
 		perror("signal failed");
-		return ;
+		return;
 	}
-	// data->status = 130;  hadi khasa dar mni 
-	// int i = 0;
-	// while(i < data->id)
-	// 	kill(data->pid[i++], SIGTERM);
+	int i = 0;
+	while (i < data->id)
+		kill(data->pid[i++], SIGTERM);
 }
