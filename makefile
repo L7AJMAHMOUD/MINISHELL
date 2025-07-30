@@ -78,67 +78,67 @@
 # .PHONY: all clean fclean re run leak horror_banner
 
 
-# NAME = minishell
-# CC = cc
-# # FLAGS = -Wall -Wextra -Werror -g3
-# HEAD = minishell.h
-# RM = rm -f
-# SRCS = $(wildcard *.c)
-
-# OBJ = $(SRCS:.c=.o)
-
-
-
-# all : $(NAME)
-
-# $(NAME): $(OBJ)
-# 	@$(CC) $(OBJ) -lreadline -o $(NAME)
-
-
-# %.o : %.c $(HEAD)
-# 	@$(CC) $(FLAGS) -c $< -o $@
-
-# clean : 
-# 	$(RM) $(OBJ)
-
-# fclean : clean
-# 	$(RM) $(NAME)
-
-# re : fclean all
-
-# run:	$(NAME)
-# 	@./$(NAME)
-
-# .PHONY : all clean fclean re
-
 NAME = minishell
-CC = cc -g -fsanitize=address
-FLAGS = 
+CC = cc
+# FLAGS = -Wall -Wextra -Werror -g3
 HEAD = minishell.h
 RM = rm -f
 SRCS = $(wildcard *.c)
+
 OBJ = $(SRCS:.c=.o)
 
-READLINE_INCLUDE = -I$(shell brew --prefix readline)/include
-READLINE_LIB = -L$(shell brew --prefix readline)/lib -lreadline
 
-all: $(NAME)
+
+all : $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(OBJ) $(READLINE_INCLUDE) $(READLINE_LIB) -o $(NAME)
+	@$(CC) $(OBJ) -lreadline -o $(NAME)
 
-%.o: %.c $(HEAD)
-	@$(CC) $(FLAGS) $(READLINE_INCLUDE) -c $< -o $@
 
-clean:
+%.o : %.c $(HEAD)
+	@$(CC) $(FLAGS) -c $< -o $@
+
+clean : 
 	$(RM) $(OBJ)
 
-fclean: clean
+fclean : clean
 	$(RM) $(NAME)
 
-re: fclean all
+re : fclean all
 
-run: $(NAME)
+run:	$(NAME)
 	@./$(NAME)
 
-.PHONY: all clean fclean re run
+.PHONY : all clean fclean re
+
+# NAME = minishell
+# CC = cc -g -fsanitize=address
+# FLAGS = 
+# HEAD = minishell.h
+# RM = rm -f
+# SRCS = $(wildcard *.c)
+# OBJ = $(SRCS:.c=.o)
+
+# READLINE_INCLUDE = -I$(shell brew --prefix readline)/include
+# READLINE_LIB = -L$(shell brew --prefix readline)/lib -lreadline
+
+# all: $(NAME)
+
+# $(NAME): $(OBJ)
+# 	@$(CC) $(OBJ) $(READLINE_INCLUDE) $(READLINE_LIB) -o $(NAME)
+
+# %.o: %.c $(HEAD)
+# 	@$(CC) $(FLAGS) $(READLINE_INCLUDE) -c $< -o $@
+
+# clean:
+# 	$(RM) $(OBJ)
+
+# fclean: clean
+# 	$(RM) $(NAME)
+
+# re: fclean all
+
+# run: $(NAME)
+# 	@./$(NAME)
+
+# .PHONY: all clean fclean re run

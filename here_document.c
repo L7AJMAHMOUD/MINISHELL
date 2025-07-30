@@ -172,7 +172,7 @@ char **get_delimiters(t_command *arr, char **h)
 	{
 		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command)
 		{
-			deli_stack[j] = arr[i + 1].command;
+			deli_stack[j] = ft_strdup(arr[i + 1].command);
 			i++;
 			j++;
 		}
@@ -193,6 +193,13 @@ long long file_size(int fd)
         return 1;
     }
 	return (st.st_size);
+}
+
+void heredoc_child_cleanup(char **limiters, char *file, char *com)
+{
+	if (limiters) free_all_ul_split(limiters);
+	if (file) free(file);
+	if (com) free(com);
 }
 int here_doc(t_node* node, char **envp, t_data *data)
 {
@@ -234,7 +241,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 				if (fd == -1)
 				{
 					perror("minishell");
-					// free_all_ul_split(limiters);
+					heredoc_child_cleanup(limiters, file, com);
 					exit (-1);
 				}
 				while (1)
@@ -248,7 +255,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 						fd = open(file, O_CREAT | O_RDWR, 0644); 
 						data->i = nbr_del;
 						data->fd = fd;
-						// free_all_ul_split(limiters);
+						heredoc_child_cleanup(limiters, file, com);
 						exit (0);
 					}
 					if (com[0] && limiters[no + 1] == NULL)
@@ -260,7 +267,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 					j++;
 					if (ft_strcmp(com, limiters[no]) == 0)
 						no++;
-					// free(com);
+					free(com);
 				}
 				
 			}
@@ -270,7 +277,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 				if (fd == -1)
 				{
 					perror("minishell");
-					// free_all_ul_split(limiters);
+					heredoc_child_cleanup(limiters, file, com);
 					exit (-1);
 				}
 				while (1)
@@ -284,7 +291,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 						fd = open(file, O_CREAT | O_RDWR, 0644); 
 						data->fd = fd;
 						data->i = nbr_del;
-						free_all_ul_split(limiters);
+						heredoc_child_cleanup(limiters, file, com);
 						exit (0);
 					}
 					if (com[0] && limiters[no + 1] == NULL)
@@ -292,35 +299,37 @@ int here_doc(t_node* node, char **envp, t_data *data)
 						j++;
 					if (ft_strcmp(com, limiters[no]) == 0)
 						no++;
-					// free(com);
 				}
 				
 			}
 			i++;
 		}
-		// free_all_ul_split(limiters);
+		heredoc_child_cleanup(limiters, file, com);
         exit(0);
     }
     else
     {
 		waitpid(pid, &status, 0);
-        if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
-        {
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
+		{
 			fd = open(file, O_RDONLY);
 			free(file);
-            if (fd == -1)
-            {
+			free_all_ul_split(limiters);
+			if (fd == -1)
+			{
 				perror("minishell");
-                return -1;
-            }
-            data->fd = fd;
-            data->status = WEXITSTATUS(status);
-            data->i = nbr_del;
-            return 0;
-        }
+				return -1;
+			}
+			data->fd = fd;
+			data->status = WEXITSTATUS(status);
+			data->i = nbr_del;
+			return 0;
+		}
 		free(file);
+		free_all_ul_split(limiters);
 		data->status = WEXITSTATUS(status);
 		return -1;
+
     }
 }
 

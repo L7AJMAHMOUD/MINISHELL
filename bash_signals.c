@@ -22,16 +22,11 @@ void bash_sig_handler(int signum)
     	rl_redisplay();
 }
 
-void heredoc_sigint_handler(int signum)
-{
-	exit(130);
-}
-
 void signal_init(t_data *data)
 {
 	// printf ("hello\n");
 	if (signal(SIGINT, bash_sig_handler) == SIG_ERR
-		|| signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+	|| signal(SIGQUIT, SIG_IGN) == SIG_ERR)
 	{
 		perror("signal failed");
 		return;
@@ -42,6 +37,11 @@ void signal_init(t_data *data)
 	// 	kill(data->pid[i++], SIGKILL);
 }
 
+
+void heredoc_sigint_handler(int signum)
+{
+	exit(130);
+}
 void signal_init_here(t_data *data)
 {
 	if (signal(SIGINT, heredoc_sigint_handler) == SIG_ERR
