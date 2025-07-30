@@ -251,6 +251,13 @@ int here_doc(t_node* node, char **envp, t_data *data)
 						write(fd,"\n",1);
 					if ((!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))) 
 					{
+						if (!com)
+							ft_print("minishell: avertissement :« here-document » délimité par la fin du fichier", 0);
+						if (!com && limiters[no + 1] != NULL)
+						{
+							no++;
+							continue;
+						}
 						close(fd);
 						fd = open(file, O_CREAT | O_RDWR, 0644); 
 						data->i = nbr_del;
@@ -287,6 +294,13 @@ int here_doc(t_node* node, char **envp, t_data *data)
 						write(fd,"\n",1);
 					if (!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))
 					{
+						if (!com)
+							ft_print("minishell: avertissement :« here-document » délimité par la fin du fichier", 0);
+						if (!com && limiters[no + 1] != NULL)
+						{
+							no++;
+							continue;
+						}
 						close(fd);
 						fd = open(file, O_CREAT | O_RDWR, 0644); 
 						data->fd = fd;
