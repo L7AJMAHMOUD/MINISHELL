@@ -60,6 +60,7 @@ char	*expand_str(char *command, char **envp, t_data *data)
 	int var_len;
 	int p;
 	int m;
+	command = ft_strdup(command);
 	j = 0;
 	m = 0;
 	while(command[j])
@@ -269,7 +270,8 @@ int here_doc(t_node* node, char **envp, t_data *data)
 					{
 						arr_ = expand_str(com, envp, data);
 						if (arr_)
-						write(fd,arr_,ft_strlen(arr_));
+							write(fd,arr_,ft_strlen(arr_));
+						free(arr_);
 					}
 					j++;
 					if (ft_strcmp(com, limiters[no]) == 0)
@@ -313,6 +315,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 						j++;
 					if (ft_strcmp(com, limiters[no]) == 0)
 						no++;
+					free(com);
 				}
 				
 			}

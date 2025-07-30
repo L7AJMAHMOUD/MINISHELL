@@ -256,56 +256,51 @@ char	*find_path(char *path, char **envp, t_data *data)
 	}
 	return (find_executable_in_path(envp, data, path, &j));
 }
+static void	child_process(t_node *node, char **envp, t_data *data)
+{
+	char *path;
+
+	if (data->fd != -1 && dup2(data->fd, 0) == -1)
+	{
+		perror("dup2");
+		exit(1);
+	}
+	path = find_path(*(node->command), envp, data);
+	if (!path)
+		exit(1);
+	if (execve(path, node->command, envp) == -1)
+	{
+		write(2, "minishell: ", 11);
+		write(2, path, ft_strlen(path));
+		write(2, ": ", 2);
+		perror(NULL);
+		exit(-1);
+	}
+	write(2, "minishell: ", 11);
+	write(2, path, ft_strlen(path));
+	write(2, ": Permission denied\n", 20);
+	exit(-2);
+}
 
 void	exe(char **envp, t_node *node, t_data *data)
 {
-	char	*path;
-	int		i;
+	int	i;
 
 	i = fork();
 	if (i == -1)
-	{
-		perror("minishell");
-		return ;
-	}
+		return (perror("minishell"));
 	if (i == 0)
-	{
-		if (data->fd != -1)
-		{
-			if (dup2(data->fd, 0) == -1)
-			{
-				perror("dup2");
-				exit(1);
-			}
-		}
-		path = find_path(*(node->command), envp, data);
-		if (!path)
-			exit(1);
-		if (execve(path, node->command, envp) == -1)
-		{
-			write(2, "minishell: ", 11);
-			write(2, path, ft_strlen(path));
-			write(2, ": ", 3);
-			perror(NULL);
-			exit(-1);
-		}
-		write(2, "minishell: ", 11);
-		write(2, path, ft_strlen(path));
-		write(2, ": Permission denied\n", 20);
-		exit(-2);
-	}
+		child_process(node, envp, data);
 	data->pid[data->id++] = i;
 	data->status = wait_for_child(i);
-	if (WIFEXITED(data->status) && WEXITSTATUS(data->status) == 0)
+	if (WIFEXITED(data->status))
 	{
 		data->status = WEXITSTATUS(data->status);
-		return ;
+		if (data->status == 255)
+			data->status = 126;
 	}
-	data->status = WEXITSTATUS(data->status);
-	if (data->status == 255)
-		data->status = 126;
-	return ;
 }
+
 // 	if (data->status == 1)
 // 		data->status = 127;
 // 	else if (WEXITSTATUS(data->status) == 255)
