@@ -245,7 +245,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 					if ((!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))) 
 					{
 						close(fd);
-						fd = open(file, O_CREAT | O_RDWR, 0644); \
+						fd = open(file, O_CREAT | O_RDWR, 0644); 
 						data->i = nbr_del;
 						data->fd = fd;
 						free_all_ul_split(limiters);

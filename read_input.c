@@ -113,6 +113,7 @@ void	ft_exit(char ***envp, t_node *node, t_data *data)
 	free(data->path);
 	free(data->pwd);
 	free(data->pid);
+    cleanup_fds();
 	exit(data->status);
 }
 
@@ -203,6 +204,7 @@ void    read_input(char ***envp, t_data *data)
                 free(data->path);
             free(data->pwd);
             free(data->pid);
+            cleanup_fds();
             exit (data->status);
         }
         add_history(command);

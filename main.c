@@ -12,6 +12,22 @@
 
 #include "minishell.h"
 
+void cleanup_fds(void)
+{
+	int fd;
+	int max_fd = 1024;
+
+    fd = 3;
+	while (fd < max_fd)
+	{
+		if (fcntl(fd, F_GETFD) != -1)
+		{
+			close(fd);
+		}
+        fd++;
+	}
+}
+
 char **read_stock(char **envp, t_data *data)
 {
     int i;
@@ -99,4 +115,5 @@ int main(int ac, char **av, char **envp)
 	}
     else
         invalid_param();
+    return (free(data.pid), free(data.pwd), free(data.path), cleanup_fds(), 0 );
 }

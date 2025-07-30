@@ -38,7 +38,7 @@ int redirect_output_fd(char **command, t_data *data)
 				return -1;
 			}
 			if (dup2(fd, 1) == -1)
-				return (perror("dup2 failed"), -1);
+				return (close(fd), perror("dup2 failed"), -1);
 			if (close(fd) == -1)
 				return (perror("close failed"), -1);
 		}

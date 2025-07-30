@@ -199,5 +199,5 @@ void	list(char **command);
 int	wait_for_child(pid_t pid);
 void	heredoc_sigint_handler(int sig);
 void	signal_init_here(t_data *data);
-
+void cleanup_fds(void);
 #endif
