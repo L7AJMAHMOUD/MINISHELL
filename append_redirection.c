@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   append_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 18:00:31 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/24 21:08:02 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/07/30 10:56:35 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	append_to_fd(char **command, t_data *data)
+int	append_to_fd(char **command, t_command *arr, t_data *data)
 {
 	int	i;
 	int	fd;
@@ -27,7 +27,7 @@ int	append_to_fd(char **command, t_data *data)
 			{
 				data->status = 1;
 				write(2, "minishell : ", 13);
-				write(2, command[i + 1], ft_strlen(command[i + 1]));
+				write(2, arr[i + 1].command, ft_strlen(arr[i + 1].command));
 				write(2, " : ", 3);
 				perror(NULL);
 				return (-1);

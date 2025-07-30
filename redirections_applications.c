@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:35:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/30 09:16:29 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/30 10:58:30 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ char	**apply_redirections(t_node *node, char **envp, t_data *data,int s_int, int
 			data->i = 0;
 			if (ft_strcmp(node->command[i], ">") == 0 && node->arr[i].q == 0)
 			{
-				if (redirect_output_fd(node->command, data) == -1)
+				if (redirect_output_fd(node->command, node->arr, data) == -1)
 					return (NULL);
 			}
 			else if (ft_strcmp(node->command[i], ">>") == 0 && node->arr[i].q == 0)
 			{
-				if (append_to_fd(node->command, data) == -1)
+				if (append_to_fd(node->command, node->arr, data) == -1)
 					return (NULL);
 			}
 			else if (ft_strcmp(node->command[i], "<") == 0 && node->arr[i].q == 0)
