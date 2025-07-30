@@ -96,3 +96,12 @@ echo hi | >./outfiles/outfile01 echo bye >./test_files/invalid_permission
 echo hi | echo bye >./test_files/invalid_permission
 
 export GHOST=123 | env | grep GHOST
+
+
+----------NEW---------------
+▄︻デ══━一 🎯 > cat
+^\^\^\^\^\^\^\^\^\^\\^C
+
+▄︻デ══━一 🎯 > ^C
+▄︻デ══━一 🎯 > $?
+minihell: 0: command not found

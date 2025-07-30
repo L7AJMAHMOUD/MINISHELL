@@ -82,10 +82,12 @@ int	pip(t_node *node, char ***envp, t_data *data, t_node *cur)
 {
 	int		fds[6];
 	int		pid;
+	int 	i;
 
 	fds[0] = -1;
 	fds[4] = dup(0);
 	fds[5] = dup(1);
+	i = 0;
 	while (cur)
 	{
 		fds[1] = check_here_doc(cur);
@@ -93,8 +95,11 @@ int	pip(t_node *node, char ***envp, t_data *data, t_node *cur)
 			return (1);
 		data->envp = envp;
 		pid = handle_child(cur, node, data, fds);
-		if (fds[1] == -1 || (!cur->next && fds[1] != -1))
+		if (i != 1 && (fds[1] == -1 || (!cur->next && fds[1] != -1) || (!cur->next->next && cur->next && !cur->next->command[0] && fds[1] != -1)))
+		{
+			i = 1;
 			waitpid(pid, &data->status, 0);
+		}
 		cur = cur->next;
 	}
 	while (1)

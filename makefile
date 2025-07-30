@@ -112,7 +112,7 @@
 # .PHONY : all clean fclean re
 
 NAME = minishell
-CC = cc
+CC = cc -g -fsanitize=address
 FLAGS = 
 HEAD = minishell.h
 RM = rm -f

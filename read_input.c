@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/30 09:27:07 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/30 11:46:30 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,11 @@ int	ft_strisdigit(char *c)
 {
 	int i = 0;
 
-	if (!c || c[0] == '\0')
+	while (c[i] <= 32)
+		i++;
+	if (!c || c[i] == '\0')
 		return (0);
-	if (c[0] == '-' || c[0] == '+')
+	if (c[i] == '-' || c[i] == '+')
 		i++;
 	if (c[i] == '\0')
 		return (0);
@@ -82,6 +84,13 @@ int	ft_strisdigit(char *c)
 		if (c[i] < '0' || c[i] > '9')
 			return (0);
 		i++;
+        if (c[i] <= 32)
+        {
+            while (c[i] <= 32 && c[i])
+		        i++;
+            if (c[i])
+                return (0);
+        }
 	}
 	return (1);
 }
@@ -106,6 +115,7 @@ void	ft_exit(char ***envp, t_node *node, t_data *data)
 		{
 			ft_print("exit: numeric argument required", 0);
 			data->status = 2;
+            return ;
 		}
 	}
 	free_all_ul_split(*envp);
@@ -191,10 +201,8 @@ void    read_input(char ***envp, t_data *data)
             data->pid[k] = 0;
         data->id = 0;
         signal_init(data);
-        // if (data->status == 0)
-            command = readline("\033[31m▄\033[32m︻\033[33mデ\033[34m══━\033[31m一\033[32m 🎯 > \033[0m" );
-		// else
-        //     command = readline("\033[31m▄\033[32m︻\033[33mデ\033[34m══━\033[31m一\033[32m 💀 > \033[0m" );
+        data->status = 0;
+            command = readline("MINISHELL-1.0$ " );
         if (!command)
         {
             ft_print("\nexit", 0);

@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:22 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/30 09:27:03 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/30 11:01:21 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ int main(int ac, char **av, char **envp)
     (void)av;
     t_data data;
     char buff[BUFFER_SIZE];
-    // f();
-    atexit(f);
+    // // f();
+    // atexit(f);
     if(!getcwd(buff, BUFFER_SIZE))
     {
         ft_print("minishell : Erreur initialisation",0);

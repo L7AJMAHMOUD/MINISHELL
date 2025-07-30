@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:49:37 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/30 09:26:50 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/30 11:27:28 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 				if (fd == -1)
 				{
 					perror("minishell");
-					free_all_ul_split(limiters);
+					// free_all_ul_split(limiters);
 					exit (-1);
 				}
 				while (1)
@@ -248,7 +248,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 						fd = open(file, O_CREAT | O_RDWR, 0644); 
 						data->i = nbr_del;
 						data->fd = fd;
-						free_all_ul_split(limiters);
+						// free_all_ul_split(limiters);
 						exit (0);
 					}
 					if (com[0] && limiters[no + 1] == NULL)
@@ -260,7 +260,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 					j++;
 					if (ft_strcmp(com, limiters[no]) == 0)
 						no++;
-					free(com);
+					// free(com);
 				}
 				
 			}
@@ -270,7 +270,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 				if (fd == -1)
 				{
 					perror("minishell");
-					free_all_ul_split(limiters);
+					// free_all_ul_split(limiters);
 					exit (-1);
 				}
 				while (1)
@@ -292,13 +292,13 @@ int here_doc(t_node* node, char **envp, t_data *data)
 						j++;
 					if (ft_strcmp(com, limiters[no]) == 0)
 						no++;
-					free(com);
+					// free(com);
 				}
 				
 			}
 			i++;
 		}
-		free_all_ul_split(limiters);
+		// free_all_ul_split(limiters);
         exit(0);
     }
     else
