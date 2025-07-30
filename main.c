@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user01 <user01@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:22 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/16 12:12:57 by user01           ###   ########.fr       */
+/*   Updated: 2025/07/30 09:27:03 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void cleanup_fds(void)
 		fd++;
 	}
 }
+
 
 char **read_stock(char **envp, t_data *data)
 {
@@ -68,13 +69,18 @@ char **read_stock(char **envp, t_data *data)
     return str;
 }
 
+void f()
+{
+    system("leaks minishell");
+}
 int main(int ac, char **av, char **envp)
 {
     (void)ac;
     (void)av;
     t_data data;
     char buff[BUFFER_SIZE];
-
+    // f();
+    atexit(f);
     if(!getcwd(buff, BUFFER_SIZE))
     {
         ft_print("minishell : Erreur initialisation",0);

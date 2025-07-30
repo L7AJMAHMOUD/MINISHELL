@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:35:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/27 21:43:53 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/30 09:16:29 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ char	**apply_redirections(t_node *node, char **envp, t_data *data,int s_int, int
 				i += (data->i) * 2;
 				dup2(s_p, 1);
 				dup2(s_po, 0);
-				// close(s_p);
 				continue;
 			}
 			i++;

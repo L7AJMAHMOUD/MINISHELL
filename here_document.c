@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:49:37 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/27 22:03:47 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/30 09:26:50 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
     char *file = here_doc_data();
     char **limiters = get_delimiters(node->arr, node->command);
     if (!limiters || !file)
-	return -1;
+		return -1;
     
     while (limiters[nbr_del])
 	nbr_del++;
@@ -304,7 +304,6 @@ int here_doc(t_node* node, char **envp, t_data *data)
     else
     {
 		waitpid(pid, &status, 0);
-		free_all_ul_split(limiters);
         if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
         {
 			fd = open(file, O_RDONLY);
