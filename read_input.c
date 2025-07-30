@@ -165,6 +165,17 @@ int check_node_syntex(t_node *tmp)
     }
     return 1;
 }
+void restore_sigint_handler(void)
+{
+	struct sigaction sa;
+
+	sa.sa_sigaction = bash_sig_handler;
+	sa.sa_flags = SA_SIGINFO;
+	sigemptyset(&sa.sa_mask);
+
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+		perror("sigaction restore");
+}
 int wait_for_child(pid_t pid)
 {
 	int status;
@@ -181,7 +192,7 @@ int wait_for_child(pid_t pid)
         write(1, "\n", 1);
 
 	//  Restore handlers after child ends
-	signal(SIGINT, bash_sig_handler);
+	restore_sigint_handler();
 	signal(SIGQUIT, SIG_IGN);
     return status;
 }
@@ -192,6 +203,7 @@ void    read_input(char ***envp, t_data *data)
 	t_node *node;
 	t_node *tmp;
 
+    signal_init(data);
     while (1)
     {
         g_hsig = 0;
@@ -200,8 +212,7 @@ void    read_input(char ***envp, t_data *data)
         for (int k = 0; k < 2000; k++)
             data->pid[k] = 0;
         data->id = 0;
-        signal_init(data);
-            command = readline("MINISHELL-1.0$ " );
+        command = readline("MINISHELL-1.0$ " );
         if (!command)
         {
             ft_print("\nexit", 0);

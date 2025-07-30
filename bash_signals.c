@@ -12,29 +12,33 @@
 
 #include "minishell.h"
 
-void bash_sig_handler(int signum)
+static t_data *g_data = NULL;
+
+void bash_sig_handler(int signum, siginfo_t *info, void *context)
 {
-    (void)signum;
-    write(STDOUT_FILENO, "\n", 1);
+	(void)signum;
+	(void)info;
+	(void)context;
+
+	printf("g -> %s\n", g_data ->path);
+	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
-    rl_replace_line("", 0);
-	if (g_hsig == 0)
-    	rl_redisplay();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 void signal_init(t_data *data)
 {
-	// printf ("hello\n");
-	if (signal(SIGINT, bash_sig_handler) == SIG_ERR
-	|| signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-	{
-		perror("signal failed");
-		return;
-	}
-	// data->status = 130;
-	// int i = 0;
-	// while (i < data->id)
-	// 	kill(data->pid[i++], SIGKILL);
+	struct sigaction sa;
+
+	g_data = data; 
+	sa.sa_sigaction = bash_sig_handler;
+	sa.sa_flags = SA_SIGINFO;
+	sigemptyset(&sa.sa_mask);
+
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+		perror("sigaction");
+	signal(SIGQUIT, SIG_IGN);
 }
 
 
