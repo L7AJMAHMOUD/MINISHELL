@@ -252,7 +252,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 					if ((!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))) 
 					{
 						if (!com)
-							ft_print("minishell: avertissement :« here-document » délimité par la fin du fichier", 0);
+							ft_print("minishell: warning: here-document delimited by end-of-file", 0);
 						if (!com && limiters[no + 1] != NULL)
 						{
 							no++;
@@ -295,7 +295,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 					if (!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))
 					{
 						if (!com)
-							ft_print("minishell: avertissement :« here-document » délimité par la fin du fichier", 0);
+							ft_print("minishell: warning: here-document delimited by end-of-file", 0);
 						if (!com && limiters[no + 1] != NULL)
 						{
 							no++;
