@@ -14,17 +14,14 @@
 
 void cleanup_fds(void)
 {
-	int fd;
-	int max_fd = 1024;
+	int	fd;
+	int	max_fd = 1024;
 
-    fd = 3;
+	fd = 3;
 	while (fd < max_fd)
 	{
-		if (fcntl(fd, F_GETFD) != -1)
-		{
-			close(fd);
-		}
-        fd++;
+		close(fd);
+		fd++;
 	}
 }
 
