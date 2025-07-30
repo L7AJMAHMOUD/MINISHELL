@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:44:11 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/30 11:46:30 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/07/30 12:02:55 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,6 @@ void    read_input(char ***envp, t_data *data)
             data->pid[k] = 0;
         data->id = 0;
         signal_init(data);
-        data->status = 0;
             command = readline("MINISHELL-1.0$ " );
         if (!command)
         {
