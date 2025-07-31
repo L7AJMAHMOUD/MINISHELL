@@ -243,7 +243,7 @@ void    read_input(char ***envp, t_data *data)
             indx.i = -1;
             indx.j = -1;
             indx.p = 0;
-            tmp->command = apply_redirections(tmp, *envp, data, indx);
+            tmp->command = apply_redirections(tmp, *envp, data, &indx);
 	        if((tmp)->command && check_command((tmp)->command, envp, node, data))
             {
                 exe(*envp, node, data);

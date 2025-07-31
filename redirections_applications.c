@@ -32,7 +32,7 @@ int	handle_heredoc(t_node *node, t_data *data, t_indexes *indx, int *i)
 		dup2(indx->j, 1);
 		dup2(indx->i, 0);
 	}
-	if (here_doc(node, data->envp, data) == -1 && node->arr[*i].q == 0)
+	if (here_doc(node, *(data->envp), data) == -1 && node->arr[*i].q == 0)
 		return (-1);
 	*i += (data->i) * 2;
 	dup2(s_p, 1);
@@ -55,7 +55,7 @@ char	**apply_redirections(t_node *node, char **envp, t_data *data, t_indexes *in
 	int			i;
 
 	i = 0;
-	data->envp = envp;
+	data->envp = &envp;
 	if (indx->p == 0)
 	{
 		if (save_check(&s_in, &s_out))

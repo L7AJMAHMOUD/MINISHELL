@@ -52,8 +52,8 @@ static void	child_process(t_node *cur, t_node *node, t_data *data, int *fds)
 		dup2(fds[3], STDOUT_FILENO);
 		close(fds[3]);
 	}
-	indx.i = fd[4];
-	indx.j = fd[5];
+	indx.i = fds[4];
+	indx.j = fds[5];
 	indx.p = 0;
 	cur->command = apply_redirections(cur,
 			*(data->envp), data, &indx);
