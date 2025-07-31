@@ -292,7 +292,7 @@ void	exe(char **envp, t_node *node, t_data *data)
 	if (i == 0)
 		child_process(node, envp, data);
 	data->pid[data->id++] = i;
-	data->status = wait_for_child(i);
+	data->status = wait_for_child(i , data);
 	if (WIFEXITED(data->status))
 	{
 		data->status = WEXITSTATUS(data->status);

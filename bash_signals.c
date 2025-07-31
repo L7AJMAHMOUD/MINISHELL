@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-static t_data *g_data = NULL;
 
 void bash_sig_handler(int signum, siginfo_t *info, void *context)
 {
@@ -20,24 +19,23 @@ void bash_sig_handler(int signum, siginfo_t *info, void *context)
 	(void)info;
 	(void)context;
 
-	printf("g -> %s\n", g_data ->path);
-	write(STDOUT_FILENO, "\n", 1);
+	write(STDOUT_FILENO, "\nHH\n", 4);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
-void signal_init(t_data *data)
+void signal_init(t_data * data)
 {
 	struct sigaction sa;
 
-	g_data = data; 
 	sa.sa_sigaction = bash_sig_handler;
-	sa.sa_flags = SA_SIGINFO;
+	sa.sa_flags = SA_SIGINFO | SA_RESTART;
 	sigemptyset(&sa.sa_mask);
 
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 		perror("sigaction");
+
 	signal(SIGQUIT, SIG_IGN);
 }
 

@@ -165,18 +165,8 @@ int check_node_syntex(t_node *tmp)
     }
     return 1;
 }
-void restore_sigint_handler(void)
-{
-	struct sigaction sa;
 
-	sa.sa_sigaction = bash_sig_handler;
-	sa.sa_flags = SA_SIGINFO;
-	sigemptyset(&sa.sa_mask);
-
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-		perror("sigaction restore");
-}
-int wait_for_child(pid_t pid)
+int wait_for_child(pid_t pid, t_data *data)
 {
 	int status;
 
@@ -192,8 +182,8 @@ int wait_for_child(pid_t pid)
         write(1, "\n", 1);
 
 	//  Restore handlers after child ends
-	restore_sigint_handler();
-	signal(SIGQUIT, SIG_IGN);
+	
+    signal_init(data);
     return status;
 }
 
