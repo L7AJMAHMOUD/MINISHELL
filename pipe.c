@@ -39,6 +39,8 @@ static int	init_pipe(int *pipefd, t_node *current)
 
 static void	child_process(t_node *cur, t_node *node, t_data *data, int *fds)
 {
+	t_indexes indx;
+
 	if (fds[0] != -1)
 	{
 		dup2(fds[0], STDIN_FILENO);
@@ -50,8 +52,11 @@ static void	child_process(t_node *cur, t_node *node, t_data *data, int *fds)
 		dup2(fds[3], STDOUT_FILENO);
 		close(fds[3]);
 	}
+	indx.i = fd[4];
+	indx.j = fd[5];
+	indx.p = 0;
 	cur->command = apply_redirections(cur,
-			*(data->envp), data, fds[4], fds[5], 0);
+			*(data->envp), data, &indx);
 	if (cur->command && check_command(cur->command, data->envp, cur, data))
 		exe(*(data->envp), cur, data);
 	free_all_node(cur);

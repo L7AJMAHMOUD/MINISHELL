@@ -194,6 +194,7 @@ void    read_input(char ***envp, t_data *data)
 	t_node *node;
 	t_node *tmp;
     int     p;
+    t_indexes indx;
 
     signal_init(data);
     while (1)
@@ -239,14 +240,20 @@ void    read_input(char ***envp, t_data *data)
 				free_all_node(node);
 				continue;
 			}
-            tmp->command = apply_redirections(tmp, *envp, data, -1, -1, 0);
+            indx.i = -1;
+            indx.j = -1;
+            indx.p = 0;
+            tmp->command = apply_redirections(tmp, *envp, data, indx);
 	        if((tmp)->command && check_command((tmp)->command, envp, node, data))
             {
                 exe(*envp, node, data);
 				if (data->fd != -1)
 					close(data->fd);
             }
-            apply_redirections(tmp, *envp, data, -1, -1, 1);
+            indx.i = -1;
+            indx.j = -1;
+            indx.p = 1;
+            apply_redirections(tmp, *envp, data, &indx);
 	        free_all_node(node);
 		}
         free(command);

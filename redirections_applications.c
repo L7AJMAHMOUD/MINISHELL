@@ -22,17 +22,17 @@ int	handle_simple_redirs(t_node *node, t_data *data, int i)
 		return (redirect_input_fd(node->command, data));
 	return (0);
 }
-int	handle_heredoc(t_node *node, char **envp, t_data *data, int s_int, int s_ou, int *i)
+int	handle_heredoc(t_node *node, t_data *data, t_indexes *indx, int *i)
 {
 	int	s_p = dup(1);
 	int	s_po = dup(0);
 
-	if (s_ou != -1 && s_int != -1)
+	if (indx->j != -1 && indx->i != -1)
 	{
-		dup2(s_ou, 1);
-		dup2(s_int, 0);
+		dup2(indx->j, 1);
+		dup2(indx->i, 0);
 	}
-	if (here_doc(node, envp, data) == -1 && node->arr[*i].q == 0)
+	if (here_doc(node, data->envp, data) == -1 && node->arr[*i].q == 0)
 		return (-1);
 	*i += (data->i) * 2;
 	dup2(s_p, 1);
@@ -48,14 +48,15 @@ int 	save_check(int *s_in, int *s_out)
 		return (1);
 	return (0);
 }
-char	**apply_redirections(t_node *node, char **envp, t_data *data, int s_int, int s_ou, int p)
+char	**apply_redirections(t_node *node, char **envp, t_data *data, t_indexes *indx)
 {
 	static int	s_in;
 	static int	s_out;
 	int			i;
 
 	i = 0;
-	if (p == 0)
+	data->envp = envp;
+	if (indx->p == 0)
 	{
 		if (save_check(&s_in, &s_out))
 			return (NULL);
@@ -65,7 +66,7 @@ char	**apply_redirections(t_node *node, char **envp, t_data *data, int s_int, in
 			if (handle_simple_redirs(node, data, i) == -1)
 				return (NULL);
 			else if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i].q == 0)
-				if (handle_heredoc(node, envp, data, s_int, s_ou, &i) == -1)
+				if (handle_heredoc(node, data, indx, &i) == -1)
 					return (NULL);
 			i++;
 		}
