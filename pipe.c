@@ -56,7 +56,7 @@ static void	child_process(t_node *cur, t_node *node, t_data *data, int *fds)
 	indx.j = fds[5];
 	indx.p = 0;
 	cur->command = apply_redirections(cur,
-			*(data->envp), data, &indx);
+			*(data->envp), data, indx);
 	if (cur->command && check_command(cur->command, data->envp, cur, data))
 		exe(*(data->envp), cur, data);
 	free_all_node(cur);
@@ -105,7 +105,6 @@ int	pip(t_node *node, char ***envp, t_data *data, t_node *cur)
 			i = 1;
 			waitpid(pid, &data->status, 0);
 		}
-		cleanup_fds();
 		cur = cur->next;
 	}
 	while (1)
@@ -113,5 +112,6 @@ int	pip(t_node *node, char ***envp, t_data *data, t_node *cur)
 			break;
 	if (data->status % 2 == 0 && data->status != 0)
 		data->status = data->status / 256;
+	cleanup_fds();
 	return (0);
 }

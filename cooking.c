@@ -201,7 +201,7 @@ char	*get_variable(char *str, char **envp, t_data *data)
 	return (NULL);
 }
 
-void	expand_env_variable(t_command *arr, int i, int *j, int p, t_data *data)
+void	expand_env_variable(t_command *arr, t_indexes indx, int *j, t_data *data)
 {
 	int		var_len;
 	char	*varname;
@@ -209,22 +209,22 @@ void	expand_env_variable(t_command *arr, int i, int *j, int p, t_data *data)
 	char	*tmp;
 	char	*str;
 
-	var_len = strlen_until_special(&(arr[i].command[*j]));
+	var_len = strlen_until_special(&(arr[indx.i].command[*j]));
 	varname = malloc(var_len + 1);
 	if (!varname)
 		return ;
-	strncpy(varname, &(arr[i].command[*j]), var_len);
+	strncpy(varname, &(arr[indx.i].command[*j]), var_len);
 	varname[var_len] = '\0';
 	tmp = get_variable(varname, arr->envp, data);
 	if (tmp)
 		val = ft_strdup(tmp);
 	else
 		val = NULL;
-	str = ft_strdup(&(arr[i].command[*j + var_len]));
-	arr[i].command[*j - 1 - p] = 0;
-	arr[i].command = ft_strjoin_(arr[i].command, val);
-	var_len = ft_strlen(arr[i].command);
-	arr[i].command = ft_strjoin_(arr[i].command, str);
+	str = ft_strdup(&(arr[indx.i].command[*j + var_len]));
+	arr[indx.i].command[*j - 1 - indx.p] = 0;
+	arr[indx.i].command = ft_strjoin_(arr[indx.i].command, val);
+	var_len = ft_strlen(arr[indx.i].command);
+	arr[indx.i].command = ft_strjoin_(arr[indx.i].command, str);
 	free(varname);
 	*j = var_len;
 }
@@ -288,6 +288,7 @@ void	handle_dollar(t_command *arr, int i, int j, t_data *data)
 {
 	int	p;
 	int	m;
+	t_indexes indx;
 
 	while (arr[i].command[j])
 	{
@@ -307,7 +308,11 @@ void	handle_dollar(t_command *arr, int i, int j, t_data *data)
 			else if (arr[i].command[j] == '?')
 				expand_exit_status(arr, i, &j, p);
 			else
-				expand_env_variable(arr, i, &j, p, data);
+			{
+				indx.i = i;
+				indx.p = p;
+				expand_env_variable(arr, indx, &j, data);
+			}
 		}
 	}
 }
