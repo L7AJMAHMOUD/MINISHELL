@@ -75,5 +75,6 @@ char	**clean_command(char **command, t_command *arr)
 	clean = copy_list(command, arr);
 	if (!clean)
 		return (NULL);
+	free_all_ul_split(command);
 	return (clean);
 }

@@ -12,71 +12,66 @@
 
 #include "minishell.h"
 
-char	**apply_redirections(t_node *node, char **envp, t_data *data,int s_int, int s_ou, int p)
+int	handle_simple_redirs(t_node *node, t_data *data, int i)
 {
-	static int s_in;
-	static int s_out;
-	int s_p;
-	int i;
-	char **cmd;
+	if (ft_strcmp(node->command[i], ">") == 0 && node->arr[i].q == 0)
+		return (redirect_output_fd(node->command, node->arr, data));
+	else if (ft_strcmp(node->command[i], ">>") == 0 && node->arr[i].q == 0)
+		return (append_to_fd(node->command, node->arr, data));
+	else if (ft_strcmp(node->command[i], "<") == 0 && node->arr[i].q == 0)
+		return (redirect_input_fd(node->command, data));
+	return (0);
+}
+int	handle_heredoc(t_node *node, char **envp, t_data *data, int s_int, int s_ou, int *i)
+{
+	int	s_p = dup(1);
+	int	s_po = dup(0);
+
+	if (s_ou != -1 && s_int != -1)
+	{
+		dup2(s_ou, 1);
+		dup2(s_int, 0);
+	}
+	if (here_doc(node, envp, data) == -1 && node->arr[*i].q == 0)
+		return (-1);
+	*i += (data->i) * 2;
+	dup2(s_p, 1);
+	dup2(s_po, 0);
+	return (0);
+}
+
+int 	save_check(int *s_in, int *s_out)
+{
+	*s_in = dup(0);
+	*s_out = dup(1);
+	if (*s_in == -1 || *s_out == -1)
+		return (1);
+	return (0);
+}
+char	**apply_redirections(t_node *node, char **envp, t_data *data, int s_int, int s_ou, int p)
+{
+	static int	s_in;
+	static int	s_out;
+	int			i;
 
 	i = 0;
 	if (p == 0)
 	{
-		s_in = dup(0);
-		s_out = dup(1);
-		if (s_in == -1 || s_out == -1)
+		if (save_check(&s_in, &s_out))
 			return (NULL);
 		while (node->command[i])
 		{
 			data->i = 0;
-			if (ft_strcmp(node->command[i], ">") == 0 && node->arr[i].q == 0)
-			{
-				if (redirect_output_fd(node->command, node->arr, data) == -1)
-					return (NULL);
-			}
-			else if (ft_strcmp(node->command[i], ">>") == 0 && node->arr[i].q == 0)
-			{
-				if (append_to_fd(node->command, node->arr, data) == -1)
-					return (NULL);
-			}
-			else if (ft_strcmp(node->command[i], "<") == 0 && node->arr[i].q == 0)
-			{
-				if (redirect_input_fd(node->command, data) == -1)
-					return (NULL);
-			}
+			if (handle_simple_redirs(node, data, i) == -1)
+				return (NULL);
 			else if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i].q == 0)
-			{
-				s_p = dup(1);
-				int s_po = dup(0);
-				if (s_ou != -1 && s_int != -1)
-				{
-					dup2(s_ou, 1);
-					dup2(s_int, 0);
-				}
-				if (here_doc(node, envp, data)  == -1 && node->arr[i].q == 0)
+				if (handle_heredoc(node, envp, data, s_int, s_ou, &i) == -1)
 					return (NULL);
-				i += (data->i) * 2;
-				dup2(s_p, 1);
-				dup2(s_po, 0);
-				continue;
-			}
 			i++;
 		}
-		cmd = clean_command(node->command, node->arr);
-		if (!cmd)
-			return (NULL);
-		if (cmd)
-			free_all_ul_split(node->command);
-		return (cmd);
+		return (clean_command(node->command, node->arr));
 	}
-	if (s_in == 0 || s_out == 0)
+	if (s_in == 0 || s_out == 0 || dup2(s_in, 0) == -1 || dup2(s_out, 1) == -1)
 		return (NULL);
-	if (dup2(s_in, 0) == -1 || dup2(s_out, 1) == -1)
-		return (NULL);
-	close(s_in);
-	close(s_out);
-	s_in = 0;
-	s_out = 0;
-	return (NULL);
+	return (close(s_in), close(s_out), s_out = 0, s_in = 0, NULL);
 }
