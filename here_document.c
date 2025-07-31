@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-int g_hsig;
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -213,14 +212,13 @@ int here_doc(t_node* node, char **envp, t_data *data)
     int nbr_del = 0;
     int status;
 	
-	g_hsig = 1;
     char *file = here_doc_data();
     char **limiters = get_delimiters(node->arr, node->command);
     if (!limiters || !file)
 		return -1;
     
     while (limiters[nbr_del])
-	nbr_del++;
+		nbr_del++;
 	
     pid_t pid = fork();
     
@@ -229,7 +227,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 		perror("fork");
         return -1;
     }
-    
+
     if (pid == 0)
     {
 		signal_init_here(data);
@@ -238,6 +236,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 			j = 0;
 			if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i + 1].q == 0)
 			{
+				
 				fd = open(file, O_CREAT | O_RDWR, 0644); 
 				if (fd == -1)
 				{

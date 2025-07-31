@@ -13,35 +13,33 @@
 #include "minishell.h"
 
 
-void bash_sig_handler(int signum, siginfo_t *info, void *context)
+void bash_sig_handler(int signum)
 {
 	(void)signum;
-	(void)info;
-	(void)context;
 
-	write(STDOUT_FILENO, "\nHH\n", 4);
+	write(1, "\n", 1);	
+	g_hsig = 1;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+
 }
 
 void signal_init(t_data * data)
 {
-	struct sigaction sa;
-
-	sa.sa_sigaction = bash_sig_handler;
-	sa.sa_flags = SA_SIGINFO | SA_RESTART;
-	sigemptyset(&sa.sa_mask);
-
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-		perror("sigaction");
-
-	signal(SIGQUIT, SIG_IGN);
+	if (signal(SIGINT, bash_sig_handler) == SIG_ERR
+		|| signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+	{
+		perror("signal failed");
+		return;
+	}
 }
 
 
 void heredoc_sigint_handler(int signum)
 {
+	(void)signum;
+	write(1,"\n", 1);
 	exit(130);
 }
 void signal_init_here(t_data *data)

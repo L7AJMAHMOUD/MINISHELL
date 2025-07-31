@@ -180,7 +180,7 @@ char **dirham(char **str, char **envp);
 int  redirect_output_fd(char **command, t_command *arr, t_data *data);
 int redirect_input_fd(char **command, t_data *data);
 char **wildcart(char **st, char **envp);
-void    bash_sig_handler();
+void    bash_sig_handler(int signum);
 void	*ft_memset(void *b, int c, size_t len);
 void	cmd_final(char ***command);
 void shy_emoji_banner();
@@ -200,4 +200,5 @@ int	wait_for_child(pid_t pid , t_data *data);
 void	heredoc_sigint_handler(int sig);
 void	signal_init_here(t_data *data);
 void cleanup_fds(void);
+
 #endif

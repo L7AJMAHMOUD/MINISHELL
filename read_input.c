@@ -12,6 +12,9 @@
 
 #include "minishell.h"
 
+int g_hsig = 0;
+
+int alpha = 1;
 void free_all_node(t_node *node)
 {
 	t_node *tmp;
@@ -174,15 +177,13 @@ int wait_for_child(pid_t pid, t_data *data)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 
-	waitpid(pid, &status, 0);
-    // if ((status & 0x7F) == SIGINT) // SIGINT is usually 2
-    //     write(1, "\n", 1);
+	waitpid(pid, &status, 0);;
 
     if (WTERMSIG(status) == SIGINT)
         write(1, "\n", 1);
 
 	//  Restore handlers after child ends
-	
+    
     signal_init(data);
     return status;
 }
@@ -196,13 +197,19 @@ void    read_input(char ***envp, t_data *data)
     signal_init(data);
     while (1)
     {
-        g_hsig = 0;
         node = NULL;
 		data->fd = -1;
         for (int k = 0; k < 2000; k++)
             data->pid[k] = 0;
         data->id = 0;
         command = readline("MINISHELL-1.0$ " );
+        if (g_hsig == 1)
+        {
+            // tqder dir free l hadak chi li bghit hna ela hssabi hit hna kyna ctrl + c 
+            // command[0] = 'X';
+            // free(data);
+            g_hsig = 0;
+        }
         if (!command)
         {
             ft_print("\nexit", 0);
