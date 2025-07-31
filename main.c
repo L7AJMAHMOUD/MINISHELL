@@ -73,6 +73,13 @@ void f()
 {
     system("leaks minishell");
 }
+
+int isapure(void)
+{
+    if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
+        return 0;
+    return 1;
+}
 int main(int ac, char **av, char **envp)
 {
     (void)ac;
@@ -81,6 +88,11 @@ int main(int ac, char **av, char **envp)
     char buff[BUFFER_SIZE];
     // // f();
     // atexit(f);
+    if (isapure())
+    {
+        write(STDERR_FILENO, "minishell: error: non-TTY mode is not supported\n", 49);
+        return 1;
+    }
     if(!getcwd(buff, BUFFER_SIZE))
     {
         ft_print("minishell : Erreur initialisation",0);
