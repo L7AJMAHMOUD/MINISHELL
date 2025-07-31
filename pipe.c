@@ -105,6 +105,7 @@ int	pip(t_node *node, char ***envp, t_data *data, t_node *cur)
 			i = 1;
 			waitpid(pid, &data->status, 0);
 		}
+		cleanup_fds();
 		cur = cur->next;
 	}
 	while (1)
