@@ -36,19 +36,38 @@ void signal_init(t_data * data)
 }
 
 
-void heredoc_sigint_handler(int signum)
+static t_data *get_heredoc_data(t_data *new_data)
 {
-	(void)signum;
-	write(1,"\n", 1);
-	exit(130);
+    static t_data *stored_data = NULL;
+    
+    if (new_data != NULL)
+        stored_data = new_data;
+    
+    return stored_data;
 }
+
 void signal_init_here(t_data *data)
 {
-	if (signal(SIGINT, heredoc_sigint_handler) == SIG_ERR
-		|| signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-	{
-		perror("signal failed");
-		return;
-	}
-	
+    get_heredoc_data(data);
+    
+    if (signal(SIGINT, heredoc_sigint_handler) == SIG_ERR
+        || signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+    {
+        perror("signal failed");
+        return;
+    }
+}
+
+void heredoc_sigint_handler(int signum)
+{
+    t_data *data;
+    
+    (void)signum;
+    write(1, "\n", 1);
+    data = get_heredoc_data(NULL);
+    if (data && data->path)
+    {
+		heredoc_child_cleanup(data->limiters, data->file, data->com);
+		exit(130);
+    }
 }

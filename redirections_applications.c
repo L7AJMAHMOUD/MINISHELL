@@ -60,15 +60,15 @@ char	**apply_redirections(t_node *node, char **envp, t_data *data, t_indexes ind
 	if (indx.p == 0)
 	{
 		if (save_check(&s_in, &s_out))
-			return (NULL);
+			return (free_all_ul_split(node->command), NULL);
 		while (node->command[i])
 		{
 			data->i = 0;
 			if (handle_simple_redirs(node, data, i) == -1)
-				return (NULL);
+				return (free_all_ul_split(node->command), NULL);
 			else if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i].q == 0)
 				if (handle_heredoc(node, data, indx, &i) == -1)
-					return (NULL);
+					return (free_all_ul_split(node->command), NULL);
 			i++;
 		}
 		return (clean_command(node->command, node->arr));

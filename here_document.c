@@ -214,6 +214,8 @@ int here_doc(t_node* node, char **envp, t_data *data)
 	
     char *file = here_doc_data();
     char **limiters = get_delimiters(node->arr, node->command);
+	data->file = file;
+	data->limiters = limiters;
     if (!limiters || !file)
 		return -1;
     
@@ -247,6 +249,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 				while (1)
 				{
 					com = readline("> ");
+					data->com = com;
 					if (j != 0)
 						write(fd,"\n",1);
 					if ((!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))) 
@@ -291,6 +294,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
 				while (1)
 				{
 					com = readline("> ");
+					data->com = com;
 					if (j != 0)
 						write(fd,"\n",1);
 					if (!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))

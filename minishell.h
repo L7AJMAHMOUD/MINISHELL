@@ -50,6 +50,9 @@ typedef struct s_data
 	char ***envp;
 	char *path;
 	int *pid;
+	char *com;
+	char *file;
+	char **limiters;
 	int fd;
 	int id;
 	int i;
@@ -176,6 +179,7 @@ int check_command(char **str, char ***envp, t_node *node, t_data *data);
 void free_all_node(t_node *node);
 int	pip(t_node *node, char ***envp, t_data *data, t_node *cur);
 char **add_to_envp(char **envp, char *ligne, int i);
+void heredoc_child_cleanup(char **limiters, char *file, char *com);
 char **dirham(char **str, char **envp);
 int  redirect_output_fd(char **command, t_command *arr, t_data *data);
 int redirect_input_fd(char **command, t_data *data);
