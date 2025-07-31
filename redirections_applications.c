@@ -68,7 +68,8 @@ char	**apply_redirections(t_node *node, char **envp, t_data *data, t_indexes *in
 			else if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i].q == 0)
 				if (handle_heredoc(node, data, indx, &i) == -1)
 					return (NULL);
-			i++;
+			if (node->command[i])
+				i++;
 		}
 		return (clean_command(node->command, node->arr));
 	}
