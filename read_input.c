@@ -205,16 +205,16 @@ void    read_input(char ***envp, t_data *data)
             data->pid[k] = 0;
         data->id = 0;
         command = readline("MINISHELL-1.0$ " );
-        if (g_hsig == 1)
-        {
-            p = 0;
-            while (p < data->id)
-            {
-                kill(data->pid[p++], SIGTERM);
-            }
-            data->status = 130;
-            g_hsig = 0;
-        }
+        // if (g_hsig == 1)
+        // {
+        //     p = 0;
+        //     while (p < data->id)
+        //     {
+        //         kill(data->pid[p++], SIGTERM);
+        //     }
+        //     data->status = 130;
+        //     g_hsig = 0;
+        // }
         if (!command)
         {
             ft_print("\nexit", 0);
