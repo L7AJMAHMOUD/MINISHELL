@@ -193,6 +193,7 @@ void    read_input(char ***envp, t_data *data)
     char *command;
 	t_node *node;
 	t_node *tmp;
+    int     p;
 
     signal_init(data);
     while (1)
@@ -205,9 +206,12 @@ void    read_input(char ***envp, t_data *data)
         command = readline("MINISHELL-1.0$ " );
         if (g_hsig == 1)
         {
-            // tqder dir free l hadak chi li bghit hna ela hssabi hit hna kyna ctrl + c 
-            // command[0] = 'X';
-            // free(data);
+            p = 0;
+            while (p < data->id)
+            {
+                kill(data->pid[p++], SIGTERM);
+            }
+            data->status = 130;
             g_hsig = 0;
         }
         if (!command)
