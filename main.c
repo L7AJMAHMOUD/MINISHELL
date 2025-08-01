@@ -80,55 +80,59 @@ int isapure(void)
         return 0;
     return 1;
 }
-int main(int ac, char **av, char **envp)
+static int	is_not_tty(void)
 {
-    (void)ac;
-    (void)av;
-    t_data data;
-    char buff[BUFFER_SIZE];
-    // // f();
-    // atexit(f);
-    if (isapure())
-    {
-        write(STDERR_FILENO, "minishell: error: non-TTY mode is not supported\n", 49);
-        return 1;
-    }
-    if(!getcwd(buff, BUFFER_SIZE))
-    {
-        ft_print("minishell : Erreur initialisation",0);
-        return 1;
-    }
-    data.pwd = ft_strdup(buff);
-    if (!data.pwd)
-    {
-		free(data.pwd);
-        ft_print("minishell : Erreur initialisation",0);
-        return 1;
-    }
-    data.path = ft_strdup("/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin");
-    if (!data.path)
-    {
-        free(data.pwd);
-        ft_print("minishell : Erreur initialisation",0);
-        return 1;
-    }
-    data.pid = malloc(2000 * sizeof(int));
-    if (!data.pid)
-    {
-        free(data.pwd);
-        free(data.path);
-        ft_print("minishell : Erreur initialisation",0);
-        return 1;
-    }
-	data.status = 0;
-    if (ac == 1)
+	if (isapure())
 	{
-        envp = read_stock(envp, &data);
-        if (!envp)
-            return (free(data.pwd), free(data.path), 1);
-        read_input(&envp, &data);
+		write(STDERR_FILENO, "minishell: error: non-TTY mode is not supported\n", 49);
+		return (1);
 	}
-    else
-        invalid_param();
-    return (free(data.pid), free(data.pwd), free(data.path), cleanup_fds(), 0 );
+	return (0);
+}
+
+static int	init_pwd(t_data *data)
+{
+	char	buff[BUFFER_SIZE];
+
+	if (!getcwd(buff, BUFFER_SIZE))
+		return (ft_print("minishell : Erreur initialisation", 0), 1);
+	data->pwd = ft_strdup(buff);
+	if (!data->pwd)
+		return (ft_print("minishell : Erreur initialisation", 0), 1);
+	return (0);
+}
+
+static int	init_env(t_data *data)
+{
+	data->path = ft_strdup("/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin");
+	if (!data->path)
+		return (free(data->pwd), ft_print("minishell : Erreur initialisation", 0), 1);
+	data->pid = malloc(2000 * sizeof(int));
+	if (!data->pid)
+		return (free(data->pwd), free(data->path),
+			ft_print("minishell : Erreur initialisation", 0), 1);
+	data->status = 0;
+	return (0);
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	t_data	data;
+
+	(void)ac;
+	(void)av;
+	if (is_not_tty())
+		return (1);
+	if (init_pwd(&data) || init_env(&data))
+		return (1);
+	if (ac == 1)
+	{
+		envp = read_stock(envp, &data);
+		if (!envp)
+			return (free(data.pwd), free(data.path), 1);
+		read_input(&envp, &data);
+	}
+	else
+		invalid_param();
+	return (free(data.pid), free(data.pwd), free(data.path), cleanup_fds(), 0);
 }

@@ -204,5 +204,8 @@ int	wait_for_child(pid_t pid , t_data *data);
 void	heredoc_sigint_handler(int sig);
 void	signal_init_here(t_data *data);
 void cleanup_fds(void);
+int strlen_(char *str);
+char	*ft_strncpy(char *dst, const char *src, size_t n);
+char	*expand_str(char *cmd, char **envp, t_data *data);
 
 #endif

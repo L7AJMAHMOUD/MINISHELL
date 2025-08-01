@@ -177,80 +177,81 @@ int wait_for_child(pid_t pid, t_data *data)
 
 	waitpid(pid, &status, 0);
 
-	signal_init(data); // restore your shell signal handling
+	signal_init(data);
 	return status;
 }
 
-void    read_input(char ***envp, t_data *data)
+static void	init_loop_data(t_data *data)
 {
-    char *command;
-	t_node *node;
-	t_node *tmp;
-    int     p;
-    t_indexes indx;
-
-    signal_init(data);
-    while (1)
-    {
-        node = NULL;
-		data->fd = -1;
-        for (int k = 0; k < 2000; k++)
-            data->pid[k] = 0;
-        data->id = 0;
-        command = readline("MINISHELL-1.0$ " );
-        // if (g_hsig == 1)
-        // {
-        //     p = 0;
-        //     while (p < data->id)
-        //     {
-        //         kill(data->pid[p++], SIGTERM);
-        //     }
-        //     data->status = 130;
-        //     g_hsig = 0;
-        // }
-        if (!command)
-        {
-            ft_print("\nexit", 0);
-            if (*envp)
-                free_all_ul_split(*envp);
-            if (data->path)
-                free(data->path);
-            free(data->pwd);
-            free(data->pid);
-            cleanup_fds();
-            exit (data->status);
-        }
-        add_history(command);
-        if(command_analyze(command, data) == 0)
-		{
-            command_tokenization(&node, command, *envp, data);
-	        tmp = node;
-			if (node -> next)
-			{
-				pip(node, envp, data, node);
-                free(command);
-                command = NULL;
-				free_all_node(node);
-				continue;
-			}
-            indx.i = -1;
-            indx.j = -1;
-            indx.p = 0;
-            tmp->command = apply_redirections(tmp, *envp, data, indx);
-	        if((tmp)->command && check_command((tmp)->command, envp, node, data))
-            {
-                exe(*envp, node, data);
-				if (data->fd != -1)
-					close(data->fd);
-            }
-            indx.i = -1;
-            indx.j = -1;
-            indx.p = 1;
-            apply_redirections(tmp, *envp, data, indx);
-	        free_all_node(node);
-		}
-        free(command);
-        command = NULL;
-    }
+	data->fd = -1;
+	for (int k = 0; k < 2000; k++)
+		data->pid[k] = 0;
+	data->id = 0;
 }
+
+static void	handle_null_command(char ***envp, t_data *data)
+{
+	ft_print("exit", 0);
+	if (*envp)
+		free_all_ul_split(*envp);
+	if (data->path)
+		free(data->path);
+    if (data->pwd)
+	    free(data->pwd);
+    if (data->pid)
+	    free(data->pid);
+	cleanup_fds();
+	exit(data->status);
+}
+
+static void	execute_command(t_node *node, char ***envp, t_data *data, char *command)
+{
+	t_node	*tmp;
+	t_indexes	indx;
+
+	tmp = node;
+	if (node->next)
+	{
+		pip(node, envp, data, node);
+		free_all_node(node);
+		return ;
+	}
+	indx.i = -1;
+	indx.j = -1;
+	indx.p = 0;
+	tmp->command = apply_redirections(tmp, *envp, data, indx);
+	if (tmp->command && check_command(tmp->command, envp, node, data))
+	{
+		exe(*envp, node, data);
+		if (data->fd != -1)
+			close(data->fd);
+	}
+	indx.p = 1;
+	apply_redirections(tmp, *envp, data, indx);
+	free_all_node(node);
+}
+
+void	read_input(char ***envp, t_data *data)
+{
+	char	*command;
+	t_node	*node;
+
+	signal_init(data);
+	while (1)
+	{
+		node = NULL;
+		init_loop_data(data);
+		command = readline("MINISHELL-1.0$ ");
+		if (!command)
+			handle_null_command(envp, data);
+		add_history(command);
+		if (command_analyze(command, data) == 0)
+		{
+			command_tokenization(&node, command, *envp, data);
+			execute_command(node, envp, data, command);
+		}
+		free(command);
+	}
+}
+
 
