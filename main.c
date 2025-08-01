@@ -99,7 +99,7 @@ int main(int ac, char **av, char **envp)
         return 1;
     }
     data.pwd = ft_strdup(buff);
-     if (!data.pwd)
+    if (!data.pwd)
     {
 		free(data.pwd);
         ft_print("minishell : Erreur initialisation",0);

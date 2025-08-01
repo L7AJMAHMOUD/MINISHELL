@@ -38,7 +38,9 @@ void bash_sig_handler(int signum)
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	rl_redisplay();
+    if (g_hsig == 0)
+	    rl_redisplay();
+    g_hsig = 0;
 
 }
 
@@ -77,7 +79,6 @@ void heredoc_sigint_handler(int signum)
     if (data)
     {
 		heredoc_child_cleanup(data->limiters, data->file, data->com);
-        write(1, "\n", 1);
 		exit(130);
     }
 }

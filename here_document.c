@@ -329,9 +329,10 @@ int here_doc(t_node* node, char **envp, t_data *data)
     }
     else
     {
-		signal(SIGINT, SIG_IGN);
+		g_hsig = 1;
 		waitpid(pid, &status, 0);
-		signal_init_here(data);
+		// signal(SIGINT, SIG_IGN);
+		// signal_init_here(data);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
 		{
 			fd = open(file, O_RDONLY);
