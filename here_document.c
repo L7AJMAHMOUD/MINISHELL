@@ -201,160 +201,151 @@ void heredoc_child_cleanup(char **limiters, char *file, char *com)
 	if (file) free(file);
 	if (com) free(com);
 }
-int here_doc(t_node* node, char **envp, t_data *data)
+int open_heredoc_fd(const char *file)
 {
-    int i = 0;
-    int j;
-    int fd;
-    char *com = NULL;
-    char *arr_;
-    int no = 0;
-    int nbr_del = 0;
-    int status;
-    char *file = here_doc_data();
-    char **limiters = get_delimiters(node->arr, node->command);
-	data->file = file;
-	data->limiters = limiters;
-    if (!limiters || !file)
-		return -1;
-    
-    while (limiters[nbr_del])
-		nbr_del++;
-	
-    pid_t pid = fork();
-    
-    if (pid == -1)
-    {
-		perror("fork");
-        return -1;
-    }
-
-    if (pid == 0)
-    {
-		signal_init_here(data);
-		while (node->command[i])
-		{
-			j = 0;
-			if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i + 1].q == 0)
-			{
-				
-				fd = open(file, O_CREAT | O_RDWR, 0644); 
-				if (fd == -1)
-				{
-					perror("minishell");
-					heredoc_child_cleanup(limiters, file, com);
-					exit (-1);
-				}
-				while (1)
-				{
-					com = readline("> ");
-					data->com = com;
-					if (j != 0)
-						write(fd,"\n",1);
-					if ((!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))) 
-					{
-						if (!com)
-							ft_print("minishell: warning: here-document delimited by end-of-file", 0);
-						if (!com && limiters[no + 1] != NULL)
-						{
-							no++;
-							continue;
-						}
-						close(fd);
-						fd = open(file, O_CREAT | O_RDWR, 0644); 
-						data->i = nbr_del;
-						data->fd = fd;
-						heredoc_child_cleanup(limiters, file, com);
-						exit (0);
-					}
-					if (com[0] && limiters[no + 1] == NULL)
-					{
-						arr_ = expand_str(com, envp, data);
-						if (arr_)
-							write(fd,arr_,ft_strlen(arr_));
-						free(arr_);
-					}
-					j++;
-					if (ft_strcmp(com, limiters[no]) == 0)
-						no++;
-					free(com);
-				}
-				
-			}
-			else if (ft_strcmp(node->command[i], "<<") == 0)
-			{
-				fd = open(file, O_CREAT | O_RDWR, 0644); 
-				if (fd == -1)
-				{
-					perror("minishell");
-					heredoc_child_cleanup(limiters, file, com);
-					exit (-1);
-				}
-				while (1)
-				{
-					com = readline("> ");
-					data->com = com;
-					if (j != 0)
-						write(fd,"\n",1);
-					if (!com || (ft_strcmp(com, limiters[no]) == 0 && limiters[no + 1] == NULL))
-					{
-						if (!com)
-							ft_print("minishell: warning: here-document delimited by end-of-file", 0);
-						if (!com && limiters[no + 1] != NULL)
-						{
-							no++;
-							continue;
-						}
-						close(fd);
-						fd = open(file, O_CREAT | O_RDWR, 0644); 
-						data->fd = fd;
-						data->i = nbr_del;
-						heredoc_child_cleanup(limiters, file, com);
-						exit (0);
-					}
-					if (com[0] && limiters[no + 1] == NULL)
-					write(fd,com,ft_strlen(com));
-						j++;
-					if (ft_strcmp(com, limiters[no]) == 0)
-						no++;
-					free(com);
-				}
-				
-			}
-			i++;
-		}
-		heredoc_child_cleanup(limiters, file, com);
-        exit(0);
-    }
-    else
-    {
-		g_hsig = 1;
-		waitpid(pid, &status, 0);
-		// signal(SIGINT, SIG_IGN);
-		// signal_init_here(data);
-		if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
-		{
-			fd = open(file, O_RDONLY);
-			free(file);
-			free_all_ul_split(limiters);
-			if (fd == -1)
-			{
-				perror("minishell");
-				return -1;
-			}
-			data->fd = fd;
-			data->status = WEXITSTATUS(status);
-			data->i = nbr_del;
-			return 0;
-		}
-		free(file);
-		free_all_ul_split(limiters);
-		data->status = WEXITSTATUS(status);
-		return -1;
-
-    }
+	int fd = open(file, O_CREAT | O_RDWR, 0644);
+	if (fd == -1)
+	{
+		perror("minishell");
+		exit(1);
+	}
+	return fd;
 }
 
+int handle_delimiter(char **limiters, int *no, int fd, t_data *data, char *file)
+{
+	if (!data->com || (ft_strcmp(data->com, limiters[*no]) == 0 && !limiters[*no + 1]))
+	{
+		if (!data->com)
+			ft_print("minishell: warning: here-document delimited by end-of-file", 0);
+		if (!data->com && limiters[*no + 1])
+		{
+			(*no)++;
+			return 0;
+		}
+		close(fd);
+		fd = open_heredoc_fd(file);
+		data->fd = fd;
+		data->i = *no + 1;
+		heredoc_child_cleanup(limiters, file, data->com);
+		exit(0);
+	}
+	return (1);
+}
+
+
+void write_expanded(int fd, char *com, t_data *data)
+{
+	char *arr_ = expand_str(com, *(data->envp), data);
+	if (arr_)
+	{
+		write(fd, arr_, ft_strlen(arr_));
+		free(arr_);
+	}
+	write(fd, "\n", 1);
+}
+
+void process_here_doc(t_data *data, char *file, char **limiters, int expand)
+{
+	int		fd;
+	int		no;
+	int		j;
+	
+	j = 0;
+	no = 0;
+	data->com = NULL;
+	fd = open_heredoc_fd(file);
+	while (1)
+	{
+		data->com = readline("> ");
+		if (handle_delimiter(limiters, &no, fd, data, file) == 0)
+			continue;
+		if (expand && data->com[0] && limiters[no + 1] == NULL)
+			write_expanded(fd, data->com, data);
+		else if (!expand && data->com[0] && limiters[no + 1] == NULL)
+		{
+			write(fd, data->com, ft_strlen(data->com));
+			write(fd, "\n", 1);
+		}
+		j++;
+		if (data->com && ft_strcmp(data->com, limiters[no]) == 0)
+			no++;
+		free(data->com);
+	}
+}
+
+
+void child_(t_data *data, t_node *node, char *file, char **limiters)
+{
+	int i;
+	
+	i = 0;
+	data->file = file;
+	data->limiters = limiters;
+	signal_init_here(data);
+	while (node->command[i])
+	{
+		if (ft_strcmp(node->command[i], "<<") == 0)
+			process_here_doc(data, file, limiters, node->arr[i + 1].q == 0);
+		i++;
+	}
+	heredoc_child_cleanup(limiters, file, NULL);
+	exit(0);
+}
+
+static int handle_heredoc_success(char *file, char **limiters, t_data *data, int status, int nbr_del)
+{
+	int fd = open(file, O_RDONLY);
+	free(file);
+	free_all_ul_split(limiters);
+	if (fd == -1)
+		return (perror("minishell"), -1);
+	data->fd = fd;
+	data->status = WEXITSTATUS(status);
+	data->i = nbr_del;
+	return (0);
+}
+
+static int handle_heredoc_failure(char *file, char **limiters, t_data *data, int status)
+{
+	free(file);
+	free_all_ul_split(limiters);
+	data->status = WEXITSTATUS(status);
+	return (-1);
+}
+
+static int wait_heredoc_child(pid_t pid, char *file, char **limiters, t_data *data, int nbr_del)
+{
+	int status;
+
+	g_hsig = 1;
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
+		return handle_heredoc_success(file, limiters, data, status, nbr_del);
+	return handle_heredoc_failure(file, limiters, data, status);
+}
+
+int here_doc(t_node *node, char **envp, t_data *data)
+{
+	int		nbr_del = 0;
+	char	**limiters;
+	char	*file;
+	pid_t	pid;
+	
+	limiters = get_delimiters(node->arr, node->command);
+	file = here_doc_data();
+	if (!limiters || !file)
+		return (-1);
+	while (limiters[nbr_del])
+		nbr_del++;
+	*(data->envp) = envp;
+	pid = fork();
+	if (pid == -1)
+		return (perror("fork"), -1);
+	if (pid == 0)
+		child_(data, node, file, limiters);
+	return wait_heredoc_child(pid, file, limiters, data, nbr_del);
+}
 
 
 void	list(char **command)

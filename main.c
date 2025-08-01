@@ -123,10 +123,10 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (is_not_tty())
 		return (1);
-	if (init_pwd(&data) || init_env(&data))
-		return (1);
 	if (ac == 1)
 	{
+		if (init_pwd(&data) || init_env(&data))
+			return (1);
 		envp = read_stock(envp, &data);
 		if (!envp)
 			return (free(data.pwd), free(data.path), 1);
@@ -134,5 +134,5 @@ int	main(int ac, char **av, char **envp)
 	}
 	else
 		invalid_param();
-	return (free(data.pid), free(data.pwd), free(data.path), cleanup_fds(), 0);
+	return (0);
 }
