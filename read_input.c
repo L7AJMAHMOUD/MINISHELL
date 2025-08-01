@@ -34,7 +34,7 @@ void print_env(char **envp, char **command, t_data *data)
     i = 0;
     if (command[1])
     {
-        ft_print("my shell must implement env with no options or arguments ​😉​", 0);
+        ft_print("my shell must implement env with no options or arguments ​.​", 0);
         data->status = 125;
         return;
     }
@@ -56,8 +56,7 @@ void minishell(char **str, t_data *data)
             "under the terms of the GNU General Public License.\n"
             "There is NO WARRANTY, to the extent permitted by law.\n\n"
             "Developed by:\n"
-            "  Abderrahman Karam      (abkaram)\n"
-            "  Mahmoud En-Najy       (maen-naj)\n\n"
+            "  Abderrahman Karam      (abkaram) / " " Mahmoud En-Najy       (maen-naj)\n\n"
             "Forged in sleepless nights ☕, driven by pure logic 🧠,\n"
             "and crafted with heart ❤, byte by byte.\n"
             "Inspired by the soul of /bin/bash and the ghosts of UNIX past 👻.\n"
@@ -241,7 +240,7 @@ void	read_input(char ***envp, t_data *data)
 	{
 		node = NULL;
 		init_loop_data(data);
-		command = readline("MINISHELL-1.0$ ");
+		command = readline("\001\033[38;5;93m\002MINISHELL-1.0$ \001\033[0m\002");
 		if (!command)
 			handle_null_command(envp, data);
 		add_history(command);

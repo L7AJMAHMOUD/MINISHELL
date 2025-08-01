@@ -69,10 +69,6 @@ char **read_stock(char **envp, t_data *data)
     return str;
 }
 
-void f()
-{
-    system("leaks minishell");
-}
 
 int isapure(void)
 {
