@@ -73,11 +73,11 @@ void heredoc_sigint_handler(int signum)
     t_data *data;
     
     (void)signum;
-    write(1, "\n", 1);
     data = get_heredoc_data(NULL);
     if (data)
     {
 		heredoc_child_cleanup(data->limiters, data->file, data->com);
+        write(1, "\n", 1);
 		exit(130);
     }
 }

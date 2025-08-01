@@ -265,6 +265,8 @@ static void	child_process(t_node *node, char **envp, t_data *data)
 		perror("dup2");
 		exit(1);
 	}
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	path = find_path(*(node->command), envp, data);
 	if (!path)
 		exit(1);
@@ -281,10 +283,10 @@ static void	child_process(t_node *node, char **envp, t_data *data)
 	write(2, ": Permission denied\n", 20);
 	exit(-2);
 }
-
 void	exe(char **envp, t_node *node, t_data *data)
 {
 	int	i;
+	int sig;
 
 	i = fork();
 	if (i == -1)
@@ -293,7 +295,16 @@ void	exe(char **envp, t_node *node, t_data *data)
 		child_process(node, envp, data);
 	data->pid[data->id++] = i;
 	data->status = wait_for_child(i , data);
-	if (WIFEXITED(data->status))
+	if (WIFSIGNALED(data->status))
+	{
+		sig = WTERMSIG(data->status);
+		if (sig == SIGQUIT)
+			write(2, "Quit\n", 5);
+		else if (sig == SIGINT)
+			write(2, "\n", 1);
+		data->status = 128 + sig;
+	}
+	else if (WIFEXITED(data->status))
 	{
 		data->status = WEXITSTATUS(data->status);
 		if (data->status == 255)

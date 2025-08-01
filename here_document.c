@@ -211,7 +211,7 @@ int here_doc(t_node* node, char **envp, t_data *data)
     int no = 0;
     int nbr_del = 0;
     int status;
-	
+	int sig;
     char *file = here_doc_data();
     char **limiters = get_delimiters(node->arr, node->command);
 	data->file = file;
@@ -329,7 +329,9 @@ int here_doc(t_node* node, char **envp, t_data *data)
     }
     else
     {
+		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
+		signal_init_here(data);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
 		{
 			fd = open(file, O_RDONLY);

@@ -14,7 +14,6 @@
 
 int g_hsig = 0;
 
-int alpha = 1;
 void free_all_node(t_node *node)
 {
 	t_node *tmp;
@@ -173,19 +172,13 @@ int wait_for_child(pid_t pid, t_data *data)
 {
 	int status;
 
-	//  Temporarily ignore SIGINT to prevent double prompt
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 
-	waitpid(pid, &status, 0);;
+	waitpid(pid, &status, 0);
 
-    if (WTERMSIG(status) == SIGINT)
-        write(1, "\n", 1);
-
-	//  Restore handlers after child ends
-    
-    signal_init(data);
-    return status;
+	signal_init(data); // restore your shell signal handling
+	return status;
 }
 
 void    read_input(char ***envp, t_data *data)
