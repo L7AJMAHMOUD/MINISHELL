@@ -49,14 +49,14 @@ int 	save_check(int *s_in, int *s_out)
 		return (1);
 	return (0);
 }
-char	**apply_redirections(t_node *node, char **envp, t_data *data, t_indexes indx)
+char	**apply_redirections(t_node *node, char ***envp, t_data *data, t_indexes indx)
 {
 	static int	s_in;
 	static int	s_out;
 	int			i;
 
 	i = 0;
-	data->envp = &envp;
+	data->envp = envp;
 	if (indx.p == 0)
 	{
 		if (save_check(&s_in, &s_out))

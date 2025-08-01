@@ -41,9 +41,9 @@ char	**ft_join_arr(char **first, char **second)
 
 	i = 0;
 	j = 0;
-	result = malloc(sizeof(char *) * (len1 + len2 + 1));
 	len2 = count_args(second);
 	len1 = count_args(first);
+	result = malloc(sizeof(char *) * (len1 + len2 + 1));
 	if (!result)
 		return (NULL);
 	while (i < len1)
@@ -98,12 +98,6 @@ void	complet(t_node **node, char *command, char **envp, t_data *data)
 void	command_tokenization(t_node **node, char
 	*command, char **envp, t_data *data)
 {
-	int		i;
-	t_node	*t_mp;
-	t_node	*t_p;
-
-	t_mp = NULL;
-	i = 0;
 	if (!command)
 		return ;
 	if (!*node)

@@ -206,12 +206,11 @@ int here_doc(t_node* node, char **envp, t_data *data)
     int i = 0;
     int j;
     int fd;
-    char *com;
+    char *com = NULL;
     char *arr_;
     int no = 0;
     int nbr_del = 0;
     int status;
-	int sig;
     char *file = here_doc_data();
     char **limiters = get_delimiters(node->arr, node->command);
 	data->file = file;

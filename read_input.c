@@ -204,7 +204,7 @@ static void	handle_null_command(char ***envp, t_data *data)
 	exit(data->status);
 }
 
-static void	execute_command(t_node *node, char ***envp, t_data *data, char *command)
+static void	execute_command(t_node *node, char ***envp, t_data *data)
 {
 	t_node	*tmp;
 	t_indexes	indx;
@@ -212,14 +212,14 @@ static void	execute_command(t_node *node, char ***envp, t_data *data, char *comm
 	tmp = node;
 	if (node->next)
 	{
-		pip(node, envp, data, node);
+		pip(envp, data, node);
 		free_all_node(node);
 		return ;
 	}
 	indx.i = -1;
 	indx.j = -1;
 	indx.p = 0;
-	tmp->command = apply_redirections(tmp, *envp, data, indx);
+	tmp->command = apply_redirections(tmp, envp, data, indx);
 	if (tmp->command && check_command(tmp->command, envp, node, data))
 	{
 		exe(*envp, node, data);
@@ -227,7 +227,7 @@ static void	execute_command(t_node *node, char ***envp, t_data *data, char *comm
 			close(data->fd);
 	}
 	indx.p = 1;
-	apply_redirections(tmp, *envp, data, indx);
+	apply_redirections(tmp, envp, data, indx);
 	free_all_node(node);
 }
 
@@ -248,7 +248,7 @@ void	read_input(char ***envp, t_data *data)
 		if (command_analyze(command, data) == 0)
 		{
 			command_tokenization(&node, command, *envp, data);
-			execute_command(node, envp, data, command);
+			execute_command(node, envp, data);
 		}
 		free(command);
 	}

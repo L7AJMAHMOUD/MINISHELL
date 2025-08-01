@@ -32,7 +32,6 @@ static int	handle_numeric_dollar(char **cmd, int *j, int p)
 static int	handle_exit_code(char **cmd, int *j, int p, t_data *data)
 {
 	char	*varname;
-	char	*tmp;
 	char	*val;
 	char	*str;
 
@@ -82,7 +81,7 @@ char	*expand_str(char *cmd, char **envp, t_data *data)
 
 	indx.j = 0;
 	cmd = ft_strdup(cmd);
-    data->envp = &envp;
+    *(data->envp) = envp;
 	while (cmd[indx.j])
 	{
 		if (cmd[indx.j++] == '$')

@@ -37,7 +37,7 @@ static int	init_pipe(int *pipefd, t_node *current)
 	return (0);
 }
 
-static void	child_process(t_node *cur, t_node *node, t_data *data, int *fds)
+static void	child_process(t_node *cur, t_data *data, int *fds)
 {
 	t_indexes indx;
 
@@ -56,14 +56,14 @@ static void	child_process(t_node *cur, t_node *node, t_data *data, int *fds)
 	indx.j = fds[5];
 	indx.p = 0;
 	cur->command = apply_redirections(cur,
-			*(data->envp), data, indx);
+			(data->envp), data, indx);
 	if (cur->command && check_command(cur->command, data->envp, cur, data))
 		exe(*(data->envp), cur, data);
 	free_all_node(cur);
 	exit(data->status);
 }
 
-static int	handle_child(t_node *cur, t_node *node, t_data *data, int *fds)
+static int	handle_child(t_node *cur, t_data *data, int *fds)
 {
 	pid_t	pid;
 
@@ -71,7 +71,7 @@ static int	handle_child(t_node *cur, t_node *node, t_data *data, int *fds)
 	if (pid < 0)
 		return (perror("fork"), 1);
 	if (pid == 0)
-		child_process(cur, node, data, fds);
+		child_process(cur, data, fds);
 	if (fds[0] != -1)
 		close(fds[0]);
 	if (cur->next)
@@ -83,7 +83,7 @@ static int	handle_child(t_node *cur, t_node *node, t_data *data, int *fds)
 	return (pid);
 }
 
-int	pip(t_node *node, char ***envp, t_data *data, t_node *cur)
+int	pip(char ***envp, t_data *data, t_node *cur)
 {
 	int		fds[6];
 	int		pid;
@@ -99,7 +99,7 @@ int	pip(t_node *node, char ***envp, t_data *data, t_node *cur)
 		if (init_pipe(&fds[2], cur))
 			return (1);
 		data->envp = envp;
-		pid = handle_child(cur, node, data, fds);
+		pid = handle_child(cur, data, fds);
 		if (i != 1 && (fds[1] == -1 || (!cur->next && fds[1] != -1) || (!cur->next->next && cur->next && !cur->next->command[0] && fds[1] != -1)))
 		{
 			i = 1;
