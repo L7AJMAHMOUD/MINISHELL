@@ -1,32 +1,40 @@
-NAME = minishell
-CC = cc
-FLAGS = -Wall -Wextra -Werror -g3
-HEAD = minishell.h
-RM = rm -f
-SRCS = $(wildcard *.c)
+NAME    = minishell
+CC      = cc
+FLAGS   = -Wall -Wextra -Werror -g3
+RM      = rm -f
 
-OBJ = $(SRCS:.c=.o)
+HEAD    = minishell.h
 
+SRC_DIRS = src/builtins \
+           src/execution \
+           src/parsing \
+           src/heredoc \
+           src/signals \
+           src/core \
+           src/utils
 
+SRCS = main.c $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 
-all : $(NAME)
+OBJS = $(SRCS:.c=.o)
 
-$(NAME): $(OBJ)
-	@$(CC) $(OBJ) -lreadline -o $(NAME)
+all: $(NAME)
 
+$(NAME): $(OBJS)
+	@$(CC) $(FLAGS) $(OBJS) -lreadline -o $(NAME)
+	@echo "\033[1;32m[OK]\033[0m Compiled $(NAME)"
 
-%.o : %.c $(HEAD)
-	@$(CC) $(FLAGS) -c $< -o $@
+%.o: %.c $(HEAD)
+	@$(CC) $(FLAGS) -I. -c $< -o $@
 
-clean : 
-	$(RM) $(OBJ)
+clean:
+	$(RM) $(OBJS)
 
-fclean : clean
+fclean: clean
 	$(RM) $(NAME)
 
-re : fclean all
+re: fclean all
 
-run:	$(NAME)
+run: $(NAME)
 	@./$(NAME)
 
-.PHONY : all clean fclean re
+.PHONY: all clean fclean re run
