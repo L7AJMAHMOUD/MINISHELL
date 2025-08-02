@@ -25,8 +25,8 @@ int file_already_exist()
     while (1)
     {
         found = 0;
-
-        while ((entry = readdir(directory)) != NULL)
+        entry = readdir(directory);
+        while (entry != NULL)
         {
             if (entry->d_name[0] == 'h' && atoi(entry->d_name + 1) == new_f)
             {
@@ -34,6 +34,7 @@ int file_already_exist()
                 new_f++;
                 break;
             }
+            entry = readdir(directory);
         }
 
         if (!found)
