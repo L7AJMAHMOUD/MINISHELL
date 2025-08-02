@@ -160,8 +160,9 @@ void		free_all_node(t_node *node);
 int			pip(char ***envp, t_data *data, t_node *cur);
 char		**add_to_envp(char **envp, char *ligne, int p, char		**str);
 void		heredoc_child_cleanup(char **limiters, char *file, char *com);
-int			redirect_output_fd(char **command, t_command *arr, t_data *data);
-int			redirect_input_fd(char **command, t_data *data);
+int			redirect_output_fd(char **command, t_command *arr, t_data *data, int i);
+int	redirect_input_fd(char **command, t_command *arr, t_data *data, int i);
+char		**clean_command_here(char **command, t_command *arr);
 
 /* ────────────────────────────── */
 /*       ⚡ SIGNAL HANDLING        */
@@ -186,10 +187,10 @@ void		cleanup_fds(void);
 t_command	cooking(char *str, int p, int x, t_data *data);
 char		**clean_command(char **coammand, t_command *arr);
 int			is_redirection(char *command);
-int			append_to_fd(char **command, t_command *arr, t_data *data);
+int			append_to_fd(char **command, t_command *arr, t_data *data, int i);
 char		*ft_strjoin_(char *s1, char *s2);
 char		*get_variable(char *str, char **envp, t_data *data);
-char		*here_doc_data(void);
+char		*here_doc_data(int pid, char *file_num, char *file_name, char *full_path);
 char		*join_strings(char *s1, char *s2);
 int			wait_for_child(pid_t pid, t_data *data);
 int			strlen_(char *str);

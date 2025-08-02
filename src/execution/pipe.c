@@ -83,16 +83,30 @@ static int	handle_child(t_node *cur, t_data *data, int *fds)
 	return (pid);
 }
 
+void	init_fds(int *fds, int *i)
+{
+	fds[0] = -1;
+	fds[4] = dup(0);
+	fds[5] = dup(1);
+	*i = 0;
+}
+
+void	wait_and_update_status(t_data *data)
+{
+	while (1)
+		if (wait(NULL) <= 0)
+			break ;
+	if (data->status % 2 == 0 && data->status != 0)
+		data->status = data->status / 256;
+}
+
 int	pip(char ***envp, t_data *data, t_node *cur)
 {
 	int	fds[6];
 	int	pid;
 	int	i;
 
-	fds[0] = -1;
-	fds[4] = dup(0);
-	fds[5] = dup(1);
-	i = 0;
+	init_fds(fds, &i);
 	while (cur)
 	{
 		fds[1] = check_here_doc(cur);
@@ -104,16 +118,12 @@ int	pip(char ***envp, t_data *data, t_node *cur)
 				|| (!cur->next->next && cur->next
 					&& !cur->next->command[0] && fds[1] != -1)))
 		{
-			i = 1;
+			if (fds[1] != -1)
+				i = 1;
 			waitpid(pid, &data->status, 0);
 		}
 		cur = cur->next;
 	}
-	while (1)
-		if (wait(NULL) <= 0)
-			break ;
-	if (data->status % 2 == 0 && data->status != 0)
-		data->status = data->status / 256;
-	cleanup_fds();
-	return (0);
+	wait_and_update_status(data);
+	return (cleanup_fds(), 0);
 }

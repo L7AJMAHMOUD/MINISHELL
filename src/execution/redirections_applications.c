@@ -15,15 +15,15 @@
 int	handle_simple_redirs(t_node *node, t_data *data, int i)
 {
 	if (ft_strcmp(node->command[i], ">") == 0 && node->arr[i].q == 0)
-		return (redirect_output_fd(node->command, node->arr, data));
+		return (redirect_output_fd(node->command, node->arr, data, i));
 	else if (ft_strcmp(node->command[i], ">>") == 0 && node->arr[i].q == 0)
-		return (append_to_fd(node->command, node->arr, data));
+		return (append_to_fd(node->command, node->arr, data, i));
 	else if (ft_strcmp(node->command[i], "<") == 0 && node->arr[i].q == 0)
-		return (redirect_input_fd(node->command, data));
+		return (redirect_input_fd(node->command, node->arr, data, i));
 	return (0);
 }
 
-int	handle_heredoc(t_node *node, t_data *data, t_indexes indx, int *i)
+int	handle_heredoc(t_node *node, t_data *data, t_indexes indx, int i)
 {
 	int	s_p;
 	int	s_po;
@@ -35,10 +35,16 @@ int	handle_heredoc(t_node *node, t_data *data, t_indexes indx, int *i)
 		dup2(indx.j, 1);
 		dup2(indx.i, 0);
 	}
-	if (here_doc(node, *(data->envp), data) == -1 && node->arr[*i].q == 0)
-		return (-1);
-	*i += (data->i) * 2;
-	*i -= 1;
+	while (node->command[i])
+	{
+		if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i].q == 0)
+		{
+			if (here_doc(node, *(data->envp), data) == -1)
+				return (-1);
+			break ;
+		}
+		i++;
+	}
 	dup2(s_p, 1);
 	dup2(s_po, 0);
 	return (0);
@@ -66,15 +72,14 @@ char	**apply_redirections(t_node *node, char ***envp,
 	{
 		if (save_check(&s_in, &s_out))
 			return (free_all_ul_split(node->command), NULL);
+		if (handle_heredoc(node, data, indx, i) == -1)
+			return (free_all_ul_split(node->command), NULL);
+		node->command = clean_command_here(node->command, node->arr);
 		while (node->command[i])
 		{
 			data->i = 0;
 			if (handle_simple_redirs(node, data, i) == -1)
 				return (free_all_ul_split(node->command), NULL);
-			else if (ft_strcmp(node->command[i], "<<") == 0
-				&& node->arr[i].q == 0)
-				if (handle_heredoc(node, data, indx, &i) == -1)
-					return (free_all_ul_split(node->command), NULL);
 			i++;
 		}
 		return (clean_command(node->command, node->arr));

@@ -12,6 +12,39 @@
 
 #include "minishell.h"
 
+static int helprs_red_par(int *i, char *command)
+{
+	*i += 1;
+	if (command[*i] == command[*i + 1])
+		*i += 1;
+	else
+		*i += 1;
+	while (command[*i] == ' ')
+		*i += 1;
+	if (ft_isdigit(command[*i]) && command[*i + 1] == '>')
+		return (-1);
+	if (command[*i] == '\0')
+		return (-1);
+	if (command[*i] == '>' || command[*i] == '<')
+		return (-1);
+	return (0);
+}
+static int helprs_red_pars(int *i, char *command, char current)
+{
+	*i += 1;
+	if (command[*i] == current)
+		*i += 1;
+	while (command[*i] == SPACE_CHAR)
+		*i += 1;
+	if (command[*i] == '\0')
+		return (-1);
+	if (command[*i] == REDIRECT_IN || command[*i] == REDIRECT_OUT)
+		return (-1);
+	if (!is_something(&command[*i]))
+		return (-1);
+	return (0);
+}
+
 int	redirect_parse(char *command)
 {
 	int		i;
@@ -24,34 +57,13 @@ int	redirect_parse(char *command)
 		if (ft_isdigit(command[i]) && (command[i + 1] == '>'
 				|| command[i + 1] == '<'))
 		{
-			i++;
-			if (command[i] == command[i + 1])
-				i++;
-			else
-				i++;
-			while (command[i] == ' ')
-				i++;
-			if (ft_isdigit(command[i]) && command[i + 1] == '>')
-				return (-1);
-			if (command[i] == '\0')
-				return (-1);
-			if (command[i] == '>' || command[i] == '<')
+			if (helprs_red_par(&i, command))
 				return (-1);
 		}
 		if (command[i] == REDIRECT_IN || command[i] == REDIRECT_OUT)
 		{
 			current = command[i];
-			i++;
-			if (command[i] == current)
-				i++;
-			while (command[i] == SPACE_CHAR)
-				i++;
-			if (command[i] == '\0')
-				return (-1);
-			if (command[i] == REDIRECT_IN || command[i] == REDIRECT_OUT)
-				return (-1);
-			if (!is_something(&command[i]))
-				return (-1);
+			helprs_red_pars(&i, command, current);
 		}
 		else
 			i++;

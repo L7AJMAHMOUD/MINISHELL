@@ -1,6 +1,6 @@
 NAME    = minishell
 CC      = cc
-FLAGS   = -Wall -Wextra -Werror -g3
+# FLAGS   = -Wall -Wextra -Werror -g3
 RM      = rm -f
 HEAD    = minishell.h
 
@@ -13,7 +13,6 @@ SRCS = main.c \
        src/execution/pipe.c \
        src/execution/pipe_detec.c \
        src/execution/pipe_syn.c \
-       src/execution/redirections.c \
        src/execution/output_redirection.c \
        src/execution/input_redirection.c \
        src/execution/append_redirection.c \
@@ -21,6 +20,7 @@ SRCS = main.c \
        src/core/read_input.c \
        src/core/cooking.c \
        src/core/analyze_command.c \
+       src/parsing/redirections.c \
        src/parsing/parse.c \
        src/parsing/expand.c \
        src/parsing/command_tokenization.c \

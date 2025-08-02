@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	j;
@@ -36,27 +35,34 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	str[j] = '\0';
 	return (str);
 }
-int strlen_(char *str)
+
+int	strlen_(char *str)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	if (!str)
-		return 0;
-	while (str[i] && str[i] != '$' && str[i] != QUOTE_SINGLE && str[i] != QUOTE_DOUBLE && str[i] != 32 && str[i] != '<' && str[i] != '>')
+		return (0);
+	while (str[i] && str[i] != '$' && str[i] != QUOTE_SINGLE
+		&& str[i] != QUOTE_DOUBLE && str[i] != 32
+		&& str[i] != '<' && str[i] != '>')
 	{
 		i++;
 	}
-	return i;
+	return (i);
 }
 
-int	delimiters_counter(t_command *arr,char **h)
+int	delimiters_counter(t_command *arr, char **h)
 {
-	int i = 0;
-	int count  = 0;
+	int	i;
+	int	count;
 
+	i = 0;
+	count = 0;
 	while (h[i])
 	{
-		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command)
+		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command
+			&& arr[i].q == 0)
 		{
 			i += 2;
 			count++;
@@ -66,19 +72,24 @@ int	delimiters_counter(t_command *arr,char **h)
 	}
 	return (count);
 }
-char **get_delimiters(t_command *arr, char **h)
+
+char	**get_delimiters(t_command *arr, char **h)
 {
-	int delim = delimiters_counter(arr, h);
-	char **deli_stack = malloc((delim  + 1) * sizeof(char *));
+	int		delim;
+	char	**deli_stack;
+	int		i;
+	int		j;
 
-	int i = 0;
-	int j = 0;
-
+	delim = delimiters_counter(arr, h);
+	deli_stack = malloc((delim + 1) * sizeof(char *));
+	i = 0;
+	j = 0;
 	if (!deli_stack)
 		return (NULL);
 	while (h[i])
 	{
-		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command)
+		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command
+			&& arr[i].q == 0)
 		{
 			deli_stack[j] = ft_strdup(arr[i + 1].command);
 			i++;
@@ -91,60 +102,70 @@ char **get_delimiters(t_command *arr, char **h)
 	return (deli_stack);
 }
 
-long long file_size(int fd)
+long long	file_size(int fd)
 {
-	struct stat st;
-    if (fstat(fd, &st) == -1) 
+	struct stat	st;
+
+	if (fstat(fd, &st) == -1)
 	{
-        perror("fstat");
-        close(fd);
-        return 1;
-    }
+		perror("fstat");
+		close(fd);
+		return (1);
+	}
 	return (st.st_size);
 }
 
-void heredoc_child_cleanup(char **limiters, char *file, char *com)
+void	heredoc_child_cleanup(char **limiters, char *file, char *com)
 {
-	if (limiters) free_all_ul_split(limiters);
-	if (file) free(file);
-	if (com) free(com);
+	if (limiters)
+		free_all_ul_split(limiters);
+	if (file)
+		free(file);
+	if (com)
+		free(com);
 }
-int open_heredoc_fd(const char *file)
+
+int	open_heredoc_fd(const char *file)
 {
-	int fd = open(file, O_CREAT | O_RDWR, 0644);
+	int	fd;
+
+	fd = open(file, O_CREAT | O_RDWR, 0644);
 	if (fd == -1)
 	{
 		perror("minishell");
 		exit(1);
 	}
-	return fd;
+	return (fd);
 }
 
-int handle_delimiter(char **limiters, int *no, int fd, t_data *data, char *file)
+int	handle_delimiter(int *no, int fd, t_data *data, char *file)
 {
-	if (!data->com || (ft_strcmp(data->com, limiters[*no]) == 0 && !limiters[*no + 1]))
+	if (!data->com || (ft_strcmp(data->com, data->limiters[*no]) == 0
+			&& !data->limiters[*no + 1]))
 	{
 		if (!data->com)
-			ft_print("minishell: warning: here-document delimited by end-of-file", 0);
-		if (!data->com && limiters[*no + 1])
+			ft_print("minishell: warning: \
+here-document delimited by end-of-file", 0);
+		if (!data->com && data->limiters[*no + 1])
 		{
 			(*no)++;
-			return 0;
+			return (0);
 		}
 		close(fd);
 		fd = open_heredoc_fd(file);
 		data->fd = fd;
 		data->i = *no + 1;
-		heredoc_child_cleanup(limiters, file, data->com);
+		heredoc_child_cleanup(data->limiters, file, data->com);
 		exit(0);
 	}
 	return (1);
 }
 
-
-void write_expanded(int fd, char *com, t_data *data)
+void	write_expanded(int fd, char *com, t_data *data)
 {
-	char *arr_ = expand_str(com, *(data->envp), data);
+	char	*arr_;
+
+	arr_ = expand_str(com, *(data->envp), data);
 	if (arr_)
 	{
 		write(fd, arr_, ft_strlen(arr_));
@@ -153,21 +174,27 @@ void write_expanded(int fd, char *com, t_data *data)
 	write(fd, "\n", 1);
 }
 
-void process_here_doc(t_data *data, char *file, char **limiters, int expand)
+static void	helper_process(t_data *data, char **limiters, int *j, int *no)
 {
-	int		fd;
-	int		no;
-	int		j;
-	
-	j = 0;
-	no = 0;
+	*j = 0;
+	*no = 0;
 	data->com = NULL;
+	data->limiters = limiters;
+}
+
+void	process_here_doc(t_data *data, char *file, char **limiters, int expand)
+{
+	int	fd;
+	int	no;
+	int	j;
+
+	helper_process(data, limiters, &j, &no);
 	fd = open_heredoc_fd(file);
 	while (1)
 	{
 		data->com = readline("> ");
-		if (handle_delimiter(limiters, &no, fd, data, file) == 0)
-			continue;
+		if (handle_delimiter(&no, fd, data, file) == 0)
+			continue ;
 		if (expand && data->com[0] && limiters[no + 1] == NULL)
 			write_expanded(fd, data->com, data);
 		else if (!expand && data->com[0] && limiters[no + 1] == NULL)
@@ -182,18 +209,17 @@ void process_here_doc(t_data *data, char *file, char **limiters, int expand)
 	}
 }
 
-
-void child_(t_data *data, t_node *node, char *file, char **limiters)
+void	child_(t_data *data, t_node *node, char *file, char **limiters)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	data->file = file;
 	data->limiters = limiters;
 	signal_init_here(data);
 	while (node->command[i])
 	{
-		if (ft_strcmp(node->command[i], "<<") == 0)
+		if (node->arr[i].q == 0 && ft_strcmp(node->command[i], "<<") == 0)
 			process_here_doc(data, file, limiters, node->arr[i + 1].q == 0);
 		i++;
 	}
@@ -201,11 +227,14 @@ void child_(t_data *data, t_node *node, char *file, char **limiters)
 	exit(0);
 }
 
-static int handle_heredoc_success(char *file, char **limiters, t_data *data, int status, int nbr_del)
+static int	handle_heredoc_success(char *file, t_data *data, int status,
+		int nbr_del)
 {
-	int fd = open(file, O_RDONLY);
+	int	fd;
+
+	fd = open(file, O_RDONLY);
 	free(file);
-	free_all_ul_split(limiters);
+	free_all_ul_split(data->limiters);
 	if (fd == -1)
 		return (perror("minishell"), -1);
 	data->fd = fd;
@@ -214,7 +243,8 @@ static int handle_heredoc_success(char *file, char **limiters, t_data *data, int
 	return (0);
 }
 
-static int handle_heredoc_failure(char *file, char **limiters, t_data *data, int status)
+static int	handle_heredoc_failure(char *file, char **limiters, t_data *data,
+		int status)
 {
 	free(file);
 	free_all_ul_split(limiters);
@@ -222,26 +252,28 @@ static int handle_heredoc_failure(char *file, char **limiters, t_data *data, int
 	return (-1);
 }
 
-static int wait_heredoc_child(pid_t pid, char *file, char **limiters, t_data *data, int nbr_del)
+static int	wait_heredoc_child(pid_t pid, char *file, t_data *data, int nbr_del)
 {
-	int status;
+	int	status;
 
 	g_hsig = 1;
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
-		return handle_heredoc_success(file, limiters, data, status, nbr_del);
-	return handle_heredoc_failure(file, limiters, data, status);
+		return (handle_heredoc_success(file, data, status, nbr_del));
+	return (handle_heredoc_failure(file, data->limiters, data, status));
 }
 
-int here_doc(t_node *node, char **envp, t_data *data)
+int	here_doc(t_node *node, char **envp, t_data *data)
 {
-	int		nbr_del = 0;
+	int		nbr_del;
 	char	**limiters;
 	char	*file;
 	pid_t	pid;
-	
+
+	nbr_del = 0;
 	limiters = get_delimiters(node->arr, node->command);
-	file = here_doc_data();
+	data->limiters = limiters;
+	file = here_doc_data(0, NULL, NULL, NULL);
 	if (!limiters || !file)
 		return (-1);
 	while (limiters[nbr_del])
@@ -252,6 +284,5 @@ int here_doc(t_node *node, char **envp, t_data *data)
 		return (perror("fork"), -1);
 	if (pid == 0)
 		child_(data, node, file, limiters);
-	return wait_heredoc_child(pid, file, limiters, data, nbr_del);
+	return (wait_heredoc_child(pid, file, data, nbr_del));
 }
-

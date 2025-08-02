@@ -20,12 +20,10 @@ int	validate_pipe_syntax(char *command)
 				i++;
 			if (!command[i] || command[i] == PIPE_CHAR)
 				return (-1);
+			continue ;
 		}
-		else
-		{
-			k = 0;
-			i++;
-		}
+		k = 0;
+		i++;
 	}
 	return (0);
 }

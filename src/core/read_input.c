@@ -201,8 +201,8 @@ static void	execute_command(t_node *node, char ***envp, t_data *data)
 		free_all_node(node);
 		return ;
 	}
-	indx.i = -1;
-	indx.j = -1;
+	indx.i = dup(0);
+	indx.j = dup(1);
 	indx.p = 0;
 	tmp->command = apply_redirections(tmp, envp, data, indx);
 	if (tmp->command && check_command(tmp->command, envp, node, data))
