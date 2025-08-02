@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-
 int	comp(char **envp, char *ligne, t_indexes *indx, char **str)
 {
 	indx->i = 0;
-	if (indx->j != indx->m || is_prefix_equal_until_equal_sign(envp[indx->m], ligne))
+	if (indx->j != indx->m
+		|| is_prefix_equal_until_equal_sign(envp[indx->m], ligne))
 	{
 		str[indx->k] = malloc(ft_strlen(envp[indx->j]) + 1);
 		if (!str[indx->k])

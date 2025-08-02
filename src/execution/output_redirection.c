@@ -12,16 +12,15 @@
 
 #include "minishell.h"
 
-int redirect_output_fd(char **command, t_command *arr, t_data *data)
+int	redirect_output_fd(char **command, t_command *arr, t_data *data)
 {
-	int i;
-	int fd;
-	int j;
-	
- 	i = 0;
-	 
-	 while (command[i])
-	 {
+	int	i;
+	int	fd;
+	int	j;
+
+	i = 0;
+	while (command[i])
+	{
 		j = 0;
 		if (ft_strcmp(command[i], ">") == 0)
 		{
@@ -35,7 +34,7 @@ int redirect_output_fd(char **command, t_command *arr, t_data *data)
 				write(2, arr[i + 1].command, ft_strlen(arr[i + 1].command));
 				write(2, " : ", 3);
 				perror(NULL);
-				return -1;
+				return (-1);
 			}
 			if (dup2(fd, 1) == -1)
 				return (close(fd), perror("dup2 failed"), -1);
@@ -44,5 +43,5 @@ int redirect_output_fd(char **command, t_command *arr, t_data *data)
 		}
 		i++;
 	}
-	return 0;
+	return (0);
 }

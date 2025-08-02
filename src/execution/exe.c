@@ -218,7 +218,7 @@ char	*find_executable_in_path(char **envp, t_data *data, char *path, int *j)
 	if (i == -1)
 		envp[i] = data->path;
 	*j = 5;
-	while ((size_t)*j < ft_strlen(envp[i]))
+	while ((size_t) * j < ft_strlen(envp[i]))
 	{
 		tmp = strdup_until_char(&envp[i][*j], ':', &k);
 		if (!tmp)
@@ -256,9 +256,10 @@ char	*find_path(char *path, char **envp, t_data *data)
 	}
 	return (find_executable_in_path(envp, data, path, &j));
 }
+
 static void	child_process(t_node *node, char **envp, t_data *data)
 {
-	char *path;
+	char	*path;
 
 	if (data->fd != -1 && dup2(data->fd, 0) == -1)
 	{
@@ -283,10 +284,11 @@ static void	child_process(t_node *node, char **envp, t_data *data)
 	write(2, ": Permission denied\n", 20);
 	exit(-2);
 }
+
 void	exe(char **envp, t_node *node, t_data *data)
 {
 	int	i;
-	int sig;
+	int	sig;
 
 	i = fork();
 	if (i == -1)
@@ -294,7 +296,7 @@ void	exe(char **envp, t_node *node, t_data *data)
 	if (i == 0)
 		child_process(node, envp, data);
 	data->pid[data->id++] = i;
-	data->status = wait_for_child(i , data);
+	data->status = wait_for_child(i, data);
 	if (WIFSIGNALED(data->status))
 	{
 		sig = WTERMSIG(data->status);
@@ -311,12 +313,3 @@ void	exe(char **envp, t_node *node, t_data *data)
 			data->status = 126;
 	}
 }
-
-// 	if (data->status == 1)
-// 		data->status = 127;
-// 	else if (WEXITSTATUS(data->status) == 255)
-// 		data->status = 126;
-// 	else if (data->status % 2 == 0 && data->status != 0)
-// 		data->status = data->status / 256;
-// 	return ;
-// }

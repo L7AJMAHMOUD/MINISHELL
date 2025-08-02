@@ -23,7 +23,7 @@ void	rev_(char *s)
 void	free_arr(t_command *arr, int i)
 {
 	if (!arr)
-		return;
+		return ;
 	while (i >= 0)
 	{
 		free(arr[i].command);
@@ -32,7 +32,6 @@ void	free_arr(t_command *arr, int i)
 	}
 	free(arr);
 }
-
 
 void	comp_(char *s, int *i, int *count)
 {

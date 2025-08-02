@@ -17,13 +17,13 @@ int file_already_exist()
     DIR *directory;
     int new_f = 0;
     int found = 1;
+    struct dirent *entry;
 
     directory = opendir("/tmp/HEREDOC_DIR_SYSTEMD/");
     if (!directory)
         return -1;
     while (1)
     {
-        struct dirent *entry;
         found = 0;
 
         while ((entry = readdir(directory)) != NULL)

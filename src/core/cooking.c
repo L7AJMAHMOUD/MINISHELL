@@ -37,7 +37,7 @@ char	*ft_strjoin_(char *s1, char *s2)
 	while (s2[k])
 		str[j++] = s2[k++];
 	str[j] = '\0';
-	return (free(s1), s1 = NULL , free(s2), s2 = NULL, str);
+	return (free(s1), s1 = NULL, free(s2), s2 = NULL, str);
 }
 
 void	free_commands_array(t_command *arr, int k)
@@ -196,12 +196,13 @@ char	*get_variable(char *str, char **envp, t_data *data)
 		}
 		i++;
 	}
-	if (strcmp("PATH", str) == 0 &&data->path)
+	if (strcmp("PATH", str) == 0 && data->path)
 		return (data->path);
 	return (NULL);
 }
 
-void	expand_env_variable(t_command *arr, t_indexes indx, int *j, t_data *data)
+void	expand_env_variable(t_command *arr,
+			t_indexes indx, int *j, t_data *data)
 {
 	int		var_len;
 	char	*varname;
@@ -286,9 +287,9 @@ void	skip_dollar_signs(t_command *arr, int *i, int *j, int *p)
 
 void	handle_dollar(t_command *arr, int i, int j, t_data *data)
 {
-	int	p;
-	int	m;
-	t_indexes indx;
+	int			p;
+	int			m;
+	t_indexes	indx;
 
 	while (arr[i].command[j])
 	{

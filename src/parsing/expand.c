@@ -2,8 +2,9 @@
 
 static int	count_dollars(const char *s, int j)
 {
-	int	p = 0;
+	int	p;
 
+	p = 0;
 	while (s[j] == '$')
 	{
 		j++;
@@ -77,11 +78,11 @@ static int	handle_env_var(char **cmd, int *j, int p, t_data *data)
 
 char	*expand_str(char *cmd, char **envp, t_data *data)
 {
-    t_indexes indx;
+	t_indexes	indx;
 
 	indx.j = 0;
 	cmd = ft_strdup(cmd);
-    *(data->envp) = envp;
+	*(data->envp) = envp;
 	while (cmd[indx.j])
 	{
 		if (cmd[indx.j++] == '$')
@@ -91,7 +92,7 @@ char	*expand_str(char *cmd, char **envp, t_data *data)
 			indx.p = count_dollars(cmd, indx.j);
 			indx.j += indx.p;
 			if (!cmd[indx.j] && !cmd)
-				continue;
+				continue ;
 			if (indx.p % 2 || (cmd[indx.j] >= '0' && cmd[indx.j] <= '9'))
 				handle_numeric_dollar(&cmd, &indx.j, indx.p);
 			else if (cmd[indx.j] == '?')

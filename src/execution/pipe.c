@@ -39,7 +39,7 @@ static int	init_pipe(int *pipefd, t_node *current)
 
 static void	child_process(t_node *cur, t_data *data, int *fds)
 {
-	t_indexes indx;
+	t_indexes	indx;
 
 	if (fds[0] != -1)
 	{
@@ -85,9 +85,9 @@ static int	handle_child(t_node *cur, t_data *data, int *fds)
 
 int	pip(char ***envp, t_data *data, t_node *cur)
 {
-	int		fds[6];
-	int		pid;
-	int 	i;
+	int	fds[6];
+	int	pid;
+	int	i;
 
 	fds[0] = -1;
 	fds[4] = dup(0);
@@ -100,7 +100,9 @@ int	pip(char ***envp, t_data *data, t_node *cur)
 			return (1);
 		data->envp = envp;
 		pid = handle_child(cur, data, fds);
-		if (i != 1 && (fds[1] == -1 || (!cur->next && fds[1] != -1) || (!cur->next->next && cur->next && !cur->next->command[0] && fds[1] != -1)))
+		if (i != 1 && (fds[1] == -1 || (!cur->next && fds[1] != -1)
+				|| (!cur->next->next && cur->next
+					&& !cur->next->command[0] && fds[1] != -1)))
 		{
 			i = 1;
 			waitpid(pid, &data->status, 0);
@@ -109,7 +111,7 @@ int	pip(char ***envp, t_data *data, t_node *cur)
 	}
 	while (1)
 		if (wait(NULL) <= 0)
-			break;
+			break ;
 	if (data->status % 2 == 0 && data->status != 0)
 		data->status = data->status / 256;
 	cleanup_fds();

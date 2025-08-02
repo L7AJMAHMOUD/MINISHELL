@@ -12,30 +12,29 @@
 
 #include "minishell.h"
 
-int is_echo_n_flag(char *str)
+int	is_echo_n_flag(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[i++] != '-')
-		return 0;
+		return (0);
 	while (str[i])
 	{
 		if (str[i++] != 'n')
-			return 0;
+			return (0);
 	}
-	return 1;
+	return (1);
 }
-
 
 void	print_env_value_escaped(char *str, int k)
 {
-	int i;
-	int l;
+	int	i;
+	int	l;
 
 	i = 0;
 	l = 0;
-	while(str && str[i])
+	while (str && str[i])
 	{
 		if (str[i] == '=')
 			i++;
@@ -45,7 +44,7 @@ void	print_env_value_escaped(char *str, int k)
 			l++;
 			if (str[i] != '\\')
 			{
-					l /= 2;
+				l /= 2;
 				while (l > 0)
 				{
 					l--;
@@ -59,11 +58,12 @@ void	print_env_value_escaped(char *str, int k)
 	if (k != 0)
 		write(1, " ", 1);
 }
-void echo(char **str, t_data *data)
+
+void	echo(char **str, t_data *data)
 {
-	int i;
-	int j;
-	int p;
+	int	i;
+	int	j;
+	int	p;
 
 	i = 1;
 	p = 0;
@@ -73,7 +73,7 @@ void echo(char **str, t_data *data)
 		i++;
 		p = -1;
 	}
-	while(str && str[i])
+	while (str && str[i])
 	{
 		while (str[i][j] == '=')
 			write(1, &str[i][j++], 1);
@@ -90,17 +90,16 @@ void echo(char **str, t_data *data)
 	data->status = 0;
 }
 
-
 void	pwd(t_data *data)
 {
-	char buff[BUFFER_SIZE];
+	char	buff[BUFFER_SIZE];
 
-	if(!getcwd(buff,BUFFER_SIZE))
+	if (!getcwd(buff, BUFFER_SIZE))
 	{
 		data->status = 0;
-		printf("%s\n",data->pwd);
+		printf("%s\n", data->pwd);
 		return ;
 	}
 	data->status = 0;
-	printf("%s\n",buff);
+	printf("%s\n", buff);
 }

@@ -12,15 +12,15 @@
 
 #include "minishell.h"
 
-void    invalid_param(void)
+void	invalid_param(void)
 {
-    write(2, "          🚨 INVALID MINISHELL PARAMETERS 🚨\n", 49);
-    write(2, "\n", 1);
-    write(2, "                    🚨  HELP  🚨\n", 37);
-    write(2, "\n", 1);
-    write(2, "       🚨 TRY RUNNING JUST THE EXECUTABLE FILE 🚨\n", 55);
-    write(2, "\n", 1);
-    write (2, "                   $ ./minishell\n", 33);
-    write(2, "\n", 1);
-    exit(1);   
+	write(2, "          🚨 INVALID MINISHELL PARAMETERS 🚨\n", 49);
+	write(2, "\n", 1);
+	write(2, "                    🚨  HELP  🚨\n", 37);
+	write(2, "\n", 1);
+	write(2, "       🚨 TRY RUNNING JUST THE EXECUTABLE FILE 🚨\n", 55);
+	write(2, "\n", 1);
+	write (2, "                   $ ./minishell\n", 33);
+	write(2, "\n", 1);
+	exit(1);
 }

@@ -106,7 +106,8 @@ int	duplicate_line_and_increment_index(char **str, char *ligne, t_indexes *indx)
 	return (0);
 }
 
-int	initialize_indexes_and_find_env(char **envp, char *ligne, t_indexes *indx, int p)
+int	initialize_indexes_and_find_env(char **envp, char *ligne,
+			t_indexes *indx, int p)
 {
 	if (!envp)
 		return (1);
@@ -132,7 +133,8 @@ char	**add_to_envp(char **envp, char *ligne, int p)
 	while (envp[indx.j])
 	{
 		indx.i = 0;
-		if (indx.k == 1 && indx.j == indx.m && is_prefix_equal_until_equal_sign(envp[indx.m], ligne))
+		if (indx.k == 1 && indx.j == indx.m
+			&& is_prefix_equal_until_equal_sign(envp[indx.m], ligne))
 		{
 			if (duplicate_line_to_array(str, ligne, &indx))
 				return (envp);
@@ -204,7 +206,10 @@ int	check_synt(char *str)
 		if (str[i] == '+' && str[i + 1] == '=')
 			break ;
 		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (ft_print("minishell: export: not a valid identifier", 0), 1);
+		{
+			ft_print("minishell: export: not a valid identifier", 0);
+			return (1);
+		}
 		i++;
 	}
 	return (0);
@@ -292,7 +297,10 @@ void	print_env_export(char **tmp)
 			if ((k == 0 && tmp[i][j] == '=') || (!tmp[i][j + 1] && k == 1))
 			{
 				write(1, "\"", 1);
-				k = (k == 1) ? -1 : 1;
+				if (k == 1)
+					k = -1;
+				else
+					k = 1;
 			}
 		}
 		if (k == 1)

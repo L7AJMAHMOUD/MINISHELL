@@ -347,17 +347,3 @@ int here_doc(t_node *node, char **envp, t_data *data)
 	return wait_heredoc_child(pid, file, limiters, data, nbr_del);
 }
 
-
-void	list(char **command)
-{
-	int i = 0;
-
-	while (command[i])
-	{
-		printf("[%s] ->",command[i]);
-		i++;
-	}
-	if (command[i] == NULL)
-		printf("NULL\n");
-	
-}
