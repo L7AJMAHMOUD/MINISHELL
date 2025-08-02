@@ -120,10 +120,9 @@ int	initialize_indexes_and_find_env(char **envp, char *ligne,
 	return (0);
 }
 
-char	**add_to_envp(char **envp, char *ligne, int p)
+char	**add_to_envp(char **envp, char *ligne, int p, char		**str)
 {
 	t_indexes	indx;
-	char		**str;
 
 	if (!ligne || initialize_indexes_and_find_env(envp, ligne, &indx, p))
 		return (envp);
@@ -140,25 +139,38 @@ char	**add_to_envp(char **envp, char *ligne, int p)
 				return (envp);
 		}
 		else
-		{
 			if (duplicate_envp_entry(str, envp, &indx))
 				return (envp);
-		}
 		indx.j++;
 	}
 	if (indx.k == 2)
-	{
 		if (duplicate_line_and_increment_index(str, ligne, &indx))
 			return (envp);
-	}
 	return (free_all_ul_split(envp), str[indx.j] = NULL, str);
+}
+
+static char	*dup_env_line(char *line)
+{
+	char	*dup;
+	int		i;
+
+	dup = malloc(ft_strlen(line) + 1);
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (line[i])
+	{
+		dup[i] = line[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
 }
 
 char	**copy_envp(char **envp)
 {
-	int		i;
-	int		j;
 	char	**str;
+	int		j;
 
 	if (!envp)
 		return (NULL);
@@ -171,23 +183,12 @@ char	**copy_envp(char **envp)
 	j = 0;
 	while (envp[j])
 	{
-		i = 0;
-		str[j] = malloc(ft_strlen(envp[j]) + 1);
+		str[j] = dup_env_line(envp[j]);
 		if (!str[j])
-		{
-			free_all_ul_split(str);
-			return (NULL);
-		}
-		while (envp[j][i])
-		{
-			str[j][i] = envp[j][i];
-			i++;
-		}
-		str[j][i] = '\0';
+			return (free_all_ul_split(str), NULL);
 		j++;
 	}
-	str[j] = NULL;
-	return (str);
+	return (str[j] = NULL, str);
 }
 
 int	check_synt(char *str)
@@ -279,10 +280,9 @@ char	*command_analyse(char *command, char **envp, t_data *data)
 	return (cmd);
 }
 
-void	print_env_export(char **tmp)
+void	print_env_export(char **tmp, int j)
 {
 	int	i;
-	int	j;
 	int	k;
 
 	i = -1;
@@ -320,7 +320,7 @@ void	export(char ***envp, char **cmd, t_data *data)
 		tmp = arr_sorted(*envp);
 		if (!tmp)
 			return (data->status = 1, (void)0);
-		print_env_export(tmp);
+		print_env_export(tmp, 0);
 		free_all_ul_split(tmp);
 		return ((void)(data->status = 0));
 	}
@@ -329,7 +329,8 @@ void	export(char ***envp, char **cmd, t_data *data)
 	{
 		if (check_synt(cmd[j++]))
 			return (data->status = 1, (void)0);
-		tmp = add_to_envp(*envp, command_analyse(cmd[j - 1], *envp, data), 0);
+		tmp = add_to_envp(*envp, command_analyse(cmd[j - 1], *envp, data),
+				0, NULL);
 		*envp = tmp;
 	}
 }

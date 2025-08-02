@@ -48,12 +48,12 @@ void	update_pwd_vars(char *buff, t_data *data, char ***envp)
 
 	command = strmerge_and_free(ft_strdup("OLDPWD="), data->pwd);
 	free(data->pwd);
-	tmp = add_to_envp(*envp, command, 1);
+	tmp = add_to_envp(*envp, command, 1, NULL);
 	free(command);
 	*envp = tmp;
 	data->pwd = ft_strdup(buff);
 	command = strmerge_and_free(ft_strdup("PWD="), data->pwd);
-	tmp = add_to_envp(*envp, command, 1);
+	tmp = add_to_envp(*envp, command, 1, NULL);
 	free(command);
 	*envp = tmp;
 }

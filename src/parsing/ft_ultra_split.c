@@ -215,13 +215,14 @@ t_command	*ft_ultr_split(char *str, char **envp, int q, t_data *data)
 	if (complit_(arr, words, &j, tmp))
 		return (NULL);
 	j = 0;
+	data->envp = &envp;
 	while (j < words)
 	{
-		arr[j] = cooking(arr[j].command, envp, j, q, data);
+		arr[j] = cooking(arr[j].command, j, q, data);
 		j++;
 	}
-	free(tmp);
-	return (arr->nbr = words, arr);
+	
+	return (free(tmp), arr->nbr = words, arr);
 }
 
 char	**ft_ultra_split(char *str, char **envp, t_data *data)

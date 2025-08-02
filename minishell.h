@@ -102,7 +102,7 @@ int			ft_atoi(const char *str);
 void		free_arr(t_command *arr, int i);
 void		read_input(char ***envp, t_data *data);
 char		**ft_ultra_split(char *s, char **envp, t_data *data);
-t_command	*ft_ultr_split(char *str, char **envp, int e, t_data *data);
+t_command	*ft_ultr_split(char *str, char **envp, int q, t_data *data);
 void		invalid_param(void);
 
 /* ────────────────────────────── */
@@ -138,7 +138,7 @@ int			validate_pipe_syntax(char *command);
 /* ────────────────────────────── */
 
 void		pwd(t_data *data);
-void		echo(char **str, t_data *data);
+void		echo(char **str, t_data *data, int p, int j);
 void		cd(char ***envp, char **arg, t_data *data);
 void		export(char ***envp, char **command, t_data *data);
 void		unset(char ***envp, char **command, t_data *data);
@@ -158,7 +158,7 @@ int			strcmp_until_equal(char *s1, char *s2);
 int			check_command(char **str, char ***envp, t_node *node, t_data *data);
 void		free_all_node(t_node *node);
 int			pip(char ***envp, t_data *data, t_node *cur);
-char		**add_to_envp(char **envp, char *ligne, int i);
+char		**add_to_envp(char **envp, char *ligne, int p, char		**str);
 void		heredoc_child_cleanup(char **limiters, char *file, char *com);
 int			redirect_output_fd(char **command, t_command *arr, t_data *data);
 int			redirect_input_fd(char **command, t_data *data);
@@ -183,7 +183,7 @@ void		cleanup_fds(void);
 /*      🍜 COMMAND UTILITIES      */
 /* ────────────────────────────── */
 
-t_command	cooking(char *str, char **envp, int p, int x, t_data *data);
+t_command	cooking(char *str, int p, int x, t_data *data);
 char		**clean_command(char **coammand, t_command *arr);
 int			is_redirection(char *command);
 int			append_to_fd(char **command, t_command *arr, t_data *data);

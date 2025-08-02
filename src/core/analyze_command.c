@@ -92,10 +92,10 @@ syntax error near unexpected token « | »", 0), -1);
 	if (redirect_parse(command) != 0)
 		return (data->status = 2, ft_print("minishell: \
 syntax error near unexpected token « >< »", 0), -1);
-	// if (dsq_detector(command) != 0)
-	// 	return (data->status = 2,
-	// 		ft_print("minishell: syntax error near unexpected token « \" »", 0),
-			// -1);
+	if (dsq_detector(command) != 0)
+		return (data->status = 2,
+			ft_print("minishell: syntax error near unexpected token « \" »", 0),
+			-1);
 	if (command[0] == '\0' || only_space(command))
 		return (1);
 	return (0);

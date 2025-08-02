@@ -285,33 +285,47 @@ void	skip_dollar_signs(t_command *arr, int *i, int *j, int *p)
 	}
 }
 
+static void	helprs_handl_dol(int *p, int *m, int j)
+{
+	*p = 0;
+	*m = j;
+}
+
+static void	helprs_handl_doll(t_indexes *indx, int p, int i)
+{
+	indx->i = i;
+	indx->p = p;
+}
+
+static void	handle_positional(t_command *arr, int i, t_indexes *indxx, int *j)
+{
+	remove_positional_parameter(arr, i, &indxx->p, *j);
+	*j = indxx->m;
+}
+
 void	handle_dollar(t_command *arr, int i, int j, t_data *data)
 {
-	int			p;
-	int			m;
 	t_indexes	indx;
+	t_indexes	indxx;
 
 	while (arr[i].command[j])
 	{
 		if (arr[i].command[j++] == '$')
 		{
-			p = 0;
-			m = j;
-			skip_dollar_signs(arr, &i, &j, &p);
+			helprs_handl_dol(&indxx.p, &indxx.m, j);
+			skip_dollar_signs(arr, &i, &j, &indxx.p);
 			if (arr[i].command[j] <= 32 && !arr[i + 1].command)
 				continue ;
-			if (arr[i].q == 39 || p % 2
+			if (arr[i].q == 39 || indxx.p % 2
 				|| (arr[i].command[j] >= '0' && arr[i].command[j] <= '9'))
 			{
-				remove_positional_parameter(arr, i, &p, j);
-				j = m;
+				handle_positional(arr, i, &indxx, &j);
 			}
 			else if (arr[i].command[j] == '?')
-				expand_exit_status(arr, i, &j, p);
+				expand_exit_status(arr, i, &j, indxx.p);
 			else
 			{
-				indx.i = i;
-				indx.p = p;
+				helprs_handl_doll(&indx, indxx.p, i);
 				expand_env_variable(arr, indx, &j, data);
 			}
 		}
@@ -351,7 +365,7 @@ char	*ft_arr_to_str(t_command *arr)
 	return (str);
 }
 
-t_command	cooking(char *str, char **envp, int p, int x, t_data *data)
+t_command	cooking(char *str, int p, int x, t_data *data)
 {
 	t_command	arr2;
 	t_command	*arr;
@@ -360,7 +374,7 @@ t_command	cooking(char *str, char **envp, int p, int x, t_data *data)
 	arr = cleaning(str, p, NULL, indx);
 	arr2.q = arr[0].q;
 	arr->data = data;
-	arr->envp = envp;
+	arr->envp = *(data->envp);
 	if (!x)
 		expand(arr, data);
 	arr2.command = ft_arr_to_str(arr);
