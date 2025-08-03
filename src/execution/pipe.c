@@ -107,6 +107,7 @@ int	pip(char ***envp, t_data *data, t_node *cur)
 	int	i;
 
 	init_fds(fds, &i);
+	g_hsig = 1;
 	while (cur)
 	{
 		fds[1] = check_here_doc(cur);
