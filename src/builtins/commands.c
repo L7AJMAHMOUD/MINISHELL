@@ -31,22 +31,8 @@ void	print_env_value_escaped(char *str, int k, int i, int l)
 {
 	while (str && str[i])
 	{
-		if (str[i] == '=')
-			i++;
-		if (str[i] == '\\')
-		{
-			i++;
-			l++;
-			if (str[i] != '\\')
-			{
-				l /= 2;
-				while (l > 0)
-				{
-					l--;
-					write(1, "\\", 1);
-				}
-			}
-		}
+		// if (str[i] == '=')
+		// 	i++;
 		write(1, &str[i], 1);
 		i++;
 	}
@@ -66,8 +52,8 @@ void	echo(char **str, t_data *data, int p, int j)
 	}
 	while (str && str[i])
 	{
-		while (str[i][j] == '=')
-			write(1, &str[i][j++], 1);
+		// while (str[i][j] == '=')
+		// 	write(1, &str[i][j++], 1);
 		if (str[i + 1])
 			print_env_value_escaped(str[i], 1, 0, 0);
 		else
