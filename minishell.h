@@ -250,5 +250,5 @@ void		rev_(char *s);
 void		preparation(char **s, int i);
 int			count_words(char *s, char sep, int i, int count);
 int			initialisation(t_command *arr, int word);
-
+void		si(int signum);
 #endif

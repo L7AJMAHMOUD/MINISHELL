@@ -42,6 +42,23 @@ void	bash_sig_handler(int signum)
 	g_hsig = 0;
 }
 
+void	si(int signum)
+{
+	t_data	*data;
+	int		p;
+
+	(void)signum;
+	data = get_heredoc_data(NULL);
+	p = 0;
+	while (p < data->id)
+	{
+		kill(data->pid[p++], SIGTERM);
+	}
+	data->status = 131;
+		write(1, "Quit\n", 5);
+	signal_init(data);
+}
+
 void	signal_init(t_data *data)
 {
 	get_heredoc_data(data);

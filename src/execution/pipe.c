@@ -88,7 +88,8 @@ int	pip(char ***envp, t_data *data, t_node *cur)
 	int	fds[6];
 	int	pid;
 	int	i;
-
+	
+	signal(SIGQUIT, si);
 	init_fds(fds, &i);
 	g_hsig = 1;
 	while (cur)
