@@ -1,0 +1,101 @@
+1- t_node struct fiha whd juj variables (and , or) dyr lihom initialization f reset_node_flags (command_tokenization.c) haydhom ila knti makheddamch bihom
+
+2- tab (\t) mtloob f fiche de correction o hna madirinooch ga3 achno ban lk ??
+
+    jareb had juuj bch t3raf lblan : 
+    > $'\t' 
+    > echo $'column1\tcolumn2'
+
+3- > ls"" , test mea bash ...
+
+4- cat   "minishell.h"  khass newline f lakher
+
+5 - cat "" makefile , new line f lakher
+
+6 - echo "line with a \" quote" , test mea bash
+
+7 - echo "Hello $USER!" , test mea bash
+
+8 - echo "start-$EMPTY-end" , test mea bash
+
+9 - echo "This is \$USER" , test mea lbash
+
+10- echo "\"double inside\"" , test mea bash
+
+11 - echo "\"" , test mea bash
+
+12 - echo "\""quote"\"" , test mea bash
+
+13- echo "hello \"user\"" , test mea bash
+
+14 - echo 'C:\Windows\System32' , test mea bash
+
+15 - echo '!@#$%^&*()_+=' , test mea bash
+
+16 - echo 'tab\tnewline\nquote\"' , test mea bash
+
+17 - echo 'ends with backslash \' , test mea l bash
+
+18 - echo 'hello , bhal had test andiro lmara lowl tla3 segf wlkin mabqach darha mn ba3d wla kikhdem 3adi
+
+19 - echo "Price is \$42" , test mea bash
+
+20 - echo "\$USER" , test mea bash
+
+21 - echo "Backslash: \\, Dollar: \$, Quote: \"" ,test mea bash
+
+22 - echo "tab\tnewline\nbell\a" , test mea bash
+
+23 - echo "abc\"" , test bash
+
+24 - echo "weird: \xFF"
+
+25 - > env , kyn wahd lfarq f akhir line bin bash o env
+
+26 - > export SPECIAL="!@#$%^&*()_+" , hadi fiha chek hit l bash kitale3 ; bash: !@#: event not found
+
+27 - export NAME=world , export GREET="hello $NAME" , echo $GREET , test mea  bash
+
+28 - export LITERAL="\$HOME" , $LITERAL
+
+29 - export VAR="!@#$%^&*()_+-=" , hta tchrah lia elch kiwqf hdkchi end "#" hta lbash bash: !@#: event not found , ghi lbash makidirch liha export kitale3 had l error
+
+30 - export _  , echo $_ , test mea bash
+
+31 - export VAR="foo=bar=baz" , echo "$VAR"
+
+32 - export VAR="Hello \"world\"" , echo "$VAR" , test mea bash
+
+33 - export VAR="hello\tworld" , echo "$VAR" , test mea bash
+
+34 - cd /path/does/not/exist , khass ikteb lk lpath li 3titih 3ad no such file or directory
+
+35 - touch 1 , cd 1 , khass tkun resultat hoka -> bash: cd: 1: Not a directory
+
+36 - cd "" , cd"" , test mea bash 
+
+37 - mkdir noperm , chmod 600 noperm , cd noperm , dir balk ra makidkholch ghi makitale3ch permission denied 
+
+38 - mkdir "foo bar" , cd foo\ bar , test mea bash
+
+39 - unset PATH , ls , test mea bash
+
+40 - export PATH="/does/not/exist:/nope" , ls , test mea bash
+
+41 - export PATH="/bin\t/usr/bin" , ls , test mea bash
+
+42 - export PATH="/tmp;rm -rf /" , ls , test mea bash
+
+43 - cat << , segmentation fault
+
+44 - ls << $1 , segmentation fault
+
+45 - cat << EOF > missing_dir/file.txt , error khass ikun ->  missing_dir/file.txt: No such file or directory
+
+46 - cat | cat  ctrl + D kheddama mzyan , ctrl + C kat3ti 2 prompt o f ctrl + \ kat3ti 2 Quit
+
+47 - cat << 'STOP' | grep \$WORD | tee -a no_expand.txt | wc -l 
+    > $WORD there
+    > something else
+    > $WORD again
+    > STOP
