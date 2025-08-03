@@ -59,7 +59,6 @@ static int	wait_heredoc_child(pid_t pid, char *file, t_data *data, int nbr_del)
 {
 	int	status;
 
-	g_hsig = 1;
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
 		return (handle_heredoc_success(file, data, status, nbr_del));
@@ -74,6 +73,8 @@ int	here_doc(t_node *node, char **envp, t_data *data)
 	pid_t	pid;
 
 	nbr_del = 0;
+	g_hsig = 1;
+	signal_init(data);
 	limiters = get_delimiters(node->arr, node->command);
 	data->limiters = limiters;
 	file = here_doc_data(0, NULL, NULL, NULL);
