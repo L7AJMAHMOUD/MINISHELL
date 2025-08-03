@@ -31,8 +31,6 @@ void	print_env_value_escaped(char *str, int k, int i, int l)
 {
 	while (str && str[i])
 	{
-		// if (str[i] == '=')
-		// 	i++;
 		write(1, &str[i], 1);
 		i++;
 	}
