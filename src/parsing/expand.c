@@ -59,7 +59,7 @@ static int	handle_env_var(char **cmd, int *j, int p, t_data *data)
 	char	*str;
 	int		var_len;
 
-	var_len = strlen_(&(*cmd)[*j]);
+	var_len = strlen_until_special(&(*cmd)[*j]);
 	varname = malloc(var_len + 1);
 	if (!varname)
 		return (0);

@@ -160,21 +160,27 @@ t_command	*cleaning(char *str, int p, t_command *arr, t_indexes indx)
 	return (arr[++indx.k].command = NULL, arr->nbr = indx.k, arr);
 }
 
+int	is_special_char(char c)
+{
+	return (c == '$' || c == '\'' || c == '\"' || c == ' ' || c == '\t'
+		|| c == '<' || c == '>' || c == '!' || c == '?' || c == '='
+		|| c == '+' || c == '-' || c == '/' || c == '|' || c == '&'
+		|| c == ';' || c == '*' || c == '[' || c == ']' || c == '('
+		|| c == ')' || c == '#' || c == '{' || c == '}');
+}
+
 int	strlen_until_special(char *str)
 {
 	int	i;
 
-	i = 0;
 	if (!str)
 		return (0);
-	while (str[i] && str[i] != '$' && str[i] != QUOTE_SINGLE
-		&& str[i] != QUOTE_DOUBLE && str[i] != 32 && str[i] != '<'
-		&& str[i] != '>')
-	{
+	i = 0;
+	while (str[i] && !is_special_char(str[i]))
 		i++;
-	}
 	return (i);
 }
+
 
 char	*get_variable(char *str, char **envp, t_data *data)
 {

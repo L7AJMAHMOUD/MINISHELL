@@ -193,7 +193,7 @@ char		*get_variable(char *str, char **envp, t_data *data);
 char		*here_doc_data(int pid, char *file_num, char *file_name, char *full_path);
 char		*join_strings(char *s1, char *s2);
 int			wait_for_child(pid_t pid, t_data *data);
-int			strlen_(char *str);
+int			strlen_until_special(char *str);
 char		*ft_strncpy(char *dst, const char *src, size_t n);
 char		*expand_str(char *cmd, char **envp, t_data *data);
 char		*strmerge_and_free(char *s1, char *s2);

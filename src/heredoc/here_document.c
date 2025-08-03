@@ -36,22 +36,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-int	strlen_(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i] && str[i] != '$' && str[i] != QUOTE_SINGLE
-		&& str[i] != QUOTE_DOUBLE && str[i] != 32
-		&& str[i] != '<' && str[i] != '>')
-	{
-		i++;
-	}
-	return (i);
-}
-
 int	delimiters_counter(t_command *arr, char **h)
 {
 	int	i;
