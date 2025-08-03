@@ -12,18 +12,6 @@
 
 #include "minishell.h"
 
-char	*ft_strchr(const char *str, int c)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i] != (char)c && str[i])
-		i++;
-	if (str[i] == (char)c)
-		return ((char *)str + i);
-	return (NULL);
-}
-
 static int	strlen_until_char(const char *str, int c)
 {
 	int	i;
@@ -36,7 +24,7 @@ static int	strlen_until_char(const char *str, int c)
 	return (i);
 }
 
-static char	*strdup_until_char(const char *src, int c, int *i)
+char	*strdup_until_char(const char *src, int c, int *i)
 {
 	char	*h;
 
@@ -56,182 +44,6 @@ static char	*strdup_until_char(const char *src, int c, int *i)
 	h[*i] = '\0';
 	*i += 1;
 	return (h);
-}
-
-char	*strjoin_with_slash(char *s1, char *s2)
-{
-	size_t	k;
-	size_t	j;
-	char	*str;
-
-	j = 0;
-	k = 0;
-	if (!s2 && !s1)
-		return (NULL);
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (ft_strdup(s1));
-	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 2);
-	if (str == NULL)
-		return (0);
-	while (s1[j])
-	{
-		str[j] = s1[j];
-		j++;
-	}
-	str[j++] = '/';
-	while (s2[k])
-		str[j++] = s2[k++];
-	str[j] = '\0';
-	return (free(s1), s1 = NULL, str);
-}
-
-int	find_path_index(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (envp[i][0] == 'P' && envp[i][1] == 'A' && envp[i][2] == 'T'
-			&& envp[i][3] == 'H')
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-int	check_invalid_path_or_command(char *path)
-{
-	if (ft_strchr(path, ':'))
-	{
-		write(2, "minishell: ", 11);
-		write(2, path, ft_strlen(path));
-		write(2, ": No such file or directory\n", 29);
-		exit (127);
-	}
-	if (ft_strcmp("..", path) == 0)
-	{
-		write(2, "minishell: ", 11);
-		write(2, path, ft_strlen(path));
-		write(2, ": command not found\n", 20);
-		return (1);
-	}
-	return (0);
-}
-
-int	check_path_directory_or_missing(char *path)
-{
-	DIR	*dir;
-
-	dir = opendir(path);
-	if (dir)
-	{
-		write(2, "minishell: ", 11);
-		write(2, path, ft_strlen(path));
-		write(2, ": Is a directory\n", 18);
-		closedir(dir);
-		exit (-1);
-	}
-	if (access(path, F_OK) != 0)
-	{
-		write(2, "minishell: ", 11);
-		write(2, path, ft_strlen(path));
-		write(2, ": No such file or directory\n", 28);
-		exit (127);
-	}
-	return (0);
-}
-
-int	check_if_directory(char *path)
-{
-	DIR	*dir;
-
-	dir = opendir(path);
-	if (dir)
-	{
-		write(2, "minishell: ", 11);
-		write(2, path, ft_strlen(path));
-		write(2, ": Is a directory\n", 18);
-		closedir(dir);
-		exit (-1);
-	}
-	return (0);
-}
-
-char	*print_access_error(char *path)
-{
-	if (access(path, F_OK) == 0)
-	{
-		write(2, "minishell: ", 11);
-		write(2, path, ft_strlen(path));
-		write(2, ": Permission denied\n", 20);
-		exit(-2);
-	}
-	write(2, "minishell: ", 11);
-	write(2, path, ft_strlen(path));
-	write(2, ": No such file or directory\n", 28);
-	exit (127);
-}
-
-char	*print_no_such_file_error(char *path)
-{
-	write(2, "minishell: ", 11);
-	write(2, path, ft_strlen(path));
-	write(2, ": No such file or directory\n", 28);
-	exit (127);
-}
-
-char	*print_permission_denied_error(char *path)
-{
-	write(2, "minishell: ", 11);
-	write(2, path, ft_strlen(path));
-	write(2, ": Permission denied\n", 20);
-	exit(-2);
-}
-
-char	*print_command_not_found_error(char *path)
-{
-	write(2, "minihell: ", 11);
-	write(2, path, ft_strlen(path));
-	write(2, ": command not found\n", 20);
-	exit (127);
-}
-
-char	*check_executable_or_error(char *tmp, char *path)
-{
-	if (access(tmp, X_OK) == 0)
-		return (tmp);
-	return (print_permission_denied_error(path));
-}
-
-char	*find_executable_in_path(char **envp, t_data *data, char *path, int *j)
-{
-	int		i;
-	int		k;
-	char	*tmp;
-
-	i = find_path_index(envp);
-	if (i == -1 && !data->path)
-		return (print_access_error(path));
-	if (i == -1)
-		envp[i] = data->path;
-	*j = 5;
-	while ((size_t) * j < ft_strlen(envp[i]))
-	{
-		tmp = strdup_until_char(&envp[i][*j], ':', &k);
-		if (!tmp)
-			return (NULL);
-		*j += k;
-		tmp = strjoin_with_slash(tmp, path);
-		if (!tmp)
-			return (NULL);
-		if (access(tmp, F_OK) == 0)
-			return (check_executable_or_error(tmp, path));
-		free(tmp);
-	}
-	return (print_command_not_found_error(path));
 }
 
 char	*find_path(char *path, char **envp, t_data *data)

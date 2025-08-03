@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int helprs_red_par(int *i, char *command)
+static int	helprs_red_par(int *i, char *command)
 {
 	*i += 1;
 	if (command[*i] == command[*i + 1])
@@ -29,7 +29,8 @@ static int helprs_red_par(int *i, char *command)
 		return (-1);
 	return (0);
 }
-static int helprs_red_pars(int *i, char *command, char current)
+
+static int	helprs_red_pars(int *i, char *command, char current)
 {
 	*i += 1;
 	if (command[*i] == current)
@@ -70,6 +71,7 @@ int	redirect_parse(char *command)
 	}
 	return (0);
 }
+
 static int	helper_heredoc_append(int *i, char *cmd, char symbol)
 {
 	*i += 1;
@@ -102,14 +104,14 @@ int	redirect_parse_double(char *cmd)
 			current = REDIRECT_IN;
 			if (helper_heredoc_append(&i, cmd, current))
 				return (-1);
-			continue;
+			continue ;
 		}
 		else if (cmd[i] == REDIRECT_OUT && cmd[i + 1] == REDIRECT_OUT)
 		{
 			current = REDIRECT_OUT;
 			if (helper_heredoc_append(&i, cmd, current))
 				return (-1);
-			continue;
+			continue ;
 		}
 		i++;
 	}

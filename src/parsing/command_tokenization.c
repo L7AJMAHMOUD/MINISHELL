@@ -12,15 +12,6 @@
 
 #include "minishell.h"
 
-void	reset_node_flags(t_node *node)
-{
-	node->command = 0;
-	node->pipe = 0;
-	node->and = 0;
-	node->or = 0;
-	node->next = 0;
-}
-
 int	count_args(char **tab)
 {
 	int	i;
@@ -81,7 +72,7 @@ void	complet(t_node **node, char *command, char **envp, t_data *data)
 
 	t_mp = NULL;
 	i = 0;
-	command_tokenization(&t_mp, ft_strstr(command, "|"), envp, data);
+	command_tokenization(&t_mp, ft_strstr(command, "|", 0, 0), envp, data);
 	if (!(*node)->next)
 		(*node)->next = t_mp;
 	else
@@ -90,7 +81,7 @@ void	complet(t_node **node, char *command, char **envp, t_data *data)
 		(*node)->next = t_mp;
 		t_mp->next = t_p;
 	}
-	i = ft_strt(command, "|");
+	i = ft_strt(command, "|", 0, 0);
 	command[i] = 0;
 	command_tokenization(node, command, envp, data);
 }
@@ -108,12 +99,13 @@ void	command_tokenization(t_node **node, char
 		reset_node_flags(*node);
 	}
 	(*node)->hd = 0;
-	if (ft_strstr(command, "|"))
+	if (ft_strstr(command, "|", 0, 0))
 		complet(node, command, envp, data);
 	else
 	{
 		(*node)->arr = ft_ultr_split(command, envp, 1, data);
 		(*node)->i = (*node)->arr->nbr;
-		(*node)->command = split_fini(ft_ultra_split(command, envp, data), (*node)->arr);
+		(*node)->command = split_fini(ft_ultra_split(command,
+					envp, data), (*node)->arr);
 	}
 }

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void print_err(t_command *arr, int i)
+void	print_err(t_command *arr, int i)
 {
 	write(2, "minishell : ", 13);
 	write(2, arr[i + 1].command, ft_strlen(arr[i + 1].command));
@@ -26,10 +26,10 @@ int	append_to_fd(char **command, t_command *arr, t_data *data, int i)
 
 	if (ft_strcmp(command[i], ">>") == 0 && arr[i].q == 0)
 	{
-		if (!command[i + 1]  || (command[i + 1] && ft_strcmp(command[i + 1], arr[i + 1].command) != 0 && count_word(command[i + 1], ' ') != 1))
+		if (!command[i + 1] || (command[i + 1] && ft_strcmp(command[i + 1],
+					arr[i + 1].command) && count_word(command[i + 1], 32) != 1))
 		{
-			data->status = 1;
-			return (print_err(arr, i), -1);
+			return (data->status = 1, print_err(arr, i), -1);
 		}
 		fd = open(command[i + 1], O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (fd == -1)

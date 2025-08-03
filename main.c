@@ -12,63 +12,6 @@
 
 #include "minishell.h"
 
-void	cleanup_fds(void)
-{
-	int	fd;
-	int	max_fd;
-
-	fd = 3;
-	max_fd = 1024;
-	while (fd < max_fd)
-	{
-		close(fd);
-		fd++;
-	}
-}
-
-char	**read_stock(char **envp, t_data *data)
-{
-	int		i;
-	int		j;
-	char	**str;
-
-	j = 0;
-	if (!envp)
-	{
-		str = malloc((3 + 1) * sizeof(char *));
-		j = 0;
-		if (!str)
-			return (NULL);
-		str[j] = ft_strdup("OLDPWD");
-		str[j++] = join_strings("PWD", data->pwd);
-		str[j++] = ft_strdup("SHLVL=1");
-		str[j] = 0;
-		return (str);
-	}
-	while (envp[j])
-		j++;
-	str = malloc((j + 1) * sizeof(char *));
-	j = 0;
-	if (!str)
-		return (NULL);
-	while (envp[j])
-	{
-		i = 0;
-		str[j] = malloc(ft_strlen(envp[j]) + 1);
-		if (!str[i])
-			return (free_all_ul_split(str), NULL);
-		while (envp[j][i])
-		{
-			str[j][i] = envp[j][i];
-			i++;
-		}
-		str[j][i] = 0;
-		j++;
-	}
-	str[j] = 0;
-	return (str);
-}
-
 int	isapure(void)
 {
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
@@ -131,7 +74,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		if (init_pwd(&data) || init_env(&data))
 			return (1);
-		envp = read_stock(envp, &data);
+		envp = read_stock(envp, &data, 0, 0);
 		if (!envp)
 			return (free(data.pwd), free(data.path), 1);
 		read_input(&envp, &data);

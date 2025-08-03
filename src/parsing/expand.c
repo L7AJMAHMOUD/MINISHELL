@@ -66,7 +66,10 @@ static int	handle_env_var(char **cmd, int *j, int p, t_data *data)
 	ft_strncpy(varname, &(*cmd)[*j], var_len);
 	varname[var_len] = '\0';
 	tmp = get_variable(varname, *(data->envp), data);
-	val = tmp ? ft_strdup(tmp) : NULL;
+	if (tmp)
+		val = ft_strdup(tmp);
+	else
+		val = NULL;
 	str = ft_strdup(&(*cmd)[*j + var_len]);
 	(*cmd)[*j - 1 - p] = 0;
 	*cmd = ft_strjoin_(*cmd, val);
@@ -76,10 +79,8 @@ static int	handle_env_var(char **cmd, int *j, int p, t_data *data)
 	return (1);
 }
 
-char	*expand_str(char *cmd, char **envp, t_data *data)
+char	*expand_str(char *cmd, char **envp, t_data *data, t_indexes indx)
 {
-	t_indexes	indx;
-
 	indx.j = 0;
 	cmd = ft_strdup(cmd);
 	*(data->envp) = envp;

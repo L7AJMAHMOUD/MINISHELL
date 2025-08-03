@@ -70,3 +70,17 @@ void	ft_print(char *s, int i)
 	}
 	ft_putchar('\n');
 }
+
+void	cleanup_fds(void)
+{
+	int	fd;
+	int	max_fd;
+
+	fd = 3;
+	max_fd = 1024;
+	while (fd < max_fd)
+	{
+		close(fd);
+		fd++;
+	}
+}

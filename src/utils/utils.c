@@ -24,10 +24,8 @@ static int	ft_an(char *haystack, char *needle)
 	return (0);
 }
 
-char	*ft_strstr(char *haystack, char *needle)
+char	*ft_strstr(char *haystack, char *needle, size_t i, size_t j)
 {
-	size_t	i;
-	size_t	j;
 	size_t	c;
 
 	i = 0;
@@ -102,17 +100,11 @@ char	*ft_strdup(char *src )
 	return (h);
 }
 
-int	ft_strt(char *haystack, char *needle)
+int	ft_strt(char *haystack, char *needle, size_t i, size_t j)
 {
-	size_t	i;
-	size_t	j;
 	size_t	c;
 
-	i = 0;
-	j = 0;
-	if (needle[j] == 0)
-		return (0);
-	while (haystack[i])
+	while (needle[j] != 0 && haystack[i])
 	{
 		c = haystack[i];
 		if (c == QUOTE_DOUBLE || c == QUOTE_SINGLE || c == '(')
@@ -133,32 +125,5 @@ int	ft_strt(char *haystack, char *needle)
 				return (i);
 		i++;
 	}
-	return (0);
-}
-
-int	ft_isalpha(int c)
-{
-	if (c >= 65 && c <= 90)
-		return (1);
-	if (c >= 97 && c <= 122)
-		return (1);
-	return (0);
-}
-
-int	ft_isalnum(int c)
-{
-	if (c >= 48 && c <= 57)
-		return (1);
-	if (c >= 65 && c <= 90)
-		return (1);
-	if (c >= 97 && c <= 122)
-		return (1);
-	return (0);
-}
-
-int	ft_isdigit(int c)
-{
-	if (c >= 48 && c <= 57)
-		return (1);
 	return (0);
 }
