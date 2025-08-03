@@ -86,7 +86,6 @@ char	**cpt_read_stock(char **str, t_data *data)
 	int	j;
 
 	j = 0;
-	printf("hello 2\n");
 	str = malloc((3 + 1) * sizeof(char *));
 	if (!str)
 		return (NULL);
@@ -101,7 +100,6 @@ char	**read_stock(char **envp, t_data *data, int j, int i)
 {
 	char	**str;
 
-	printf("hello %s\n",envp[0]);
 	if (!envp[0])
 		return (cpt_read_stock(str, data));
 	while (envp[j])
