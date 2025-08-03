@@ -94,7 +94,7 @@ t_command	*ft_ultr_split(char *str, char **envp, int q, t_data *data)
 	preparation(&tmp, 0);
 	rev_(tmp);
 	words = count_words(tmp, ' ', 0, 0);
-	arr = malloc(sizeof(t_command) * words);
+	arr = malloc(sizeof(t_command) * (words + 1));
 	if (!arr)
 		return (NULL);
 	if (complit_(arr, words, &j, tmp))
@@ -106,7 +106,7 @@ t_command	*ft_ultr_split(char *str, char **envp, int q, t_data *data)
 		arr[j] = cooking(arr[j].command, j, q, data);
 		j++;
 	}
-	return (free(tmp), arr->nbr = words, arr);
+	return (arr[j].command = NULL, free(tmp), arr->nbr = words, arr);
 }
 
 char	**ft_ultra_split(char *str, char **envp, t_data *data)

@@ -69,19 +69,23 @@ char	**copy_list_here(char **command, t_command *arr)
 	new = malloc((new_cmd_size_here(command, arr) + 1) * sizeof(char *));
 	if (!new)
 		return (NULL);
-	while (command[i])
+	while (arr[i].command)
 	{
-		if (ft_strcmp(command[i], "<<") == 0 && command[i + 1] && arr[i].q == 0)
+		if (ft_strcmp(arr[i].command, "<<") == 0
+			&& arr[i + 1].command && arr[i].q == 0)
+		{
 			i += 2;
-		else
+			continue;
+		}
+		else if (command[i])
 		{
 			new[j] = ft_strdup(command[i]);
-			i++;
 			j++;
 		}
+		i++;
 	}
-	new[j] = NULL;
-	return (new);
+	
+	return (new[j] = NULL, new);
 }
 
 char	**clean_command(char **command, t_command *arr)

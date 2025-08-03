@@ -31,7 +31,7 @@ int	delimiters_counter(t_command *arr, char **h)
 
 	i = 0;
 	count = 0;
-	while (h[i])
+	while (arr[i].command)
 	{
 		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command
 			&& arr[i].q == 0)
@@ -58,7 +58,7 @@ char	**get_delimiters(t_command *arr, char **h)
 	j = 0;
 	if (!deli_stack)
 		return (NULL);
-	while (h[i])
+	while (arr[i].command)
 	{
 		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command
 			&& arr[i].q == 0)
