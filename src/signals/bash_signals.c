@@ -56,7 +56,6 @@ void	si(int signum)
 	}
 	data->status = 131;
 		write(1, "Quit\n", 5);
-	signal_init(data);
 }
 
 void	signal_init(t_data *data)

@@ -98,9 +98,9 @@ void	read_input(char ***envp, t_data *data)
 	char	*command;
 	t_node	*node;
 
-	signal_init(data);
 	while (1)
 	{
+		signal_init(data);
 		node = NULL;
 		init_loop_data(data);
 		command = readline(
