@@ -12,26 +12,6 @@
 
 #include "minishell.h"
 
-int	new_cmd_size_here(char **command, t_command *arr)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (command[i])
-	{
-		if (ft_strcmp(command[i], "<<") == 0 && command[i + 1] && arr[i].q == 0)
-			i += 2;
-		else
-		{
-			count++;
-			i++;
-		}
-	}
-	return (count);
-}
-
 char	**copy_list(char **command, t_command *arr)
 {
 	char	**new;
@@ -58,52 +38,11 @@ char	**copy_list(char **command, t_command *arr)
 	return (new);
 }
 
-char	**copy_list_here(char **command, t_command *arr)
-{
-	char	**new;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	new = malloc((new_cmd_size_here(command, arr) + 1) * sizeof(char *));
-	if (!new)
-		return (NULL);
-	while (arr[i].command)
-	{
-		if (ft_strcmp(arr[i].command, "<<") == 0
-			&& arr[i + 1].command && arr[i].q == 0)
-		{
-			i += 2;
-			continue;
-		}
-		else if (command[i])
-		{
-			new[j] = ft_strdup(command[i]);
-			j++;
-		}
-		i++;
-	}
-	
-	return (new[j] = NULL, new);
-}
-
 char	**clean_command(char **command, t_command *arr)
 {
 	char	**clean;
 
 	clean = copy_list(command, arr);
-	if (!clean)
-		return (NULL);
-	free_all_ul_split(command);
-	return (clean);
-}
-
-char	**clean_command_here(char **command, t_command *arr)
-{
-	char	**clean;
-
-	clean = copy_list_here(command, arr);
 	if (!clean)
 		return (NULL);
 	free_all_ul_split(command);

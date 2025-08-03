@@ -98,17 +98,14 @@ void	read_input(char ***envp, t_data *data)
 	char	*command;
 	t_node	*node;
 
+	signal_init(data);
 	while (1)
 	{
-		g_hsig = 0;
-		signal_init(data);
 		node = NULL;
 		init_loop_data(data);
 		command = readline(
-			"\001\033[38;5;93m\002MINISHELL-1.0$ "
-			"\001\033[0m\002");
-		g_hsig = 2;
-		signal_init(data);
+				"\001\033[38;5;93m\002MINISHELL-1.0$ "
+				"\001\033[0m\002");
 		if (!command)
 			handle_null_command(envp, data);
 		add_history(command);

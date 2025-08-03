@@ -4,7 +4,8 @@ int	is_redirect(char *command)
 {
 	if (ft_strcmp(command, ">") == 0
 		|| ft_strcmp(command, "<") == 0
-		|| ft_strcmp(command, ">>") == 0)
+		|| ft_strcmp(command, ">>") == 0
+		|| ft_strcmp(command, "<<") == 0)
 		return (0);
 	return (-1);
 }

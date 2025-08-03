@@ -163,7 +163,6 @@ int			redirect_output_fd(char **command, t_command *arr,
 				t_data *data, int i);
 int			redirect_input_fd(char **command, t_command *arr,
 				t_data *data, int i);
-char		**clean_command_here(char **command, t_command *arr);
 
 /* ────────────────────────────── */
 /*       ⚡ SIGNAL HANDLING        */
@@ -250,5 +249,5 @@ void		rev_(char *s);
 void		preparation(char **s, int i);
 int			count_words(char *s, char sep, int i, int count);
 int			initialisation(t_command *arr, int word);
-void		si(int signum);
+
 #endif

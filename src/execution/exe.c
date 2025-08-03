@@ -78,6 +78,8 @@ static void	child_process(t_node *node, char **envp, t_data *data)
 		perror("dup2");
 		exit(1);
 	}
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	path = find_path(*(node->command), envp, data);
 	if (!path)
 		exit(1);

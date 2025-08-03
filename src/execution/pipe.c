@@ -89,9 +89,8 @@ int	pip(char ***envp, t_data *data, t_node *cur)
 	int	pid;
 	int	i;
 
-	g_hsig = 3;
-	signal_init(data);
 	init_fds(fds, &i);
+	g_hsig = 1;
 	while (cur)
 	{
 		fds[1] = check_here_doc(cur);

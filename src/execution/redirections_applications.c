@@ -74,7 +74,6 @@ char	**apply_redirections(t_node *node, char ***envp,
 			return (free_all_ul_split(node->command), NULL);
 		if (handle_heredoc(node, data, indx, i) == -1)
 			return (free_all_ul_split(node->command), NULL);
-		node->command = clean_command_here(node->command, node->arr);
 		while (node->command[i])
 		{
 			data->i = 0;

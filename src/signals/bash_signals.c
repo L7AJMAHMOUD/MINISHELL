@@ -34,46 +34,20 @@ void	bash_sig_handler(int signum)
 		kill(data->pid[p++], SIGTERM);
 	}
 	data->status = 130;
-	if (g_hsig == 1)
-		write(1, "^C", 2);
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	if (g_hsig != 1 && g_hsig != 3)
+	if (g_hsig == 0)
 		rl_redisplay();
-}
-
-void	si(int signum)
-{
-	t_data	*data;
-	int		p;
-
-	(void)signum;
-	data = get_heredoc_data(NULL);
-	p = 0;
-	while (p < data->id)
-	{
-		kill(data->pid[p++], SIGKILL);
-	}
-	data->status = 131;
-		write(1, "Quit\n", 5);
+	g_hsig = 0;
 }
 
 void	signal_init(t_data *data)
 {
 	get_heredoc_data(data);
-	if (g_hsig != 2 && g_hsig != 3)
-	{
-		if (signal(SIGINT, bash_sig_handler) == SIG_ERR
-		|| signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-		{
-			perror("signal failed");
-			return ;
-		}
-		return ;
-	}
+	g_hsig = 0;
 	if (signal(SIGINT, bash_sig_handler) == SIG_ERR
-		|| signal(SIGQUIT, si) == SIG_ERR)
+		|| signal(SIGQUIT, SIG_IGN) == SIG_ERR)
 	{
 		perror("signal failed");
 		return ;
