@@ -8,6 +8,9 @@ SRCS = main.c \
        src/builtins/cd.c \
        src/builtins/commands.c \
        src/builtins/export.c \
+       src/builtins/utils_export.c \
+       src/builtins/helpr_export.c \
+       src/builtins/pseudo_export.c \
        src/builtins/unset.c \
        src/execution/exe.c \
        src/execution/pipe.c \

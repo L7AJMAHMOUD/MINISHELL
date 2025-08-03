@@ -181,7 +181,6 @@ int	strlen_until_special(char *str)
 	return (i);
 }
 
-
 char	*get_variable(char *str, char **envp, t_data *data)
 {
 	int		i;

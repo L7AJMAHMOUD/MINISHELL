@@ -221,7 +221,6 @@ t_command	*ft_ultr_split(char *str, char **envp, int q, t_data *data)
 		arr[j] = cooking(arr[j].command, j, q, data);
 		j++;
 	}
-	
 	return (free(tmp), arr->nbr = words, arr);
 }
 

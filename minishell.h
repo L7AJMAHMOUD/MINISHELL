@@ -200,4 +200,12 @@ char		*strmerge_and_free(char *s1, char *s2);
 int			count_word(char *s, char c);
 int			redirect_parse_double(char *cmd);
 void		print_err(t_command *arr, int i);
+int			envp_array_length(char **envp);
+int			duplicate_line_to_array(char **str, char *ligne, t_indexes *indx);
+char		*dup_env_line(char *line);
+char		*command_analyse(char *command, char **envp, t_data *data);
+char		**arr_sorted(char **str);
+void		ft_swap_str(char **s1, char **s2);
+char	**copy_envp(char **envp);
+
 #endif
