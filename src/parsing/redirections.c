@@ -70,3 +70,48 @@ int	redirect_parse(char *command)
 	}
 	return (0);
 }
+static int	helper_heredoc_append(int *i, char *cmd, char symbol)
+{
+	*i += 1;
+	if (cmd[*i] == symbol)
+		*i += 1;
+	else
+		return (-1);
+	while (cmd[*i] == SPACE_CHAR)
+		*i += 1;
+	if (cmd[*i] == '\0')
+		return (-1);
+	if (cmd[*i] == REDIRECT_IN || cmd[*i] == REDIRECT_OUT)
+		return (-1);
+	if (!is_something(&cmd[*i]))
+		return (-1);
+	return (0);
+}
+
+int	redirect_parse_double(char *cmd)
+{
+	int		i;
+	char	current;
+
+	i = 0;
+	while (cmd[i])
+	{
+		skip_inside_quotes(cmd, &i);
+		if (cmd[i] == REDIRECT_IN && cmd[i + 1] == REDIRECT_IN)
+		{
+			current = REDIRECT_IN;
+			if (helper_heredoc_append(&i, cmd, current))
+				return (-1);
+			continue;
+		}
+		else if (cmd[i] == REDIRECT_OUT && cmd[i + 1] == REDIRECT_OUT)
+		{
+			current = REDIRECT_OUT;
+			if (helper_heredoc_append(&i, cmd, current))
+				return (-1);
+			continue;
+		}
+		i++;
+	}
+	return (0);
+}
