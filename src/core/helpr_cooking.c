@@ -43,7 +43,7 @@ t_command	*cleaning(char *str, int p, t_command *arr, t_indexes indx)
 				if (allocate_next_command(arr, str, &(indx.k), indx.j))
 					return (NULL);
 			init_quote_state(&indx, str);
-			if (indx.c == str[indx.i] && p == 0 && !str[indx.i + 1])
+			if (indx.c == str[indx.i] && p == 0 && !indx.i && !str[indx.i + 1])
 			{
 				if (handle_empty_quote_command(arr, &indx, str))
 					return (NULL);
