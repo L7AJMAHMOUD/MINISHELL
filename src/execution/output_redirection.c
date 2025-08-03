@@ -18,6 +18,15 @@ int	redirect_output_fd(char **command, t_command *arr, t_data *data, int i)
 
 	if (ft_strcmp(command[i], ">") == 0 && arr[i].q == 0)
 	{
+		if (!command[i + 1]  || (command[i + 1] && ft_strcmp(command[i + 1], arr[i + 1].command) != 0 && count_word(command[i + 1], ' ') != 1))
+		{
+			data->status = 1;
+			write(2, "minishell : ", 13);
+			write(2, arr[i + 1].command, ft_strlen(arr[i + 1].command));
+			write(2, " : ", 3);
+			write(2, "redirection ambiguë\n", 21);
+			return (-1);
+		}
 		fd = open(command[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (fd == -1)
 		{

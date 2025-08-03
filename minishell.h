@@ -197,5 +197,6 @@ int			strlen_until_special(char *str);
 char		*ft_strncpy(char *dst, const char *src, size_t n);
 char		*expand_str(char *cmd, char **envp, t_data *data);
 char		*strmerge_and_free(char *s1, char *s2);
+int			count_word(char *s, char c);
 
 #endif

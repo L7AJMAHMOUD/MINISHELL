@@ -48,7 +48,7 @@ static char	**double_array(int words)
 	return (p);
 }
 
-static int	count_word(char *s, char c)
+int	count_word(char *s, char c)
 {
 	int	i;
 	int	count;

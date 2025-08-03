@@ -16,6 +16,15 @@ int	redirect_input_fd(char **command, t_command *arr, t_data *data, int i)
 {
 	int	fd;
 
+	if (!command[i + 1]  || (command[i + 1] && ft_strcmp(command[i + 1], arr[i + 1].command) != 0 && count_word(command[i + 1], ' ') != 1))
+	{
+		data->status = 1;
+		write(2, "minishell : ", 13);
+		write(2, arr[i + 1].command, ft_strlen(arr[i + 1].command));
+		write(2, " : ", 3);
+		write(2, "redirection ambiguë\n", 21);
+		return (-1);
+	}
 	if (ft_strcmp(command[i], "<") == 0 && arr[i].q == 0)
 	{
 		fd = open(command[i + 1], O_RDONLY, 0644);
