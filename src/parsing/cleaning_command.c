@@ -23,7 +23,7 @@ char	**copy_list(char **command, t_command *arr)
 	new = malloc((new_cmd_size(command, arr) + 1) * sizeof(char *));
 	if (!new)
 		return (NULL);
-	while (arr[i].command)
+	while (command[i])
 	{
 		if (is_redirect(command[i]) == 0
 			&& arr[i + 1].command && arr[i].q == 0)
