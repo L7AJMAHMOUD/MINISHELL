@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:32:43 by abkaram           #+#    #+#             */
-/*   Updated: 2025/08/04 18:59:06 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 19:23:02 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	complete(char ***envp, char **arg, t_data *data, char **tmp)
 		if (arg[i + 1])
 		{
 			ft_print("minishell: cd: too many arguments", 0);
-			return (free(*tmp), data->status = 1, 1);
+			return (free(*tmp), data->status = 2, 1);
 		}
 		return (data->status = 1, perror("minishell"), 1);
 	}

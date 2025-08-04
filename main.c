@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:22 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/30 11:01:21 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 19:21:01 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	if (is_not_tty())
-		return (1);
+	// if (is_not_tty())
+	// 	return (1);
 	if (ac == 1)
 	{
 		if (init_pwd(&data) || init_env(&data))

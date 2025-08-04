@@ -89,7 +89,7 @@ void	ft_exit(char ***envp, t_node *node, t_data *data)
 	if (node->command[1] && node->command[2])
 	{
 		ft_print("exit: too many arguments", 0);
-		data->status = 1;
+		data->status = 2;
 		return ;
 	}
 	if (node->command[1])
