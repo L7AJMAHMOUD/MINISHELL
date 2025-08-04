@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../minishell.h"
 
 static int	count_dollars(const char *s, int j)
 {

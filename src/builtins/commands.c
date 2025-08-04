@@ -6,11 +6,11 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:50:19 by abkaram           #+#    #+#             */
-/*   Updated: 2025/06/04 08:54:14 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 18:59:20 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 int	is_echo_n_flag(char *str)
 {

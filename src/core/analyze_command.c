@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 00:30:54 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/24 20:12:31 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:00:39 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 void	skip_inside_quotes(char	*command, int	*i)
 {

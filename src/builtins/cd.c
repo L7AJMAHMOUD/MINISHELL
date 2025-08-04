@@ -6,11 +6,11 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:32:43 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/27 22:01:39 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 18:59:06 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 char	*strmerge_and_free(char *s1, char *s2)
 {

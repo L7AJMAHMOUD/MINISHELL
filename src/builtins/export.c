@@ -6,11 +6,11 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/07/27 22:03:26 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 18:59:24 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 char	**copy_envp(char **envp)
 {

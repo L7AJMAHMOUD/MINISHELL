@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../minishell.h"
 
 int	open_heredoc_fd(const char *file)
 {

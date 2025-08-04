@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../minishell.h"
 
 int	validate_pipe_syntax(char *command)
 {

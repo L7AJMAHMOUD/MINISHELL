@@ -1,6 +1,6 @@
 NAME    = minishell
 CC      = cc
-FLAGS   = -Wall -Wextra -Werror
+# FLAGS   = -Wall -Wextra -Werror
 RM      = rm -f
 HEAD    = minishell.h
 
@@ -55,23 +55,21 @@ SRCS = main.c \
        src/utils/ft_print.c \
        src/utils/libft.c
 
-OBJS = $(SRCS:.c=.o)
+OBJ = $(SRCS:.c=.o)
+
+READLINE_INCLUDE = -I$(shell brew --prefix readline)/include
+READLINE_LIB = -L$(shell brew --prefix readline)/lib -lreadline
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	@$(CC) $(FLAGS) $(OBJS) -lreadline -o $(NAME)
-	@echo "\033[1;32m[OK]\033[0m Compiled $(NAME)"
+$(NAME): $(OBJ)
+	@$(CC) $(OBJ) $(READLINE_INCLUDE) $(READLINE_LIB) -o $(NAME)
 
 %.o: %.c $(HEAD)
-	@$(CC) $(FLAGS) -I. -c $< -o $@
+	@$(CC) $(FLAGS) $(READLINE_INCLUDE) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJ)
 
 fclean: clean
 	$(RM) $(NAME)
-
-re: clean all
-
-.PHONY: all clean fclean 

@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../minishell.h"
 
 int	strlen_until_special(char *str)
 {

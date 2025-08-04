@@ -6,11 +6,11 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 10:19:57 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/30 11:50:26 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 19:03:33 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 static t_data	*get_heredoc_data(t_data *new_data)
 {

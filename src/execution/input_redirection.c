@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   input_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 10:45:09 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/13 13:56:53 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:01:43 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 int	redirect_input_fd(char **command, t_command *arr, t_data *data, int i)
 {

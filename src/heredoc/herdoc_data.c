@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   herdoc_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 03:28:48 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/17 06:03:45 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:02:16 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 int	file_already_exist(DIR *directory, int new_f, int found,
 		struct dirent *entry)

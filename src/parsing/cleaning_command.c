@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cleaning_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 11:06:32 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/24 21:32:49 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:02:28 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 char	**copy_list(char **command, t_command *arr)
 {

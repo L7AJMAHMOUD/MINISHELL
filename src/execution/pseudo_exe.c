@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../minishell.h"
 
 char	*check_executable_or_error(char *tmp, char *path)
 {

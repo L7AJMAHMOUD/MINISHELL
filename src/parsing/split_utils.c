@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:38:23 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/24 21:48:43 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:03:00 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 size_t	ft_strlen(const char *s)
 {

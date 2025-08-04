@@ -6,11 +6,11 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 18:00:31 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/30 10:56:35 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 19:01:31 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 void	print_err(t_command *arr, int i)
 {

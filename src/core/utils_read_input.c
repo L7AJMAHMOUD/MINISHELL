@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../minishell.h"
 
 void	free_all_node(t_node *node)
 {

@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../minishell.h"
 
 static void	skip_dollar_signs(t_command *arr, int *i, int *j, int *p)
 {

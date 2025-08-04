@@ -6,11 +6,11 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 14:56:00 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/30 10:55:56 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 19:01:46 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 int	redirect_output_fd(char **command, t_command *arr, t_data *data, int i)
 {

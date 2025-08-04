@@ -6,11 +6,11 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 20:04:09 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/27 22:10:17 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 19:04:38 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 void	expand(t_command *arr, t_data *data)
 {

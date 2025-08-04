@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../minishell.h"
 
 static int	duplicate_envp_entry(char **str, char **envp, t_indexes *indx)
 {

@@ -6,11 +6,11 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:35:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/30 10:58:30 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 19:02:03 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 int	handle_simple_redirs(t_node *node, t_data *data, int i)
 {

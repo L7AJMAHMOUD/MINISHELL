@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../minishell.h"
 
 static int	init_command_array(t_command **arr, t_indexes *indx, char *str)
 {

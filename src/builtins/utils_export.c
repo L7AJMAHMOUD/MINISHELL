@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../minishell.h"
 
 int	strcmp_until_equal(char *s1, char *s2)
 {

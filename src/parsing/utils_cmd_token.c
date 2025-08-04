@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../minishell.h"
 
 void	reset_node_flags(t_node *node)
 {

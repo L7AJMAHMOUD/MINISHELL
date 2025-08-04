@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../minishell.h"
 
 char	*strjoin_with_slash(char *s1, char *s2)
 {

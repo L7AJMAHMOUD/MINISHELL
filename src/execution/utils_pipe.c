@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../minishell.h"
 
 void	init_fds(int *fds, int *i)
 {

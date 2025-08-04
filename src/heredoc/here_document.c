@@ -6,11 +6,11 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:49:37 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/07/30 11:27:28 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 19:02:19 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 void	child_(t_data *data, t_node *node, char *file, char **limiters)
 {

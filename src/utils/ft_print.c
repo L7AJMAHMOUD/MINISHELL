@@ -6,11 +6,11 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:36:10 by abkaram           #+#    #+#             */
-/*   Updated: 2025/05/05 13:02:21 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 19:03:42 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 static int	ft_putchar(char s)
 {
