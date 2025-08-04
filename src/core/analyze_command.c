@@ -84,6 +84,10 @@ int	only_space(char *c)
 
 int	command_analyze(char *command, t_data *data)
 {
+	if (dsq_detector(command) != 0)
+		return (data->status = 2,
+			ft_print("minishell: syntax error near unexpected token « \" »", 0),
+			-1);
 	if (search_first(command) != 0
 		|| validate_pipe_syntax(command) != 0
 		|| pipe_detector(command) != 0)
@@ -95,10 +99,6 @@ syntax error near unexpected token « >< »", 0), -1);
 	if (redirect_parse_double(command) != 0)
 		return (data->status = 2, ft_print("minishell: \
 syntax error near unexpected token « >< »", 0), -1);
-	if (dsq_detector(command) != 0)
-		return (data->status = 2,
-			ft_print("minishell: syntax error near unexpected token « \" »", 0),
-			-1);
 	if (command[0] == '\0' || only_space(command))
 		return (1);
 	return (0);

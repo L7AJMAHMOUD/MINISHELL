@@ -27,3 +27,17 @@ int	is_something(char *cmd)
 		return (0);
 	return (1);
 }
+
+int	is_empty(char *cmd, int c, int j)
+{
+	int	i;
+
+	i = 0;
+	if (!cmd)
+		return (0);
+	while (cmd[i] == c)
+		i++;
+	if (!cmd[i] && !cmd[j + 1])
+		return (1);
+	return (0);
+}

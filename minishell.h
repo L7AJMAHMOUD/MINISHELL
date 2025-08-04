@@ -249,5 +249,6 @@ void		rev_(char *s);
 void		preparation(char **s, int i);
 int			count_words(char *s, char sep, int i, int count);
 int			initialisation(t_command *arr, int word);
+int			is_empty(char *cmd, int c, int i);
 
 #endif
