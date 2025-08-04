@@ -238,7 +238,7 @@ char		*print_access_error(char *path);
 char		*strdup_until_char(const char *src, int c, int *i);
 void		init_fds(int *fds, int *i);
 void		wait_and_update_status(t_data *data);
-char		**get_delimiters(t_command *arr);
+char		**get_delimiters(t_command *arr, char **str);
 void		process_here_doc(t_data *data, char *file, char **limiters,
 				int expand);
 int			new_cmd_size(char **command, t_command *arr);

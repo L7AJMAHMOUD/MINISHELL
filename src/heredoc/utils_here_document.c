@@ -45,7 +45,7 @@ int	delimiters_counter(t_command *arr)
 	return (count);
 }
 
-char	**get_delimiters(t_command *arr)
+char	**get_delimiters(t_command *arr, char **command)
 {
 	int		delim;
 	char	**deli_stack;
@@ -63,28 +63,15 @@ char	**get_delimiters(t_command *arr)
 		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command
 			&& arr[i].q == 0)
 		{
-			deli_stack[j] = ft_strdup(arr[i + 1].command);
-			i++;
-			j++;
+			if (command[i + 1] && ft_strcmp(command[i + 1], "<<") != 0 )
+				deli_stack[j++] = ft_strdup(command[i++ + 1]);
+			else
+				deli_stack[j++] = ft_strdup(arr[i++ + 1].command);
 		}
 		else
 			i++;
 	}
-	deli_stack[j] = NULL;
-	return (deli_stack);
-}
-
-long long	file_size(int fd)
-{
-	struct stat	st;
-
-	if (fstat(fd, &st) == -1)
-	{
-		perror("fstat");
-		close(fd);
-		return (1);
-	}
-	return (st.st_size);
+	return (deli_stack[j] = NULL, deli_stack);
 }
 
 void	heredoc_child_cleanup(char **limiters, char *file, char *com)

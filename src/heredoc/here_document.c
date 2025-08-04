@@ -74,7 +74,7 @@ int	here_doc(t_node *node, char **envp, t_data *data)
 	pid_t	pid;
 
 	nbr_del = 0;
-	limiters = get_delimiters(node->arr);
+	limiters = get_delimiters(node->arr, node->command);
 	data->limiters = limiters;
 	file = here_doc_data(NULL);
 	if (!limiters || !file)
