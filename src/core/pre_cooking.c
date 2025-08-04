@@ -38,7 +38,9 @@ void	handle_dollar(t_command *arr, int i, int j, t_data *data)
 		{
 			helprs_handl_dol(&indxx.p, &indxx.m, j);
 			skip_dollar_signs(arr, &i, &j, &indxx.p);
-			if (arr[i].command[j] <= 32 && !arr[i + 1].command)
+			// if (arr[i].command[j] <= 32 && !arr[i + 1].command)
+			// 	continue ;
+			if (arr[i].command[j] <= 32 && !arr[i + 1].command && indxx.p == 0)
 				continue ;
 			if (arr[i].q == 39 || indxx.p % 2
 				|| (arr[i].command[j] >= '0' && arr[i].command[j] <= '9'))
