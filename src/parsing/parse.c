@@ -35,7 +35,7 @@ int	is_empty(char *cmd, int c, int j)
 	i = 0;
 	if (!cmd)
 		return (0);
-	if (cmd[i] =='$')
+	if (cmd[i] == '$')
 		i++;
 	while (cmd[i] == c)
 		i++;

@@ -24,7 +24,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-int	delimiters_counter(t_command *arr, char **h)
+int	delimiters_counter(t_command *arr)
 {
 	int	i;
 	int	count;
@@ -45,14 +45,14 @@ int	delimiters_counter(t_command *arr, char **h)
 	return (count);
 }
 
-char	**get_delimiters(t_command *arr, char **h)
+char	**get_delimiters(t_command *arr)
 {
 	int		delim;
 	char	**deli_stack;
 	int		i;
 	int		j;
 
-	delim = delimiters_counter(arr, h);
+	delim = delimiters_counter(arr);
 	deli_stack = malloc((delim + 1) * sizeof(char *));
 	i = 0;
 	j = 0;

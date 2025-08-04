@@ -27,7 +27,7 @@ int	is_echo_n_flag(char *str)
 	return (1);
 }
 
-void	print_env_value_escaped(char *str, int k, int i, int l)
+void	print_env_value_escaped(char *str, int k, int i)
 {
 	while (str && str[i])
 	{
@@ -38,7 +38,7 @@ void	print_env_value_escaped(char *str, int k, int i, int l)
 		write(1, " ", 1);
 }
 
-void	echo(char **str, t_data *data, int p, int j)
+void	echo(char **str, t_data *data, int p)
 {
 	int	i;
 
@@ -51,9 +51,9 @@ void	echo(char **str, t_data *data, int p, int j)
 	while (str && str[i])
 	{
 		if (str[i + 1])
-			print_env_value_escaped(str[i], 1, 0, 0);
+			print_env_value_escaped(str[i], 1, 0);
 		else
-			print_env_value_escaped(str[i], 0, 0, 0);
+			print_env_value_escaped(str[i], 0, 0);
 		i++;
 		if (!str[i] && p == 0)
 			write(1, "\n", 1);

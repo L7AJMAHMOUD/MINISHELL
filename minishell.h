@@ -137,7 +137,7 @@ int			validate_pipe_syntax(char *command);
 /* ────────────────────────────── */
 
 void		pwd(t_data *data);
-void		echo(char **str, t_data *data, int p, int j);
+void		echo(char **str, t_data *data, int p);
 void		cd(char ***envp, char **arg, t_data *data);
 void		export(char ***envp, char **command, t_data *data);
 void		unset(char ***envp, char **command, t_data *data);
@@ -190,8 +190,7 @@ int			is_redirection(char *command);
 int			append_to_fd(char **command, t_command *arr, t_data *data, int i);
 char		*ft_strjoin_(char *s1, char *s2);
 char		*get_variable(char *str, char **envp, t_data *data);
-char		*here_doc_data(int pid, char *file_num, char *file_name,
-				char *full_path);
+char		*here_doc_data(char *full_path);
 char		*join_strings(char *s1, char *s2);
 int			wait_for_child(pid_t pid, t_data *data);
 int			strlen_until_special(char *str);
@@ -239,7 +238,7 @@ char		*print_access_error(char *path);
 char		*strdup_until_char(const char *src, int c, int *i);
 void		init_fds(int *fds, int *i);
 void		wait_and_update_status(t_data *data);
-char		**get_delimiters(t_command *arr, char **h);
+char		**get_delimiters(t_command *arr);
 void		process_here_doc(t_data *data, char *file, char **limiters,
 				int expand);
 int			new_cmd_size(char **command, t_command *arr);

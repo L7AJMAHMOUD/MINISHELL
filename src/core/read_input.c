@@ -19,7 +19,7 @@ int	check_command(char **str, char ***envp, t_node *node, t_data *data)
 	if (!str || !*str)
 		return (0);
 	if (!(ft_strcmp(str[0], "echo")))
-		return (echo(str, data, 0, 0), 0);
+		return (echo(str, data, 0), 0);
 	if (!(ft_strcmp(str[0], "cd")))
 		return (cd(envp, &str[1], data), 0);
 	if (!(ft_strcmp(str[0], "pwd")))

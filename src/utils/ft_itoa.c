@@ -100,6 +100,7 @@ char	**read_stock(char **envp, t_data *data, int j, int i)
 {
 	char	**str;
 
+	str = NULL;
 	if (!envp[0])
 		return (cpt_read_stock(str, data));
 	while (envp[j])

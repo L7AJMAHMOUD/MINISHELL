@@ -101,8 +101,7 @@ void	create_heredoc_dir_if_needed(int d_exist)
 	waitpid(pid, NULL, 0);
 }
 
-char	*here_doc_data(int pid, char *file_num, char *file_name,
-		char *full_path)
+char	*here_doc_data(char *full_path)
 {
 	int		d_exist;
 	int		f_index;
@@ -121,8 +120,8 @@ char	*here_doc_data(int pid, char *file_num, char *file_name,
 	f_index = file_already_exist(NULL, 0, 1, NULL);
 	if (f_index == -1)
 	{
-		free(curr_wor_dir);
 		chdir(curr_wor_dir);
+		free(curr_wor_dir);
 		return (NULL);
 	}
 	full_path = create_heredoc_path(f_index);
