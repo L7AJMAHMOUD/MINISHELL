@@ -77,9 +77,7 @@ typedef struct s_node
 	t_command		*arr;
 	int				i;
 	int				pipe;
-	int				and;
 	int				hd;
-	int				or;
 	struct s_node	*next;
 }	t_node;
 
@@ -236,7 +234,7 @@ char		*print_permission_denied_error(char *path);
 char		*print_command_not_found_error(char *path);
 char		*print_access_error(char *path);
 char		*strdup_until_char(const char *src, int c, int *i);
-void		init_fds(int *fds, int *i);
+void		init_fds(int *fds);
 void		wait_and_update_status(t_data *data);
 char		**get_delimiters(t_command *arr, char **str);
 void		process_here_doc(t_data *data, char *file, char **limiters,
@@ -249,5 +247,6 @@ void		preparation(char **s, int i);
 int			count_words(char *s, char sep, int i, int count);
 int			initialisation(t_command *arr, int word);
 int			is_empty(char *cmd, int c, int i);
+void		print_is_a_directory_error(char *path);
 
 #endif

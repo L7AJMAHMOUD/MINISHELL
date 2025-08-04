@@ -7,6 +7,7 @@
 		"string": "c",
 		"string_view": "c",
 		"span": "c",
-		"sigevent_t.h": "c"
+		"sigevent_t.h": "c",
+		"algorithm": "c"
 	}
 }

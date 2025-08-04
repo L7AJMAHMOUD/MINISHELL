@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 08:11:38 by abkaram           #+#    #+#             */
-/*   Updated: 2025/08/04 18:59:24 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 22:12:23 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	export(char ***envp, char **cmd, t_data *data)
 	while (cmd[j])
 	{
 		if (check_synt(cmd[j++]))
-			return (data->status = 1, (void)0);
+			data->status = 1;
 		tmp = add_to_envp(*envp, command_analyse(cmd[j - 1], *envp, data),
 				0, NULL);
 		*envp = tmp;

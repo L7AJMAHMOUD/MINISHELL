@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 19:25:37 by abkaram           #+#    #+#             */
-/*   Updated: 2025/08/04 19:25:38 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 20:00:03 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	handle_dollar(t_command *arr, int i, int j, t_data *data)
 		{
 			helprs_handl_dol(&indxx.p, &indxx.m, j);
 			skip_dollar_signs(arr, &i, &j, &indxx.p);
-			if (arr[i].command[j] <= 32 && !arr[i + 1].command)
+			if (arr[i].command[j] <= 32 && (!arr[i + 1].command))
 				continue ;
 			if (arr[i].q == 39 || indxx.p % 2
 				|| (arr[i].command[j] >= '0' && arr[i].command[j] <= '9'))

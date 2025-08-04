@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 19:25:54 by abkaram           #+#    #+#             */
-/*   Updated: 2025/08/04 19:25:55 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 22:30:16 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	minishell(char **str, t_data *data)
 	}
 }
 
-int	ft_strisdigit(char *c)
+int	ft(char *c)
 {
 	int	i;
 
@@ -106,7 +106,7 @@ void	ft_exit(char ***envp, t_node *node, t_data *data)
 	}
 	if (node->command[1])
 	{
-		if (ft_strisdigit(node->command[1]))
+		if (ft(node->command[1]) && ((ft_atoi(node->command[1]) / 256) < 256))
 			data->status = ft_atoi(node->command[1]) % 256;
 		else
 		{

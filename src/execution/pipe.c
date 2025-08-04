@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 19:26:21 by abkaram           #+#    #+#             */
-/*   Updated: 2025/08/04 19:26:25 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 22:33:17 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,8 @@ int	pip(char ***envp, t_data *data, t_node *cur)
 {
 	int	fds[6];
 	int	pid;
-	int	i;
 
-	init_fds(fds, &i);
+	init_fds(fds);
 	g_hsig = 1;
 	while (cur)
 	{
@@ -98,14 +97,10 @@ int	pip(char ***envp, t_data *data, t_node *cur)
 			return (1);
 		data->envp = envp;
 		pid = handle_child(cur, data, fds);
-		if (i != 1 && (fds[1] == -1 || (!cur->next && fds[1] != -1)
-				|| (!cur->next->next && cur->next
-					&& !cur->next->command[0] && fds[1] != -1)))
-		{
-			if (fds[1] != -1)
-				i = 1;
+		if (pid == 1)
+			return (0);
+		if (fds[1] == -1 || (!cur->next && fds[1] != -1))
 			waitpid(pid, &data->status, 0);
-		}
 		cur = cur->next;
 	}
 	wait_and_update_status(data);

@@ -1,11 +1,10 @@
 #include "../../minishell.h"
 
-void	init_fds(int *fds, int *i)
+void	init_fds(int *fds)
 {
 	fds[0] = -1;
 	fds[4] = dup(0);
 	fds[5] = dup(1);
-	*i = 0;
 }
 
 void	wait_and_update_status(t_data *data)

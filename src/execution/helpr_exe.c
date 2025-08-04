@@ -15,12 +15,7 @@ char	*ft_strchr(const char *str, int c)
 char	*print_access_error(char *path)
 {
 	if (access(path, F_OK) == 0)
-	{
-		write(2, "minishell: ", 11);
-		write(2, path, ft_strlen(path));
-		write(2, ": Permission denied\n", 20);
-		exit(-2);
-	}
+		return (path);
 	write(2, "minishell: ", 11);
 	write(2, path, ft_strlen(path));
 	write(2, ": No such file or directory\n", 28);

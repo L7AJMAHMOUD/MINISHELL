@@ -34,3 +34,11 @@ char	*find_executable_in_path(char **envp, t_data *data, char *path, int *j)
 	}
 	return (print_command_not_found_error(path));
 }
+
+void print_is_a_directory_error(char *path)
+{
+	write(2, "minishell: ", 11);
+	write(2, path, ft_strlen(path));
+	write(2, ": is a directory\n", 17);
+	exit(126);
+}

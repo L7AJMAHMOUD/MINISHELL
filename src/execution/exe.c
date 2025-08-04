@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:53:28 by abkaram           #+#    #+#             */
-/*   Updated: 2025/08/04 19:17:56 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 22:23:44 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char	*find_path(char *path, char **envp, t_data *data)
 static void	child_process(t_node *node, char **envp, t_data *data)
 {
 	char	*path;
+	struct stat st;
 
 	if (data->fd != -1 && dup2(data->fd, 0) == -1)
 	{
@@ -85,16 +86,15 @@ static void	child_process(t_node *node, char **envp, t_data *data)
 		exit(1);
 	if (execve(path, node->command, envp) == -1)
 	{
+		if (stat(path, &st) == 0 && S_ISDIR(st.st_mode))
+			print_is_a_directory_error(path);
 		write(2, "minishell: ", 11);
 		write(2, path, ft_strlen(path));
 		write(2, ": ", 2);
 		perror(NULL);
 		exit(-1);
 	}
-	write(2, "minishell: ", 11);
-	write(2, path, ft_strlen(path));
-	write(2, ": Permission denied\n", 20);
-	exit(-2);
+	print_permission_denied_error(path);
 }
 
 void	exe(char **envp, t_node *node, t_data *data)

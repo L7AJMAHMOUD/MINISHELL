@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 08:56:47 by abkaram           #+#    #+#             */
-/*   Updated: 2025/08/04 19:02:31 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/04 21:31:45 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ char	**split_fini(char **command, t_command *arr)
 {
 	char	**str;
 
-	if (command && command[0] && ft_strcmp(command[0], arr[0].command) != 0)
+	if (command && command[0] && is_something(command[0])
+		&& ft_strcmp(command[0], arr[0].command) != 0)
 	{
 		str = ft_split(command[0], ' ');
 		command = ft_join_arr(str, &command[1]);
