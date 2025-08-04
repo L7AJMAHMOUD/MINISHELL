@@ -23,13 +23,14 @@ char	**copy_list(char **command, t_command *arr)
 	new = malloc((new_cmd_size(command, arr) + 1) * sizeof(char *));
 	if (!new)
 		return (NULL);
-	while (command[i])
+	while (arr[i].command)
 	{
-		if (is_redirect(command[i]) == 0 && command[i + 1] && arr[i].q == 0)
+		if (is_redirect(arr[i].command) == 0
+			&& arr[i + 1].command && arr[i].q == 0)
 			i += 2;
 		else
 		{
-			new[j] = ft_strdup(command[i]);
+			new[j] = ft_strdup(arr[i].command);
 			i++;
 			j++;
 		}
