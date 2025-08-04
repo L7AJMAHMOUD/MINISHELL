@@ -34,7 +34,7 @@ void	handle_dollar(t_command *arr, int i, int j, t_data *data)
 
 	while (arr[i].command[j])
 	{
-		if (arr[i].command[j++] == '$')
+		if (arr[i].command[j++] == '$' && (arr[i].command[j] || arr[i].q == 0))
 		{
 			helprs_handl_dol(&indxx.p, &indxx.m, j);
 			skip_dollar_signs(arr, &i, &j, &indxx.p);
