@@ -25,18 +25,20 @@ char	**copy_list(char **command, t_command *arr)
 		return (NULL);
 	while (arr[i].command)
 	{
-		if (is_redirect(arr[i].command) == 0
+		if (is_redirect(command[i]) == 0
 			&& arr[i + 1].command && arr[i].q == 0)
-			i += 2;
-		else
 		{
-			new[j] = ft_strdup(arr[i].command);
 			i++;
-			j++;
+			if (!command[i])
+				break ;
+			if (ft_strcmp(command[i], "<<") == 0)
+				i--;
+			i++;
 		}
+		else
+			new[j++] = ft_strdup(command[i++]);
 	}
-	new[j] = NULL;
-	return (new);
+	return (new[j] = NULL, new);
 }
 
 char	**clean_command(char **command, t_command *arr)
