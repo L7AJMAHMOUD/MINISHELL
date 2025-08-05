@@ -36,7 +36,7 @@ char	*get_variable(char *str, char **envp, t_data *data)
 	len = strlen_until_special(str);
 	while (envp[i])
 	{
-		if (strncmp(envp[i], str, len) == 0 && envp[i][len] == '=')
+		if (ft_strncmp(envp[i], str, len) == 0 && envp[i][len] == '=')
 		{
 			equal_pos = strchr(envp[i], '=');
 			if (equal_pos)
@@ -62,16 +62,12 @@ void	expand_env_variable(t_command *arr,
 	varname = malloc(var_len + 1);
 	if (!varname)
 		return ;
-	strncpy(varname, &(arr[indx.i].command[*j]), var_len);
+	ft_strncpy(varname, &(arr[indx.i].command[*j]), var_len);
 	varname[var_len] = '\0';
 	tmp = get_variable(varname, arr->envp, data);
 	if (tmp)
-	{
 		arr[indx.i].ex = 1;
-		val = ft_strdup(tmp);
-	}
-	else
-		val = NULL;
+	val = ft_strdup(tmp);
 	str = ft_strdup(&(arr[indx.i].command[*j + var_len]));
 	arr[indx.i].command[*j - 1 - indx.p] = 0;
 	arr[indx.i].command = ft_strjoin_(arr[indx.i].command, val);
@@ -92,7 +88,7 @@ void	expand_exit_status(t_command *arr, int i, int *j, int p)
 	varname = malloc(var_len + 1);
 	if (!varname)
 		return ;
-	strncpy(varname, &(arr[i].command[*j]), var_len);
+	ft_strncpy(varname, &(arr[i].command[*j]), var_len);
 	varname[var_len] = '\0';
 	val = ft_itoa(arr->data->status);
 	str = ft_strdup(&(arr[i].command[*j + var_len]));

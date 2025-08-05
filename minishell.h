@@ -24,7 +24,6 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <dirent.h>
-# include <sys/wait.h>
 # include <signal.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -98,7 +97,7 @@ typedef struct s_indexes
 /*        🔧 CORE FUNCTIONS       */
 /* ────────────────────────────── */
 
-long			ft_atoi(const char *str);
+long		ft_atoi(const char *str);
 void		free_arr(t_command *arr, int i);
 void		read_input(char ***envp, t_data *data);
 char		**ft_ultra_split(char *s, char **envp, t_data *data);
@@ -122,6 +121,7 @@ char		**ft_split(char const *s, char c);
 int			ft_strt(char *haystack, char *needle, size_t i, size_t j);
 int			ft_strcmp(char *s1, char *s2);
 int			is_something(char *cmd);
+int			ft_strncmp(char *s1, char *s2, size_t n);
 
 /* ────────────────────────────── */
 /*       🧩 PARSING & TOKENS      */
@@ -155,7 +155,8 @@ void		skip_inside_quotes(char *command, int *i);
 int			command_analyze(char *command, t_data *data);
 int			here_doc(t_node *node, char **envp, t_data *data);
 int			strcmp_until_equal(char *s1, char *s2);
-int			check_command(char **str, char ***envp, t_node *node, t_data *data);
+int			check_command(char **str, char ***envp, t_node *node,
+				t_data *data);
 void		free_all_node(t_node *node);
 int			pip(char ***envp, t_data *data, t_node *cur);
 char		**add_to_envp(char **envp, char *ligne, int p, char **str);
@@ -196,13 +197,15 @@ char		*join_strings(char *s1, char *s2);
 int			wait_for_child(pid_t pid, t_data *data);
 int			strlen_until_special(char *str);
 char		*ft_strncpy(char *dst, const char *src, size_t n);
-char		*expand_str(char *cmd, char **envp, t_data *data, t_indexes indx);
+char		*expand_str(char *cmd, char **envp, t_data *data,
+				t_indexes indx);
 char		*strmerge_and_free(char *s1, char *s2);
 int			count_word(char *s, char c);
 int			redirect_parse_double(char *cmd);
 void		print_err(t_command *arr, int i);
 int			envp_array_length(char **envp);
-int			duplicate_line_to_array(char **str, char *ligne, t_indexes *indx);
+int			duplicate_line_to_array(char **str, char *ligne,
+				t_indexes *indx);
 char		*dup_env_line(char *line);
 char		*command_analyse(char *command, char **envp, t_data *data);
 char		**arr_sorted(char **str);
@@ -213,16 +216,17 @@ t_command	*cleaning(char *str, int p, t_command *arr, t_indexes indx);
 int			allocate_next_command(t_command *arr, char *str, int *k, int j);
 int			handle_empty_quote_command(t_command *arr, t_indexes *indx,
 				char *str);
-int			complete_quoted_command(t_command *arr, char *str, t_indexes *ind);
+int			complete_quoted_command(t_command *arr, char *str,
+				t_indexes *ind);
 int			is_special_char(char c);
-void		remove_positional_parameter(t_command *arr, int i, int *p, int j);
+void		remove_positional_parameter(t_command *arr, int i, int *p,
+				int j);
 void		expand_exit_status(t_command *arr, int i, int *j, int p);
 void		expand_env_variable(t_command *arr, t_indexes indx, int *j,
 				t_data *data);
 void		print_env(char **envp, char **command, t_data *data);
 void		minishell(char **str, t_data *data);
 void		ft_exit(char ***envp, t_node *node, t_data *data);
-int			check_command(char **str, char ***envp, t_node *node, t_data *data);
 int			wait_for_child(pid_t pid, t_data *data);
 int			check_if_directory(char *path);
 int			check_path_directory_or_missing(char *path);

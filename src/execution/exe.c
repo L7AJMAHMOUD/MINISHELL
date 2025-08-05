@@ -71,8 +71,8 @@ char	*find_path(char *path, char **envp, t_data *data)
 
 static void	child_process(t_node *node, char **envp, t_data *data)
 {
-	char	*path;
-	struct stat st;
+	char		*path;
+	struct stat	st;
 
 	if (data->fd != -1 && dup2(data->fd, 0) == -1)
 	{
