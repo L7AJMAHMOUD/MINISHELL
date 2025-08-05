@@ -59,8 +59,8 @@ t_command	cooking(char *str, int p, int x, t_data *data)
 	arr->envp = *(data->envp);
 	if (!x)
 		expand(arr, data);
-	arr2.command = ft_arr_to_str(arr);
 	arr2.ex = arr->ex;
+	arr2.command = ft_arr_to_str(arr);
 	free(str);
 	return (arr2);
 }
