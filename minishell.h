@@ -194,6 +194,7 @@ char		*ft_strjoin_(char *s1, char *s2);
 char		*get_variable(char *str, char **envp, t_data *data);
 char		*here_doc_data(char *full_path);
 char		*join_strings(char *s1, char *s2);
+int			max_pipe_detector(char *command);
 int			wait_for_child(pid_t pid, t_data *data);
 int			strlen_until_special(char *str);
 char		*ft_strncpy(char *dst, const char *src, size_t n);
