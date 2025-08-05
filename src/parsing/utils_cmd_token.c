@@ -6,6 +6,7 @@ void	reset_node_flags(t_node *node)
 	node->pipe = 0;
 	node->next = 0;
 }
+
 int	ft_strncmp(char *s1, char *s2, size_t n)
 {
 	size_t	i;
