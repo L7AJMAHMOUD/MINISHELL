@@ -45,23 +45,6 @@ int	delimiters_counter(t_command *arr)
 	return (count);
 }
 
-int	is_valid(char *str)
-{
-	int i;
-
-	i = 0;
-	ft_print(str,0);
-	while (str[i] == '$')
-		i++;
-	if (str[i] == '\"' || str[i] == '\'')
-	{
-		printf("hello\n");
-		return (1);
-	}
-	return (0);
-	
-}
-
 char	**get_delimiters(t_command *arr, char **command)
 {
 	int		delim;
