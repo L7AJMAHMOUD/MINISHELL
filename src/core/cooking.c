@@ -51,8 +51,10 @@ t_command	cooking(char *str, int p, int x, t_data *data)
 	t_command	*arr;
 	t_indexes	indx;
 
+	arr2.k = 0;
 	arr = cleaning(str, p, NULL, indx);
 	arr2.q = arr[0].q;
+	arr2.k = arr[0].k;
 	arr->data = data;
 	arr->envp = *(data->envp);
 	if (!x)

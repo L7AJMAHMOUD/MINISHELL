@@ -68,8 +68,8 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	// if (is_not_tty())
-	// 	return (1);
+	if (is_not_tty())
+		return (1);
 	if (ac == 1)
 	{
 		if (init_pwd(&data) || init_env(&data))

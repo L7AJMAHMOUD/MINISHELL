@@ -45,6 +45,23 @@ int	delimiters_counter(t_command *arr)
 	return (count);
 }
 
+int	is_valid(char *str)
+{
+	int i;
+
+	i = 0;
+	ft_print(str,0);
+	while (str[i] == '$')
+		i++;
+	if (str[i] == '\"' || str[i] == '\'')
+	{
+		printf("hello\n");
+		return (1);
+	}
+	return (0);
+	
+}
+
 char	**get_delimiters(t_command *arr, char **command)
 {
 	int		delim;
@@ -63,7 +80,7 @@ char	**get_delimiters(t_command *arr, char **command)
 		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command
 			&& arr[i].q == 0)
 		{
-			if (command[i + 1] && ft_strcmp(command[i + 1], "<<") != 0 )
+			if (arr[i + 1].k != 0)
 				deli_stack[j++] = ft_strdup(command[i++ + 1]);
 			else
 				deli_stack[j++] = ft_strdup(arr[i++ + 1].command);

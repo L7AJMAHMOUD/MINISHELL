@@ -68,6 +68,7 @@ typedef struct s_command
 	char	**envp;
 	t_data	*data;
 	int		q;
+	int		k;
 	int		nbr;
 }	t_command;
 

@@ -51,6 +51,7 @@ t_command	*cleaning(char *str, int p, t_command *arr, t_indexes indx)
 	{
 		if (str[indx.i] == QUOTE_SINGLE || str[indx.i] == QUOTE_DOUBLE)
 		{
+			arr[indx.k].k = 1;
 			if (indx.j != 0)
 				if (allocate_next_command(arr, str, &(indx.k), indx.j))
 					return (NULL);
