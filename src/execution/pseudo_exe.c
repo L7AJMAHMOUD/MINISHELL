@@ -39,6 +39,7 @@ void print_is_a_directory_error(char *path)
 {
 	write(2, "minishell: ", 11);
 	write(2, path, ft_strlen(path));
-	write(2, ": is a directory\n", 17);
+	write(2, ": Is a directory\n", 17);
+	free(path);
 	exit(126);
 }

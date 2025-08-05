@@ -92,6 +92,7 @@ static void	child_process(t_node *node, char **envp, t_data *data)
 		write(2, path, ft_strlen(path));
 		write(2, ": ", 2);
 		perror(NULL);
+		free(path);
 		exit(-1);
 	}
 	print_permission_denied_error(path);
