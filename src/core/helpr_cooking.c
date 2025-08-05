@@ -40,7 +40,7 @@ static int	init_quote_state(t_indexes *indx, char *str)
 {
 	indx->j = 0;
 	indx->c = str[indx->i++];
-	return (0);
+	return (1);
 }
 
 t_command	*cleaning(char *str, int p, t_command *arr, t_indexes indx)
@@ -51,11 +51,10 @@ t_command	*cleaning(char *str, int p, t_command *arr, t_indexes indx)
 	{
 		if (str[indx.i] == QUOTE_SINGLE || str[indx.i] == QUOTE_DOUBLE)
 		{
-			arr[indx.k].k = 1;
 			if (indx.j != 0)
 				if (allocate_next_command(arr, str, &(indx.k), indx.j))
 					return (NULL);
-			init_quote_state(&indx, str);
+			arr->k = init_quote_state(&indx, str);
 			if (indx.c == str[indx.i] && !p && is_empty(str, indx.c, indx.i))
 			{
 				if (handle_empty_quote_command(arr, &indx, str))
