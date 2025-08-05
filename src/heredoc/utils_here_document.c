@@ -63,7 +63,7 @@ char	**get_delimiters(t_command *arr, char **command)
 		if (ft_strcmp(arr[i].command, "<<") == 0 && arr[i + 1].command
 			&& arr[i].q == 0)
 		{
-			if (arr[i + 1].k != 0)
+			if (arr[i + 1].k != 0 && arr[i + 1].q == 0)
 				deli_stack[j++] = ft_strdup(command[i++ + 1]);
 			else
 				deli_stack[j++] = ft_strdup(arr[i++ + 1].command);
