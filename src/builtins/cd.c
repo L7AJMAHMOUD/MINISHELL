@@ -82,7 +82,7 @@ int	complete(char ***envp, char **arg, t_data *data, char **tmp)
 			ft_print("minishell: cd: too many arguments", 0);
 			return (free(*tmp), data->status = 2, 1);
 		}
-		return (data->status = 1, perror("minishell"), 1);
+		return (free(*tmp), data->status = 1, perror("minishell"), 1);
 	}
 	return (closedir(dir), 0);
 }

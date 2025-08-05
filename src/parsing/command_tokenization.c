@@ -48,19 +48,22 @@ char	**ft_join_arr(char **first, char **second)
 		j++;
 	}
 	result[i + j] = NULL;
-	return (free_all_ul_split(first), result);
+	return (result);
 }
 
 char	**split_fini(char **command, t_command *arr)
 {
 	char	**str;
+	char	**tmp;
 
 	if (command && command[0] && is_something(command[0])
 		&& ft_strcmp(command[0], arr[0].command) != 0)
 	{
 		str = ft_split(command[0], ' ');
-		command = ft_join_arr(str, &command[1]);
-		return (command);
+		tmp = ft_join_arr(str, &command[1]);
+		free_all_ul_split(command);
+		free_all_ul_split(str);
+		return (tmp);
 	}
 	return (command);
 }

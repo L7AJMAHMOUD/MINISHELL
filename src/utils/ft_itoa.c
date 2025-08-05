@@ -90,7 +90,7 @@ char	**cpt_read_stock(char **str, t_data *data)
 	if (!str)
 		return (NULL);
 	str[j++] = ft_strdup("OLDPWD");
-	str[j++] = join_strings("PWD", data->pwd);
+	str[j++] = join_strings("PWD=", data->pwd);
 	str[j++] = ft_strdup("SHLVL=1");
 	str[j] = 0;
 	return (str);

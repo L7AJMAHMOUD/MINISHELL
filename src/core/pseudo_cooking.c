@@ -83,7 +83,6 @@ void	expand_exit_status(t_command *arr, int i, int *j, int p)
 	int		var_len;
 	char	*varname;
 	char	*val;
-	char	*tmp;
 	char	*str;
 
 	var_len = 1;
@@ -92,11 +91,7 @@ void	expand_exit_status(t_command *arr, int i, int *j, int p)
 		return ;
 	strncpy(varname, &(arr[i].command[*j]), var_len);
 	varname[var_len] = '\0';
-	tmp = ft_itoa(arr->data->status);
-	if (tmp)
-		val = ft_strdup(tmp);
-	else
-		val = NULL;
+	val = ft_itoa(arr->data->status);
 	str = ft_strdup(&(arr[i].command[*j + var_len]));
 	arr[i].command[*j - 1 - p] = 0;
 	arr[i].command = ft_strjoin_(arr[i].command, val);

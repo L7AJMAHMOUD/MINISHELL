@@ -116,5 +116,6 @@ char	**ft_ultra_split(char *str, char **envp, t_data *data)
 
 	arr = ft_ultr_split(str, envp, 0, data);
 	tab = ft_arr_to_tab(arr, arr->nbr, 0, 0);
+	
 	return (tab);
 }
