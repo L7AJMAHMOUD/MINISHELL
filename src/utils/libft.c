@@ -16,11 +16,11 @@ void	*ft_memset(void *b, int c, size_t len)
 static int	norm(int n)
 {
 	if (n == -1)
-		return (0);
+		return (-1);
 	return (-1);
 }
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
 	int			i;
 	long double	m;

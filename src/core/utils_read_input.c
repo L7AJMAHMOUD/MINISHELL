@@ -106,7 +106,7 @@ void	ft_exit(char ***envp, t_node *node, t_data *data)
 	}
 	if (node->command[1])
 	{
-		if (ft(node->command[1]) && ((ft_atoi(node->command[1]) / 256) < 256))
+		if (ft(node->command[1]) && (ft_atoi(node->command[1]) != -1))
 			data->status = ft_atoi(node->command[1]) % 256;
 		else
 		{

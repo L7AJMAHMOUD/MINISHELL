@@ -98,7 +98,7 @@ typedef struct s_indexes
 /*        🔧 CORE FUNCTIONS       */
 /* ────────────────────────────── */
 
-int			ft_atoi(const char *str);
+long			ft_atoi(const char *str);
 void		free_arr(t_command *arr, int i);
 void		read_input(char ***envp, t_data *data);
 char		**ft_ultra_split(char *s, char **envp, t_data *data);
