@@ -66,7 +66,10 @@ void	expand_env_variable(t_command *arr,
 	varname[var_len] = '\0';
 	tmp = get_variable(varname, arr->envp, data);
 	if (tmp)
+	{
+		arr[indx.i].ex = 1;
 		val = ft_strdup(tmp);
+	}
 	else
 		val = NULL;
 	str = ft_strdup(&(arr[indx.i].command[*j + var_len]));

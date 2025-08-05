@@ -51,7 +51,7 @@ char	**ft_join_arr(char **first, char **second)
 	return (result);
 }
 
-char	**split_fini(char **command, t_command *arr)
+char	**split_fini(char **command, t_command *arr, t_command *arr_)
 {
 	char	**str;
 	char	**tmp;
@@ -59,7 +59,10 @@ char	**split_fini(char **command, t_command *arr)
 	if (command && command[0] && is_something(command[0])
 		&& ft_strcmp(command[0], arr[0].command) != 0)
 	{
-		str = ft_split(command[0], ' ');
+		if (arr_[0].ex)
+			str = ft_split(command[0], ' ');
+		else
+			return (command);
 		tmp = ft_join_arr(str, &command[1]);
 		free_all_ul_split(command);
 		free_all_ul_split(str);
@@ -108,8 +111,10 @@ void	command_tokenization(t_node **node, char
 	else
 	{
 		(*node)->arr = ft_ultr_split(command, envp, 1, data);
+		(*node)->arr_ex = ft_ultr_split(command, envp, 0, data);;
 		(*node)->i = (*node)->arr->nbr;
 		(*node)->command = split_fini(ft_ultra_split(command,
-					envp, data), (*node)->arr);
+					envp, data), (*node)->arr, (*node)->arr_ex);
+		free_arr((*node)->arr_ex, (*node)->i);
 	}
 }

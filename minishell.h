@@ -67,6 +67,7 @@ typedef struct s_command
 	char	*command;
 	char	**envp;
 	t_data	*data;
+	int		ex;
 	int		q;
 	int		k;
 	int		nbr;
@@ -76,6 +77,7 @@ typedef struct s_node
 {
 	char			**command;
 	t_command		*arr;
+	t_command		*arr_ex;
 	int				i;
 	int				pipe;
 	int				hd;
