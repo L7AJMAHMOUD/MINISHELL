@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_ft_ultra_split.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 19:15:14 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/08/07 19:15:15 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/08/07 19:40:15 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	comp_(char *s, int *i, int *count)
 		*count = *count + 1;
 	quote = s[*i];
 	*i += 1;
-	while ((s[*i] && s[*i] != quote && s[*i] != PIPE_CHAR))
+	while ((s[*i] && s[*i] != quote))
 		*i += 1;
 	if (s[*i] == quote)
 		*i += 1;
@@ -63,11 +63,11 @@ int	count_words(char *s, char sep, int i, int count)
 {
 	if (!s)
 		return (0);
-	while (s[i] && s[i] != PIPE_CHAR)
+	while (s[i])
 	{
 		while (s[i] == SPACE_CHAR)
 			i++;
-		if (!s[i] || s[i] == PIPE_CHAR)
+		if (!s[i])
 			break ;
 		if (s[i] == QUOTE_SINGLE || s[i] == QUOTE_DOUBLE)
 			comp_(s, &i, &count);
@@ -76,7 +76,7 @@ int	count_words(char *s, char sep, int i, int count)
 			if (i == 0 || s[i - 1] == SPACE_CHAR || s[i - 1] == sep)
 				count++;
 			while (s[i] && s[i] != sep && s[i] != QUOTE_SINGLE
-				&& s[i] != QUOTE_DOUBLE && s[i] != PIPE_CHAR)
+				&& s[i] != QUOTE_DOUBLE)
 				i++;
 		}
 		else
