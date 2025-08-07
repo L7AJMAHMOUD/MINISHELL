@@ -101,6 +101,7 @@ void	read_input(char ***envp, t_data *data)
 	signal_init(data);
 	while (1)
 	{
+		cleanup_fds();
 		node = NULL;
 		init_loop_data(data);
 		command = readline(
