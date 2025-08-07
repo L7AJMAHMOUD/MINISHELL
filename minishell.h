@@ -256,5 +256,6 @@ int			count_words(char *s, char sep, int i, int count);
 int			initialisation(t_command *arr, int word);
 int			is_empty(char *cmd, int c, int i);
 void		print_is_a_directory_error(char *path);
+void		inisia(t_indexes *indx);
 
 #endif

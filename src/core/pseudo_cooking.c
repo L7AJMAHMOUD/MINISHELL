@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 19:24:46 by abkaram           #+#    #+#             */
-/*   Updated: 2025/08/04 21:17:31 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/07 19:22:34 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ char	*get_variable(char *str, char **envp, t_data *data)
 	{
 		if (ft_strncmp(envp[i], str, len) == 0 && envp[i][len] == '=')
 		{
-			equal_pos = strchr(envp[i], '=');
+			equal_pos = ft_strchr(envp[i], '=');
 			if (equal_pos)
 				return (equal_pos + 1);
 		}
 		i++;
 	}
-	if (strcmp("PATH", str) == 0 && data->path)
+	if (ft_strcmp("PATH", str) == 0 && data->path)
 		return (data->path);
 	return (NULL);
 }

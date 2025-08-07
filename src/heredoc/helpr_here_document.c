@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpr_here_document.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 19:14:07 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/08/07 19:14:08 by maen-naj         ###   ########.fr       */
+/*   Updated: 2025/08/07 19:23:25 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	write_expanded(int fd, char *com, t_data *data)
 	char		*arr_;
 	t_indexes	indx;
 
+	inisia(&indx);
 	arr_ = expand_str(com, *(data->envp), data, indx);
 	if (arr_)
 	{
