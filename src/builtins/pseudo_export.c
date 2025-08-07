@@ -54,15 +54,13 @@ char	*command_analyse(char *command, char **envp, t_data *data)
 		i++;
 	}
 	if (!command[i] || command[i] == '=')
-		return (command);
+		return (ft_strdup(command));
 	tmp = ft_strdup(&command[i + 2]);
 	command[i] = 0;
 	str = get_variable(command, envp, data);
 	cmd = strmerge_and_free(cmd, command);
-	free(command);
-	command = NULL;
 	cmd = strmerge_and_free(cmd, "=");
 	cmd = strmerge_and_free(cmd, str);
 	cmd = strmerge_and_free(cmd, tmp);
-	return (cmd);
+	return (free(tmp), cmd);
 }

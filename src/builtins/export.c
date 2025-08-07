@@ -103,6 +103,7 @@ void	export(char ***envp, char **cmd, t_data *data)
 {
 	char	**tmp;
 	int		j;
+	char	*str;
 
 	j = 1;
 	if (!cmd[1])
@@ -119,8 +120,9 @@ void	export(char ***envp, char **cmd, t_data *data)
 	{
 		if (check_synt(cmd[j++]))
 			data->status = 1;
-		tmp = add_to_envp(*envp, command_analyse(cmd[j - 1], *envp, data),
-				0, NULL);
+		str = command_analyse(cmd[j - 1], *envp, data);
+		tmp = add_to_envp(*envp, str, 0, NULL);
+		free(str);
 		*envp = tmp;
 	}
 }

@@ -19,16 +19,16 @@ int	isapure(void)
 	return (1);
 }
 
-static int	is_not_tty(void)
-{
-	if (isapure())
-	{
-		write(STDERR_FILENO,
-			"minishell: error: non-TTY mode is not supported\n", 49);
-		return (1);
-	}
-	return (0);
-}
+// static int	is_not_tty(void)
+// {
+// 	if (isapure())
+// 	{
+// 		write(STDERR_FILENO,
+// 			"minishell: error: non-TTY mode is not supported\n", 49);
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
 static int	init_pwd(t_data *data)
 {
@@ -68,8 +68,8 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	if (is_not_tty())
-		return (1);
+	// if (is_not_tty())
+	// 	return (1);
 	if (ac == 1)
 	{
 		if (init_pwd(&data) || init_env(&data))
