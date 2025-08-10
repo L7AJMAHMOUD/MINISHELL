@@ -6,7 +6,7 @@
 /*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:20:22 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/08/07 19:26:13 by abkaram          ###   ########.fr       */
+/*   Updated: 2025/08/10 13:51:40 by abkaram          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ int	isapure(void)
 	return (1);
 }
 
-// static int	is_not_tty(void)
-// {
-// 	if (isapure())
-// 	{
-// 		write(STDERR_FILENO,
-// 			"minishell: error: non-TTY mode is not supported\n", 49);
-// 		return (1);
-// 	}
-// 	return (0);
-// }
+static int	is_not_tty(void)
+{
+	if (isapure())
+	{
+		write(STDERR_FILENO,
+			"minishell: error: non-TTY mode is not supported\n", 49);
+		return (1);
+	}
+	return (0);
+}
 
 static int	init_pwd(t_data *data)
 {
@@ -68,8 +68,8 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	// if (is_not_tty())
-	// 	return (1);
+	if (is_not_tty())
+		return (1);
 	if (ac == 1)
 	{
 		if (init_pwd(&data) || init_env(&data))
