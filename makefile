@@ -57,16 +57,15 @@ SRCS = main.c \
 
 OBJ = $(SRCS:.c=.o)
 
-READLINE_INCLUDE = -I$(shell brew --prefix readline)/include
-READLINE_LIB = -L$(shell brew --prefix readline)/lib -lreadline
+READLINE_LIB = -lreadline
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(OBJ) $(READLINE_INCLUDE) $(READLINE_LIB) -o $(NAME)
+	@$(CC) $(OBJ) $(READLINE_LIB) -o $(NAME)
 
 %.o: %.c $(HEAD)
-	@$(CC) $(FLAGS) $(READLINE_INCLUDE) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@
 
 clean:
 	@$(RM) $(OBJ)

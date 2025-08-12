@@ -107,7 +107,10 @@ void	command_tokenization(t_node **node, char
 	}
 	(*node)->hd = 0;
 	if (ft_strstr(command, "|", 0, 0))
+	{
+		write(2, "hello\n", 6);
 		complet(node, command, envp, data);
+	}
 	else
 	{
 		(*node)->arr = ft_ultr_split(command, envp, 1, data);

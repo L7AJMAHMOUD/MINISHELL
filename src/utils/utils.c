@@ -42,9 +42,8 @@ char	*ft_strstr(char *haystack, char *needle, size_t i, size_t j)
 				i++;
 			if (haystack[i] != 0)
 				i++;
+			continue;
 		}
-		if (haystack[i] == 0)
-			return (0);
 		if (haystack[i] == needle[j])
 			if (ft_an(&haystack[i], needle) == 1)
 				return (&haystack[i + 1]);
@@ -109,16 +108,14 @@ int	ft_strt(char *haystack, char *needle, size_t i, size_t j)
 	while (needle[j] != 0 && haystack[i])
 	{
 		c = haystack[i];
-		if (c == QUOTE_DOUBLE || c == QUOTE_SINGLE || c == '(')
+		if (c == QUOTE_DOUBLE || c == QUOTE_SINGLE)
 		{
 			i++;
-			if (c == '(')
-				while (haystack[i] != ')')
-					i++;
-			else
-				while (haystack[i] != (char)c)
-					i++;
-			i++;
+			while (haystack[i] != (char)c && haystack[i])
+				i++;
+			if (haystack[i] != 0)
+				i++;
+			continue;
 		}
 		if (haystack[i] == 0)
 			return (0);
