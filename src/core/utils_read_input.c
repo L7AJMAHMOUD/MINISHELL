@@ -115,6 +115,7 @@ void	ft_exit(char ***envp, t_node *node, t_data *data)
 			return ;
 		}
 	}
+	write_history(".minishell_history");
 	free_all_ul_split(*envp);
 	free_all_node(node);
 	free(data->path);
