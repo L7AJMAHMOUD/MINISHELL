@@ -1,56 +1,63 @@
 # MINISHELL
 
-## Project Overview
-MINISHELL is a simple UNIX shell implementation that serves as a project to learn about system-level programming, processes, and the underlying architecture of shell commands. The goal is to create a functional shell that can execute user commands, manage processes, and handle various functionalities typically found in a UNIX shell.
+## Overview
+MINISHELL is a simple shell implementation that aims to replicate the functionality of standard Unix shells. It supports various shell commands, job control, and basic scripting functionality.
 
 ## Features
-- **Command Execution**: Execute simple shell commands and manage processes.
-- **Built-in Commands**: Support for built-in commands like `cd`, `exit`, and `echo`.
-- **Environment Variables**: Access and manipulate environment variables.
-- **Input/Output Redirection**: Redirect input and output using `>` and `<` operators.
-- **Pipelines**: Support for command pipelines with use of `|` operator.
+- Support for built-in commands (e.g., `cd`, `exit`, `echo`)
+- Execute external commands with arguments
+- Support for piping and redirection (i.e., `|`, `>`, `<`)
+- Environment variable management
+- Job control, including foreground and background processes
+- Basic scripting capabilities with support for command substitution
+
+## Requirements
+To successfully build and run MINISHELL, you will need:
+- A Unix-like environment (Linux/macOS)
+- GCC (GNU Compiler Collection) or Clang installed
+- Make utility to build the project
 
 ## Installation
-To install MINISHELL, clone the repository and build the project using the following commands:
-
-```bash
-git clone https://github.com/L7AJMAHMOUD/MINISHELL.git
-cd MINISHELL
-make
-```
-
-Make sure that you have all the necessary dependencies installed including `gcc` and `make`.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/L7AJMAHMOUD/MINISHELL.git
+   cd MINISHELL
+   ```
+2. Build the project:
+   ```bash
+   make
+   ```
 
 ## Usage
-Run the shell by executing the following command in the terminal:
-
+To start the MINISHELL, run:
 ```bash
 ./minishell
 ```
 
-You can start typing your commands after the shell prompt.
-
-## Project Structure
-The project is organized as follows:
-
-```
-MINISHELL/
-├── src/
-│   ├── main.c        # Entry point of the shell
-│   ├── command.c     # Command execution logic
-│   ├── builtin.c     # Built-in command implementations
-│   └── ...           # Other source files
-├── inc/
-│   ├── minishell.h   # Header file with function declarations
-│   └── ...           # Other headers
-└── Makefile          # Build script
+You can execute commands like:
+```bash
+$ echo Hello, World!
+$ ls -l
+$ cd my_directory
 ```
 
-## Documentation
-For detailed documentation, refer to the `docs/` folder. It contains information on the design decisions, architecture, and advanced usage of the shell features.
+## Examples
+- Running a simple command:
+  ```bash
+  $ ls
+  file1.txt  file2.txt
+  ```
+- Piping between commands:
+  ```bash
+  $ ls | grep file
+  ```
+- Using redirection:
+  ```bash
+  $ echo "Hello World!" > output.txt
+  ```
+
+## Contributing
+Contributions to MINISHELL are welcome! Please fork the repository and submit a pull request with your changes.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Author
-This project is maintained by Karamu-ser.
+This project is licensed under the MIT License.
