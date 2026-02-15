@@ -86,7 +86,7 @@ int	check_path_directory_or_missing(char *path)
 		write(2, path, ft_strlen(path));
 		write(2, ": Is a directory\n", 18);
 		closedir(dir);
-		exit (-1);
+		exit (126);
 	}
 	if (access(path, F_OK) != 0)
 	{
@@ -109,7 +109,7 @@ int	check_if_directory(char *path)
 		write(2, path, ft_strlen(path));
 		write(2, ": Is a directory\n", 18);
 		closedir(dir);
-		exit (-1);
+		exit (126);
 	}
 	return (0);
 }

@@ -59,7 +59,6 @@ static void	child_process(t_node *cur, t_data *data, int *fds)
 			(data->envp), data, indx);
 	if (cur->command && check_command(cur->command, data->envp, cur, data))
 		exe(*(data->envp), cur, data);
-	free_all_node(cur);
 	exit(data->status);
 }
 

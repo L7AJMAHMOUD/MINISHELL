@@ -59,31 +59,21 @@ int	save_check(int *s_in, int *s_out)
 	return (0);
 }
 
-char	**apply_redirections(t_node *node, char ***envp,
-			t_data *data, t_indexes indx)
+char	**apply_redirections(t_node *node, char ***envp, t_data *data,
+		t_indexes indx)
 {
-	static int	s_in;
-	static int	s_out;
-	int			i;
+	int	i;
 
 	i = 0;
 	data->envp = envp;
-	if (indx.p == 0)
+	if (handle_heredoc(node, data, indx, i) == -1)
+		return (free_all_ul_split(node->command), NULL);
+	while (node->command[i])
 	{
-		if (save_check(&s_in, &s_out))
+		data->i = 0;
+		if (handle_simple_redirs(node, data, i) == -1)
 			return (free_all_ul_split(node->command), NULL);
-		if (handle_heredoc(node, data, indx, i) == -1)
-			return (free_all_ul_split(node->command), NULL);
-		while (node->command[i])
-		{
-			data->i = 0;
-			if (handle_simple_redirs(node, data, i) == -1)
-				return (free_all_ul_split(node->command), NULL);
-			i++;
-		}
-		return (clean_command(node->command, node->arr));
+		i++;
 	}
-	if (s_in == 0 || s_out == 0 || dup2(s_in, 0) == -1 || dup2(s_out, 1) == -1)
-		return (NULL);
-	return (close(s_in), close(s_out), s_out = 0, s_in = 0, NULL);
+	return (clean_command(node->command, node->arr));
 }

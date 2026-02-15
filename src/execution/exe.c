@@ -92,8 +92,8 @@ static void	child_process(t_node *node, char **envp, t_data *data)
 		write(2, path, ft_strlen(path));
 		write(2, ": ", 2);
 		perror(NULL);
-		free(path);
-		exit(-1);
+		free(path); // path is allocated by find_path
+		exit(126);
 	}
 	print_permission_denied_error(path);
 }
@@ -122,7 +122,5 @@ void	exe(char **envp, t_node *node, t_data *data)
 	else if (WIFEXITED(data->status))
 	{
 		data->status = WEXITSTATUS(data->status);
-		if (data->status == 255)
-			data->status = 126;
 	}
 }

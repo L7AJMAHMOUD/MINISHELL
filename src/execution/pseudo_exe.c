@@ -24,16 +24,16 @@ char	*find_executable_in_path(char **envp, t_data *data, char *path, int *j)
 	int		i;
 	int		k;
 	char	*tmp;
+	char	*path_var;
 
 	i = find_path_index(envp);
 	if (i == -1 && !data->path)
 		return (print_access_error(path));
-	if (i == -1)
-		envp[i] = data->path;
+	path_var = (i != -1) ? envp[i] : data->path;
 	*j = 5;
-	while ((size_t) * j < ft_strlen(envp[i]))
+	while (path_var && (size_t) * j < ft_strlen(path_var))
 	{
-		tmp = strdup_until_char(&envp[i][*j], ':', &k);
+		tmp = strdup_until_char(&path_var[*j], ':', &k);
 		if (!tmp)
 			return (NULL);
 		*j += k;

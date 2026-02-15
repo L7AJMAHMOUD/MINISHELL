@@ -228,7 +228,6 @@ void		expand_env_variable(t_command *arr, t_indexes indx, int *j,
 void		print_env(char **envp, char **command, t_data *data);
 void		minishell(char **str, t_data *data);
 void		ft_exit(char ***envp, t_node *node, t_data *data);
-int			wait_for_child(pid_t pid, t_data *data);
 int			check_if_directory(char *path);
 int			check_path_directory_or_missing(char *path);
 int			check_invalid_path_or_command(char *path);

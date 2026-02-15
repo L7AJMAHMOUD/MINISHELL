@@ -54,6 +54,7 @@ static void	init_loop_data(t_data *data)
 static void	handle_null_command(char ***envp, t_data *data)
 {
 	ft_print("exit", 0);
+	write_history(".minishell_history");
 	if (*envp)
 		free_all_ul_split(*envp);
 	if (data->path)
@@ -70,6 +71,8 @@ static void	execute_command(t_node *node, char ***envp, t_data *data)
 {
 	t_node		*tmp;
 	t_indexes	indx;
+	int			s_in;
+	int			s_out;
 
 	tmp = node;
 	if (node->next)
@@ -78,9 +81,10 @@ static void	execute_command(t_node *node, char ***envp, t_data *data)
 		free_all_node(node);
 		return ;
 	}
-	indx.i = dup(0);
-	indx.j = dup(1);
-	indx.p = 0;
+	s_in = dup(STDIN_FILENO);
+	s_out = dup(STDOUT_FILENO);
+	indx.i = s_in;
+	indx.j = s_out;
 	tmp->command = apply_redirections(tmp, envp, data, indx);
 	if (tmp->command && check_command(tmp->command, envp, node, data))
 	{
@@ -88,8 +92,10 @@ static void	execute_command(t_node *node, char ***envp, t_data *data)
 		if (data->fd != -1)
 			close(data->fd);
 	}
-	indx.p = 1;
-	apply_redirections(tmp, envp, data, indx);
+	dup2(s_in, STDIN_FILENO);
+	dup2(s_out, STDOUT_FILENO);
+	close(s_in);
+	close(s_out);
 	free_all_node(node);
 }
 
@@ -109,9 +115,9 @@ void	read_input(char ***envp, t_data *data)
 				"\001\033[0m\002");
 		if (!command)
 			handle_null_command(envp, data);
-		add_history(command);
 		if (command_analyze(command, data) == 0)
 		{
+			add_history(command);
 			command_tokenization(&node, command, *envp, data);
 			execute_command(node, envp, data);
 		}
