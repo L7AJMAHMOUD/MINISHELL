@@ -59,7 +59,7 @@ char	**ft_arr_to_tab(t_command *arr, int words, int i, int j)
 		}
 		tab[i] = ft_strdup(arr[j].command);
 		if (!tab[i++])
-			return (free_arr(arr, --words), free_all_ul_split(tab), NULL);
+			return (i--, free_arr(arr, --words), free_all_ul_split(tab), NULL);
 		j++;
 	}
 	tab[i] = 0;
