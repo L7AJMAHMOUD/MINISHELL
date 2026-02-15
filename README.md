@@ -1,72 +1,56 @@
-# 🐚 MINISHELL
+# MINISHELL
 
-> A lightweight, feature-rich shell implementation in C, recreating core functionalities of bash.
+## Project Overview
+MINISHELL is a simple UNIX shell implementation that serves as a project to learn about system-level programming, processes, and the underlying architecture of shell commands. The goal is to create a functional shell that can execute user commands, manage processes, and handle various functionalities typically found in a UNIX shell.
 
-![Language](https://img.shields.io/badge/Language-C-blue?style=flat-square)
-![Code Quality](https://img.shields.io/badge/Code%20Quality-Good-brightgreen?style=flat-square)
-![School](https://img.shields.io/badge/School-42-000000?style=flat-square)
+## Features
+- **Command Execution**: Execute simple shell commands and manage processes.
+- **Built-in Commands**: Support for built-in commands like `cd`, `exit`, and `echo`.
+- **Environment Variables**: Access and manipulate environment variables.
+- **Input/Output Redirection**: Redirect input and output using `>` and `<` operators.
+- **Pipelines**: Support for command pipelines with use of `|` operator.
 
-## 📋 Table of Contents
+## Installation
+To install MINISHELL, clone the repository and build the project using the following commands:
 
-- [Overview](#overview)
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Built-in Commands](#built-in-commands)
-- [Advanced Features](#advanced-features)
-- [Code Quality](#code-quality)
-- [Authors](#authors)
-- [License](#license)
-
----
-
-## 🎯 Overview
-
-**MINISHELL** is an educational shell implementation that demonstrates deep understanding of systems programming in C. It recreates essential shell functionalities including command execution, piping, redirection, and environment variable management.
-
-This project is ideal for:
-- Learning shell internals and process management
-- Understanding systems programming concepts
-- Exploring Unix/Linux system calls
-- Studying command parsing and execution
-
----
-
-## ✨ Features
-
-### Core Functionality
-- ✅ **Command Execution** - Execute system commands with proper argument parsing
-- ✅ **Piping** - Chain multiple commands using pipes (`|`)
-- ✅ **Input/Output Redirection** - Support for `<`, `>`, `>>` operators
-- ✅ **Heredoc** - Here-document syntax support (`<<`)
-- ✅ **Environment Variables** - Expand and manage environment variables
-- ✅ **Exit Status** - Access exit codes via `$?`
-- ✅ **Quote Handling** - Support for both single (`'`) and double (`"`) quotes
-- ✅ **Signal Handling** - Proper handling of Ctrl+C and other signals
-
-### Built-in Commands
-- 🔨 `cd` - Change directory with PWD/OLDPWD tracking
-- 📝 `echo` - Print text to output
-- 🚪 `exit` - Exit the shell with exit code
-- 🔄 `export` - Manage environment variables
-- 🗑️ `unset` - Remove environment variables
-- 📊 `env` - Display environment variables
-- 🔤 `pwd` - Print working directory
-
----
-
-## 📦 Requirements
-
-### System Requirements
-- Linux/Unix environment
-- GCC or Clang compiler
-- GNU Make
-- Readline library (`libreadline-dev` on Ubuntu/Debian)
-
-### Installation of Dependencies
-
-**Ubuntu/Debian:**
 ```bash
-sudo apt-get install build-essential libreadline-dev
+git clone https://github.com/L7AJMAHMOUD/MINISHELL.git
+cd MINISHELL
+make
+```
+
+Make sure that you have all the necessary dependencies installed including `gcc` and `make`.
+
+## Usage
+Run the shell by executing the following command in the terminal:
+
+```bash
+./minishell
+```
+
+You can start typing your commands after the shell prompt.
+
+## Project Structure
+The project is organized as follows:
+
+```
+MINISHELL/
+├── src/
+│   ├── main.c        # Entry point of the shell
+│   ├── command.c     # Command execution logic
+│   ├── builtin.c     # Built-in command implementations
+│   └── ...           # Other source files
+├── inc/
+│   ├── minishell.h   # Header file with function declarations
+│   └── ...           # Other headers
+└── Makefile          # Build script
+```
+
+## Documentation
+For detailed documentation, refer to the `docs/` folder. It contains information on the design decisions, architecture, and advanced usage of the shell features.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Author
+This project is maintained by Karamu-ser.
