@@ -73,6 +73,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac == 1)
 	{
 		read_history(".minishell_history");
+		init_autosuggestions();
 		if (init_pwd(&data) || init_env(&data))
 			return (1);
 		envp = read_stock(envp, &data, 0, 0);

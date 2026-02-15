@@ -31,6 +31,7 @@ SRCS = main.c \
        src/core/helpr_cooking.c \
        src/core/pseudo_cooking.c \
        src/core/pre_cooking.c \
+       src/core/autosuggestion.c \
        src/core/analyze_command.c \
        src/parsing/redirections.c \
        src/parsing/parse.c \
