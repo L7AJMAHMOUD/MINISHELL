@@ -1,79 +1,32 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   redirections_applications.c                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/17 14:35:50 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/08/07 19:13:59 by maen-naj         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../minishell.h"
 
-int	handle_simple_redirs(t_node *node, t_data *data, int i)
+static int apply_one(t_node *node, t_data *data, int i)
 {
-	if (ft_strcmp(node->command[i], ">") == 0 && node->arr[i].q == 0)
-		return (redirect_output_fd(node->command, node->arr, data, i));
-	else if (ft_strcmp(node->command[i], ">>") == 0 && node->arr[i].q == 0)
-		return (append_to_fd(node->command, node->arr, data, i));
-	else if (ft_strcmp(node->command[i], "<") == 0 && node->arr[i].q == 0)
-		return (redirect_input_fd(node->command, node->arr, data, i));
-	return (0);
+    if (!ft_strcmp(node->command[i], ">"))
+        return (redirect_output_fd(node->command, node->arr, data, i));
+    if (!ft_strcmp(node->command[i], ">>"))
+        return (append_to_fd(node->command, node->arr, data, i));
+    if (!ft_strcmp(node->command[i], "<"))
+        return (redirect_input_fd(node->command, node->arr, data, i));
+    if (!ft_strcmp(node->command[i], "<<") && dup2(node->hd, STDIN_FILENO) < 0)
+        return (perror("minishell: heredoc"), data->status = 1, -1);
+    return (0);
 }
 
-int	handle_heredoc(t_node *node, t_data *data, t_indexes indx, int i)
+char **apply_redirections(t_node *node, char ***envp, t_data *data)
 {
-	int	s_p;
-	int	s_po;
+    int i = 0;
 
-	s_p = dup(1);
-	s_po = dup(0);
-	if (indx.j != -1 && indx.i != -1)
-	{
-		dup2(indx.j, 1);
-		dup2(indx.i, 0);
-	}
-	while (node->command[i])
-	{
-		if (ft_strcmp(node->command[i], "<<") == 0 && node->arr[i].q == 0)
-		{
-			if (here_doc(node, *(data->envp), data) == -1)
-				return (-1);
-			break ;
-		}
-		i++;
-	}
-	dup2(s_p, 1);
-	dup2(s_po, 0);
-	return (0);
-}
-
-int	save_check(int *s_in, int *s_out)
-{
-	*s_in = dup(0);
-	*s_out = dup(1);
-	if (*s_in == -1 || *s_out == -1)
-		return (1);
-	return (0);
-}
-
-char	**apply_redirections(t_node *node, char ***envp, t_data *data,
-		t_indexes indx)
-{
-	int	i;
-
-	i = 0;
-	data->envp = envp;
-	if (handle_heredoc(node, data, indx, i) == -1)
-		return (free_all_ul_split(node->command), NULL);
-	while (node->command[i])
-	{
-		data->i = 0;
-		if (handle_simple_redirs(node, data, i) == -1)
-			return (free_all_ul_split(node->command), NULL);
-		i++;
-	}
-	return (clean_command(node->command, node->arr));
+    data->envp = envp;
+    while (node->command && node->command[i])
+    {
+        if (!node->arr[i].q && !is_redirect(node->command[i]))
+        {
+            if (apply_one(node, data, i) == -1)
+                return (free_all_ul_split(node->command), NULL);
+            i++;
+        }
+        i++;
+    }
+    return (clean_command(node->command, node->arr));
 }

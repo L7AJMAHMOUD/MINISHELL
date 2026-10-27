@@ -1,107 +1,99 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/04 19:26:21 by abkaram           #+#    #+#             */
-/*   Updated: 2025/08/04 22:33:17 by abkaram          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../minishell.h"
 
-static int	check_here_doc(t_node *current)
+static void pipeline_child(t_node *node, t_node *root, t_data *data, int input, int pipefd[2])
 {
-	int	k;
 
-	k = 0;
-	while (current->command[k])
-	{
-		if (ft_strcmp(current->command[k], "<<") == 0
-			&& current->arr[k + 1].q == 0)
-			return (-1);
-		k++;
-	}
-	return (0);
+    signal(SIGINT, SIG_DFL);
+    signal(SIGQUIT, SIG_DFL);
+    data->interactive = 0;
+    if (input >= 0 && dup2(input, STDIN_FILENO) < 0)
+        _exit(1);
+    if (input >= 0)
+        close(input);
+    if (node->next)
+    {
+        close(pipefd[0]);
+        if (dup2(pipefd[1], STDOUT_FILENO) < 0)
+            _exit(1);
+        close(pipefd[1]);
+    }
+    node->command = apply_redirections(node, data->envp, data);
+    while (root)
+    {
+        if (root->hd >= 0)
+            close(root->hd);
+        root->hd = -1;
+        root = root->next;
+    }
+    if (node->command && check_command(node->command, data->envp, node, data))
+        execute_external(node, *data->envp, data);
+    _exit(data->status);
 }
 
-static int	init_pipe(int *pipefd, t_node *current)
+int pip(char ***envp, t_data *data, t_node *root)
 {
-	if (current->next)
-	{
-		if (pipe(pipefd) == -1)
-			return (perror("pipe"), 1);
-	}
-	return (0);
-}
+    t_node *node = root;
+    int input = -1;
+    int pipefd[2] = {-1, -1};
+    int status;
+    int failed = 0;
+    int i;
+    pid_t pid;
 
-static void	child_process(t_node *cur, t_data *data, int *fds)
-{
-	t_indexes	indx;
-
-	if (fds[0] != -1)
-	{
-		dup2(fds[0], STDIN_FILENO);
-		close(fds[0]);
-	}
-	if (cur->next)
-	{
-		close(fds[2]);
-		dup2(fds[3], STDOUT_FILENO);
-		close(fds[3]);
-	}
-	indx.i = fds[4];
-	indx.j = fds[5];
-	indx.p = 0;
-	cur->command = apply_redirections(cur,
-			(data->envp), data, indx);
-	if (cur->command && check_command(cur->command, data->envp, cur, data))
-		exe(*(data->envp), cur, data);
-	exit(data->status);
-}
-
-static int	handle_child(t_node *cur, t_data *data, int *fds)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
-		return (perror("fork"), 1);
-	if (pid == 0)
-		child_process(cur, data, fds);
-	if (fds[0] != -1)
-		close(fds[0]);
-	if (cur->next)
-	{
-		close(fds[3]);
-		fds[0] = fds[2];
-	}
-	data->pid[data->id++] = pid;
-	return (pid);
-}
-
-int	pip(char ***envp, t_data *data, t_node *cur)
-{
-	int	fds[6];
-	int	pid;
-
-	init_fds(fds);
-	g_hsig = 1;
-	while (cur)
-	{
-		fds[1] = check_here_doc(cur);
-		if (init_pipe(&fds[2], cur))
-			return (1);
-		data->envp = envp;
-		pid = handle_child(cur, data, fds);
-		if (pid == 1)
-			return (0);
-		if (fds[1] == -1 || (!cur->next && fds[1] != -1))
-			waitpid(pid, &data->status, 0);
-		cur = cur->next;
-	}
-	wait_and_update_status(data);
-	return (cleanup_fds(), 0);
+    data->envp = envp;
+    data->id = 0;
+    signal(SIGINT, SIG_IGN);
+    while (node)
+    {
+        if (node->next && pipe(pipefd) < 0)
+        {
+            failed = 1;
+            break;
+        }
+        pid = fork();
+        if (pid < 0)
+        {
+            if (node->next)
+            {
+                close(pipefd[0]);
+                close(pipefd[1]);
+            }
+            failed = 1;
+            break;
+        }
+        if (!pid)
+            pipeline_child(node, root, data, input, pipefd);
+        data->pid[data->id++] = pid;
+        if (input >= 0)
+            close(input);
+        input = -1;
+        if (node->next)
+        {
+            close(pipefd[1]);
+            input = pipefd[0];
+        }
+        node = node->next;
+    }
+    if (input >= 0)
+        close(input);
+    if (failed)
+    {
+        perror("minishell: pipeline");
+        i = 0;
+        while (i < data->id)
+            kill(data->pid[i++], SIGTERM);
+    }
+    i = 0;
+    while (i < data->id)
+    {
+        status = 1 << 8;
+        while (waitpid(data->pid[i], &status, 0) < 0 && errno == EINTR)
+            ;
+        i++;
+        data->status = shell_wait_status(status);
+    }
+    if (failed)
+        data->status = 1;
+    signal_init(data);
+    return (failed);
 }

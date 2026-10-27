@@ -1,0 +1,7 @@
+/build/
+/minishell
+/minishell-sanitize
+*.o
+*.d
+.minishell_history
+__pycache__/

@@ -1,120 +1,44 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   expand.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maen-naj <maen-naj@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/07 19:15:37 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/08/07 19:15:38 by maen-naj         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../minishell.h"
+#include <ctype.h>
+#include <string.h>
 
-static int	count_dollars(const char *s, int j)
+/* Heredoc text expands variables without quote removal or field splitting. */
+char *expand_str(char *input, char **envp, t_data *data)
 {
-	int	p;
+    char *result = ft_strdup("");
+    char *start;
+    char *name;
+    char *value;
+    char literal[2] = {0};
+    char status[16];
 
-	p = 0;
-	while (s[j] == '$')
-	{
-		j++;
-		p++;
-	}
-	return (p);
-}
-
-static int	handle_numeric_dollar(char **cmd, int *j, int p)
-{
-	char	*str;
-
-	if ((*cmd)[*j] >= '0' && (*cmd)[*j] <= '9')
-		str = ft_strdup(&(*cmd)[*j + 1]);
-	else
-		str = ft_strdup(&(*cmd)[*j]);
-	if ((*cmd)[*j - (p + 1)] == '$')
-		(*cmd)[*j - ++p] = 0;
-	else
-		(*cmd)[*j - p] = 0;
-	*cmd = ft_strjoin_(*cmd, str);
-	*j -= p;
-	return (1);
-}
-
-static int	handle_exit_code(char **cmd, int *j, int p, t_data *data)
-{
-	char	*varname;
-	char	*val;
-	char	*str;
-
-	varname = malloc(2);
-	if (!varname)
-		return (0);
-	varname[0] = (*cmd)[*j];
-	varname[1] = '\0';
-	val = ft_itoa(data->status);
-	str = ft_strdup(&(*cmd)[*j + 1]);
-	(*cmd)[*j - 1 - p] = 0;
-	*cmd = ft_strjoin_(*cmd, val);
-	*j = ft_strlen(*cmd);
-	*cmd = ft_strjoin_(*cmd, str);
-	free(varname);
-	return (1);
-}
-
-static int	handle_env_var(char **cmd, int *j, int p, t_data *data)
-{
-	char	*varname;
-	char	*tmp;
-	char	*val;
-	char	*str;
-	int		var_len;
-
-	var_len = strlen_until_special(&(*cmd)[*j]);
-	varname = malloc(var_len + 1);
-	if (!varname)
-		return (0);
-	ft_strncpy(varname, &(*cmd)[*j], var_len);
-	varname[var_len] = '\0';
-	tmp = get_variable(varname, *(data->envp), data);
-	if (tmp)
-		val = ft_strdup(tmp);
-	else
-		val = NULL;
-	str = ft_strdup(&(*cmd)[*j + var_len]);
-	(*cmd)[*j - 1 - p] = 0;
-	*cmd = ft_strjoin_(*cmd, val);
-	*j = ft_strlen(*cmd);
-	*cmd = ft_strjoin_(*cmd, str);
-	free(varname);
-	return (1);
-}
-
-char	*expand_str(char *cmd, char **envp, t_data *data, t_indexes indx)
-{
-	indx.j = 0;
-	cmd = ft_strdup(cmd);
-	*(data->envp) = envp;
-	while (cmd[indx.j])
-	{
-		if (cmd[indx.j++] == '$')
-		{
-			indx.p = 0;
-			indx.m = indx.j;
-			indx.p = count_dollars(cmd, indx.j);
-			indx.j += indx.p;
-			if (!cmd[indx.j] && !cmd)
-				continue ;
-			if (indx.p % 2 || (cmd[indx.j] >= '0' && cmd[indx.j] <= '9'))
-				handle_numeric_dollar(&cmd, &indx.j, indx.p);
-			else if (cmd[indx.j] == '?')
-				handle_exit_code(&cmd, &indx.j, indx.p, data);
-			else
-				handle_env_var(&cmd, &indx.j, indx.p, data);
-		}
-	}
-	if (cmd[0] == 0)
-		return (free(cmd), NULL);
-	return (cmd);
+    while (result && *input)
+    {
+        value = literal;
+        literal[0] = *input++;
+        if (literal[0] == '$' && *input == '?')
+        {
+            snprintf(status, sizeof(status), "%d", data->status);
+            value = status;
+            input++;
+        }
+        else if (literal[0] == '$' && (isalpha((unsigned char)*input) || *input == '_'))
+        {
+            start = input;
+            while (isalnum((unsigned char)*input) || *input == '_')
+                input++;
+            name = strndup(start, input - start);
+            if (!name)
+                return (free(result), NULL);
+            value = get_variable(name, envp, data);
+            free(name);
+        }
+        else if (literal[0] == '$' && isdigit((unsigned char)*input))
+        {
+            input++;
+            value = "";
+        }
+        result = strmerge_and_free(result, value);
+    }
+    return (result);
 }

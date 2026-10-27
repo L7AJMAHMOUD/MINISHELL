@@ -1,86 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_print.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/25 13:36:10 by abkaram           #+#    #+#             */
-/*   Updated: 2025/08/04 19:03:42 by abkaram          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../minishell.h"
 
-static int	ft_putchar(char s)
+void ft_print(char *message, int number)
 {
-	return (write (2, &s, 1));
-}
-
-static int	ft_putstr(char *s)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-	{
-		write(2, "(null)", 6);
-		return (6);
-	}
-	while (s[i])
-	{
-		i += ft_putchar(s[i]);
-	}
-	return (i);
-}
-
-static int	ft_putnbr(int n)
-{
-	char	c;
-	int		i;
-
-	i = 0;
-	if (n == -2147483648)
-		i += ft_putstr("-2147483648");
-	else if (n < 0)
-	{
-		write(2, "-", 1);
-		i += ft_putnbr(-n) + 1;
-	}
-	else if (n >= 0 && n < 10)
-	{
-		c = (n + 48);
-		i += ft_putchar(c);
-	}
-	else if (n >= 10)
-	{
-		i += ft_putnbr(n / 10);
-		i += ft_putnbr(n % 10);
-	}
-	return (i);
-}
-
-void	ft_print(char *s, int i)
-{
-	ft_putstr(s);
-	if (i != 0)
-	{
-		ft_putstr(" : ");
-		ft_putnbr(i);
-	}
-	ft_putchar('\n');
-}
-
-void	cleanup_fds(void)
-{
-	int	fd;
-	int	max_fd;
-
-	fd = 3;
-	max_fd = 1024;
-	while (fd < max_fd)
-	{
-		close(fd);
-		fd++;
-	}
+    if (number)
+        fprintf(stderr, "%s : %d\n", message ? message : "(null)", number);
+    else
+        fprintf(stderr, "%s\n", message ? message : "(null)");
 }

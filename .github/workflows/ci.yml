@@ -1,0 +1,24 @@
+name: Build and test
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y libreadline-dev clang
+      - name: Build and test
+        run: make -j2 CC=${{ matrix.compiler }} test
+      - name: Check memory and undefined behavior
+        if: matrix.compiler == 'clang'
+        run: make sanitize

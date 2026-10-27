@@ -1,54 +1,42 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipe_detec.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: abkaram <abkaram@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 13:55:21 by maen-naj          #+#    #+#             */
-/*   Updated: 2025/08/04 19:01:49 by abkaram          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../minishell.h"
 
-int	pipe_detector(char *command)
+int pipe_detector(char *command)
 {
-	int	i;
+    int i;
 
-	i = 0;
-	while (command[i])
-	{
-		skip_inside_quotes(command, &i);
-		if (command[i] == PIPE_CHAR)
-		{
-			i++;
-			while (command[i] == SPACE_CHAR)
-				i++;
-			if (command[i] == '\0')
-				return (-1);
-		}
-		else
-			i++;
-	}
-	return (0);
+    i = 0;
+    while (command[i])
+    {
+        skip_inside_quotes(command, &i);
+        if (command[i] == PIPE_CHAR)
+        {
+            i++;
+            while (command[i] == SPACE_CHAR)
+                i++;
+            if (command[i] == '\0')
+                return (-1);
+        }
+        else
+            i++;
+    }
+    return (0);
 }
 
-int	max_pipe_detector(char *command)
+int max_pipe_detector(char *command)
 {
-	int	i;
-	int	j;
+    int i;
+    int j;
 
-	i = 0;
-	j = 0;
-	while (command[i])
-	{
-		skip_inside_quotes(command, &i);
-		if (command[i] == PIPE_CHAR)
-			j++;
-		i++;
-	}
-	if (j > 1024)
-		return (-1);
-	return (0);
+    i = 0;
+    j = 0;
+    while (command[i])
+    {
+        skip_inside_quotes(command, &i);
+        if (command[i] == PIPE_CHAR)
+            j++;
+        i++;
+    }
+    if (j > 1024)
+        return (-1);
+    return (0);
 }
